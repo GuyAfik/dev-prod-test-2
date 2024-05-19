@@ -1,0 +1,136 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: 67b384a4-542e-4c6b-88b5-01585f061ed3
+inputSections:
+- description: Generic group for inputs
+  inputs:
+  - test
+  name: General (Inputs group)
+inputs:
+- description: ""
+  key: test
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: test!
+name: Read-Write-Context-Playbook
+outputs: []
+quiet: true
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: dce70522-9347-434d-89f1-495f5c895816
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: dce70522-9347-434d-89f1-495f5c895816
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: test
+      value:
+        simple: test
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 589226fb-343c-475b-8742-901975ae2a7b
+      iscommand: false
+      name: Set Context
+      script: Set
+      type: regular
+      version: -1
+    taskid: 589226fb-343c-475b-8742-901975ae2a7b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 260
+        }
+      }
+  "2":
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 378c76de-7b21-49c1-8f06-d727f39708b3
+      iscommand: false
+      name: Untitled Task
+      type: regular
+      version: -1
+    taskid: 378c76de-7b21-49c1-8f06-d727f39708b3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 570
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 615,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }
