@@ -22,7 +22,7 @@ inputs:
   playbookInputQuery: null
   required: false
   value:
-    simple: test!
+    simple: test
 name: Read-Write-Context-Playbook
 outputSections:
 - description: Generic group for outputs
@@ -69,33 +69,33 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "2"
+      - "3"
     note: false
     quietmode: 0
     scriptarguments:
       key:
         simple: test
       value:
-        simple: test
+        simple: ${inputs.test}
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
       description: Set a value in context under the key you entered.
-      id: 589226fb-343c-475b-8742-901975ae2a7b
+      id: 87b6bb24-43fe-4836-8f49-679b9aff164a
       iscommand: false
       name: Set Context
       script: Set
       type: regular
       version: -1
-    taskid: 589226fb-343c-475b-8742-901975ae2a7b
+    taskid: 87b6bb24-43fe-4836-8f49-679b9aff164a
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
           "x": 450,
-          "y": 260
+          "y": 310
         }
       }
   "2":
@@ -106,23 +106,112 @@ tasks:
     isoversize: false
     note: false
     quietmode: 0
+    scriptarguments:
+      data:
+        simple: ${test}
+      newValue:
+        simple: replaced-value-test!
+      regex:
+        simple: test!
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
-      id: 378c76de-7b21-49c1-8f06-d727f39708b3
+      description: |-
+        Replaces regex match/es in string.
+        Returns the string after replace was preformed.
+      id: b7725394-5e3e-414d-8cae-2d5ab827e1e3
       iscommand: false
-      name: Untitled Task
+      name: replace context string
+      script: StringReplace
       type: regular
       version: -1
-    taskid: 378c76de-7b21-49c1-8f06-d727f39708b3
+    taskid: b7725394-5e3e-414d-8cae-2d5ab827e1e3
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
+          "x": 760,
+          "y": 800
+        }
+      }
+  "3":
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "4"
+      "yes":
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      left:
+        simple: ${test}
+      right:
+        simple: test!
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether the values provided in arguments are equal. If either
+        of the arguments are missing, no is returned.
+      id: 1d137ede-8783-46dc-8f2c-f9a47ac1e751
+      iscommand: false
+      name: Check if String equals test!
+      script: AreValuesEqual
+      type: condition
+      version: -1
+    taskid: 1d137ede-8783-46dc-8f2c-f9a47ac1e751
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
           "x": 450,
-          "y": 570
+          "y": 530
+        }
+      }
+  "4":
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      data:
+        simple: ${test}
+      newValue:
+        simple: replaced-value-test
+      regex:
+        simple: test
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Replaces regex match/es in string.
+        Returns the string after replace was preformed.
+      id: dd17e83f-3910-4c20-88a6-9ecf14215a0b
+      iscommand: false
+      name: replace context string
+      script: StringReplace
+      type: regular
+      version: -1
+    taskid: dd17e83f-3910-4c20-88a6-9ecf14215a0b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 240,
+          "y": 800
         }
       }
 version: -1
@@ -131,9 +220,9 @@ view: |-
     "linkLabelsPosition": {},
     "paper": {
       "dimensions": {
-        "height": 615,
-        "width": 380,
-        "x": 450,
+        "height": 845,
+        "width": 900,
+        "x": 240,
         "y": 50
       }
     }
