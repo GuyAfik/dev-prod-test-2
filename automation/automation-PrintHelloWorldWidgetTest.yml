@@ -39,8 +39,6 @@ enabled: true
 engineinfo: {}
 mainengineinfo: {}
 name: PrintHelloWorldWidgetTest
-nativeimage:
-- "8.6"
 pswd: ""
 runas: DBotWeakRole
 runonce: false
