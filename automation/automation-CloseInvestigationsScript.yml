@@ -144,6 +144,7 @@ script: |
       resp = demisto.executeCommand("getIncidents", {"query": ""})
       incidents_metadata = resp[0]["Contents"]["data"]
       for incident in incidents_metadata:
+          demisto.log(f"{incident=}")
           state = incident.get("state")
           created_time = incidents_metadata.get("created")
           _id = incident.get("id")
