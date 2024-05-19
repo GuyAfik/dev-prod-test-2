@@ -147,7 +147,7 @@ script: |
           all_keys = incident.keys()
           demisto.log(f"{incident=}, {all_keys=}")
           state = incident.get("state")
-          created_time = incidents_metadata.get("created")
+          created_time = incident.get("created")
           _id = incident.get("id")
           incident_name = incident.get("rawName")
           demisto.log(f'{state=}, {created_time=}, {_id=}, {incident_name=}')
