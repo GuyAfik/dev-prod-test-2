@@ -154,7 +154,8 @@ script: |
           # 2 is a state of "Closed" incident
           # if state != 2 and dateparser.parse(created_time, settings={'TIMEZONE': 'UTC'}) + timedelta(minutes=30) < now:
           if state != 2:
-              demisto.executeCommand("Print", {"value": f"incident {incident_name} with ID {_id} is getting closed now!!!"})
+              demisto.log(f"incident {incident_name} with ID {_id} is getting closed now!!!")
+              # demisto.executeCommand("Print", {"value": f"incident {incident_name} with ID {_id} is getting closed now!!!"})
               demisto.executeCommand("closeInvestigation", {"id": _id})
 
 
