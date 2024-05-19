@@ -149,10 +149,10 @@ script: |
           created_time = incident.get("created")
           _id = incident.get("id")
           incident_name = incident.get("rawName")
-          now = datetime.now()
+          now = datetime.utcnow()
           demisto.log(f'{state=}, {created_time=}, {_id=}, {incident_name=}, {now.strftime("%Y-%m-%dT%H:%M:%SZ")=}')
           # 1 is a state of "Active" incident
-          if state != 2 and dateparser.parse(created_time).replace(tzinfo=None) + timedelta(minutes=30) < now:
+          if state != 2 and dateparser.parse(created_time, settings={'TIMEZONE': 'UTC'}) + timedelta(minutes=30) < now:
               demisto.executeCommand("Print", {"value": f"incident {incident_name} with ID {_id} is getting closed now!!!"})
               demisto.executeCommand("closeInvestigation", {"id": _id})
 
