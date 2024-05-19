@@ -145,12 +145,11 @@ script: |
       incidents_metadata = resp[0]["Contents"]["data"]
       for incident in incidents_metadata:
           all_keys = incident.keys()
-          demisto.log(f"{incident=}, {all_keys=}")
           state = incident.get("status")
           created_time = incident.get("created")
           _id = incident.get("id")
           incident_name = incident.get("rawName")
-          demisto.log(f'{state=}, {created_time=}, {_id=}, {incident_name=}')
+          demisto.log(f'{state=}, {created_time=}, {_id=}, {incident_name=}, {type(state)=}')
           # 1 is a state of "Active" incident
           if state != 2 and dateparser.parse(created_time).replace(tzinfo=None) > datetime.now() + timedelta(minutes=30):
               demisto.executeCommand("Print", {"value": f"incident {incident_name} with ID {_id} is getting closed now!!!"})
