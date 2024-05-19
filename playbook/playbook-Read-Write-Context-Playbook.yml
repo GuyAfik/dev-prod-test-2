@@ -24,6 +24,10 @@ inputs:
   value:
     simple: test!
 name: Read-Write-Context-Playbook
+outputSections:
+- description: Generic group for outputs
+  name: General (Outputs group)
+  outputs: []
 outputs: []
 quiet: true
 starttaskid: "0"
