@@ -18,8 +18,6 @@ enabled: true
 engineinfo: {}
 mainengineinfo: {}
 name: CloseInvestigationsScript
-nativeimage:
-- "8.6"
 pswd: ""
 runas: DBotWeakRole
 runonce: false
