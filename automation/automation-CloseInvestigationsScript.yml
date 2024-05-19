@@ -142,7 +142,7 @@ script: |
 
   def main():
       resp = demisto.executeCommand("getIncidents", {"query": ""})
-      demisto.log(f'{resp[0]["Contents"][0]=}')
+      demisto.log(f'{resp[0]["Contents"]["data"][0]=}')
 
 
   if __name__ in ('__builtin__', 'builtins', '__main__'):  # pragma: no cover
