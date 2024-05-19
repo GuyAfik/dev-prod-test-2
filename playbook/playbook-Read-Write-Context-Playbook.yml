@@ -23,7 +23,7 @@ inputs:
   playbookInputQuery: null
   required: false
   value:
-    simple: test
+    simple: test!
 - description: ""
   key: should-close-investigation
   playbookInputQuery: null
@@ -89,20 +89,20 @@ tasks:
     task:
       brand: ""
       description: Set a value in context under the key you entered.
-      id: 87b6bb24-43fe-4836-8f49-679b9aff164a
+      id: 32a1d55a-b96d-4ce7-85ef-28b63da7fdb0
       iscommand: false
       name: Set Context
       script: Set
       type: regular
       version: -1
-    taskid: 87b6bb24-43fe-4836-8f49-679b9aff164a
+    taskid: 32a1d55a-b96d-4ce7-85ef-28b63da7fdb0
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
           "x": 450,
-          "y": 310
+          "y": 260
         }
       }
   "2":
@@ -127,20 +127,20 @@ tasks:
       description: |-
         Replaces regex match/es in string.
         Returns the string after replace was preformed.
-      id: b7725394-5e3e-414d-8cae-2d5ab827e1e3
+      id: 6ac5e509-e1c9-42f8-88f9-73704f827cfc
       iscommand: false
       name: replace context string
       script: StringReplace
       type: regular
       version: -1
-    taskid: b7725394-5e3e-414d-8cae-2d5ab827e1e3
+    taskid: 6ac5e509-e1c9-42f8-88f9-73704f827cfc
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
-          "x": 760,
-          "y": 800
+          "x": 1270,
+          "y": 835
         }
       }
   "3":
@@ -154,6 +154,7 @@ tasks:
       - "4"
       "yes":
       - "2"
+      - "5"
     note: false
     quietmode: 0
     scriptarguments:
@@ -167,20 +168,20 @@ tasks:
       brand: ""
       description: Check whether the values provided in arguments are equal. If either
         of the arguments are missing, no is returned.
-      id: 1d137ede-8783-46dc-8f2c-f9a47ac1e751
+      id: b6d37acd-697d-4ba1-82b3-14c0800f6d40
       iscommand: false
       name: Check if String equals test!
       script: AreValuesEqual
       type: condition
       version: -1
-    taskid: 1d137ede-8783-46dc-8f2c-f9a47ac1e751
+    taskid: b6d37acd-697d-4ba1-82b3-14c0800f6d40
     timertriggers: []
     type: condition
     view: |-
       {
         "position": {
           "x": 450,
-          "y": 530
+          "y": 480
         }
       }
   "4":
@@ -205,20 +206,93 @@ tasks:
       description: |-
         Replaces regex match/es in string.
         Returns the string after replace was preformed.
-      id: dd17e83f-3910-4c20-88a6-9ecf14215a0b
+      id: 4c724472-6626-46c9-8232-3ae333f849ba
       iscommand: false
       name: replace context string
       script: StringReplace
       type: regular
       version: -1
-    taskid: dd17e83f-3910-4c20-88a6-9ecf14215a0b
+    taskid: 4c724472-6626-46c9-8232-3ae333f849ba
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
-          "x": 240,
-          "y": 800
+          "x": 770,
+          "y": 835
+        }
+      }
+  "5":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: inputs.should-close-investigation
+          operator: isEqualString
+          right:
+            value:
+              simple: "true"
+      label: "yes"
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "yes":
+      - "6"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 25650a3a-f2b8-4f05-8620-9afd8f93cf35
+      iscommand: false
+      name: Should Close Investigation
+      type: condition
+      version: -1
+    taskid: 25650a3a-f2b8-4f05-8620-9afd8f93cf35
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 120,
+          "y": 835
+        }
+      }
+  "6":
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      id:
+        simple: ${incident.id}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.close.inv
+      id: a96712f0-b30b-4717-8d9a-59eb749f6982
+      iscommand: true
+      name: Close Investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: a96712f0-b30b-4717-8d9a-59eb749f6982
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 120,
+          "y": 1090
         }
       }
 version: -1
@@ -227,9 +301,9 @@ view: |-
     "linkLabelsPosition": {},
     "paper": {
       "dimensions": {
-        "height": 845,
-        "width": 900,
-        "x": 240,
+        "height": 1135,
+        "width": 1530,
+        "x": 120,
         "y": 50
       }
     }
