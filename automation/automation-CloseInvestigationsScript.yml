@@ -146,7 +146,7 @@ script: |
       for incident in incidents_metadata:
           all_keys = incident.keys()
           demisto.log(f"{incident=}, {all_keys=}")
-          state = incident.get("state")
+          state = incident.get("status")
           created_time = incident.get("created")
           _id = incident.get("id")
           incident_name = incident.get("rawName")
