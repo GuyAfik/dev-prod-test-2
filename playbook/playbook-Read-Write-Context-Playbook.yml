@@ -15,6 +15,7 @@ inputSections:
 - description: Generic group for inputs
   inputs:
   - test
+  - should-close-investigation
   name: General (Inputs group)
 inputs:
 - description: ""
@@ -23,6 +24,12 @@ inputs:
   required: false
   value:
     simple: test
+- description: ""
+  key: should-close-investigation
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: "true"
 name: Read-Write-Context-Playbook
 outputSections:
 - description: Generic group for outputs
