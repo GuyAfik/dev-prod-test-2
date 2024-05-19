@@ -414,6 +414,129 @@
 			},
 			"x": 0,
 			"y": 4
+		},
+		{
+			"forceRange": false,
+			"h": 3,
+			"i": "dc61bff0-15f1-11ef-964c-a971cda2e0a9",
+			"id": "dc61bff0-15f1-11ef-964c-a971cda2e0a9",
+			"reflectDimensions": true,
+			"w": 4,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "indicators",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 7,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "231d80ed-5dd5-41b2-80a9-e30fc8e35f6b",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2024-05-19T15:09:38.220059485Z",
+				"name": "show indicators",
+				"packID": "",
+				"packName": "",
+				"params": {
+					"tableColumns": [
+						{
+							"isDefault": true,
+							"key": "indicator_type",
+							"position": 1,
+							"width": 120
+						},
+						{
+							"isDefault": true,
+							"key": "value",
+							"position": 2,
+							"width": 300
+						},
+						{
+							"isDefault": true,
+							"key": "score",
+							"position": 4,
+							"width": 120
+						},
+						{
+							"isDefault": true,
+							"key": "firstSeen",
+							"position": 5,
+							"width": 275
+						},
+						{
+							"isDefault": true,
+							"key": "lastSeen",
+							"position": 6,
+							"width": 275
+						},
+						{
+							"isDefault": true,
+							"key": "timestamp",
+							"position": 8,
+							"width": 190
+						},
+						{
+							"isDefault": true,
+							"key": "relatedIncCount",
+							"position": 9,
+							"width": 150
+						},
+						{
+							"isDefault": true,
+							"key": "sourceBrands",
+							"position": 12,
+							"width": 175
+						},
+						{
+							"isDefault": true,
+							"key": "sourceInstances",
+							"position": 13,
+							"width": 175
+						},
+						{
+							"isDefault": true,
+							"key": "expirationStatus",
+							"position": 14,
+							"width": 175
+						},
+						{
+							"isDefault": true,
+							"key": "expiration",
+							"position": 15,
+							"width": 190
+						}
+					]
+				},
+				"prevName": "show indicators",
+				"primaryTerm": 1,
+				"propagationLabels": [
+					"all"
+				],
+				"query": "",
+				"sequenceNumber": 23459,
+				"shouldCommit": false,
+				"sizeInBytes": 1469,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 1,
+				"widgetType": "table"
+			},
+			"x": 4,
+			"y": 4
 		}
 	],
 	"locked": false,
