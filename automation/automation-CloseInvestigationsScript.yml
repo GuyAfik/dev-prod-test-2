@@ -152,7 +152,7 @@ script: |
           incident_name = incident.get("rawName")
           now = datetime.now(local_tz)
           next_30_minutes_from_incident_creation = (dateparser.parse(created_time) + timedelta(minutes=30)).astimezone(local_tz)
-          demisto.log(f'{state=}, {created_time=}, {_id=}, {incident_name=}, {now.strftime("%Y-%m-%dT%H:%M:%SZ")=}')
+           demisto.log(f'{state=}, {created_time=}, {_id=}, {incident_name=}, {now.strftime("%Y-%m-%dT%H:%M:%SZ")=}, {next_30_minutes_from_incident_creation=}')
           # 2 is a state of "Closed" incident
           if state != 2 and next_30_minutes_from_incident_creation < now:
               demisto.log(f"incident {incident_name} with ID {_id} is getting closed now!!!")
