@@ -194,6 +194,8 @@ script:
 
     EPOCH_BASE = datetime.utcfromtimestamp(0)
 
+
+
     af_indicator_type_to_demisto = {
         'Domain': FeedIndicatorType.Domain,
         'Url': FeedIndicatorType.URL,
