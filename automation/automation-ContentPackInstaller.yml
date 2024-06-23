@@ -34,7 +34,8 @@ contentitemexportablefields:
     propagationLabels: []
     toServerVersion: ""
 dockerimage: demisto/xsoar-tools:1.0.0.83431
-engineinfo: {}
+engineinfo:
+  engine: 2527eb4b-975a-4585-a48a-ad138b2415ed
 mainengineinfo: {}
 name: ContentPackInstaller
 outputs:
