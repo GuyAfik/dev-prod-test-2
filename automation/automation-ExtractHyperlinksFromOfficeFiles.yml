@@ -11,7 +11,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.14.42
+    itemVersion: 1.15.14
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -19,7 +19,7 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/office-utils:2.0.0.88298
+dockerimage: demisto/office-utils:2.0.0.96781
 engineinfo: {}
 mainengineinfo: {}
 name: ExtractHyperlinksFromOfficeFiles
@@ -37,14 +37,16 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('ExtractHyperlinksFromOfficeFiles', 'start', __line__())
-  ### pack version: 1.14.42
+  ### pack version: 1.15.14
 
 
   import openpyxl
   from docx import Document
   from pptx import Presentation
+  from pptx.enum.shapes import MSO_SHAPE_TYPE
   import zipfile
   import pandas as pd
+  from docx.opc.constants import RELATIONSHIP_TYPE as RT
 
 
   def extract_hyperlinks_from_xlsx(file_path: str) -> Set:
@@ -74,10 +76,10 @@ script: |
   def extract_hyperlinks_from_docx(file_path: str) -> Set:
       doc = Document(file_path)
       links = set()
-      for para in doc.paragraphs:
-          for hyper in para.hyperlinks:
-              if hyper.address:
-                  links.add(hyper.address)
+      for rel in doc.part.rels.values():
+          if rel.reltype == RT.HYPERLINK and rel.is_external:
+              links.add(rel._target)
+
       return links
 
 
@@ -91,7 +93,12 @@ script: |
                       for run in paragraph.runs:
                           if run.hyperlink and run.hyperlink.address:
                               links.add(run.hyperlink.address)
-              if shape.click_action and shape.click_action.hyperlink.address:
+              if shape.shape_type == MSO_SHAPE_TYPE.GROUP:    # pylint: disable=E1101
+                  group_shape = shape
+                  for s in group_shape.shapes:
+                      if s.click_action and s.click_action.hyperlink.address:
+                          links.add(s.click_action.hyperlink.address)
+              elif shape.click_action and shape.click_action.hyperlink.address:
                   links.add(shape.click_action.hyperlink.address)
 
       return links
