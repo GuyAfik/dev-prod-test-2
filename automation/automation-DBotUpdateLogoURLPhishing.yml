@@ -25,7 +25,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.14.42
+    itemVersion: 1.15.14
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -33,7 +33,7 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/mlurlphishing:1.0.0.85127
+dockerimage: demisto/mlurlphishing:1.0.0.90588
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
@@ -43,7 +43,7 @@ runas: DBotRole
 runonce: false
 script: |
   register_module_line('DBotUpdateLogoURLPhishing', 'start', __line__())
-  ### pack version: 1.14.42
+  ### pack version: 1.15.14
 
 
 
