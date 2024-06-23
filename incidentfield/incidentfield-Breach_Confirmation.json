@@ -27,7 +27,7 @@
 	"id": "incident_breachconfirmation",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.14.42",
+	"itemVersion": "1.15.14",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Breach Confirmation",
@@ -41,7 +41,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Breach Confirmation",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
