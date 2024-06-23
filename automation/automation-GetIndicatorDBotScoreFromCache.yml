@@ -11,7 +11,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 1.14.42
+    itemVersion: 1.15.14
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -19,7 +19,7 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.10.13.86272
+dockerimage: demisto/python3:3.10.14.95956
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
@@ -31,17 +31,41 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('GetIndicatorDBotScoreFromCache', 'start', __line__())
-  ### pack version: 1.14.42
+  ### pack version: 1.15.14
   import contextlib
 
 
+
+
+  def escape_special_characters(text: str) -> str:
+      """Add escape char.
+
+      Args:
+          text (str): indicator value.
+
+      Returns:
+          return the value with the added escape char.
+      """
+      return (
+          text.replace("\\", r"\\")
+          .replace("\n", r"\n")
+          .replace("\t", r"\t")
+          .replace("\r", r"\r")
+          .replace("(", r"\(")
+          .replace(")", r"\)")
+          .replace("[", r"\[")
+          .replace("]", r"\]")
+          .replace("^", r"\^")
+          .replace(":", r"\:")
+          .replace('"', r"\"")
+      )
 
 
   def main():
       values: list[str] = argToList(demisto.args().get("value", None))
       unique_values: set[str] = {v.lower() for v in values}  # search query is case insensitive
 
-      query = f"""value:({' '.join([f'"{value}"' for value in unique_values])})"""
+      query = f"""value:({' '.join([f'"{escape_special_characters(value)}"' for value in unique_values])})"""
       demisto.debug(f'{query=}')
 
       res = demisto.searchIndicators(
