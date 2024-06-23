@@ -25,7 +25,7 @@
 	"id": "incident_contactemailaddress",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.14.42",
+	"itemVersion": "1.15.14",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Contact Email address",
@@ -39,7 +39,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Contact Email address",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
