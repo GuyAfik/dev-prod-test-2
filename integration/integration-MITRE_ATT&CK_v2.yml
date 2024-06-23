@@ -63,6 +63,21 @@ configuration:
   name: feedFetchInterval
   required: false
   type: 19
+- additionalinfo: Supports CSV values.
+  display: Tags
+  name: feedTags
+  required: false
+  type: 0
+- defaultvalue: "true"
+  display: Create relationships
+  name: create_relationships
+  required: false
+  type: 8
+- defaultvalue: "false"
+  display: Save intrusion sets as threat actor indicator types
+  name: switch_intrusion_set_to_threat_actor
+  required: false
+  type: 8
 - additionalinfo: When selected, the exclusion list is ignored for indicators from
     this feed. This means that if an indicator from this feed is on the exclusion
     list, the indicator might still be added to the system.
@@ -80,21 +95,11 @@ configuration:
   name: insecure
   required: false
   type: 8
-- additionalinfo: Supports CSV values.
-  display: Tags
-  name: feedTags
-  required: false
-  type: 0
-- defaultvalue: "true"
-  display: Create relationships
-  name: create_relationships
-  required: false
-  type: 8
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.1.33
+    itemVersion: 1.1.39
     packID: FeedMitreAttackv2
     packName: MITRE ATT&CK
     packPropagationLabels:
@@ -200,14 +205,14 @@ script:
     - contextPath: MITREATTACK.value
       description: MITRE ATTACK Attack Pattern value.
       type: String
-  dockerimage: demisto/taxii2:1.0.0.90938
+  dockerimage: demisto/taxii2:1.0.0.96248
   feed: true
   nativeimage:
   - "8.6"
   runonce: false
   script: |
     register_module_line('MITRE ATT&CK v2', 'start', __line__())
-    ### pack version: 1.1.33
+    ### pack version: 1.1.39
 
 
     import logging
@@ -482,51 +487,29 @@ script:
             'mitreid': mitre_id,
             'tags': tags,
             'tlp': tlp,
+            'description': indicator_json['description'],
         }
 
         mapping_by_type = {
             "Attack Pattern": {
                 'killchainphases': kill_chain_phases,
-                'description': indicator_json.get('description'),
                 'operatingsystemrefs': indicator_json.get('x_mitre_platforms')
             },
             "Intrusion Set": {
-                'description': indicator_json.get('description'),
+                'aliases': indicator_json.get('aliases')
+            },
+            "Threat Actor": {
                 'aliases': indicator_json.get('aliases')
             },
             "Malware": {
                 'aliases': indicator_json.get('x_mitre_aliases'),
-                'description': indicator_json.get('description'),
                 'operatingsystemrefs': indicator_json.get('x_mitre_platforms')
-
             },
             "Tool": {
                 'aliases': indicator_json.get('x_mitre_aliases'),
-                'description': indicator_json.get('description'),
-                'operatingsystemrefs': indicator_json.get('x_mitre_platforms')
-            },
-            "Course of Action": {
-                'description': indicator_json.get('description')
-            },
-
-            "STIX Attack Pattern": {
-                'stixkillchainphases': kill_chain_phases,
-                'stixdescription': indicator_json.get('description'),
-                'operatingsystemrefs': indicator_json.get('x_mitre_platforms')
-            },
-            "STIX Malware": {
-                'stixaliases': indicator_json.get('x_mitre_aliases'),
-                'stixdescription': indicator_json.get('description'),
-                'operatingsystemrefs': indicator_json.get('x_mitre_platforms')
-
-            },
-            "STIX Tool": {
-                'stixaliases': indicator_json.get('x_mitre_aliases'),
-                'stixdescription': indicator_json.get('description'),
                 'operatingsystemrefs': indicator_json.get('x_mitre_platforms')
             },
             "Campaign": {
-                'description': indicator_json.get('description'),
                 'aliases': indicator_json.get('aliases')
             }
         }
@@ -881,6 +864,8 @@ script:
         create_relationships = argToBoolean(params.get('create_relationships'))
         command = demisto.command()
         demisto.info(f'Command being called is {command}')
+        if params.get('switch_intrusion_set_to_threat_actor', ''):
+            MITRE_TYPE_TO_DEMISTO_TYPE['intrusion-set'] = ThreatIntel.ObjectsNames.THREAT_ACTOR
 
         try:
             client = Client(url, proxies, verify_certificate, tags, tlp_color)
@@ -1296,7 +1281,7 @@ script:
                 entry['version'] = parse(xsoar_indicator.get('modified')).strftime(STIX_DATE_FORMAT)  # type: ignore[arg-type]
             return entry
 
-        def create_stix_object(self, xsoar_indicator: dict, xsoar_type: str, extensions_dict: dict = {}) -> tuple:
+        def create_stix_object(self, xsoar_indicator: dict, xsoar_type: str, extensions_dict: dict = {}) -> tuple[dict, dict, dict]:
             """
 
             Args:
@@ -1318,7 +1303,12 @@ script:
                 is_sdo = True
             else:
                 demisto.debug(f'No such indicator type: {xsoar_type} in stix format.')
-                return {}, {}
+                return {}, {}, {}
+
+            indicator_value = xsoar_indicator.get("value")
+            if (stix_type == "file") and (get_hash_type(indicator_value) == "Unknown"):
+                demisto.debug(f"Skip indicator of type 'file' with value: '{indicator_value}', as it is not a valid hash.")
+                return {}, {}, {}
 
             created_parsed = parse(xsoar_indicator.get('timestamp')).strftime(STIX_DATE_FORMAT)  # type: ignore[arg-type]
 
@@ -1338,7 +1328,7 @@ script:
                 stix_object['object_refs'] = [ref['objectstixid']
                                               for ref in xsoar_indicator['CustomFields'].get('reportobjectreferences', [])]
             if is_sdo:
-                stix_object['name'] = xsoar_indicator.get('value')
+                stix_object['name'] = indicator_value
                 stix_object = self.add_sdo_required_field_2_1(stix_object, xsoar_indicator)
                 stix_object = self.add_sdo_required_field_2_0(stix_object, xsoar_indicator)
             else:
