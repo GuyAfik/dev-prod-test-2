@@ -25,7 +25,7 @@
 	"id": "incident_medicalinformationbreached",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.14.42",
+	"itemVersion": "1.15.14",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Medical Information breached",
@@ -39,7 +39,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Medical Information breached",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
