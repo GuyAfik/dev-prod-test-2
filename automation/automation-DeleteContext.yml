@@ -35,7 +35,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.14.42
+    itemVersion: 1.15.14
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -51,7 +51,7 @@ pswd: ""
 runas: DBotRole
 runonce: false
 script: |
-  // pack version: 1.14.42
+  // pack version: 1.15.14
   LINE_SEPARATOR = '\n';
 
   function errorEntry(text) {
