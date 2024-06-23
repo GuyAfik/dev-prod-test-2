@@ -41,7 +41,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.14.42
+    itemVersion: 1.15.14
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -60,7 +60,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  // pack version: 1.14.42
+  // pack version: 1.15.14
   if ((typeof args.data) !== 'string') {
       return {
           Type: entryTypes.error,
