@@ -25,7 +25,7 @@
 	"id": "incident_uniqueidentificationnumberbreached",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.14.42",
+	"itemVersion": "1.15.14",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Unique identification number breached",
@@ -39,7 +39,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Unique identification number breached",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
