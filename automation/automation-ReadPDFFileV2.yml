@@ -25,7 +25,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.14.42
+    itemVersion: 1.15.14
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -33,7 +33,7 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/readpdf:1.0.0.89247
+dockerimage: demisto/readpdf:1.0.0.98214
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
@@ -146,7 +146,7 @@ runas: DBotRole
 runonce: false
 script: |
   register_module_line('ReadPDFFileV2', 'start', __line__())
-  ### pack version: 1.14.42
+  ### pack version: 1.15.14
 
 
 
@@ -389,9 +389,9 @@ script: |
       html_file_names = get_files_names_in_path(output_folder, "*.html")
       html_content = ""
       for file_name in html_file_names:
-          with open(file_name) as f:
+          with open(file_name, "rb") as f:
               for line in f:
-                  html_content += html.unescape(line) if unescape_url else line
+                  html_content += html.unescape(str(line)) if unescape_url else str(line)
       return html_content
 
 
