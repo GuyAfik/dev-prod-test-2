@@ -50,7 +50,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.3.53
+    itemVersion: 1.3.56
     packID: DemistoRESTAPI
     packName: Cortex REST API
     packPropagationLabels:
@@ -334,7 +334,7 @@ script:
         as a value in Context.
   runonce: false
   script: |
-    // pack version: 1.3.53
+    // pack version: 1.3.56
 
     const MIN_HOSTED_XSOAR_VERSION = '8.0.0';
 
@@ -654,8 +654,11 @@ script:
                 logDebug(pack_id + ' pack installed successfully')
                 installed_packs.push(pack_id)
             }
-
-            return 'The following packs installed successfully: ' + installed_packs.join(", ")
+            if (installed_packs.length === 0) {
+                return 'No pack has been installed, please check that the pack name and version are correct.'
+            } else {
+                return 'The following packs installed successfully: ' + installed_packs.join(", ")
+            }
         }
     };
 
