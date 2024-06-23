@@ -25,7 +25,7 @@
 	"id": "incident_companyhasinsuranceforthebreach",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.14.42",
+	"itemVersion": "1.15.14",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Company has Insurance for the Breach",
@@ -39,7 +39,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Company has Insurance for the Breach",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
