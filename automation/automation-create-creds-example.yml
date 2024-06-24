@@ -33,7 +33,7 @@ script: |+
 
 
   def main():
-      demisto.credentials({"name": "admin", "password": "123", "user": "Joe"})
+      demisto.credentials([{"name": "admin", "password": "123", "user": "Joe"}])
 
 
   ''' ENTRY POINT '''
