@@ -24,7 +24,7 @@ name: CommonUserServer
 pswd: ""
 runas: DBotWeakRole
 runonce: false
-script: const x = 5
+script: from collections.abc import Iterable
 scripttarget: 0
 tags:
 - infra
