@@ -1,0 +1,136 @@
+{
+	"author": "Cortex XSOAR",
+	"authorImage": "content/packs/Base/Author_image.png",
+	"beta": false,
+	"cacheVersn": 0,
+	"categories": [
+		"Data Enrichment \u0026 Threat Intelligence"
+	],
+	"certification": "certified",
+	"contentItemTypes": [
+		"integration"
+	],
+	"contentItems": {
+		"automation": null,
+		"classifier": null,
+		"dashboard": null,
+		"genericfield": null,
+		"generictype": null,
+		"incidentfield": null,
+		"incidenttype": null,
+		"indicatorfield": null,
+		"integration": [
+			{
+				"category": "Data Enrichment \u0026 Threat Intelligence",
+				"commands": [
+					{
+						"description": "Gets indicators from CrowdStrike Falcon Intel Feed.",
+						"name": "crowdstrike-falcon-intel-get-indicators"
+					}
+				],
+				"description": "The CrowdStrike intelligence team tracks the activities of threat actor groups and advanced persistent threats (APTs) to understand as much as possible about their known aliases, targets, methods, and more. This integration retrieves indicators from the CrowdStrike Falcon Intel Feed.",
+				"id": "Crowdstrike Falcon Intel Feed",
+				"name": "CrowdStrike Falcon Intel Feed Actors"
+			},
+			{
+				"category": "Data Enrichment \u0026 Threat Intelligence",
+				"commands": [
+					{
+						"description": "Resets the retrieving start time according to the `First Fetch Time` parameter, WARNING: This command will reset your fetch history.",
+						"name": "crowdstrike-reset-fetch-indicators"
+					},
+					{
+						"description": "Gets indicators from the CrowdStrike Falcon Intel Feed.",
+						"name": "crowdstrike-indicators-list"
+					}
+				],
+				"description": "Retrieves indicators from the CrowdStrike Falcon Intel Feed.",
+				"id": "CrowdStrike Indicator Feed",
+				"name": "CrowdStrike Indicator Feed"
+			}
+		],
+		"layoutscontainer": null,
+		"list": null,
+		"playbook": null,
+		"report": null,
+		"reputation": null,
+		"widget": null,
+		"wizard": null
+	},
+	"created": "2020-09-15T07:48:54Z",
+	"currentVersion": "2.1.16",
+	"definitionId": "",
+	"dependencies": {
+		"Base": {
+			"author": "Cortex XSOAR",
+			"certification": "certified",
+			"mandatory": true,
+			"minVersion": "1.33.50",
+			"name": "Base"
+		}
+	},
+	"deprecated": false,
+	"description": "Tracks the activities of threat actor groups and advanced persistent threats (APTs) to understand as much as possible about their known aliases, targets, methods, and more.",
+	"downloads": 5239,
+	"eulaLink": "https://github.com/demisto/content/blob/master/LICENSE",
+	"fromServerVersion": "5.5.0",
+	"general": [
+		"generalFieldCertified",
+		"generalFieldByCortexXSOAR",
+		"generalFieldFree",
+		"generalFieldSupportIncluded"
+	],
+	"hybrid": false,
+	"id": "FeedCrowdstrikeFalconIntel",
+	"installMessage": "",
+	"integrations": [
+		{
+			"imagePath": "content/packs/FeedCrowdstrikeFalconIntel/CrowdstrikeFalconIntelFeed_image.png",
+			"name": "CrowdStrike Falcon Intel Feed Actors"
+		},
+		{
+			"imagePath": "content/packs/FeedCrowdstrikeFalconIntel/CrowdStrikeIndicatorFeed_image.png",
+			"name": "CrowdStrike Indicator Feed"
+		}
+	],
+	"itemVersion": "2.1.16",
+	"keywords": [
+		"Crowdstrike",
+		"Feed",
+		"Intel",
+		"STIX"
+	],
+	"legacy": true,
+	"modules": [],
+	"name": "Crowdstrike Falcon Intel Feed",
+	"packID": "FeedCrowdstrikeFalconIntel",
+	"packName": "",
+	"premium": false,
+	"previewOnly": false,
+	"price": 0,
+	"propagationLabels": [
+		"all"
+	],
+	"rawKeywords": null,
+	"rawTags": null,
+	"rawUseCases": null,
+	"readme": "Use this pack to receive information and indicators on adversaries tracked by CrowdStrike, their target nations and industries, and research on their activities.\n\n## What does this pack do?\nThis pack contains 2 feed integrations.\n\n- The CrowdStrike Falcon Intel Feed Actors integration retrieves indicators of type STIX Threat Actor from the CrowdStrike Falcon Intel Feed.\n\n- The CrowdStrike Falcon Indicator Feed integration retrieves indicators of the following types from the CrowdStrike Falcon Intel Feed.\n   - Account\n   - Domain\n   - Email\n   - File MD5\n   - File SHA-256\n   - IP\n   - Registry Key\n   - URL\n\n## Creating the integration instance\n\nTo create the integration instance for either feed, you need a CrowdStrike API client and a CrowdStrike API client secret. To define a CrowdStrike API client, you must have the role of a Falcon Administrator. This will allow you to view, create, or modify API clients or keys. Secrets are only shown when a new API client is created or when it is reset.",
+	"searchRank": 10,
+	"serverMaxVersion": "",
+	"serverMinVersion": "5.5.0",
+	"support": "xsoar",
+	"supportDetails": {
+		"email": "",
+		"url": "https://www.paloaltonetworks.com/cortex"
+	},
+	"tags": [
+		"TIM",
+		"Relationship"
+	],
+	"toServerVersion": "",
+	"updated": "2024-04-08T09:26:45Z",
+	"useCases": [],
+	"version": -1,
+	"versionInfo": "941102",
+	"videos": []
+}
