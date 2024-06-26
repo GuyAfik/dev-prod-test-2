@@ -58,7 +58,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.2.0
+    itemVersion: 2.2.3
     packID: AutoFocus
     packName: AutoFocus by Palo Alto Networks
     packPropagationLabels:
@@ -1474,14 +1474,13 @@ script:
       description: The domain name.
       type: String
     polling: true
-  dockerimage: demisto/python3:3.10.13.86272
+  dockerimage: demisto/python3:3.10.14.98471
   nativeimage:
-  - "8.3"
-  - "8.4"
+  - "8.6"
   runonce: false
   script: |
     register_module_line('AutoFocus V2', 'start', __line__())
-    ### pack version: 2.2.0
+    ### pack version: 2.2.3
 
 
     ''' IMPORTS '''
@@ -1790,7 +1789,8 @@ script:
         else:
             results = CommandResults(
                 readable_output=f'Error in API call to AutoFocus.\nMessage: {api_res.get("message")}',
-                entry_type=EntryType.ERROR
+                entry_type=EntryType.ERROR,
+                raw_response=f'Error in API call to AutoFocus.\nMessage: {api_res.get("message")}'
             )
         return_results(results)
 
