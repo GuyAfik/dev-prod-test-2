@@ -1,5 +1,6 @@
 {
 	"XDRBuiltInField": false,
+	"XsiamIncidentFieldExtraData": null,
 	"aliasTo": "",
 	"aliases": null,
 	"associatedToAll": false,
@@ -77,7 +78,7 @@
 	"id": "indicator_cvss3",
 	"ipVersion": "",
 	"isReadOnly": true,
-	"itemVersion": "3.5.0",
+	"itemVersion": "3.5.5",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "CVSS3",
@@ -91,7 +92,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "CVSS3",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
