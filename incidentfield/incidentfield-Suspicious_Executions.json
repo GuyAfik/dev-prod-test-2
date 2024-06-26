@@ -1,5 +1,6 @@
 {
 	"XDRBuiltInField": false,
+	"XsiamIncidentFieldExtraData": null,
 	"aliasTo": "",
 	"aliases": null,
 	"associatedToAll": true,
@@ -93,7 +94,7 @@
 	"id": "incident_suspiciousexecutions",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "3.5.0",
+	"itemVersion": "3.5.5",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Suspicious Executions",
@@ -107,7 +108,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Suspicious Executions",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
