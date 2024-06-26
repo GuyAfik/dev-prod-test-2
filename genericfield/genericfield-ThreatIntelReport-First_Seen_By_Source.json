@@ -1,5 +1,6 @@
 {
 	"XDRBuiltInField": false,
+	"XsiamIncidentFieldExtraData": null,
 	"aliasTo": "",
 	"aliases": null,
 	"associatedToAll": true,
@@ -23,7 +24,7 @@
 	"id": "generic_ThreatIntelReport_firstseenbysource",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.0.13",
+	"itemVersion": "1.0.15",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "First Seen By Source",
@@ -37,7 +38,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "First Seen By Source",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
