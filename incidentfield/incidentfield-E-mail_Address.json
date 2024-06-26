@@ -27,7 +27,7 @@
 	"id": "incident_emailaddress",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.15.16",
+	"itemVersion": "1.15.15",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "E-mail Address",
