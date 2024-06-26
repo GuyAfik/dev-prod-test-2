@@ -25,7 +25,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 1.15.14
+    itemVersion: 1.15.16
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -34,8 +34,7 @@ contentitemexportablefields:
     propagationLabels: []
     toServerVersion: ""
 dockerimage: demisto/xsoar-tools:1.0.0.83431
-engineinfo:
-  engine: 2527eb4b-975a-4585-a48a-ad138b2415ed
+engineinfo: {}
 mainengineinfo: {}
 name: ContentPackInstaller
 outputs:
@@ -53,7 +52,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('ContentPackInstaller', 'start', __line__())
-  ### pack version: 1.15.14
+  ### pack version: 1.15.16
 
 
 
