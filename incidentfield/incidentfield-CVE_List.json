@@ -1,5 +1,6 @@
 {
 	"XDRBuiltInField": false,
+	"XsiamIncidentFieldExtraData": null,
 	"aliasTo": "",
 	"aliases": null,
 	"associatedToAll": true,
@@ -25,7 +26,7 @@
 	"id": "incident_cvelist",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "2.1.24",
+	"itemVersion": "2.1.29",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "CVE List",
@@ -39,7 +40,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "CVE List",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
