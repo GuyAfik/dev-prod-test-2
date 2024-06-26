@@ -12,6 +12,7 @@
 	],
 	"contentItems": {
 		"automation": null,
+		"casefield": null,
 		"classifier": null,
 		"dashboard": null,
 		"genericfield": null,
@@ -24,23 +25,23 @@
 				"category": "Utilities",
 				"commands": [
 					{
-						"description": "Release a lock",
+						"description": "Release all locks.",
+						"name": "demisto-lock-release-all"
+					},
+					{
+						"description": "Show information on locks.",
+						"name": "demisto-lock-info"
+					},
+					{
+						"description": "Release a lock.",
 						"name": "demisto-lock-release"
 					},
 					{
 						"description": "Gets a specific lock. If the lock doesn't exist, it creates one. If the lock is already in use, the command waits until the lock is released or until timeout is reached. If timeout is reached and the lock hasn't been released, the command fails to get the lock.",
 						"name": "demisto-lock-get"
-					},
-					{
-						"description": "Release all locks",
-						"name": "demisto-lock-release-all"
-					},
-					{
-						"description": "Show information on locks",
-						"name": "demisto-lock-info"
 					}
 				],
-				"description": "Locking mechanism that prevents concurrent execution of different tasks",
+				"description": "Locking mechanism that prevents concurrent execution of different tasks.",
 				"id": "Demisto Lock",
 				"name": "Demisto Lock"
 			}
@@ -54,20 +55,24 @@
 		"wizard": null
 	},
 	"created": "2020-11-09T18:43:35Z",
-	"currentVersion": "1.0.8",
+	"currentVersion": "1.1.1",
+	"defaultDataSource": {
+		"id": "",
+		"name": ""
+	},
 	"definitionId": "",
 	"dependencies": {
 		"Base": {
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": true,
-			"minVersion": "1.33.19",
+			"minVersion": "1.34.11",
 			"name": "Base"
 		}
 	},
 	"deprecated": false,
 	"description": "Locking mechanism that prevents concurrent execution of different tasks",
-	"downloads": 10914,
+	"downloads": 13467,
 	"eulaLink": "https://github.com/demisto/content/blob/master/LICENSE",
 	"fromServerVersion": "5.0.0",
 	"general": [
@@ -85,7 +90,7 @@
 			"name": "Demisto Lock"
 		}
 	],
-	"itemVersion": "1.0.8",
+	"itemVersion": "1.1.1",
 	"keywords": [
 		"Demisto Lock",
 		"Core Lock"
@@ -114,9 +119,9 @@
 	},
 	"tags": [],
 	"toServerVersion": "",
-	"updated": "2024-01-22T21:42:26Z",
+	"updated": "2024-06-10T19:22:09Z",
 	"useCases": [],
 	"version": -1,
-	"versionInfo": "778227",
+	"versionInfo": "1084629",
 	"videos": []
 }
