@@ -113,7 +113,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.0.22
+    itemVersion: 1.0.24
     packID: Unit42Intel
     packName: Unit 42 Intel
     packPropagationLabels:
@@ -153,12 +153,11 @@ script:
   dockerimage: demisto/python3:3.10.13.87159
   feed: true
   nativeimage:
-  - "8.3"
-  - "8.4"
+  - "8.6"
   runonce: false
   script: |
     register_module_line('Unit42IntelObjectsFeed', 'start', __line__())
-    ### pack version: 1.0.22
+    ### pack version: 1.0.24
 
 
 
