@@ -1,5 +1,6 @@
 {
 	"XDRBuiltInField": false,
+	"XsiamIncidentFieldExtraData": null,
 	"aliasTo": "",
 	"aliases": null,
 	"associatedToAll": true,
@@ -82,7 +83,7 @@
 	"id": "indicator_keyvalue",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "3.5.0",
+	"itemVersion": "3.5.5",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Key Value",
@@ -96,7 +97,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Key Value",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
