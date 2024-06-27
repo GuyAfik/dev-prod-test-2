@@ -13,13 +13,22 @@
 	"itemVersion": "",
 	"keyTypeMap": {},
 	"locked": false,
-	"logicalVersion": 1,
+	"logicalVersion": 2,
 	"mapping": {
 		"BMC Incident": {
 			"dontMapEventToLabels": false,
 			"internalMapping": {
+				"BmcITSM Customer": {
+					"simple": "Customer.FirstName"
+				},
 				"BmcITSM Display ID": {
 					"simple": "DisplayID"
+				},
+				"BmcITSM Impact": {
+					"simple": "Urgency"
+				},
+				"BmcITSM Request ID": {
+					"simple": "RequestID"
 				}
 			}
 		}
