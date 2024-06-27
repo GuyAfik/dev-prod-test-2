@@ -13,8 +13,17 @@
 	"itemVersion": "",
 	"keyTypeMap": {},
 	"locked": false,
-	"logicalVersion": 0,
-	"mapping": null,
+	"logicalVersion": 1,
+	"mapping": {
+		"BMC Incident": {
+			"dontMapEventToLabels": false,
+			"internalMapping": {
+				"BmcITSM Display ID": {
+					"simple": "DisplayID"
+				}
+			}
+		}
+	},
 	"name": "test-mapper-bmc",
 	"nameRaw": "test-mapper-bmc",
 	"packID": "",
