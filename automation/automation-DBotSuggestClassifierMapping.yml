@@ -19,7 +19,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.33.52
+    itemVersion: 1.34.17
     packID: Base
     packName: Base
     packPropagationLabels:
@@ -39,7 +39,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('DBotSuggestClassifierMapping', 'start', __line__())
-  ### pack version: 1.33.52
+  ### pack version: 1.34.17
 
 
   import itertools

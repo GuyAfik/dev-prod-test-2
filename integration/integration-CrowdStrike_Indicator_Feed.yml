@@ -308,6 +308,7 @@ script:
             """
             credentials = params.get('credentials', {})
             self._client_id = credentials.get('identifier')
+            demisto.error(f"CrowdStrikeClient instantiated with ID {self._client_id}")
             self._client_secret = credentials.get('password')
             super().__init__(base_url=params.get('server_url', 'https://api.crowdstrike.com/'),
                              verify=not params.get('insecure', False), ok_codes=tuple(),

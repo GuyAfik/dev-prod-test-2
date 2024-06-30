@@ -1,0 +1,150 @@
+{
+	"author": "Cortex XSOAR",
+	"authorImage": "content/packs/Base/Author_image.png",
+	"beta": false,
+	"cacheVersn": 0,
+	"categories": [
+		"Authentication \u0026 Identity Management"
+	],
+	"certification": "certified",
+	"contentItemTypes": [
+		"integration"
+	],
+	"contentItems": {
+		"automation": null,
+		"classifier": null,
+		"dashboard": null,
+		"genericfield": null,
+		"generictype": null,
+		"incidentfield": null,
+		"incidenttype": null,
+		"indicatorfield": null,
+		"integration": [
+			{
+				"category": "Authentication \u0026 Identity Management",
+				"commands": [
+					{
+						"description": "List all secrets engines that exist in HashiCorp Vault.",
+						"name": "hashicorp-list-secrets-engines"
+					},
+					{
+						"description": "List secrets (names) for a specified KV engine.",
+						"name": "hashicorp-list-secrets"
+					},
+					{
+						"description": "Returns information about a specified secret in a specified KV V2 engine.",
+						"name": "hashicorp-get-secret-metadata"
+					},
+					{
+						"description": "Deletes the data under a specified secret given the secret path. Performs a soft delete that allows you to run the hashicorp-undelete-secret command if necessary (for KV V2 engine).",
+						"name": "hashicorp-delete-secret"
+					},
+					{
+						"description": "Undeletes (restores) a secret on HashiCorp (for KV V2 engine).",
+						"name": "hashicorp-undelete-secret"
+					},
+					{
+						"description": "Permanently deletes a secret (for KV V2 engine).",
+						"name": "hashicorp-destroy-secret"
+					},
+					{
+						"description": "When a secrets engine is no longer needed, it can be disabled. All secrets under the engine are revoked and the corresponding vault data and configurations are removed.",
+						"name": "hashicorp-disable-engine"
+					},
+					{
+						"description": "Enables a new secrets engine at the specified path.",
+						"name": "hashicorp-enable-engine"
+					},
+					{
+						"description": "Lists all configured policies.",
+						"name": "hashicorp-list-policies"
+					},
+					{
+						"description": "Get information for a policy.",
+						"name": "hashicorp-get-policy"
+					},
+					{
+						"description": "If you suspect your data has been compromised, you can seal your vault to prevent access to your secrets.",
+						"name": "hashicorp-seal-vault"
+					},
+					{
+						"description": "Use a single master key share to unseal the vault. If the master key shares threshold is met, the vault will attempt to unseal the vault. Otherwise, this API must be called until the threshold is met.",
+						"name": "hashicorp-unseal-vault"
+					},
+					{
+						"description": "Configure a secrets engine to fetch secrets from.",
+						"name": "hashicorp-configure-engine"
+					},
+					{
+						"description": "Reset the engines configuration.",
+						"name": "hashicorp-reset-configuration"
+					},
+					{
+						"description": "Creates a new authentication token.",
+						"name": "hashicorp-create-token"
+					}
+				],
+				"description": "Manage Secrets and Protect Sensitive Data through HashiCorp Vault.",
+				"id": "HashiCorp Vault",
+				"name": "HashiCorp Vault"
+			}
+		],
+		"layoutscontainer": null,
+		"list": null,
+		"playbook": null,
+		"report": null,
+		"reputation": null,
+		"widget": null,
+		"wizard": null
+	},
+	"created": "2020-04-14T00:00:00Z",
+	"currentVersion": "1.1.23",
+	"definitionId": "",
+	"dependencies": {},
+	"deprecated": false,
+	"description": "Manage Secrets and Protect Sensitive Data through HashiCorp Vault",
+	"downloads": 0,
+	"eulaLink": "https://github.com/demisto/content/blob/master/LICENSE",
+	"fromServerVersion": "6.0.0",
+	"general": [
+		"generalFieldCertified",
+		"generalFieldByCortexXSOAR",
+		"generalFieldFree",
+		"generalFieldSupportIncluded"
+	],
+	"hybrid": false,
+	"id": "HashiCorp-Vault",
+	"installMessage": "",
+	"integrations": [],
+	"itemVersion": "1.1.23",
+	"keywords": [],
+	"legacy": true,
+	"modules": [],
+	"name": "HashiCorp Vault",
+	"packID": "HashiCorp-Vault",
+	"packName": "",
+	"premium": false,
+	"previewOnly": false,
+	"price": 0,
+	"propagationLabels": [
+		"all"
+	],
+	"rawKeywords": null,
+	"rawTags": null,
+	"rawUseCases": null,
+	"searchRank": 0,
+	"serverMaxVersion": "",
+	"serverMinVersion": "6.0.0",
+	"support": "xsoar",
+	"supportDetails": {
+		"email": "",
+		"url": "https://www.paloaltonetworks.com/cortex"
+	},
+	"tags": [],
+	"toServerVersion": "",
+	"updated": "2024-06-25T11:14:28Z",
+	"useCases": [],
+	"version": -1,
+	"versionInfo": "",
+	"videos": []
+}
