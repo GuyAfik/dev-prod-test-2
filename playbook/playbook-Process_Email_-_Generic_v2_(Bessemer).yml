@@ -181,7 +181,7 @@ inputs:
   required: false
   value:
     simple: "True"
-name: 'Process Email - Generic v2 (Bessemerr) '
+name: 'Process Email - Generic v2 (Bessemer) '
 outputs:
 - contextPath: Email.HTML
   description: The email HTML body if it exists.
