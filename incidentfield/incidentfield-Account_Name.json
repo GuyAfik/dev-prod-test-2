@@ -38,7 +38,7 @@
 	"id": "incident_accountname",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "3.5.4",
+	"itemVersion": "3.5.10",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Account Name",
@@ -52,7 +52,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Account Name",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
