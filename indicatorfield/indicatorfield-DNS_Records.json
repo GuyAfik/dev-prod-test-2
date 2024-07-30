@@ -78,7 +78,7 @@
 	"id": "indicator_dnsrecords",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "3.5.4",
+	"itemVersion": "3.5.10",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "DNS Records",
@@ -92,7 +92,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "DNS Records",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
