@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 2.6.32
+    itemVersion: 2.6.36
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -20,7 +20,7 @@ description: "This playbook blocks malicious IP addresses using all integrations
   products such as FW/WAF/IPs/etc.]: \n\n* Check Point Firewall\n* Palo Alto Networks
   PAN-OS\n* Zscaler\n* FortiGate\n* Aria Packet Intelligence\n* Cisco Firepower \n*
   Cisco Secure Cloud Analytics\n* Cisco ASA\n* Akamai WAF\n* F5 SilverLine\n* ThreatX\n*
-  Signal Sciences WAF\n* Sophos Firewall\n\n"
+  Signal Sciences WAF\n* Sophos Firewall."
 id: Block IP - Generic v3
 inputs:
 - description: 'An array of malicious IPs to block. Enter a comma-separated list of
@@ -1614,8 +1614,7 @@ tasks:
           <p>${BlockList.PIIP}</p>
           <p>&nbsp;</p>
           <p>For more information, click the link below.</p>
-      cc:
-        simple: Administrator
+      cc: null
       format: html
       methods:
       - email
@@ -1628,7 +1627,7 @@ tasks:
         retriescount: 2
         retriesinterval: 360
       to:
-        simple: Analyst,Administrator
+        simple: Analyst
     nexttasks:
       '#none#':
       - "102"
@@ -3336,8 +3335,7 @@ tasks:
           <p><br />(<strong>Note</strong>: the IPs will be added to your company block list or be blocked in individual rules based on the XSOAR integrated devices).</p>
           <p>&nbsp;</p>
           <p>For more information, click the link below.</p>
-      cc:
-        simple: Administrator
+      cc: null
       format: html
       methods:
       - email
@@ -3350,7 +3348,7 @@ tasks:
         retriescount: 2
         retriesinterval: 360
       to:
-        simple: Analyst,Administrator
+        simple: Analyst
     nexttasks:
       '#none#':
       - "90"
