@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.6.32
+    itemVersion: 2.6.36
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -61,7 +61,7 @@ inputs:
 name: Block Account - Generic v2
 outputs:
 - contextPath: Blocklist.Final
-  description: Blocked accounts
+  description: Blocked accounts.
   type: unknown
 starttaskid: "0"
 system: true
@@ -1351,8 +1351,7 @@ tasks:
           <p>${Blocklist.Sensitive}</p>
           <p>&nbsp;</p>
           <p>For more information, click the link below.</p>
-      cc:
-        simple: Administrator
+      cc: null
       format: html
       methods:
       - email
@@ -1433,8 +1432,7 @@ tasks:
           <p><br />(<strong>Note</strong>: the Accounts will be set to disabled on those XSOAR integrated devices).</p>
           <p>&nbsp;</p>
           <p>For more information, click the link below.</p>
-      cc:
-        simple: Administrator
+      cc: null
       format: html
       methods:
       - email
