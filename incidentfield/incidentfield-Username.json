@@ -16,7 +16,8 @@
 		"IAM - Sync User",
 		"IAM - Rehire User",
 		"Carbon Black EDR",
-		"Azure Active Directory Identity and Access"
+		"Azure Active Directory Identity and Access",
+		"Exabeam Notable User"
 	],
 	"autoCompleteTags": null,
 	"breachScript": "",
@@ -37,7 +38,7 @@
 	"id": "incident_username",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "3.5.4",
+	"itemVersion": "3.5.10",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Username",
@@ -51,7 +52,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Username",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
@@ -70,7 +71,8 @@
 		"IAM - Update User",
 		"User Profile",
 		"IAM - Sync User",
-		"IAM - Rehire User"
+		"IAM - Rehire User",
+		"Exabeam Notable User"
 	],
 	"template": "",
 	"threshold": 72,
