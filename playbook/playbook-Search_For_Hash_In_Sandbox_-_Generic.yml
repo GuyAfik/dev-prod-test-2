@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.6.32
+    itemVersion: 2.6.36
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -110,7 +110,7 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1430,
+          "x": 1410,
           "y": 130
         }
       }
@@ -206,7 +206,7 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "13"
+      - "45"
     note: false
     quietmode: 0
     scriptarguments:
@@ -234,7 +234,7 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1430,
+          "x": 1410,
           "y": 350
         }
       }
@@ -349,8 +349,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1430,
-          "y": 510
+          "x": 1620,
+          "y": 700
         }
       }
   "16":
@@ -401,8 +401,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1430,
-          "y": 685
+          "x": 1620,
+          "y": 860
         }
       }
   "18":
@@ -445,8 +445,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1670,
-          "y": 870
+          "x": 1790,
+          "y": 1030
         }
       }
   "23":
@@ -587,7 +587,7 @@ tasks:
       {
         "position": {
           "x": 2140,
-          "y": 530
+          "y": 520
         }
       }
   "26":
@@ -711,7 +711,7 @@ tasks:
       {
         "position": {
           "x": 980,
-          "y": 685
+          "y": 700
         }
       }
   "30":
@@ -755,7 +755,7 @@ tasks:
       {
         "position": {
           "x": 750,
-          "y": 510
+          "y": 520
         }
       }
   "31":
@@ -801,8 +801,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 530,
-          "y": 685
+          "x": 520,
+          "y": 700
         }
       }
   "32":
@@ -854,8 +854,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 530,
-          "y": 870
+          "x": 520,
+          "y": 860
         }
       }
   "33":
@@ -904,7 +904,7 @@ tasks:
       {
         "position": {
           "x": 980,
-          "y": 870
+          "y": 860
         }
       }
   "34":
@@ -949,7 +949,7 @@ tasks:
       {
         "position": {
           "x": 980,
-          "y": 1210
+          "y": 1200
         }
       }
   "35":
@@ -1029,7 +1029,7 @@ tasks:
       {
         "position": {
           "x": 980,
-          "y": 1040
+          "y": 1020
         }
       }
   "37":
@@ -1059,7 +1059,7 @@ tasks:
       {
         "position": {
           "x": 2140,
-          "y": 1550
+          "y": 1540
         }
       }
   "39":
@@ -1170,8 +1170,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1430,
-          "y": 1040
+          "x": 1410,
+          "y": 1200
         }
       }
   "43":
@@ -1224,7 +1224,7 @@ tasks:
       {
         "position": {
           "x": 750,
-          "y": 1380
+          "y": 1370
         }
       }
   "44":
@@ -1283,6 +1283,51 @@ tasks:
           "y": 1680
         }
       }
+  "45":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: resources
+                root: csfalconx.resource
+          operator: isNotEmpty
+          right:
+            value: {}
+      label: "yes"
+    continueonerrortype: ""
+    id: "45"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "40"
+      "yes":
+      - "13"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Any results from the Falcon Intelligence Sandbox search?
+      id: f00bb93e-66f8-41da-86a8-8532905b405c
+      iscommand: false
+      name: Any results from the Falcon Intelligence Sandbox search?
+      type: condition
+      version: -1
+    taskid: f00bb93e-66f8-41da-86a8-8532905b405c
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1410,
+          "y": 520
+        }
+      }
 version: -1
 view: |-
   {
@@ -1291,17 +1336,18 @@ view: |-
       "1_6_yes": 0.65,
       "26_27_yes": 0.6,
       "26_35_no": 0.12,
-      "30_43_#default#": 0.47,
+      "30_43_#default#": 0.16,
       "36_34_yes": 0.63,
-      "36_43_#default#": 0.5,
+      "36_43_#default#": 0.35,
       "3_35_no": 0.34,
-      "3_5_yes": 0.68
+      "3_5_yes": 0.68,
+      "45_40_#default#": 0.22
     },
     "paper": {
       "dimensions": {
         "height": 2085,
-        "width": 2630,
-        "x": 530,
+        "width": 2640,
+        "x": 520,
         "y": -170
       }
     }
