@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.6.32
+    itemVersion: 2.6.36
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -19,7 +19,7 @@ description: |-
   * Sophos
   * Forcepoint
   * Checkpoint
-  * Netcraft
+  * Netcraft.
 id: Block URL - Generic v2
 inputs:
 - description: Array of malicious URLs to block.
@@ -911,7 +911,7 @@ tasks:
         retriescount: 2
         retriesinterval: 360
       to:
-        simple: Administrator,Analyst
+        simple: Analyst
     nexttasks:
       '#none#':
       - "31"
