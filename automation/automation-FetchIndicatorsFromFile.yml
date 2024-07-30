@@ -62,7 +62,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.15.6
+    itemVersion: 1.15.38
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -74,6 +74,8 @@ dockerimage: demisto/py3-tools:1.0.0.96102
 engineinfo: {}
 mainengineinfo: {}
 name: FetchIndicatorsFromFile
+nativeimage:
+- "8.6"
 outputs:
 - contextPath: Indicator.value
   description: The value of the indicator.
@@ -86,7 +88,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('FetchIndicatorsFromFile', 'start', __line__())
-  ### pack version: 1.15.6
+  ### pack version: 1.15.38
 
 
 
