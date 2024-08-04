@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.10.0
-    itemVersion: 2.1.46
+    itemVersion: 2.1.49
     packID: Palo_Alto_Networks_WildFire
     packName: WildFire by Palo Alto Networks
     packPropagationLabels:
@@ -340,6 +340,9 @@ tasks:
     note: false
     quietmode: 0
     scriptarguments:
+      format:
+        complex:
+          root: inputs.ReportFileType
       url:
         complex:
           accessor: Report.URL
@@ -389,6 +392,12 @@ tasks:
         complex:
           root: inputs.URL
           transformers:
+          - args:
+              ignore_safe_character: {}
+              safe_character:
+                value:
+                  simple: :/
+            operator: URLEncode
           - operator: uniq
     separatecontext: false
     skipunavailable: false
