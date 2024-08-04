@@ -24,7 +24,7 @@
 	"id": "incident_timetoassignment",
 	"ipVersion": "",
 	"isReadOnly": true,
-	"itemVersion": "3.5.10",
+	"itemVersion": "3.5.11",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Time to Assignment",
