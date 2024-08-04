@@ -306,7 +306,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 3.3.1
+    itemVersion: 3.3.3
     packID: EDL
     packName: Generic Export Indicators Service
     packPropagationLabels:
@@ -589,7 +589,7 @@ script:
   runonce: false
   script: |
     register_module_line('EDL', 'start', __line__())
-    ### pack version: 3.3.1
+    ### pack version: 3.3.3
     import os
     from datetime import datetime
     from pathlib import Path
