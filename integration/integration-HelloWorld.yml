@@ -94,7 +94,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.8.0
-    itemVersion: 3.0.10
+    itemVersion: 3.0.12
     packID: HelloWorld
     packName: HelloWorld
     packPropagationLabels:
@@ -331,7 +331,7 @@ script:
   runonce: false
   script: |
     register_module_line('HelloWorld', 'start', __line__())
-    ### pack version: 3.0.10
+    ### pack version: 3.0.12
 
 
 
