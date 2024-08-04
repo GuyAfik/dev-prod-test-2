@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.1.4
+    itemVersion: 1.1.5
     packID: TIM_SIEM
     packName: TIM - SIEM Integration
     packPropagationLabels:
@@ -336,7 +336,7 @@ tasks:
       id: 91b9c160-c50b-4650-8d1d-4df2d3eaf73d
       iscommand: false
       name: TIM - QRadar Add Url Indicators
-      playbookName: TIM - QRadar Add Url Indicators
+      playbookId: TIM - QRadar Add Url Indicators
       type: playbook
       version: -1
     taskid: 91b9c160-c50b-4650-8d1d-4df2d3eaf73d
