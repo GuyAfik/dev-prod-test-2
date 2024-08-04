@@ -40,8 +40,8 @@
 				"category": "Data Enrichment \u0026 Threat Intelligence",
 				"commands": [
 					{
-						"description": "Shows the feed names and IDs from TAXII.",
-						"name": "mitre-show-feeds"
+						"description": "Retrieves a limited number of indicators.",
+						"name": "mitre-get-indicators"
 					},
 					{
 						"description": "Looks up the reputation of the indicator.",
@@ -52,8 +52,8 @@
 						"name": "mitre-get-indicator-name"
 					},
 					{
-						"description": "Retrieves a limited number of indicators.",
-						"name": "mitre-get-indicators"
+						"description": "Shows the feed names and IDs from TAXII.",
+						"name": "mitre-show-feeds"
 					}
 				],
 				"description": "Use the MITRE ATT\u0026CK® feed to fetch MITRE’s Adversarial Tactics, Techniques, and Common Knowledge (ATT\u0026CK®) content. MITRE ATT\u0026CK is a globally-accessible knowledge base of adversary tactics and techniques based on real-world observations. The ATT\u0026CK knowledge base is used as a foundation for the development of specific threat models and methodologies in the private sector, in government, and in the cybersecurity product and service community.",
@@ -75,7 +75,7 @@
 		"wizard": null
 	},
 	"created": "2021-05-27T10:56:30Z",
-	"currentVersion": "1.1.38",
+	"currentVersion": "1.1.39",
 	"defaultDataSource": {
 		"id": "",
 		"name": ""
@@ -86,20 +86,20 @@
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": true,
-			"minVersion": "1.34.10",
+			"minVersion": "1.34.11",
 			"name": "Base"
 		},
 		"CommonScripts": {
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": true,
-			"minVersion": "1.15.6",
+			"minVersion": "1.15.8",
 			"name": "Common Scripts"
 		}
 	},
 	"deprecated": false,
 	"description": "Fetches indicators from MITRE ATT\u0026CK.",
-	"downloads": 40711,
+	"downloads": 40867,
 	"eulaLink": "https://github.com/demisto/content/blob/master/LICENSE",
 	"fromServerVersion": "5.0.0",
 	"general": [
@@ -117,7 +117,7 @@
 			"name": "MITRE ATT\u0026CK"
 		}
 	],
-	"itemVersion": "1.1.38",
+	"itemVersion": "1.1.39",
 	"keywords": [
 		"MITRE",
 		"Feed",
@@ -147,15 +147,15 @@
 		"url": "https://www.paloaltonetworks.com/cortex"
 	},
 	"tags": [
-		"Plug \u0026 Fetch",
-		"Threat Intelligence Management",
 		"Free Feed",
-		"TIM"
+		"TIM",
+		"Threat Intelligence Management",
+		"Plug \u0026 Fetch"
 	],
 	"toServerVersion": "",
-	"updated": "2024-06-06T19:19:38Z",
+	"updated": "2024-06-10T19:19:05Z",
 	"useCases": [],
 	"version": -1,
-	"versionInfo": "1076296",
+	"versionInfo": "1084629",
 	"videos": []
 }
