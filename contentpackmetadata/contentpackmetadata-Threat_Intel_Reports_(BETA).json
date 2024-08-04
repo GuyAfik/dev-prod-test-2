@@ -48,23 +48,23 @@
 		"genericfield": [
 			{
 				"description": "",
-				"name": "Operating System",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Source",
+				"name": "Indicator Type",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Targeting",
-				"type": "shortText"
+				"name": "Report Status",
+				"type": "singleSelect"
 			},
 			{
 				"description": "",
-				"name": "Published",
+				"name": "Last Seen",
 				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "Goals",
+				"type": "tagsSelect"
 			},
 			{
 				"description": "",
@@ -73,17 +73,17 @@
 			},
 			{
 				"description": "",
-				"name": "Sophistication",
+				"name": "Modified",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "CVSS",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Logo",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "CVE",
+				"name": "Value",
 				"type": "shortText"
 			},
 			{
@@ -93,43 +93,8 @@
 			},
 			{
 				"description": "",
-				"name": "Modified",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "First Seen",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "Body Vulnerability",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "Body Executive Brief",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "Fuzzy Hash",
+				"name": "Objective",
 				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Secondary Motivations",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Description",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "Report Status",
-				"type": "singleSelect"
 			},
 			{
 				"description": "",
@@ -138,67 +103,12 @@
 			},
 			{
 				"description": "",
-				"name": "Last Seen",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "Body Campaign",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "Threat Actor Types",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Body Malware",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "Objective",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Indicator Type",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Threat Actor",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Primary Motivation",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Tags",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Vulnerability Type",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
 				"name": "Malware Type",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "Goals",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Value",
+				"name": "Sophistication",
 				"type": "shortText"
 			},
 			{
@@ -208,12 +118,102 @@
 			},
 			{
 				"description": "",
+				"name": "Logo",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "Source",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Vulnerability Type",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Threat Actor",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "First Seen",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "Operating System",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Body Vulnerability",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "Published",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "Fuzzy Hash",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Threat Actor Types",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "CVE",
+				"type": "shortText"
+			},
+			{
+				"description": "",
 				"name": "Aliases",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "CVSS",
+				"name": "Primary Motivation",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Body Malware",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "Tags",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Secondary Motivations",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Body Campaign",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "Body Executive Brief",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "Description",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "Targeting",
 				"type": "shortText"
 			}
 		],
@@ -230,6 +230,10 @@
 		"generictype": [
 			{
 				"description": "",
+				"name": "Campaign"
+			},
+			{
+				"description": "",
 				"name": "Executive Brief"
 			},
 			{
@@ -243,10 +247,6 @@
 			{
 				"description": "",
 				"name": "Malware"
-			},
-			{
-				"description": "",
-				"name": "Campaign"
 			}
 		],
 		"incidentfield": null,
@@ -255,14 +255,9 @@
 		"integration": null,
 		"layoutscontainer": [
 			{
-				"description": "A template specifically designed for a report about a malware with fields such as OS, hash and more",
+				"description": "A report specifically made dor Threat Actors with additional sections including meta data about the actor",
 				"group": "",
-				"name": "Malware Report"
-			},
-			{
-				"description": "A basic template for an Executive brief or any kind of a generic report",
-				"group": "",
-				"name": "Executive Brief Report"
+				"name": "Threat Actor Report"
 			},
 			{
 				"description": "A report tailored for vulnerability with a special section for CVE, CVSS and more",
@@ -270,14 +265,19 @@
 				"name": "Vulnerability Report"
 			},
 			{
-				"description": "A report specifically made dor Threat Actors with additional sections including meta data about the actor",
+				"description": "A basic template for an Executive brief or any kind of a generic report",
 				"group": "",
-				"name": "Threat Actor Report"
+				"name": "Executive Brief Report"
 			},
 			{
 				"description": "A layout template for an out of the box report describing a Campaign ran by a threat actor",
 				"group": "",
 				"name": "Campaign Report"
+			},
+			{
+				"description": "A template specifically designed for a report about a malware with fields such as OS, hash and more",
+				"group": "",
+				"name": "Malware Report"
 			}
 		],
 		"list": null,
@@ -288,7 +288,7 @@
 		"wizard": null
 	},
 	"created": "2021-11-18T19:57:32Z",
-	"currentVersion": "1.0.14",
+	"currentVersion": "1.0.15",
 	"defaultDataSource": {
 		"id": "",
 		"name": ""
@@ -299,14 +299,14 @@
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": true,
-			"minVersion": "1.33.53",
+			"minVersion": "1.34.11",
 			"name": "Base"
 		},
 		"CommonTypes": {
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "3.5.2",
+			"minVersion": "3.5.5",
 			"name": "Common Types"
 		},
 		"FireMonSecurityManager": {
@@ -320,13 +320,13 @@
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.4.12",
+			"minVersion": "1.4.13",
 			"name": "Malware Core"
 		}
 	},
 	"deprecated": false,
 	"description": "Threat Intel Reports gives the user the ability to create, review, publish, and export threat intelligence reports.",
-	"downloads": 8149,
+	"downloads": 8724,
 	"eulaLink": "https://github.com/demisto/content/blob/master/LICENSE",
 	"fromServerVersion": "6.5.0",
 	"general": [
@@ -344,7 +344,7 @@
 			"name": "FireMon Security Manager"
 		}
 	],
-	"itemVersion": "1.0.14",
+	"itemVersion": "1.0.15",
 	"keywords": [],
 	"legacy": true,
 	"modules": [],
@@ -370,15 +370,15 @@
 		"url": "https://www.paloaltonetworks.com/cortex"
 	},
 	"tags": [
-		"Use Case",
-		"Core"
+		"Core",
+		"Use Case"
 	],
 	"toServerVersion": "",
-	"updated": "2024-05-06T19:25:26Z",
+	"updated": "2024-06-10T19:21:18Z",
 	"useCases": [
 		"Threat Intelligence Management"
 	],
 	"version": -1,
-	"versionInfo": "998827",
+	"versionInfo": "1084629",
 	"videos": []
 }
