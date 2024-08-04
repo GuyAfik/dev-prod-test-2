@@ -10,10 +10,10 @@
 	"incidentSamples": null,
 	"indicatorSamples": null,
 	"instanceIds": null,
-	"itemVersion": "2.1.27",
+	"itemVersion": "2.1.32",
 	"keyTypeMap": null,
 	"locked": false,
-	"logicalVersion": 0,
+	"logicalVersion": 1,
 	"mapping": {
 		"PAN-OS Correlation Log Incident": {
 			"dontMapEventToLabels": false,
@@ -37,7 +37,7 @@
 					"simple": "severity"
 				},
 				"Source Create time": {
-					"simple": "time_generated"
+					"simple": "match_time"
 				},
 				"Source IP": {
 					"simple": "src"
