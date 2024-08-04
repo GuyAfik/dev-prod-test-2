@@ -43,68 +43,20 @@
 		"layoutscontainer": [
 			{
 				"description": "",
-				"group": "",
-				"name": "Review Indicators Manually For Whitelisting Incident"
+				"group": "incident",
+				"name": "Review Indicators Manually Incident"
 			},
 			{
 				"description": "",
-				"group": "",
-				"name": "Review Indicators Manually Incident"
+				"group": "incident",
+				"name": "Review Indicators Manually For Whitelisting Incident"
 			}
 		],
 		"list": null,
 		"playbook": [
 			{
-				"description": "This playbook tags indicators ingested by feeds that require manual approval. The playbook is triggered due to a job. The indicators are tagged as requiring a manual review. The playbook optionally concludes with creating a new incident that includes all of the indicators that the analyst must review.\nTo enable the playbook, the indicator query needs to be configured. An example query is a list of the feeds whose ingested indicators should be manually reviewed. For example, sourceBrands:\"Feed A\" or sourceBrands:\"Feed B\".",
-				"name": "TIM - Process Indicators - Manual Review"
-			},
-			{
-				"description": "This playbook helps analysts manage the manual process of adding indicators from cloud providers, apps, services etc. to an allow list. The playbook indicator query is set to search for indicators that have the 'whitelist_review' tag. The playbooks layout displays all of the related indicators in the summary page. While reviewing the indicators, the analyst can go to the summary page and tag the indicators accordingly with tags such as, 'approved_black', 'approved_white', etc. Once the analyst completes the review, the playbook can optionally send an email with a list of changes done by the analyst which haven't been approved. Once complete, the playbook removes the 'whitelist review' tag from the indicators.",
-				"name": "TIM - Review Indicators Manually For Whitelisting"
-			},
-			{
-				"description": "This playbook helps analysts manage the manual process of reviewing indicators. The playbook indicator query is set to search for indicators that have the 'pending review' tag. The playbook's layout displays all of the related indicators in the summary page. While reviewing the indicators, the analyst can go to the summary page and tag the indicators accordingly with tags 'such as, 'approved_black', 'approved_white', etc. Once the analyst completes their review, the playbook can optionally send an email with a list of changes done by the analyst which haven't been approved. Once complete, the playbook removes the 'pending review' tag from the indicators.",
-				"name": "TIM - Review Indicators Manually"
-			},
-			{
-				"description": "This playbook processes indicators to check if they exist in a Cortex XSOAR list containing business partner urls, and tags the indicators accordingly. To enable the playbook, provide a Cortex XSOAR list name containing business partner urls.",
-				"name": "TIM - Process Indicators Against Business Partners URL List"
-			},
-			{
 				"description": "This playbook processes file indicator by tagging them with the relevant file hash type tag, such as Sha256, Sha1, and Md5.",
 				"name": "TIM - Process File Indicators With File Hash Type"
-			},
-			{
-				"description": "This playbook processes indicators by enriching indicators\nbased on the indicator feed's reputation, as specified in the playbook\ninputs. This playbook needs to be used with caution as it might use up the user\nenrichment integration's API license when running enrichment for large amounts of\nindicators.",
-				"name": "TIM - Run Enrichment For Url Indicators"
-			},
-			{
-				"description": "This playbook processes indicators by enriching indicators based on the indicator feed's reputation, as specified in the playbook inputs. This playbook needs to be used with caution as it might use up the user enrichment integration's API license when running enrichment for large amounts of indicators.",
-				"name": "TIM - Run Enrichment For Domain Indicators"
-			},
-			{
-				"description": "This playbooks allows you to exclude indicators according to the number of incidents the indicator is related to. The indicator query is \"investigationsCount:\u003e=X\" where X is the number of related incidents to the indicator that you set. Excluded indicators are located in the Cortex XSOAR exclusion list and are removed from all of their related incidents and future ones. The purpose of excluding these indicators is to reduce the amount internal and common indicators appearing in many incidents and showing only relevant indicators. Creating exclusions can also accelerate performance.",
-				"name": "TIM - Indicators Exclusion By Related Incidents"
-			},
-			{
-				"description": "This playbook processes indicators to check if they exist in a Cortex XSOAR list containing business partner IP addresses, and tags the indicators accordingly.",
-				"name": "TIM - Process Indicators Against Business Partners IP List"
-			},
-			{
-				"description": "This playbook checks if file hash indicators exist in a Cortex XSOAR list. If the indicators exist in the list, they are tagged as approved_hash.",
-				"name": "TIM - Process Indicators Against Approved Hash List"
-			},
-			{
-				"description": "This playbook processes indicators by enriching indicators\nbased on the indicator feed's reputation, as specified in the playbook\ninputs. This playbook needs to be used with caution as it might use up the user\nenrichment integration's API license when running enrichment for large amounts of\nindicators.",
-				"name": "TIM - Run Enrichment For Hash Indicators"
-			},
-			{
-				"description": "This playbook uses several sub playbooks to process and tag indicators, which is used to identify indicators that shouldn't be added to block list. For example IP indicators that belong to business partners or important hashes we wish to not process. Additional sub playbooks can be added for improving the business logic and tagging according to the user's needs. This playbook doesn't have its own indicator query as it processes indicators provided by the parent playbook query. To enable the playbook, provide the relevant list names in the sub playbook indicators, such as the ApprovedHashList, OrganizationsExternalIPListName, BusinessPartnersIPListName, etc. Also be sure to append the results of additional sub playbooks to Set indicators to Process Indicators for the additional playbooks results to be in the outputs.",
-				"name": "TIM - Indicator Auto Processing"
-			},
-			{
-				"description": "This playbook tags indicators ingested from high reliability feeds. The playbook is triggered due to a Cortex XSOAR job. The indicators are tagged as approved_white, approved_black, approved_watchlist. The tagged indicators will be ready for consumption for 3rd party systems such as SIEM, EDR etc.",
-				"name": "TIM - Process Indicators - Fully Automated"
 			},
 			{
 				"description": "This playbook performs enrichment on indicators\n  based on playbook query, as specified in the playbook\n  inputs. This playbook needs to be used with caution as it might use up the user\n  enrichment integration's API license when running enrichment for large amounts of\n  indicators. Example queries can be \"tags:example_tag\" for indicators with a specific tag. For a specific feed name\"\n  the query will be \"sourceBrands:example_feed\". For a specifc reputation the query will be \"reputation:None\" etc.",
@@ -119,20 +71,68 @@
 				"name": "TIM - Process Indicators Against Business Partners Domains List"
 			},
 			{
-				"description": "This playbook processes indicators to check if they exist in a Cortex XSOAR list containing the organizational External IP addresses or CIDR, and tags the indicators accordingly.",
-				"name": "TIM - Process Indicators Against Organizations External IP List"
-			},
-			{
-				"description": "This playbook is designed to assist with a security investigation by providing an analysis of indicator relationships. The following information is included:\n- Indicators of compromise (IOCs) related to the investigation.\n- Attack patterns related to the investigation.\n- Campaigns related to the investigation.\n- IOCs associated with the identified campaigns.\n- Reports containing details on the identified campaigns.",
-				"name": "TIM - Indicator Relationships Analysis"
+				"description": "This playbook processes indicators by enriching indicators based on the indicator feed's reputation, as specified in the playbook inputs. This playbook needs to be used with caution as it might use up the user enrichment integration's API license when running enrichment for large amounts of indicators.",
+				"name": "TIM - Run Enrichment For Domain Indicators"
 			},
 			{
 				"description": "This playbook checks if an indicator with a tag of organizational_external_ip has been updated and keeps/removes the tag according to the check results.",
 				"name": "TIM - Update Indicators Organizational External IP Tag"
 			},
 			{
+				"description": "This playbook processes indicators to check if they exist in a Cortex XSOAR list containing business partner IP addresses, and tags the indicators accordingly.",
+				"name": "TIM - Process Indicators Against Business Partners IP List"
+			},
+			{
+				"description": "This playbook uses several sub playbooks to process and tag indicators, which is used to identify indicators that shouldn't be added to block list. For example IP indicators that belong to business partners or important hashes we wish to not process. Additional sub playbooks can be added for improving the business logic and tagging according to the user's needs. This playbook doesn't have its own indicator query as it processes indicators provided by the parent playbook query. To enable the playbook, provide the relevant list names in the sub playbook indicators, such as the ApprovedHashList, OrganizationsExternalIPListName, BusinessPartnersIPListName, etc. Also be sure to append the results of additional sub playbooks to Set indicators to Process Indicators for the additional playbooks results to be in the outputs.",
+				"name": "TIM - Indicator Auto Processing"
+			},
+			{
+				"description": "This playbook processes indicators by enriching indicators\nbased on the indicator feed's reputation, as specified in the playbook\ninputs. This playbook needs to be used with caution as it might use up the user\nenrichment integration's API license when running enrichment for large amounts of\nindicators.",
+				"name": "TIM - Run Enrichment For Url Indicators"
+			},
+			{
+				"description": "This playbook processes indicators by enriching indicators\nbased on the indicator feed's reputation, as specified in the playbook\ninputs. This playbook needs to be used with caution as it might use up the user\nenrichment integration's API license when running enrichment for large amounts of\nindicators.",
+				"name": "TIM - Run Enrichment For Hash Indicators"
+			},
+			{
+				"description": "This playbook tags indicators ingested from high reliability feeds. The playbook is triggered due to a Cortex XSOAR job. The indicators are tagged as approved_white, approved_black, approved_watchlist. The tagged indicators will be ready for consumption for 3rd party systems such as SIEM, EDR etc.",
+				"name": "TIM - Process Indicators - Fully Automated"
+			},
+			{
+				"description": "This playbook helps analysts manage the manual process of adding indicators from cloud providers, apps, services etc. to an allow list. The playbook indicator query is set to search for indicators that have the 'whitelist_review' tag. The playbooks layout displays all of the related indicators in the summary page. While reviewing the indicators, the analyst can go to the summary page and tag the indicators accordingly with tags such as, 'approved_black', 'approved_white', etc. Once the analyst completes the review, the playbook can optionally send an email with a list of changes done by the analyst which haven't been approved. Once complete, the playbook removes the 'whitelist review' tag from the indicators.",
+				"name": "TIM - Review Indicators Manually For Whitelisting"
+			},
+			{
+				"description": "This playbook tags indicators ingested by feeds that require manual approval. The playbook is triggered due to a job. The indicators are tagged as requiring a manual review. The playbook optionally concludes with creating a new incident that includes all of the indicators that the analyst must review.\nTo enable the playbook, the indicator query needs to be configured. An example query is a list of the feeds whose ingested indicators should be manually reviewed. For example, sourceBrands:\"Feed A\" or sourceBrands:\"Feed B\".",
+				"name": "TIM - Process Indicators - Manual Review"
+			},
+			{
+				"description": "This playbook processes indicators to check if they exist in a Cortex XSOAR list containing business partner urls, and tags the indicators accordingly. To enable the playbook, provide a Cortex XSOAR list name containing business partner urls.",
+				"name": "TIM - Process Indicators Against Business Partners URL List"
+			},
+			{
+				"description": "This playbook helps analysts manage the manual process of reviewing indicators. The playbook indicator query is set to search for indicators that have the 'pending review' tag. The playbook's layout displays all of the related indicators in the summary page. While reviewing the indicators, the analyst can go to the summary page and tag the indicators accordingly with tags 'such as, 'approved_black', 'approved_white', etc. Once the analyst completes their review, the playbook can optionally send an email with a list of changes done by the analyst which haven't been approved. Once complete, the playbook removes the 'pending review' tag from the indicators.",
+				"name": "TIM - Review Indicators Manually"
+			},
+			{
+				"description": "This playbook is designed to assist with a security investigation by providing an analysis of indicator relationships. The following information is included:\n- Indicators of compromise (IOCs) related to the investigation.\n- Attack patterns related to the investigation.\n- Campaigns related to the investigation.\n- IOCs associated with the identified campaigns.\n- Reports containing details on the identified campaigns.",
+				"name": "TIM - Indicator Relationships Analysis"
+			},
+			{
 				"description": "This playbook processes indicators by enriching indicators\nbased on the indicator feed's reputation, as specified in the playbook\ninputs. This playbook needs to be used with caution as it might use up the user\nenrichment integration's API license when running enrichment for large amounts of\nindicators.",
 				"name": "TIM - Run Enrichment For IP Indicators"
+			},
+			{
+				"description": "This playbooks allows you to exclude indicators according to the number of incidents the indicator is related to. The indicator query is \"investigationsCount:\u003e=X\" where X is the number of related incidents to the indicator that you set. Excluded indicators are located in the Cortex XSOAR exclusion list and are removed from all of their related incidents and future ones. The purpose of excluding these indicators is to reduce the amount internal and common indicators appearing in many incidents and showing only relevant indicators. Creating exclusions can also accelerate performance.",
+				"name": "TIM - Indicators Exclusion By Related Incidents"
+			},
+			{
+				"description": "This playbook checks if file hash indicators exist in a Cortex XSOAR list. If the indicators exist in the list, they are tagged as approved_hash.",
+				"name": "TIM - Process Indicators Against Approved Hash List"
+			},
+			{
+				"description": "This playbook processes indicators to check if they exist in a Cortex XSOAR list containing the organizational External IP addresses or CIDR, and tags the indicators accordingly.",
+				"name": "TIM - Process Indicators Against Organizations External IP List"
 			}
 		],
 		"report": null,
@@ -141,7 +141,7 @@
 		"wizard": null
 	},
 	"created": "2020-09-15T11:39:53Z",
-	"currentVersion": "1.1.24",
+	"currentVersion": "1.1.26",
 	"defaultDataSource": {
 		"id": "",
 		"name": ""
@@ -173,14 +173,14 @@
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.2.18",
+			"minVersion": "2.2.20",
 			"name": "Anomali ThreatStream"
 		},
 		"AutoFocus": {
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.2.1",
+			"minVersion": "2.2.3",
 			"name": "AutoFocus by Palo Alto Networks"
 		},
 		"AwakeSecurity": {
@@ -194,21 +194,21 @@
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": true,
-			"minVersion": "1.33.53",
+			"minVersion": "1.34.17",
 			"name": "Base"
 		},
 		"Cisco-umbrella": {
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.1.0",
+			"minVersion": "1.1.1",
 			"name": "Cisco Umbrella Investigate"
 		},
 		"CommonScripts": {
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": true,
-			"minVersion": "1.14.43",
+			"minVersion": "1.15.17",
 			"name": "Common Scripts"
 		},
 		"CrowdStrikeIntel": {
@@ -222,28 +222,28 @@
 			"author": "DomainTools",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.1.5",
+			"minVersion": "1.1.6",
 			"name": "DomainTools Enterprise"
 		},
 		"DomainTools_Iris": {
 			"author": "DomainTools",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.0.1",
+			"minVersion": "2.0.2",
 			"name": "DomainTools Iris Investigate"
 		},
 		"EclecticIQ": {
 			"author": "EclecticIQ",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "3.0.0",
+			"minVersion": "3.0.1",
 			"name": "EclecticIQ Platform"
 		},
 		"FiltersAndTransformers": {
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": true,
-			"minVersion": "1.2.69",
+			"minVersion": "1.2.74",
 			"name": "Filters And Transformers"
 		},
 		"Flashpoint": {
@@ -257,7 +257,7 @@
 			"author": "Chronicle",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "3.1.4",
+			"minVersion": "4.0.0",
 			"name": "Chronicle"
 		},
 		"GoogleSafeBrowsing": {
@@ -271,7 +271,7 @@
 			"author": "Cortex XSOAR",
 			"certification": "verified",
 			"mandatory": false,
-			"minVersion": "3.0.9",
+			"minVersion": "3.0.11",
 			"name": "HelloWorld"
 		},
 		"Ipstack": {
@@ -299,7 +299,7 @@
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.1.42",
+			"minVersion": "2.1.43",
 			"name": "MISP"
 		},
 		"Maltiverse": {
@@ -334,28 +334,28 @@
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.1.46",
+			"minVersion": "2.1.47",
 			"name": "WildFire by Palo Alto Networks"
 		},
 		"PassiveTotal": {
 			"author": "RiskIQ",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.1.13",
+			"minVersion": "2.1.14",
 			"name": "PassiveTotal"
 		},
 		"PhishTank": {
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.0.30",
+			"minVersion": "2.0.31",
 			"name": "PhishTank"
 		},
 		"PolySwarm": {
 			"author": "PolySwarm",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.0.5",
+			"minVersion": "2.0.6",
 			"name": "PolySwarm"
 		},
 		"Pwned": {
@@ -369,14 +369,14 @@
 			"author": "ReversingLabs",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.3.2",
+			"minVersion": "2.4.0",
 			"name": "ReversingLabs A1000"
 		},
 		"ReversingLabs_Titanium_Cloud": {
 			"author": "ReversingLabs",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.5.0",
+			"minVersion": "2.6.0",
 			"name": "ReversingLabs TitaniumCloud"
 		},
 		"Shodan": {
@@ -390,7 +390,7 @@
 			"author": "SlashNext",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.3.6",
+			"minVersion": "1.3.8",
 			"name": "SlashNext Phishing Incident Response - Annual Subscription  (Direct Subscription)"
 		},
 		"ThreatConnect": {
@@ -439,21 +439,21 @@
 			"author": "urlscan GmbH",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.2.12",
+			"minVersion": "1.2.13",
 			"name": "URLScan.io"
 		},
 		"VirusTotal": {
 			"author": "VirusTotal",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.6.19",
+			"minVersion": "2.6.21",
 			"name": "VirusTotal"
 		},
 		"Whois": {
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.5.12",
+			"minVersion": "1.5.14",
 			"name": "Whois"
 		},
 		"XForceExchange": {
@@ -467,7 +467,7 @@
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.3.19",
+			"minVersion": "1.3.21",
 			"name": "Zscaler Internet Access"
 		},
 		"illuminate": {
@@ -481,7 +481,7 @@
 			"author": "Cortex XSOAR",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.1.21",
+			"minVersion": "2.1.22",
 			"name": "Ipinfo"
 		},
 		"isight": {
@@ -494,7 +494,7 @@
 	},
 	"deprecated": false,
 	"description": "Too many threat feeds? This Content Pack automates the processing of indicators at scale, significantly reducing busywork for your analysts.",
-	"downloads": 15213,
+	"downloads": 16396,
 	"eulaLink": "https://github.com/demisto/content/blob/master/LICENSE",
 	"fromServerVersion": "5.5.0",
 	"general": [
@@ -588,6 +588,10 @@
 			"name": "Chronicle"
 		},
 		{
+			"imagePath": "content/packs/GoogleChronicleBackstory/GoogleChronicleBackstoryStreamingAPI_image.png",
+			"name": "Chronicle Streaming API"
+		},
+		{
 			"imagePath": "content/packs/MISP/MISPV2_image.png",
 			"name": "MISP v2 (Deprecated)"
 		},
@@ -612,6 +616,10 @@
 			"name": "IBM X-Force Exchange v2"
 		},
 		{
+			"imagePath": "content/packs/Zscaler/Zscaler_image.png",
+			"name": "Zscaler Internet Access"
+		},
+		{
 			"imagePath": "content/packs/Anomali_ThreatStream/AnomaliThreatStream_image.png",
 			"name": "Anomali ThreatStream (Deprecated)"
 		},
@@ -622,10 +630,6 @@
 		{
 			"imagePath": "content/packs/Anomali_ThreatStream/AnomaliThreatStreamv3_image.png",
 			"name": "Anomali ThreatStream v3"
-		},
-		{
-			"imagePath": "content/packs/Zscaler/Zscaler_image.png",
-			"name": "Zscaler Internet Access"
 		},
 		{
 			"imagePath": "content/packs/Shodan/Shodan_v2_image.png",
@@ -672,14 +676,6 @@
 			"name": "PassiveTotal v2"
 		},
 		{
-			"imagePath": "content/packs/McAfee-TIE/McAfeeThreatIntelligenceExchange_image.png",
-			"name": "McAfee Threat Intelligence Exchange (Deprecated)"
-		},
-		{
-			"imagePath": "content/packs/McAfee-TIE/McAfeeThreatIntelligenceExchangeV2_image.png",
-			"name": "McAfee Threat Intelligence Exchange v2"
-		},
-		{
 			"imagePath": "content/packs/ThreatConnect/ThreatConnect_image.png",
 			"name": "ThreatConnect (Deprecated)"
 		},
@@ -690,6 +686,14 @@
 		{
 			"imagePath": "content/packs/ThreatConnect/ThreatConnectv3_image.png",
 			"name": "ThreatConnect v3"
+		},
+		{
+			"imagePath": "content/packs/McAfee-TIE/McAfeeThreatIntelligenceExchange_image.png",
+			"name": "McAfee Threat Intelligence Exchange (Deprecated)"
+		},
+		{
+			"imagePath": "content/packs/McAfee-TIE/McAfeeThreatIntelligenceExchangeV2_image.png",
+			"name": "McAfee Threat Intelligence Exchange v2"
 		},
 		{
 			"imagePath": "content/packs/GoogleSafeBrowsing/GoogleSafeBrowsing_image.png",
@@ -740,20 +744,20 @@
 			"name": "ThreatMiner"
 		},
 		{
-			"imagePath": "content/packs/TruSTAR/TruSTAR_image.png",
-			"name": "TruSTAR (Deprecated)"
-		},
-		{
-			"imagePath": "content/packs/TruSTAR/TruSTARv2_image.png",
-			"name": "TruSTAR v2 (Deprecated)"
-		},
-		{
 			"imagePath": "content/packs/ThreatExchange/ThreatExchange_image.png",
 			"name": "ThreatExchange (Deprecated)"
 		},
 		{
 			"imagePath": "content/packs/ThreatExchange/ThreatExchangev2_image.png",
 			"name": "ThreatExchange v2"
+		},
+		{
+			"imagePath": "content/packs/TruSTAR/TruSTAR_image.png",
+			"name": "TruSTAR (Deprecated)"
+		},
+		{
+			"imagePath": "content/packs/TruSTAR/TruSTARv2_image.png",
+			"name": "TruSTAR v2 (Deprecated)"
 		},
 		{
 			"imagePath": "content/packs/illuminate/Analyst1_image.png",
@@ -788,16 +792,16 @@
 			"name": "Awake Security"
 		},
 		{
+			"imagePath": "content/packs/SlashNextPhishingIncidentResponse/SlashNextPhishingIncidentResponse_image.png",
+			"name": "SlashNext Phishing Incident Response"
+		},
+		{
 			"imagePath": "content/packs/ReversingLabs_A1000/ReversingLabsA1000_image.png",
 			"name": "ReversingLabs A1000 (Deprecated)"
 		},
 		{
 			"imagePath": "content/packs/ReversingLabs_A1000/ReversingLabsA1000v2_image.png",
 			"name": "ReversingLabs A1000 v2"
-		},
-		{
-			"imagePath": "content/packs/SlashNextPhishingIncidentResponse/SlashNextPhishingIncidentResponse_image.png",
-			"name": "SlashNext Phishing Incident Response"
 		},
 		{
 			"imagePath": "content/packs/ReversingLabs_Titanium_Cloud/ReversingLabsTitaniumCloud_image.png",
@@ -824,7 +828,7 @@
 			"name": "IsItPhishing"
 		}
 	],
-	"itemVersion": "1.1.24",
+	"itemVersion": "1.1.26",
 	"keywords": [],
 	"legacy": true,
 	"modules": [],
@@ -850,16 +854,16 @@
 		"url": "https://www.paloaltonetworks.com/cortex"
 	},
 	"tags": [
-		"Use Case",
+		"TIM",
 		"Getting Started",
-		"TIM"
+		"Use Case"
 	],
 	"toServerVersion": "",
-	"updated": "2024-05-06T19:25:05Z",
+	"updated": "2024-06-27T19:19:20Z",
 	"useCases": [
 		"Threat Intelligence Management"
 	],
 	"version": -1,
-	"versionInfo": "998827",
+	"versionInfo": "1129454",
 	"videos": []
 }
