@@ -85,7 +85,7 @@
 	"id": "indicator_issuer",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "3.5.10",
+	"itemVersion": "3.5.11",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Issuer",
