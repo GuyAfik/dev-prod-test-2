@@ -113,7 +113,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.0.23
+    itemVersion: 1.0.24
     packID: Unit42Intel
     packName: Unit 42 Intel
     packPropagationLabels:
@@ -157,7 +157,7 @@ script:
   runonce: false
   script: |
     register_module_line('Unit42IntelObjectsFeed', 'start', __line__())
-    ### pack version: 1.0.23
+    ### pack version: 1.0.24
 
 
 
