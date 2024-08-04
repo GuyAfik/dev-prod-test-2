@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.1.24
+    itemVersion: 1.1.26
     packID: TIM_Processing
     packName: TIM - Indicator Auto-Processing
     packPropagationLabels:
@@ -194,7 +194,7 @@ tasks:
       - "7"
     note: false
     quietmode: 0
-    separatecontext: true
+    separatecontext: false
     skipunavailable: false
     task:
       brand: ""
