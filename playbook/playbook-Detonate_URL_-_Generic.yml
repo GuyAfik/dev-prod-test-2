@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.36
+    itemVersion: 2.6.37
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -1269,13 +1269,13 @@ tasks:
     separatecontext: false
     skipunavailable: true
     task:
-      brand: OPSWAT Filescan
-      description: Detonates a URL using the OPSWAT-Filescan Integration. Returns
+      brand: MetaDefender Sandbox
+      description: Detonates a URL using the MetaDefender Sandbox Integration. Returns
         relevant reports to the War Room and URL reputations to the context data.
       id: 2fee63e9-6482-4101-8272-d42cf3a950aa
       iscommand: true
-      name: Detonate URL - OPSWAT
-      script: OPSWAT Filescan|||opswat-filescan-scan-url
+      name: Detonate URL - MetaDefender Sandbox
+      script: metadefender-sandbox-scan-url
       type: regular
       version: -1
     taskid: 2fee63e9-6482-4101-8272-d42cf3a950aa
