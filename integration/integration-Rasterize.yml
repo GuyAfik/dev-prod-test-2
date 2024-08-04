@@ -53,7 +53,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.0.19
+    itemVersion: 2.0.21
     packID: rasterize
     packName: Rasterize
     packPropagationLabels:
@@ -389,7 +389,7 @@ script:
   runonce: false
   script: |
     register_module_line('Rasterize', 'start', __line__())
-    ### pack version: 2.0.19
+    ### pack version: 2.0.21
 
 
     import logging
