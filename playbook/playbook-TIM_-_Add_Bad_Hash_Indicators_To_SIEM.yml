@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.1.4
+    itemVersion: 1.1.5
     packID: TIM_SIEM
     packName: TIM - SIEM Integration
     packPropagationLabels:
@@ -385,7 +385,7 @@ tasks:
       id: b0a6de41-61eb-44fe-8463-f891fbe8e875
       iscommand: false
       name: TIM - QRadar Add Bad Hash Indicators
-      playbookName: TIM - QRadar Add Bad Hash Indicators
+      playbookId: TIM - QRadar Add Bad Hash Indicators
       type: playbook
       version: -1
     taskid: b0a6de41-61eb-44fe-8463-f891fbe8e875
