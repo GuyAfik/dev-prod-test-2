@@ -8,7 +8,7 @@
 	"hideSearch": false,
 	"id": "XSOAR Automation Insights",
 	"isCommon": true,
-	"itemVersion": "1.6.0",
+	"itemVersion": "1.7.4",
 	"layout": [
 		{
 			"forceRange": false,
@@ -830,6 +830,9 @@
 						},
 						"type": "above"
 					},
+					"keys": [
+						"sum|droppedCount"
+					],
 					"valuesFormat": "abbreviated"
 				},
 				"prevName": "Incidents Dropped Count",
@@ -990,7 +993,7 @@
 				"propagationLabels": [
 					"all"
 				],
-				"query": "UseCaseAdoptionMetrics",
+				"query": "AdoptionMetrics",
 				"shouldCommit": false,
 				"sizeInBytes": 0,
 				"toServerVersion": "",
