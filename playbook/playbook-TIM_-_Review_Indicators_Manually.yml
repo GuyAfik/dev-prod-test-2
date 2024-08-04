@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.1.24
+    itemVersion: 1.1.26
     packID: TIM_Processing
     packName: TIM - Indicator Auto-Processing
     packPropagationLabels:
@@ -34,7 +34,7 @@ inputs:
         fromvalue: null
         tovalue: null
       todate: "0001-01-01T00:00:00Z"
-    query: tags:pending_review and -tags:being_reviewed
+    query: tags:"pending_review" and -tags:"being_reviewed"
     queryEntity: indicators
     results: null
     runFromLastJobTime: false
