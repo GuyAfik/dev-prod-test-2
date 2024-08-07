@@ -26,7 +26,7 @@
 	"id": "incident_sizenumberofemployees",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.15.40",
+	"itemVersion": "1.15.44",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Size - number of employees",
