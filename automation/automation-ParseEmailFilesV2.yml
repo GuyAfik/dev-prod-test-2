@@ -47,7 +47,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.40
+    itemVersion: 1.15.44
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -55,7 +55,7 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/parse-emails:1.0.0.104899
+dockerimage: demisto/parse-emails:1.0.0.106927
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
@@ -148,7 +148,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('ParseEmailFilesV2', 'start', __line__())
-  ### pack version: 1.15.40
+  ### pack version: 1.15.44
 
 
   from parse_emails.parse_emails import EmailParser
