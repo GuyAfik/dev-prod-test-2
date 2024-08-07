@@ -35,44 +35,96 @@
 							"byFrom": "days",
 							"byTo": "",
 							"field": "",
-							"fromValue": 7,
+							"fromValue": null,
 							"toValue": null
 						},
 						"toDate": "0001-01-01T00:00:00Z"
 					},
 					"definitionId": "",
-					"fromServerVersion": "5.0.0",
-					"id": "active-incidents-by-type",
-					"isPredefined": true,
-					"itemVersion": "1.2.51",
-					"modified": "2024-08-04T07:09:24.321774151Z",
+					"fromServerVersion": "",
+					"id": "",
+					"isPredefined": false,
+					"itemVersion": "",
+					"modified": "0001-01-01T00:00:00Z",
 					"name": "Active Incidents - Line chart",
-					"packID": "CommonWidgets",
-					"packName": "Common Widgets",
-					"packPropagationLabels": [
-						"all"
-					],
+					"packID": "",
+					"packName": "",
 					"params": {
-						"groupBy": [
-							"occurred(d)",
-							"rawType"
+						"tableColumns": [
+							{
+								"isDefault": true,
+								"key": "id",
+								"position": 0,
+								"width": 110
+							},
+							{
+								"isDefault": true,
+								"key": "name",
+								"position": 2,
+								"width": 300
+							},
+							{
+								"isDefault": true,
+								"key": "type",
+								"position": 3,
+								"width": 200
+							},
+							{
+								"isDefault": true,
+								"key": "severity",
+								"position": 4,
+								"width": 80
+							},
+							{
+								"isDefault": true,
+								"key": "status",
+								"position": 5,
+								"width": 80
+							},
+							{
+								"isDefault": true,
+								"key": "owner",
+								"position": 6,
+								"width": 160
+							},
+							{
+								"isDefault": true,
+								"key": "roles",
+								"position": 7,
+								"width": 160
+							},
+							{
+								"isDefault": true,
+								"key": "playbookId",
+								"position": 8,
+								"width": 150
+							},
+							{
+								"isDefault": true,
+								"key": "occurred",
+								"position": 9,
+								"width": 200
+							},
+							{
+								"isDefault": true,
+								"key": "dueDate",
+								"position": 10,
+								"width": 200
+							}
 						]
 					},
-					"prevName": "Active Incidents - Line chart",
-					"primaryTerm": 1,
-					"propagationLabels": [],
-					"query": "-category:job and -status:archived and -status:closed",
-					"sequenceNumber": 442957,
-					"shouldCommit": false,
-					"sizeInBytes": 914,
-					"sortValues": [
-						"5547"
+					"prevName": "",
+					"propagationLabels": [
+						"all"
 					],
+					"query": "",
+					"shouldCommit": false,
+					"sizeInBytes": 0,
 					"toServerVersion": "",
 					"vcShouldIgnore": false,
 					"vcShouldKeepItemLegacyProdMachine": false,
-					"version": 2,
-					"widgetType": "line"
+					"version": 0,
+					"widgetType": "table"
 				},
 				"x": 0,
 				"y": 0
@@ -411,43 +463,99 @@
 			},
 			"data": null,
 			"layout": {
-				"chartProperties": {
-					"axis": {
-						"x": {},
-						"y": {}
-					},
-					"format": "DD MMM Y",
-					"isDatesChart": true,
-					"layout": "vertical",
-					"margin": {
-						"bottom": 5,
-						"left": 14,
-						"right": 5,
-						"top": 5
-					},
-					"timeFrame": "days"
-				},
-				"chartType": "line",
+				"classes": "striped stackable small compact",
 				"columnPos": 0,
-				"dimensions": {
-					"height": 300,
-					"width": 289
-				},
 				"forceRangeMessage": "",
 				"h": 3,
 				"i": "ab376d30-5237-11ef-9ba5-79378305c23f",
-				"legendStyle": {
-					"align": "center",
-					"iconSize": 8,
-					"iconType": "square",
-					"verticalAlign": "top",
-					"width": 289,
-					"wrapperStyle": {
-						"maxHeight": 96
-					}
+				"readableHeaders": {
+					"dueDate": "SLA",
+					"id": "ID",
+					"name": "Name",
+					"occurred": "Occurred",
+					"owner": "Owner",
+					"playbookId": "Playbook",
+					"roles": "Roles",
+					"severity": "Severity",
+					"status": "Status",
+					"type": "Type"
 				},
 				"reflectDimensions": true,
 				"rowPos": 0,
+				"tableColumns": [
+					"id",
+					"name",
+					"type",
+					"severity",
+					"status",
+					"owner",
+					"roles",
+					"playbookId",
+					"occurred",
+					"dueDate"
+				],
+				"tableColumnsMetaData": [
+					{
+						"isDefault": true,
+						"key": "id",
+						"position": 0,
+						"width": 110
+					},
+					{
+						"isDefault": true,
+						"key": "name",
+						"position": 2,
+						"width": 300
+					},
+					{
+						"isDefault": true,
+						"key": "type",
+						"position": 3,
+						"width": 200
+					},
+					{
+						"isDefault": true,
+						"key": "severity",
+						"position": 4,
+						"width": 80
+					},
+					{
+						"isDefault": true,
+						"key": "status",
+						"position": 5,
+						"width": 80
+					},
+					{
+						"isDefault": true,
+						"key": "owner",
+						"position": 6,
+						"width": 160
+					},
+					{
+						"isDefault": true,
+						"key": "roles",
+						"position": 7,
+						"width": 160
+					},
+					{
+						"isDefault": true,
+						"key": "playbookId",
+						"position": 8,
+						"width": 150
+					},
+					{
+						"isDefault": true,
+						"key": "occurred",
+						"position": 9,
+						"width": 200
+					},
+					{
+						"isDefault": true,
+						"key": "dueDate",
+						"position": 10,
+						"width": 200
+					}
+				],
 				"w": 5
 			},
 			"query": {
@@ -461,18 +569,13 @@
 						"fromValue": 7,
 						"toValue": null
 					},
-					"query": "-category:job and -status:archived and -status:closed",
 					"toDate": "0001-01-01T00:00:00Z"
 				},
-				"groupBy": [
-					"occurred(d)",
-					"rawType"
-				],
 				"type": "incident"
 			},
 			"title": "Active Incidents - Line chart",
 			"titleStyle": null,
-			"type": "chart"
+			"type": "table"
 		},
 		{
 			"autoPageBreak": false,
