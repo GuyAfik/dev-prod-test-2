@@ -13,7 +13,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.15.40
+    itemVersion: 1.15.44
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -33,7 +33,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  ### pack version: 1.15.40
+  ### pack version: 1.15.44
 
 
   function Main() {
