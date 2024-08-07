@@ -249,8 +249,8 @@
 					"version": 1,
 					"widgetType": "table"
 				},
-				"x": 0,
-				"y": 3
+				"x": 6,
+				"y": 0
 			}
 		],
 		"locked": false,
@@ -569,6 +569,7 @@
 						"fromValue": 7,
 						"toValue": null
 					},
+					"query": "",
 					"toDate": "0001-01-01T00:00:00Z"
 				},
 				"type": "incident"
@@ -588,7 +589,7 @@
 			"data": null,
 			"layout": {
 				"classes": "striped stackable small compact",
-				"columnPos": 0,
+				"columnPos": 6,
 				"forceRangeMessage": "",
 				"h": 3,
 				"i": "d1d69f70-54a7-11ef-a9d0-9784608227b0",
@@ -606,7 +607,7 @@
 					"value": "Value"
 				},
 				"reflectDimensions": true,
-				"rowPos": 3,
+				"rowPos": 0,
 				"tableColumns": [
 					"indicator_type",
 					"value",
