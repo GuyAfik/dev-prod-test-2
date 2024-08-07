@@ -76,6 +76,129 @@
 				},
 				"x": 0,
 				"y": 0
+			},
+			{
+				"forceRange": false,
+				"h": 3,
+				"i": "d1d69f70-54a7-11ef-a9d0-9784608227b0",
+				"id": "d1d69f70-54a7-11ef-a9d0-9784608227b0",
+				"reflectDimensions": true,
+				"w": 5,
+				"widget": {
+					"Cache": null,
+					"cacheVersn": 0,
+					"category": "",
+					"commitMessage": "",
+					"dataType": "indicators",
+					"dateRange": {
+						"fromDate": "0001-01-01T00:00:00Z",
+						"fromDateLicense": "0001-01-01T00:00:00Z",
+						"period": {
+							"by": "",
+							"byFrom": "days",
+							"byTo": "",
+							"field": "",
+							"fromValue": 7,
+							"toValue": null
+						},
+						"toDate": "0001-01-01T00:00:00Z"
+					},
+					"definitionId": "",
+					"fromServerVersion": "",
+					"id": "2dfa9eb9-10ce-405f-860b-25f2364d2b3c",
+					"isPredefined": false,
+					"itemVersion": "",
+					"modified": "2024-08-07T10:28:41.628388431Z",
+					"name": "test",
+					"packID": "",
+					"packName": "",
+					"params": {
+						"tableColumns": [
+							{
+								"isDefault": true,
+								"key": "indicator_type",
+								"position": 1,
+								"width": 120
+							},
+							{
+								"isDefault": true,
+								"key": "value",
+								"position": 2,
+								"width": 300
+							},
+							{
+								"isDefault": true,
+								"key": "score",
+								"position": 4,
+								"width": 120
+							},
+							{
+								"isDefault": true,
+								"key": "firstSeen",
+								"position": 5,
+								"width": 275
+							},
+							{
+								"isDefault": true,
+								"key": "lastSeen",
+								"position": 6,
+								"width": 275
+							},
+							{
+								"isDefault": true,
+								"key": "timestamp",
+								"position": 8,
+								"width": 190
+							},
+							{
+								"isDefault": true,
+								"key": "relatedIncCount",
+								"position": 9,
+								"width": 150
+							},
+							{
+								"isDefault": true,
+								"key": "sourceBrands",
+								"position": 12,
+								"width": 175
+							},
+							{
+								"isDefault": true,
+								"key": "sourceInstances",
+								"position": 13,
+								"width": 175
+							},
+							{
+								"isDefault": true,
+								"key": "expirationStatus",
+								"position": 14,
+								"width": 175
+							},
+							{
+								"isDefault": true,
+								"key": "expiration",
+								"position": 15,
+								"width": 190
+							}
+						]
+					},
+					"prevName": "test",
+					"primaryTerm": 1,
+					"propagationLabels": [
+						"all"
+					],
+					"query": "",
+					"sequenceNumber": 691676,
+					"shouldCommit": false,
+					"sizeInBytes": 1447,
+					"toServerVersion": "",
+					"vcShouldIgnore": false,
+					"vcShouldKeepItemLegacyProdMachine": false,
+					"version": 1,
+					"widgetType": "table"
+				},
+				"x": 0,
+				"y": 3
 			}
 		],
 		"locked": false,
@@ -324,16 +447,22 @@
 					}
 				},
 				"reflectDimensions": true,
-				"rowPos": null,
+				"rowPos": 0,
 				"w": 5
 			},
 			"query": {
 				"filter": {
+					"fromDate": "0001-01-01T00:00:00Z",
 					"period": {
+						"by": "",
 						"byFrom": "days",
-						"fromValue": 7
+						"byTo": "",
+						"field": "",
+						"fromValue": 7,
+						"toValue": null
 					},
-					"query": "-category:job and -status:archived and -status:closed"
+					"query": "-category:job and -status:archived and -status:closed",
+					"toDate": "0001-01-01T00:00:00Z"
 				},
 				"groupBy": [
 					"occurred(d)",
@@ -344,6 +473,139 @@
 			"title": "Active Incidents - Line chart",
 			"titleStyle": null,
 			"type": "chart"
+		},
+		{
+			"autoPageBreak": false,
+			"automation": {
+				"args": null,
+				"id": "",
+				"name": "",
+				"noEvent": false
+			},
+			"data": null,
+			"layout": {
+				"classes": "striped stackable small compact",
+				"columnPos": 0,
+				"forceRangeMessage": "",
+				"h": 3,
+				"i": "d1d69f70-54a7-11ef-a9d0-9784608227b0",
+				"readableHeaders": {
+					"expiration": "Expiration",
+					"expirationStatus": "Expiration Status",
+					"firstSeen": "First Seen",
+					"indicator_type": "Type",
+					"lastSeen": "Last Seen",
+					"relatedIncCount": "Related Incidents",
+					"score": "Verdict",
+					"sourceBrands": "Feed",
+					"sourceInstances": "Source Instances",
+					"timestamp": "Source Time Stamp",
+					"value": "Value"
+				},
+				"reflectDimensions": true,
+				"rowPos": 3,
+				"tableColumns": [
+					"indicator_type",
+					"value",
+					"score",
+					"firstSeen",
+					"lastSeen",
+					"timestamp",
+					"relatedIncCount",
+					"sourceBrands",
+					"sourceInstances",
+					"expirationStatus",
+					"expiration"
+				],
+				"tableColumnsMetaData": [
+					{
+						"isDefault": true,
+						"key": "indicator_type",
+						"position": 1,
+						"width": 120
+					},
+					{
+						"isDefault": true,
+						"key": "value",
+						"position": 2,
+						"width": 300
+					},
+					{
+						"isDefault": true,
+						"key": "score",
+						"position": 4,
+						"width": 120
+					},
+					{
+						"isDefault": true,
+						"key": "firstSeen",
+						"position": 5,
+						"width": 275
+					},
+					{
+						"isDefault": true,
+						"key": "lastSeen",
+						"position": 6,
+						"width": 275
+					},
+					{
+						"isDefault": true,
+						"key": "timestamp",
+						"position": 8,
+						"width": 190
+					},
+					{
+						"isDefault": true,
+						"key": "relatedIncCount",
+						"position": 9,
+						"width": 150
+					},
+					{
+						"isDefault": true,
+						"key": "sourceBrands",
+						"position": 12,
+						"width": 175
+					},
+					{
+						"isDefault": true,
+						"key": "sourceInstances",
+						"position": 13,
+						"width": 175
+					},
+					{
+						"isDefault": true,
+						"key": "expirationStatus",
+						"position": 14,
+						"width": 175
+					},
+					{
+						"isDefault": true,
+						"key": "expiration",
+						"position": 15,
+						"width": 190
+					}
+				],
+				"w": 5
+			},
+			"query": {
+				"filter": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 7,
+						"toValue": null
+					},
+					"query": "",
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"type": "indicators"
+			},
+			"title": "test",
+			"titleStyle": null,
+			"type": "table"
 		}
 	],
 	"sensitive": false,
