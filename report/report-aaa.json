@@ -16,126 +16,11 @@
 		"layout": [
 			{
 				"forceRange": false,
-				"h": 3,
-				"i": "ab376d30-5237-11ef-9ba5-79378305c23f",
-				"id": "ab376d30-5237-11ef-9ba5-79378305c23f",
-				"reflectDimensions": true,
-				"w": 5,
-				"widget": {
-					"Cache": null,
-					"cacheVersn": 0,
-					"category": "",
-					"commitMessage": "",
-					"dataType": "incidents",
-					"dateRange": {
-						"fromDate": "0001-01-01T00:00:00Z",
-						"fromDateLicense": "0001-01-01T00:00:00Z",
-						"period": {
-							"by": "",
-							"byFrom": "days",
-							"byTo": "",
-							"field": "",
-							"fromValue": null,
-							"toValue": null
-						},
-						"toDate": "0001-01-01T00:00:00Z"
-					},
-					"definitionId": "",
-					"fromServerVersion": "",
-					"id": "",
-					"isPredefined": false,
-					"itemVersion": "",
-					"modified": "0001-01-01T00:00:00Z",
-					"name": "Active Incidents - Line chart",
-					"packID": "",
-					"packName": "",
-					"params": {
-						"tableColumns": [
-							{
-								"isDefault": true,
-								"key": "id",
-								"position": 0,
-								"width": 110
-							},
-							{
-								"isDefault": true,
-								"key": "name",
-								"position": 2,
-								"width": 300
-							},
-							{
-								"isDefault": true,
-								"key": "type",
-								"position": 3,
-								"width": 200
-							},
-							{
-								"isDefault": true,
-								"key": "severity",
-								"position": 4,
-								"width": 80
-							},
-							{
-								"isDefault": true,
-								"key": "status",
-								"position": 5,
-								"width": 80
-							},
-							{
-								"isDefault": true,
-								"key": "owner",
-								"position": 6,
-								"width": 160
-							},
-							{
-								"isDefault": true,
-								"key": "roles",
-								"position": 7,
-								"width": 160
-							},
-							{
-								"isDefault": true,
-								"key": "playbookId",
-								"position": 8,
-								"width": 150
-							},
-							{
-								"isDefault": true,
-								"key": "occurred",
-								"position": 9,
-								"width": 200
-							},
-							{
-								"isDefault": true,
-								"key": "dueDate",
-								"position": 10,
-								"width": 200
-							}
-						]
-					},
-					"prevName": "",
-					"propagationLabels": [
-						"all"
-					],
-					"query": "",
-					"shouldCommit": false,
-					"sizeInBytes": 0,
-					"toServerVersion": "",
-					"vcShouldIgnore": false,
-					"vcShouldKeepItemLegacyProdMachine": false,
-					"version": 0,
-					"widgetType": "table"
-				},
-				"x": 0,
-				"y": 0
-			},
-			{
-				"forceRange": false,
-				"h": 3,
+				"h": 6,
 				"i": "d1d69f70-54a7-11ef-a9d0-9784608227b0",
 				"id": "d1d69f70-54a7-11ef-a9d0-9784608227b0",
 				"reflectDimensions": true,
-				"w": 5,
+				"w": 12,
 				"widget": {
 					"Cache": null,
 					"cacheVersn": 0,
@@ -249,7 +134,7 @@
 					"version": 1,
 					"widgetType": "table"
 				},
-				"x": 6,
+				"x": 0,
 				"y": 0
 			}
 		],
@@ -466,132 +351,7 @@
 				"classes": "striped stackable small compact",
 				"columnPos": 0,
 				"forceRangeMessage": "",
-				"h": 3,
-				"i": "ab376d30-5237-11ef-9ba5-79378305c23f",
-				"readableHeaders": {
-					"dueDate": "SLA",
-					"id": "ID",
-					"name": "Name",
-					"occurred": "Occurred",
-					"owner": "Owner",
-					"playbookId": "Playbook",
-					"roles": "Roles",
-					"severity": "Severity",
-					"status": "Status",
-					"type": "Type"
-				},
-				"reflectDimensions": true,
-				"rowPos": 0,
-				"tableColumns": [
-					"id",
-					"name",
-					"type",
-					"severity",
-					"status",
-					"owner",
-					"roles",
-					"playbookId",
-					"occurred",
-					"dueDate"
-				],
-				"tableColumnsMetaData": [
-					{
-						"isDefault": true,
-						"key": "id",
-						"position": 0,
-						"width": 110
-					},
-					{
-						"isDefault": true,
-						"key": "name",
-						"position": 2,
-						"width": 300
-					},
-					{
-						"isDefault": true,
-						"key": "type",
-						"position": 3,
-						"width": 200
-					},
-					{
-						"isDefault": true,
-						"key": "severity",
-						"position": 4,
-						"width": 80
-					},
-					{
-						"isDefault": true,
-						"key": "status",
-						"position": 5,
-						"width": 80
-					},
-					{
-						"isDefault": true,
-						"key": "owner",
-						"position": 6,
-						"width": 160
-					},
-					{
-						"isDefault": true,
-						"key": "roles",
-						"position": 7,
-						"width": 160
-					},
-					{
-						"isDefault": true,
-						"key": "playbookId",
-						"position": 8,
-						"width": 150
-					},
-					{
-						"isDefault": true,
-						"key": "occurred",
-						"position": 9,
-						"width": 200
-					},
-					{
-						"isDefault": true,
-						"key": "dueDate",
-						"position": 10,
-						"width": 200
-					}
-				],
-				"w": 5
-			},
-			"query": {
-				"filter": {
-					"fromDate": "0001-01-01T00:00:00Z",
-					"period": {
-						"by": "",
-						"byFrom": "days",
-						"byTo": "",
-						"field": "",
-						"fromValue": 7,
-						"toValue": null
-					},
-					"query": "",
-					"toDate": "0001-01-01T00:00:00Z"
-				},
-				"type": "incident"
-			},
-			"title": "Active Incidents - Line chart",
-			"titleStyle": null,
-			"type": "table"
-		},
-		{
-			"autoPageBreak": false,
-			"automation": {
-				"args": null,
-				"id": "",
-				"name": "",
-				"noEvent": false
-			},
-			"data": null,
-			"layout": {
-				"classes": "striped stackable small compact",
-				"columnPos": 6,
-				"forceRangeMessage": "",
-				"h": 3,
+				"h": 6,
 				"i": "d1d69f70-54a7-11ef-a9d0-9784608227b0",
 				"readableHeaders": {
 					"expiration": "Expiration",
@@ -689,7 +449,7 @@
 						"width": 190
 					}
 				],
-				"w": 5
+				"w": 12
 			},
 			"query": {
 				"filter": {
