@@ -53,7 +53,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.0.21
+    itemVersion: 2.0.23
     packID: rasterize
     packName: Rasterize
     packPropagationLabels:
@@ -385,11 +385,11 @@ script:
     - contextPath: InfoFile.Type
       description: The type of the image/pdf file.
       type: string
-  dockerimage: demisto/chromium:126.0.6478.103218
+  dockerimage: demisto/chromium:127.0.6533.105883
   runonce: false
   script: |
     register_module_line('Rasterize', 'start', __line__())
-    ### pack version: 2.0.21
+    ### pack version: 2.0.23
 
 
     import logging
@@ -398,7 +398,6 @@ script:
     import os
     import pychrome
     import random
-    import requests
     import subprocess
     import tempfile
     import threading
@@ -426,7 +425,7 @@ script:
     os.environ['HOME'] = tempfile.gettempdir()
 
     CHROME_EXE = os.getenv('CHROME_EXE', '/opt/google/chrome/google-chrome')
-    USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0" \
+    USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0" \
                  " Safari/537.36"
     CHROME_OPTIONS = ["--headless",
                       "--disable-gpu",
@@ -441,7 +440,7 @@ script:
                       ]
 
     WITH_ERRORS = demisto.params().get('with_error', True)
-    IS_HTTP = argToBoolean(demisto.params().get('is_https', False))
+    IS_HTTPS = argToBoolean(demisto.params().get('is_https', False))
 
     # The default wait time before taking a screenshot
     DEFAULT_WAIT_TIME = max(int(demisto.params().get('wait_time', 0)), 0)
@@ -589,6 +588,7 @@ script:
             self.tab = tab
             self.tab_ready_event = tab_ready_event
             self.start_frame = None
+            self.is_mailto = False
 
         def page_frame_started_loading(self, frameId):
             demisto.debug(f'PychromeEventHandler.page_frame_started_loading, {frameId=}')
@@ -616,6 +616,10 @@ script:
                 demisto.debug('PychromeEventHandler.page_frame_stopped_loading, setting tab_ready_event')
                 self.tab_ready_event.set()
 
+        def network_request_will_be_sent(self, documentURL, **kwargs):
+            '''Triggered when a request is sent by the browser, catches mailto URLs.'''
+            demisto.debug(f'PychromeEventHandler.network_request_will_be_sent, {documentURL=}')
+            self.is_mailto = documentURL.lower().startswith('mailto:')
     # endregion
 
 
@@ -946,13 +950,14 @@ script:
             write_file(CHROME_INSTANCES_FILE_PATH, chrome_instances_contents, overwrite=True)
 
 
-    def setup_tab_event(browser, tab):
+    def setup_tab_event(browser: pychrome.Browser, tab: pychrome.Tab) -> tuple[PychromeEventHandler, Event]:
         tab_ready_event = Event()
         tab_event_handler = PychromeEventHandler(browser, tab, tab_ready_event)
 
         tab.Network.enable()
         tab.Network.dataReceived = tab_event_handler.network_data_received
         # tab.Network.responseReceived = tab_event_handler.network_response_received
+        tab.Network.requestWillBeSent = tab_event_handler.network_request_will_be_sent
 
         tab.Page.frameStartedLoading = tab_event_handler.page_frame_started_loading
         tab.Page.frameStoppedLoading = tab_event_handler.page_frame_stopped_loading
@@ -960,7 +965,7 @@ script:
         return tab_event_handler, tab_ready_event
 
 
-    def navigate_to_path(browser, tab, path, wait_time, navigation_timeout):  # pragma: no cover
+    def navigate_to_path(browser, tab, path, wait_time, navigation_timeout) -> PychromeEventHandler:  # pragma: no cover
         tab_event_handler, tab_ready_event = setup_tab_event(browser, tab)
 
         try:
@@ -997,12 +1002,12 @@ script:
             heapUsage = tab.Runtime.getHeapUsage()
             demisto.debug(f'heapUsage after navigation {heapUsage=} on {tab.id=}')
 
-            return tab_event_handler
-
         except pychrome.exceptions.TimeoutException as ex:
             return_error(f'Navigation timeout: {ex} thrown while trying to navigate to {path}')
         except pychrome.exceptions.PyChromeException as ex:
             return_error(f'Exception: {ex} thrown while trying to navigate to {path}')
+
+        return tab_event_handler
 
 
     def backoff(polled_item, wait_time=DEFAULT_WAIT_TIME, polling_interval=DEFAULT_POLLING_INTERVAL):
@@ -1019,6 +1024,9 @@ script:
         :param include_source: Whether to include the page source in the response
         """
         tab_event_handler = navigate_to_path(browser, tab, path, wait_time, navigation_timeout)
+
+        if tab_event_handler.is_mailto:
+            return None, f'URLs that start with "mailto:" cannot be rasterized.\nURL: {path}'
 
         try:
             page_layout_metrics = tab.Page.getLayoutMetrics()
@@ -1187,7 +1195,7 @@ script:
                 rasterization_results = []
                 for current_path in paths:
                     if not current_path.startswith('http') and not current_path.startswith('file:///'):
-                        protocol = 'http' + 's' * IS_HTTP
+                        protocol = 'http' + 's' * IS_HTTPS
                         current_path = f'{protocol}://{current_path}'
 
                     # Start a new thread in group of max_tabs
@@ -1222,8 +1230,14 @@ script:
 
                 # Get the results
                 for current_thread in rasterization_threads:
-                    rasterization_results.append(current_thread.result())
-
+                    ret_value, response_body = current_thread.result()
+                    if ret_value:
+                        rasterization_results.append((ret_value, response_body))
+                    else:
+                        return_results(CommandResults(
+                            readable_output=str(response_body),
+                            entry_type=(EntryType.ERROR if WITH_ERRORS else EntryType.WARNING)
+                        ))
                 return rasterization_results
 
         else:
