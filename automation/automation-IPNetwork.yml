@@ -19,7 +19,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.40
+    itemVersion: 1.15.44
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -63,7 +63,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('IPNetwork', 'start', __line__())
-  ### pack version: 1.15.40
+  ### pack version: 1.15.44
 
 
   # STD imports
