@@ -36,7 +36,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.1.0
-    itemVersion: 1.34.31
+    itemVersion: 1.34.33
     packID: Base
     packName: Base
     packPropagationLabels:
@@ -56,7 +56,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('DrawRelatedIncidentsCanvas', 'start', __line__())
-  ### pack version: 1.34.31
+  ### pack version: 1.34.33
 
 
 
