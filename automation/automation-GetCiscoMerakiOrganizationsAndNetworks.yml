@@ -1,0 +1,121 @@
+args:
+- description: Meraki Integration instance name
+  name: meraki_instance
+  required: true
+commonfields:
+  id: 1cc7d131-c53d-497e-8c4e-fb4e61ebb0a7
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GetCiscoMerakiOrganizationsAndNetworks
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('GetCiscoMerakiOrganizationsAndNetworks', 'start', __line__())
+
+
+  USING_MERAKI_INSTANCE = demisto.args().get('meraki_instance')
+  ORGANIZATION_NETWORKS = "panw-iot-3rd-party-cisco-meraki-get-networks"
+  ORGANIZATIONS = "panw-iot-3rd-party-cisco-meraki-get-organizations"
+
+  def get_meraki_organizations():
+      try:
+          command_params={}
+          command_params['using'] = USING_MERAKI_INSTANCE
+          return executeCommand(ORGANIZATIONS, command_params)
+      except Exception as e:
+          raise Exception('error while retrieving the meraki organizations :'+str(e))
+
+  def get_meraki_networks(organizationID):
+      try:
+          command_params={}
+          command_params['using'] = USING_MERAKI_INSTANCE
+          command_params['organizationID']=organizationID
+          return executeCommand(ORGANIZATION_NETWORKS, command_params)
+      except Exception as e:
+          raise Exception('error while retrieving the meraki networks :'+str(e))
+
+  def executeCommand(command, params):
+      try:
+          res = demisto.executeCommand(command, params)
+          if (
+              not isinstance(res, list)
+              or 'Contents' not in res[0]
+              or isinstance(res[0]['Contents'], str)
+              ):
+                  return None
+          if isinstance(res[0]['Contents'], dict):
+              result=[]
+              result.append(res[0]['Contents'])
+              return result
+          return res[0]['Contents']
+      except Exception as e:
+          raise Exception(f'error while calling the cisco meraki command : {command} and the error is: {e}')
+
+  def get_meraki_organizations_and_its_networks(args):
+      organizations = get_meraki_organizations()
+      demisto.info(f'organizations:{organizations}')
+      if isinstance(organizations, list) and organizations:
+          data = ''
+          headers='"Organizations"," Networks"\n'
+          data += headers
+          organizations_networks=[]
+          for organization in organizations:
+              organization_and_its_networks={}
+              organizationID = organization['id']
+              organizationName = organization['name']
+              organization_and_its_networks['organization'] = organizationName
+              networks = get_meraki_networks(organizationID)
+              if isinstance(networks, list) and networks:
+                  demisto.info(f'networks:{networks}')
+                  networks_result = []
+                  for network in networks:
+                      networkID = network['id']
+                      networkName = network['name']
+                      networks_result.append(networkName)
+                  row = '"'+organizationName+'","'+','.join(networks_result)+'"\n'
+                  data += row
+                  organization_and_its_networks['networks'] = networks_result
+              else:
+                  row = '"",\n'
+                  data += row
+                  demisto.info(f'No networks found for organization: {organizationName}')
+              organizations_networks.append(organization_and_its_networks)
+          # return_results(fileResult('Meraki_cloud_organizations_and_networks.txt', str(organizations_networks), EntryType.ENTRY_INFO_FILE))
+          return_results(fileResult('Meraki_cloud_organizations_and_networks.csv', str(data), EntryType.ENTRY_INFO_FILE))
+      else:
+          msg = 'No Organizations found for the cisco meraki cloud configured.'
+          return_results(msg)
+
+  ''' MAIN FUNCTION '''
+  def main():
+      try:
+          get_meraki_organizations_and_its_networks(demisto.args())
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute GetCiscoMerakiOrganizationsAndNetworks. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('GetCiscoMerakiOrganizationsAndNetworks', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+type: python
