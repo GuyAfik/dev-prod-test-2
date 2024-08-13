@@ -1,0 +1,544 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 2.0.17
+    packID: ""
+    packName: Palo Alto Networks IoT 3rd Party Integrations
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: Fetch data from MS Defender and send it to PANW IoT Platform
+dirtyInputs: true
+id: 948611d3-2930-44b4-84e3-7a08a0b46d72
+inputs: []
+name: Import MS Defender devices to PANW IoT cloud
+outputs: []
+sourceplaybookid: Import MS Defender devices to PANW IoT cloud
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "24"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 19ca6ab1-6a05-4c8e-8c33-f30b50d55a9e
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 19ca6ab1-6a05-4c8e-8c33-f30b50d55a9e
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "18"
+      "no":
+      - "2"
+      "yes":
+      - "19"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - MS Defender XDR
+      instancename:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available and provided instance
+        is Active. Otherwise returns 'no'.
+      id: e0f8adf4-db5b-4c6a-8e77-d5cc238d8408
+      iscommand: false
+      name: Is MS Defender integration enabled?
+      script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+      type: condition
+      version: -1
+    taskid: e0f8adf4-db5b-4c6a-8e77-d5cc238d8408
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 730,
+          "y": 410
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "23"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: ms_defender_xdr
+      message:
+        simple: MS Defender integration is not enabled
+      playbook_name:
+        simple: Import MS Defender devices to PANW IoT cloud
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 455682cd-ab90-4f6d-8012-e454cf2eaf23
+      iscommand: true
+      name: Send disabled status back to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 455682cd-ab90-4f6d-8012-e454cf2eaf23
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 730,
+          "y": 585
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 703328eb-64cd-465e-841f-c393eacb97f7
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 703328eb-64cd-465e-841f-c393eacb97f7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1902.5,
+          "y": 895
+        }
+      }
+  "16":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      active_defender_instance:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 80dad1a4-6b9c-4766-8ccd-0ac06dd65fa0
+      iscommand: false
+      name: Send MS Defender devices to PANW IoT
+      script: SendMSDefenderDevicesToPANWIoT
+      type: regular
+      version: -1
+    taskid: 80dad1a4-6b9c-4766-8ccd-0ac06dd65fa0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1902.5,
+          "y": 720
+        }
+      }
+  "18":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "23"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: ms_defender_xdr
+      message:
+        simple: Invalid integration instance name provided
+      playbook_name:
+        simple: Import MS Defender devices to PANW IoT cloud
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 2f54e17b-b374-4ea9-8e6f-c122a85fc44c
+      iscommand: true
+      name: Send error status back to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 2f54e17b-b374-4ea9-8e6f-c122a85fc44c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 257.5,
+          "y": 545
+        }
+      }
+  "19":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "19"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "20"
+      "no":
+      - "21"
+      "yes":
+      - "16"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_instance_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - MS Defender XDR
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 2b11a890-4cc5-4c6f-894f-97ffde0e7af0
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: 2b11a890-4cc5-4c6f-894f-97ffde0e7af0
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1242.5,
+          "y": 545
+        }
+      }
+  "20":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "20"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: ms_defender_xdr
+      message:
+        simple: 'Error: Failed to get License'
+      playbook_name:
+        simple: Import MS Defender devices to PANW IoT cloud
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: d59dd5eb-e1df-4058-8292-f7cb96f75c98
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: d59dd5eb-e1df-4058-8292-f7cb96f75c98
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1032.5,
+          "y": 720
+        }
+      }
+  "21":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: ms_defender_xdr
+      message:
+        simple: License Limit Exceeded.
+      playbook_name:
+        simple: Import MS Defender devices to PANW IoT cloud
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 3865e8d7-ccbd-446f-89d5-a245b4a14424
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 3865e8d7-ccbd-446f-89d5-a245b4a14424
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1462.5,
+          "y": 720
+        }
+      }
+  "22":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "22"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 3636098f-ee83-4263-859e-daa0c11c7cc8
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 3636098f-ee83-4263-859e-daa0c11c7cc8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 900,
+          "y": 960
+        }
+      }
+  "23":
+    continueonerrortype: ""
+    id: "23"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 815e8abc-2a9d-41b0-816b-dcb0fb3fb4a7
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 815e8abc-2a9d-41b0-816b-dcb0fb3fb4a7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 540,
+          "y": 760
+        }
+      }
+  "24":
+    continueonerror: true
+    continueonerrortype: ""
+    defaultassigneecomplex:
+      simple: ${incident.integrationinstancename}
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "25"
+      "yes":
+      - "1"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: 225e13f5-29c4-46c3-8b4d-b5c190439458
+      iscommand: false
+      name: Is MS Defender Integration Instance Available
+      script: Exists
+      type: condition
+      version: -1
+    taskid: 225e13f5-29c4-46c3-8b4d-b5c190439458
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 195
+        }
+      }
+  "25":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: ms_defender_xdr
+      message:
+        simple: No MS Defender Integration instance passed
+      playbook_name:
+        simple: Import MS Defender devices to PANW IoT cloud
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 1587f1ae-2067-41a8-8e51-553772ed6437
+      iscommand: true
+      name: No Instance passed to this Playbook. Reporting Error
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 1587f1ae-2067-41a8-8e51-553772ed6437
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -150,
+          "y": 420
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "1_18_#default#": 0.85,
+      "1_2_no": 0.65
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1005,
+        "width": 2432.5,
+        "x": -150,
+        "y": 50
+      }
+    }
+  }
