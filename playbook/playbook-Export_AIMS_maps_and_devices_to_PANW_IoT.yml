@@ -11,7 +11,6 @@ contentitemexportablefields:
     toServerVersion: ""
 description: Export AIMS facilities, vendors, employees, work order priority list
   mappings and devices data to PANW IoT cloud
-dirtyInputs: true
 id: Export AIMS maps and devices to PANW IoT
 inputs: []
 name: Export AIMS maps and devices to PANW IoT
@@ -33,11 +32,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 4d42b553-9df3-4fae-8d52-e0c9b1c6d288
+      id: 49a9cb25-a8b8-424b-8f8c-f09ac5c61b5a
       iscommand: false
       name: ""
       version: -1
-    taskid: 4d42b553-9df3-4fae-8d52-e0c9b1c6d288
+    taskid: 49a9cb25-a8b8-424b-8f8c-f09ac5c61b5a
     timertriggers: []
     type: start
     view: |-
@@ -67,13 +66,13 @@ tasks:
     task:
       brand: ""
       description: Get the facilities mapping details from AIMS
-      id: a7b6a65e-e353-4df1-8792-c1e4d112a2ea
+      id: 32b39ed5-b9c0-4ea0-8115-d412cfaf59af
       iscommand: true
       name: Get facility maps
       script: '|||aims-get-facility-maps'
       type: regular
       version: -1
-    taskid: a7b6a65e-e353-4df1-8792-c1e4d112a2ea
+    taskid: 32b39ed5-b9c0-4ea0-8115-d412cfaf59af
     timertriggers: []
     type: regular
     view: |-
@@ -113,13 +112,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message to PANW IOT cloud.
-      id: dd57f592-9021-40d2-8cb0-71ba3f8a5c62
+      id: e971fab4-54ef-4183-8f62-1d2e325f8cb0
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: dd57f592-9021-40d2-8cb0-71ba3f8a5c62
+    taskid: e971fab4-54ef-4183-8f62-1d2e325f8cb0
     timertriggers: []
     type: regular
     view: |-
@@ -159,13 +158,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message to PANW IOT cloud.
-      id: 91bd4e9e-08e2-4b3e-876b-9dd333532c7f
+      id: 49626b7a-cbba-476c-8203-ade55b1e5a59
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 91bd4e9e-08e2-4b3e-876b-9dd333532c7f
+    taskid: 49626b7a-cbba-476c-8203-ade55b1e5a59
     timertriggers: []
     type: regular
     view: |-
@@ -205,13 +204,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message to PANW IOT cloud.
-      id: 2e66a4e3-e32c-4bb4-8cee-da989cc8318e
+      id: ea3e00bc-c55c-44e2-8b3d-d2d29dc76b06
       iscommand: true
       name: Send success status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 2e66a4e3-e32c-4bb4-8cee-da989cc8318e
+    taskid: ea3e00bc-c55c-44e2-8b3d-d2d29dc76b06
     timertriggers: []
     type: regular
     view: |-
@@ -241,13 +240,13 @@ tasks:
     task:
       brand: ""
       description: Get the vendors mapping details from AIMS
-      id: de605629-7765-4038-88d5-947a8115423d
+      id: 31824e41-238f-4f43-844b-1704b4728858
       iscommand: true
       name: Get vendor maps
       script: '|||aims-get-vendor-maps'
       type: regular
       version: -1
-    taskid: de605629-7765-4038-88d5-947a8115423d
+    taskid: 31824e41-238f-4f43-844b-1704b4728858
     timertriggers: []
     type: regular
     view: |-
@@ -277,13 +276,13 @@ tasks:
     task:
       brand: ""
       description: Get the equipment type mapping details from AIMS
-      id: 1c8c7db1-220d-4182-8407-26372eb42df3
+      id: 63a1a0bf-ee52-4d4e-80fd-1f39a7780f1c
       iscommand: true
       name: Get equipment type maps
       script: '|||aims-get-equipment-type-maps'
       type: regular
       version: -1
-    taskid: 1c8c7db1-220d-4182-8407-26372eb42df3
+    taskid: 63a1a0bf-ee52-4d4e-80fd-1f39a7780f1c
     timertriggers: []
     type: regular
     view: |-
@@ -313,13 +312,13 @@ tasks:
     task:
       brand: ""
       description: Get the cost center mapping details from AIMS
-      id: 1ff97be9-fed8-47ca-8120-56d43be09054
+      id: e60a6c06-026b-4fee-88b7-feaba58dd781
       iscommand: true
       name: Get cost center maps
       script: '|||aims-get-cost-center-maps'
       type: regular
       version: -1
-    taskid: 1ff97be9-fed8-47ca-8120-56d43be09054
+    taskid: e60a6c06-026b-4fee-88b7-feaba58dd781
     timertriggers: []
     type: regular
     view: |-
@@ -350,13 +349,13 @@ tasks:
       brand: ""
       description: Gets all available devices from the AIMS and send them to PANW
         IoT cloud using the custom attributes.
-      id: a3d57057-f4b1-4b8b-8f16-97442ecc7564
+      id: fa4d2e40-53ec-4337-8054-621f427712cb
       iscommand: false
       name: Send AIMS devices to PANW IoT
       script: SendAIMSDevicesToPANWIoT
       type: regular
       version: -1
-    taskid: a3d57057-f4b1-4b8b-8f16-97442ecc7564
+    taskid: fa4d2e40-53ec-4337-8054-621f427712cb
     timertriggers: []
     type: regular
     view: |-
@@ -390,13 +389,13 @@ tasks:
     task:
       brand: ""
       description: Send metadata to PANW IOT cloud
-      id: 8f9fc60e-782e-47cd-8b5b-4791a41023c4
+      id: 29a2f2e3-431c-4a93-89b2-6af49823c678
       iscommand: true
       name: Send AIMS metadata to PANW IoT
       script: '|||panw-iot-3rd-party-report-metadata'
       type: regular
       version: -1
-    taskid: 8f9fc60e-782e-47cd-8b5b-4791a41023c4
+    taskid: 29a2f2e3-431c-4a93-89b2-6af49823c678
     timertriggers: []
     type: regular
     view: |-
@@ -430,13 +429,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: 13193131-2115-44d7-8098-b0a9d39a582e
+      id: 00d1a058-34f5-4ecc-839b-b19b5de206b4
       iscommand: false
       name: Was there an error sending metadata to PANW IoT?
       script: isError
       type: condition
       version: -1
-    taskid: 13193131-2115-44d7-8098-b0a9d39a582e
+    taskid: 00d1a058-34f5-4ecc-839b-b19b5de206b4
     timertriggers: []
     type: condition
     view: |-
@@ -470,13 +469,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: 148e165f-82b4-4926-8eed-390f08c0edc4
+      id: 707b5772-4be0-49ad-8826-68e52247ee13
       iscommand: false
       name: Was there an error getting data from AIMS?
       script: isError
       type: condition
       version: -1
-    taskid: 148e165f-82b4-4926-8eed-390f08c0edc4
+    taskid: 707b5772-4be0-49ad-8826-68e52247ee13
     timertriggers: []
     type: condition
     view: |-
@@ -500,13 +499,13 @@ tasks:
     task:
       brand: Builtin
       description: commands.local.cmd.close.inv
-      id: 16ae59c1-7be8-49ae-8117-a8ca454b9c52
+      id: fbe93868-e290-411b-8964-a2e20dd7da23
       iscommand: true
       name: Close Investigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 16ae59c1-7be8-49ae-8117-a8ca454b9c52
+    taskid: fbe93868-e290-411b-8964-a2e20dd7da23
     timertriggers: []
     type: regular
     view: |-
@@ -546,13 +545,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: e61a9e5b-c140-419e-88df-b79291f66d4c
+      id: 597f9ed1-d7e0-49ff-800b-38a6c7aca106
       iscommand: false
       name: Is AIMS Integration enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: e61a9e5b-c140-419e-88df-b79291f66d4c
+    taskid: 597f9ed1-d7e0-49ff-800b-38a6c7aca106
     timertriggers: []
     type: condition
     view: |-
@@ -575,13 +574,13 @@ tasks:
     task:
       brand: Builtin
       description: commands.local.cmd.close.inv
-      id: be31b75e-7d2b-409a-8c36-f1bafcd9ef2e
+      id: f7345657-caf9-43ef-8e6d-94215808d1e2
       iscommand: true
       name: Close Investigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: be31b75e-7d2b-409a-8c36-f1bafcd9ef2e
+    taskid: f7345657-caf9-43ef-8e6d-94215808d1e2
     timertriggers: []
     type: regular
     view: |-
