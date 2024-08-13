@@ -1,0 +1,349 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: Playbook to handle incident triggered from PANW Iot (Zingbox) UI to un-quarantine
+  a device in ISE via pxGrid.
+dirtyInputs: true
+id: 37c738eb-740f-48e9-8a08-8f1db85a5d78
+inputs: []
+name: Un-quarantine Device in Cisco ISE via pxGrid - PANW IoT 3rd Party Integration
+outputs:
+- contextPath: incident
+  description: This playbook is invoked via the incident type "PANW IoT 3rd Party
+    Cisco ISE PxGrid Un-quarantine"
+  type: unknown
+sourceplaybookid: 8b5228ed-fd4f-413e-8a7a-0f870ab8a45e
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7b369cdd-f920-4c3d-8b62-8f4f12ce85ab
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 7b369cdd-f920-4c3d-8b62-8f4f12ce85ab
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": -290
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "2"
+      "yes":
+      - "3"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: Cisco ISE pxGrid
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available. Otherwise returns
+        'no'
+      id: 2bcf498a-0c31-4bc4-8f51-1770ac2e43dd
+      iscommand: false
+      name: Is pxGrid Integration enabled?
+      script: IsIntegrationAvailable
+      type: condition
+      version: -1
+    taskid: 2bcf498a-0c31-4bc4-8f51-1770ac2e43dd
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": -110
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: pxgrid
+      message:
+        simple: PxGrid Integration is not enabled
+      playbook_name:
+        simple: Quarantine Device in Cisco ISE via pxGrid - PANW IoT 3rd Party Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 185fdb38-d336-4230-8504-6b601c8a1a75
+      iscommand: true
+      name: Report disabled status to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 185fdb38-d336-4230-8504-6b601c8a1a75
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 160,
+          "y": 110
+        }
+      }
+  "3":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      action:
+        simple: unquarantine
+      mac_address:
+        simple: ${incident.macAddress}
+      using:
+        simple: PANW IoT 3rd Party ISE pxGrid Integration instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Quarantines or Un-quarantine a device by mac
+      id: 786d40fa-bad4-4725-84cb-7d67e1ce7505
+      iscommand: true
+      name: Un-quarantine Endpoint on Cisco ISE
+      script: '|||pxgrid-quarantine-device-by-mac'
+      type: regular
+      version: -1
+    taskid: 786d40fa-bad4-4725-84cb-7d67e1ce7505
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 670,
+          "y": 130
+        }
+      }
+  "4":
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: d2609378-f569-4167-856b-0503ccf21efe
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: d2609378-f569-4167-856b-0503ccf21efe
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 60,
+          "y": 770
+        }
+      }
+  "5":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: pxgrid
+      message:
+        simple: Failed to un-quarantine ${Endpoint.MACAddress}
+      playbook_name:
+        simple: Quarantine Device in Cisco ISE via pxGrid - PANW IoT 3rd Party Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 2b6b427e-2e0d-4515-8206-35e8c561c7d5
+      iscommand: true
+      name: Report success status to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 2b6b427e-2e0d-4515-8206-35e8c561c7d5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 400,
+          "y": 550
+        }
+      }
+  "6":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "5"
+      "yes":
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: 668c1801-a684-4f55-8944-40b49c08c60a
+      iscommand: false
+      name: was there an error attempting release from quarantine?
+      script: isError
+      type: condition
+      version: -1
+    taskid: 668c1801-a684-4f55-8944-40b49c08c60a
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 670,
+          "y": 350
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: pxgrid
+      message:
+        simple: 'successfully un-quarantined ${Endpoint.MACAddress} '
+      playbook_name:
+        simple: Quarantine Device in Cisco ISE via pxGrid - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: d41eb59a-c9e2-4969-8c27-fe900484e7dc
+      iscommand: true
+      name: Report error status to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: d41eb59a-c9e2-4969-8c27-fe900484e7dc
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 920,
+          "y": 550
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1155,
+        "width": 1240,
+        "x": 60,
+        "y": -290
+      }
+    }
+  }
