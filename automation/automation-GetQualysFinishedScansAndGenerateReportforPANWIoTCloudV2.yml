@@ -1,0 +1,248 @@
+args:
+- description: Delta time to retrieve the scans
+  name: time
+- description: Qualys instance name
+  name: qualys_instance_name
+  required: true
+- auto: PREDEFINED
+  description: Type of playbook
+  name: type
+  predefined:
+  - BULK
+  - INCREMENTAL
+  required: true
+- name: custom_time
+commonfields:
+  id: GetQualysFinishedScansAndGenerateReportforPANWIoTCloudV2
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GetQualysFinishedScansAndGenerateReportforPANWIoTCloudV2
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('GetQualysFinishedScansAndGenerateReportforPANWIoTCloudV2', 'start', __line__())
+
+
+
+
+
+
+
+  import ipaddress
+
+  USING_QUALYS = demisto.args().get('qualys_instance_name')
+  TYPE = demisto.args().get('type')
+  QUALYS_LAUNCHED_REPORTS_V2='QualysLaunchedReportsV2-'+TYPE+'-'+USING_QUALYS
+  def validate_ip_address(address):
+      try:
+          ip = ipaddress.ip_address(address)
+          return True
+      except ValueError:
+          return False
+
+  def get_formatted_time(num_of_day):
+      # Get today's date and time
+      current_date = datetime.utcnow()
+      # Subtract the specified number of days
+      new_date = current_date - timedelta(days=int(num_of_day))
+      # Format the new date in the specified format
+      new_date_str = new_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+      return new_date_str
+
+  def get_scan_reports():
+      date_time = demisto.args().get('time')
+      if demisto.args().get('custom_time'):
+          date_time = get_formatted_time(demisto.args().get('custom_time'))
+      res = demisto.executeCommand('qualys-vm-scan-list', {'launched_after_datetime': date_time,'show_ags':1,'show_op':1,'show_status':1, 'show_last':0,'using':USING_QUALYS})
+      time.sleep(60)
+      #print("Scan List : %s" % res)
+      #return_outputs(res)
+      finished_scan_list = []
+      if (
+          not isinstance(res, list)
+          or 'EntryContext' not in res[0]
+          or not isinstance(res[0]['EntryContext'], dict)
+          or not res[0]['EntryContext']
+          or 'Item not found (8)' in res[0]['EntryContext']
+      ):
+          return 'No Scans available'
+
+      report_ids = res[0]['EntryContext']
+      try:
+          scan_list = report_ids.get("Qualys.Scan(val.REF && val.REF == obj.REF)")
+          if isinstance(scan_list, list) == False:
+              scan_list = [scan_list]
+          for scan in scan_list:
+              ref = scan['REF']
+              ip = scan['TARGET']
+              title = scan['TITLE']
+              state = scan['STATUS']['STATE']
+              return_outputs('Scan ref:'+str(ref)+' Scan Title:'+str(title))
+              if state == "Finished":
+                  scan_cache_entry = ref+'_'+ip
+                  finished_scan_list.append(scan_cache_entry)
+      except Exception as e:
+          return "No Scans available on Qualys"+str(e)
+          # FIX ME: We get key errors when the scan list is empty, just return here
+          raise Exception("Failed to get Scan List data %s" % str(e))
+      if len(finished_scan_list) == 0:
+          return 'No PANW IoT launched Scans are in Finished state'
+      return launch_reports_for_finished_scans(finished_scan_list)
+
+  def doesIPExistsInIoTCloud(scan_ip):
+      res = demisto.executeCommand("panw-iot-3rd-party-device-details",{"ip":scan_ip})
+      # return_outputs(str(scan_ip)+":"+str(res[0]['Contents']))
+      if '[404] - Not Found' not in res[0]['Contents']:
+          return True
+      return False
+
+  def report_launch_success(response):
+      # Returns true if the launch was a success and false in case of error
+      report_launch_success = False
+      if isinstance(response, list) and len(response) != 0:
+          scan_id = response[0].get("EntryContext", {}).get("Qualys.Report(val.ID && val.ID == obj.ID)").get("ID")
+          report_launch_success = True if scan_id else False
+      return report_launch_success
+
+  def get_and_delete_report():
+      deleted_reports = []
+      res = demisto.executeCommand("qualys-report-list", {"using":USING_QUALYS})
+      time.sleep(60)
+      if isError(res):
+          raise Exception(res[0]['Contents'])
+      try:
+          report_list = res[0].get("EntryContext").get("Qualys.Report(val.ID && val.ID == obj.ID)")
+          for report in report_list:
+              res = demisto.executeCommand("qualys-report-delete",{'id':report.get("ID"),'using':USING_QUALYS})
+              deleted_reports.append(res)
+              time.sleep(10)
+      except Exception as ex:
+          return_error(f'Failed to execute get_and_delete_report. Error: {str(ex)}')
+      return deleted_reports
+
+  def launch_reports_for_finished_scans(scan_list, retry=0):
+      result_list = []
+      template_id = None
+      clean_data = ""
+      try:
+          res = demisto.executeCommand("qualys-report-template-list", {'using':USING_QUALYS})
+          time.sleep(60)
+          templates = res[0]['EntryContext']
+          template_list = templates.get("Qualys.ReportTemplate(val.ID && val.ID == obj.ID)")
+          if template_list:
+              for template in template_list:
+                  if 'TITLE' in template and 'ID' in template:
+                      if template.get('TITLE',"") == 'Technical Report':
+                          template_id = template['ID']
+                          demisto.info(f"Successfully get the Technical Report template ID: {template_id}")
+                          break
+      except Exception:
+          demisto.error("Failed to get Qualys template list")
+          raise Exception("Failed to get Qualys template list")
+      if template_id == None:
+          demisto.error("Failed to get Technical Report template ID")
+          raise Exception("Failed to get Technical Report template ID.")
+
+      count = 0
+      for entry in scan_list:
+          scan_ref, scan_ip = entry.split('_')
+          is_valid_ip=validate_ip_address(scan_ip)
+          single_or_multi_ip=None
+          if(not is_valid_ip):
+              single_or_multi_ip='multiIP'
+          else:
+              single_or_multi_ip=scan_ip
+          if(is_valid_ip and not doesIPExistsInIoTCloud(scan_ip)):
+              # return_outputs('IP doesn\'t exists in PANW IoT cloud: %s'%scan_ip)
+              result_list.append('IP doesn\'t exists in PANW IoT cloud: %s'%scan_ip)
+
+          else:
+              try:
+                  res = demisto.executeCommand("qualys-report-launch-scan-based-findings",
+                      {"template_id":template_id,"output_format":"pdf","report_refs":scan_ref,
+                          "report_title": "panw_iot_" + single_or_multi_ip + "_pdf_report",
+                          'using':USING_QUALYS})
+                  if isError(res) or not report_launch_success(res):
+                      if "Max number of allowed reports already running" in str(res[0].get('Contents')) and count < 10:
+                          count += 1
+                          time.sleep(720)
+                          res = demisto.executeCommand("qualys-report-launch-scan-based-findings",
+                              {"template_id":template_id,"output_format":"pdf","report_refs":scan_ref,
+                                  "report_title": "panw_iot_" + single_or_multi_ip + "_pdf_report",
+                                  'using':USING_QUALYS})
+                      else:
+                          clean_data = get_and_delete_report()
+                          raise Exception("Failed to launch PDF report. Error details: " + str(res[0].get('Contents')) + "Deleted the launched reports: " + str(len(clean_data)))
+                  pdf_report_id = res[0].get('EntryContext').get("Qualys.Report(val.ID && val.ID == obj.ID)").get("ID")
+                  return_outputs('Generating pdf report for scan: '+scan_ref+' and the pdf report id is: '+pdf_report_id)
+                  result_list.append('scan finished for %s - %s, PDF report launched with ID %s' % (scan_ip, scan_ref, pdf_report_id))
+                  # also add launched reports to cache
+                  demisto.executeCommand("PANWIoTLaunchedVulnerabilityScanCacheOperations",
+                      {"name":QUALYS_LAUNCHED_REPORTS_V2,"operation":"insert",
+                       "value":pdf_report_id+"_"+single_or_multi_ip+"_"+scan_ref})
+                  time.sleep(300)
+
+                  res = demisto.executeCommand("qualys-report-launch-scan-based-findings",
+                      {"template_id":template_id,"output_format":"xml","report_refs":scan_ref,
+                          "report_title": "panw_iot_" + single_or_multi_ip + "_xml_report",
+                          'using':USING_QUALYS})
+
+                  if isError(res) or not report_launch_success(res):
+                      if "Max number of allowed reports already running" in str(res[0].get('Contents')) and count < 10:
+                              time.sleep(720)
+                              res = demisto.executeCommand("qualys-report-launch-scan-based-findings",
+                                  {"template_id":template_id,"output_format":"xml","report_refs":scan_ref,
+                                      "report_title": "panw_iot_" + single_or_multi_ip + "_xml_report",
+                                      'using':USING_QUALYS})
+                      else:
+                          clean_data = get_and_delete_report()
+                          raise Exception("Failed to launch XML report. Error details: " + str(res[0].get('Contents')) + "Deleted the launched reports: " + str(len(clean_data)))
+                  xml_report_id = res[0].get('EntryContext').get("Qualys.Report(val.ID && val.ID == obj.ID)").get("ID")
+                  # also add launched reports to cache
+                  return_outputs('Generating xml report for scan: '+scan_ref+' and the xml report id is: '+xml_report_id)
+                  result_list.append('scan finished for %s - % s, XML report launched with ID %s' % (scan_ip, scan_ref, xml_report_id))
+                  demisto.executeCommand("PANWIoTLaunchedVulnerabilityScanCacheOperations",
+                      {"name":QUALYS_LAUNCHED_REPORTS_V2,"operation":"insert",
+                       "value":xml_report_id+"_"+single_or_multi_ip+"_"+scan_ref})
+                  demisto.info("Successfully execute the command PANWIoTLaunchedVulnerabilityScanCacheOperations")
+                  time.sleep(300)
+              except Exception as ex:
+                  demisto.error("Failed to launch Qualys report. Error details: "+str(ex))
+                  raise Exception("Failed to launch Qualys report. Error details: "+str(ex))
+      return result_list
+
+  def main():
+      try:
+          return_results(get_scan_reports())
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute GetQualysFinishedScansAndGenerateReportforPANWIoTCloudV2. Error: {str(ex)}')
+
+  ''' ENTRY POINT '''
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+
+  register_module_line('GetQualysFinishedScansAndGenerateReportforPANWIoTCloudV2', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- Qualys
+timeout: 100800h0m0s
+type: python
