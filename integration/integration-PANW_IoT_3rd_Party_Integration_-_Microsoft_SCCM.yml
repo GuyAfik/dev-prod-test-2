@@ -1,0 +1,524 @@
+category: IT Services
+commonfields:
+  id: PANW IoT 3rd Party Integration - Microsoft SCCM
+  version: -1
+configuration:
+- display: SQL Server Host/IP
+  name: sql-server-host
+  required: true
+  type: 0
+- defaultvalue: "1433"
+  display: SQL Server Port
+  name: sql-server-port
+  required: true
+  type: 0
+- display: SQL Database
+  name: sql-database-name
+  required: true
+  type: 0
+- additionalinfo: For "Windows Authentication" provide the Username as Domain\Username.
+    For SQL Server Authentication provide the SQL Server Username.
+  display: Username
+  name: sql-username
+  required: true
+  type: 0
+- display: Password
+  name: sql-password
+  required: true
+  type: 4
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: 'Microsoft System Center Configuration Manager(SCCM) is a suite of management
+  solutions designed to manage users and devices. '
+display: PANW IoT 3rd Party Integration - Microsoft SCCM
+image: data:image/png;base64,PHN2ZyBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtcnVsZT0iZXZlbm9kZCIgdmlld0JveD0iMCAwIDU2MCA0MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTAgMTE5LjE1aDU1OS42NzZ2MTYxLjEwM2gtNTU5LjY3NnoiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJtMjYuMDg4IDE0NS41MTVoNTEuNTU1bC0uMDA0IDUxLjU1NWgtNTEuNTUxeiIgZmlsbD0iI2Y2NTMxNCIvPjxwYXRoIGQ9Im04Mi45MDcgMTQ1LjUxNWg1MS41NTVjMCAxNy4xODUuMDAzIDM0LjM3LS4wMDMgNTEuNTU1LTE3LjE4Mi0uMDAzLTM0LjM2NyAwLTUxLjU0OSAwLS4wMDYtMTcuMTg1LS4wMDMtMzQuMzctLjAwMy01MS41NTV6IiBmaWxsPSIjN2ZiYjQxIi8+PHBhdGggZD0ibTQ5MC45OTcgMTY1LjE1OWM0Ljc1My0zLjA5MyAxMC44OTQtMy4zODIgMTYuMjUtMS45MDguMDQ3IDMuMTg0LjAwNiA2LjM3LjAyMSA5LjU1NS0yLjU0NS0xLjEyLTUuNTQtMS44NTEtOC4yMTctLjc1Mi0yLjEyNS44NDMtMy4zODkgMy4wMjMtMy43MTkgNS4yMDItLjM5OSAyLjc2NS0uMTQgNS41NjctLjIwOCA4LjM0OCA1LjQzOC4wMTIgMTAuODc1LjAwMyAxNi4zMTIuMDA2LjA0MS0zLjUzLS4wNDMtNy4wNjMuMDQ3LTEwLjU5MyAzLjY5Ny0xLjA1MSA3LjM1My0yLjIzMiAxMS4wMzItMy4zNC4wMzEgNC42NS0uMDQzIDkuMzA0LjA0MSAxMy45NTggMy42NzUtLjA1MyA3LjM1NC0uMDEyIDExLjAzMi0uMDI1djkuMDU1Yy0zLjY5MS0uMTUzLTcuMzg1LS4wNDItMTEuMDc1LS4wNTQuMDE1IDUuMjA2LjAwMiAxMC40MTEuMDA1IDE1LjYxOC4wNTkgMi44ODMtLjE1NCA1Ljc4MS4xODMgOC42NTUuMjA0IDEuNjk0LjgyMSAzLjU3MSAyLjQwOCA0LjQ0NyAyLjY2MSAxLjQ4OSA2LjAzNi44MzkgOC40NzktLjc5NnY5LjE0M2MtMy4xODcgMS4zODQtNi43NDcgMS44MDYtMTAuMTkzIDEuNTYxLTMuMjcxLS4yNDItNi42NTctMS40My04Ljc5MS00LjAzMi0yLjQ2NS0yLjkzOC0zLjA5OS02LjkxNy0zLjE0OS0xMC42MzktLjAyOC03Ljk4OC4wMDMtMTUuOTc3LS4wMTItMjMuOTY5LTUuNDQxLS4wMDQtMTAuODgxLS4wMDYtMTYuMzE5LjAwMy0uMDA2IDEyLjUzNy0uMDAzIDI1LjA3NS0uMDAzIDM3LjYxM2gtMTEuMTVjMC0xMi41MzYtLjAxNi0yNS4wNjYuMDA2LTM3LjYtMi41ODYtLjA1LTUuMTc0LjAxMi03Ljc1OS0uMDQxLjAwOS0yLjk3NS4wMjEtNS45NTQtLjAwNy04LjkzMyAyLjU3NC0uMDU5IDUuMTUtLjAzNCA3LjczLS4wMTUuMTg4LTMuOTU4LS40MTUtOC4wMjkuNzY4LTExLjg4NC45OTktMy40OCAzLjIyMy02LjYyIDYuMjg4LTguNTgzem0tMjM4LjcyNi42NWMyLjI0OC0uMzQxIDQuNjgxLjQyNyA2LjE3MSAyLjE4NiAxLjc0NyAxLjkyNiAyLjA2OSA0Ljk5MS43NzQgNy4yNDMtMS40MzEgMi41MzgtNC42MzIgMy43MTgtNy40MjIgMy4xMDktMi44OTUtLjUyLTUuMzA3LTMuMjEyLTUuMTc4LTYuMjEyLS4wODMtMy4xNTggMi41NTgtNS45NzMgNS42NTUtNi4zMjd6bS04NS40NTIgMS4zODFoMTYuMjE2YzUuMDQ3IDEyLjgxNyAxMC4xMzEgMjUuNjE5IDE1LjE4NSAzOC40MzUgMS4yOTEgMy4yMDYgMi40OTkgNi40NDcgMy44NTIgOS42MjcgNi40OTMtMTYuMDE0IDEzLjA3OS0zMS45ODggMTkuNTIyLTQ4LjAyNSA1LjItLjA4NCAxMC40MDEtLjAxOSAxNS42MDMtLjAzMS0uMDEyIDIxLjY3Mi0uMDA2IDQzLjM0My0uMDAyIDY1LjAxNS0zLjc1My0uMDA5LTcuNTAzLjAzMi0xMS4yNTMtLjAyMi4wNC0xNS45OTItLjAwMy0zMS45ODUuMDE5LTQ3Ljk4MS4wMDYtLjcxOS0uMDE5LTEuNDM4LS4wNjktMi4xNTUtLjIyLjMzNC0uNDE0LjY4MS0uNTg0IDEuMDQxLTYuNDQ1IDE2LjM2OS0xMy4wMTIgMzIuNjkzLTE5LjQxOCA0OS4wNzktMi42NjkuMDk3LTUuMzQxLjAwNy04LjAxNC4wNDktNi42NDctMTYuMzY5LTEzLjIxMi0zMi43NzctMTkuODI2LTQ5LjE2LS4xNzQtLjM0MS0uMzU5LS42NzItLjU2MS0uOTktLjEzNiA3LjAwNi0uMDIxIDE0LjAxOS0uMDU4IDIxLjAyNy4wMDIgOS43MDQtLjAwNiAxOS40MDguMDAyIDI5LjExMi0zLjUzOC4wMDktNy4wNzcgMC0xMC42MTQuMDA0LS4wMDMtMjEuNjc2LS4wMDYtNDMuMzUxIDAtNjUuMDI1em0xMTYuMTM4IDE4LjM3N2M1LjM4LTEuNTMzIDExLjE4NC0xLjQ3MSAxNi41NjIuMDQ5IDEuMTA5LjMxIDIuMTgyLjc0IDMuMTgxIDEuMzI2LS4wNjMgMy41NTEgMCA3LjEwNi0uMDM1IDEwLjY2MS0zLjU5Ni0yLjc0Ny04LjE1Ni00LjQ4Ny0xMi43MjYtMy45MTEtMy42My4zMjgtNy4wOTEgMi4yMTEtOS4yNjEgNS4xNDMtMi43OTEgMy42MzUtMy40MzUgOC40NjItMi45NTQgMTIuOTA5LjM1OSAzLjQ4IDEuNzk4IDYuOTU4IDQuNTA1IDkuMjY1IDIuODExIDIuNDk4IDYuNzUyIDMuMzgzIDEwLjQzMSAzLjEwNSAzLjYzNi0uNDE4IDcuMDY3LTEuOTU4IDEwLjAwNS00LjEwNy4wMzEgMy4zNjYtLjAxNiA2LjczMi4wMjUgMTAuMDk4LTQuNTU5IDIuNzEzLTEwLjAyMyAzLjQxMi0xNS4yNDEgMy4xNTctNS4zMzgtLjI4My0xMC42NjEtMi4zMDUtMTQuNTI1LTYuMDU4LTQuMTk5LTQuMDQ3LTYuNDc4LTkuODE5LTYuNzQ4LTE1LjU5OS0uMjcyLTYuMDExLjk1MS0xMi4yODEgNC40MS0xNy4zIDIuODk4LTQuMjgzIDcuNDMyLTcuMzE0IDEyLjM3MS04LjczOHptMTIxLjc5Ni0uNzA5YzUuMTU2LS45MDggMTAuNTUzLS4yNDIgMTUuNDMyIDEuNjA3LjAwNyAzLjQxOSAwIDYuODMzLjAwMyAxMC4yNDktMy40MDktMi4zNDQtNy41NzQtMy42MDUtMTEuNzExLTMuNDU5LTIuMDgzLjA4MS00LjM3NC45NjQtNS4zMjUgMi45NDUtLjc1NiAxLjk2LS4yMzIgNC41MyAxLjYxNyA1LjcwNCAzLjE2IDIuMTE1IDYuOTMyIDMuMDEzIDEwLjIwOCA0LjkwNyAyLjU3OSAxLjQ1IDUuMDgxIDMuMzQ0IDYuMzg5IDYuMDc2IDIuNDU1IDUuMTE1IDEuNDE1IDExLjg3NS0yLjkwMyAxNS42OS00LjEyIDMuODUxLTEwLjA1NiA0LjkxNi0xNS41MTUgNC43MTItMy44NzctLjI1MS03Ljc3Mi0xLjAxNi0xMS4zMzYtMi42MDIuMDE2LTMuNTk0LS4wMjItNy4xODYuMDE4LTEwLjc3OCAyLjk5OCAyLjE3NyA2LjQ1NiAzLjczNCAxMC4xMTYgNC4zNjYgMi41NDkuNDE0IDUuMzIxLjQzNCA3LjY5NS0uNzA2IDIuMjczLTEuMTMgMi42ODEtNC4zNiAxLjMzMi02LjMzNi0xLjI2NC0xLjUyMy0zLjExOS0yLjM2MS00Ljg2OC0zLjE4NS0zLjI4NS0xLjQ3Ny02LjczOC0yLjcxMy05LjYyMy00LjkyNi0yLjAyOS0xLjU4My0zLjU2NS0zLjgxMi00LjE2NS02LjMyNy0uODkyLTMuNzA2LS42MTQtNy44ODMgMS41NDEtMTEuMTIyIDIuNDYyLTMuNzc1IDYuNzM4LTYuMDM4IDExLjA5NS02LjgxNXptLTc3LjEyMiAxLjQ2OGMzLjA3Ny0xLjg0OSA2Ljk4OC0yLjAwNCAxMC4zNDgtLjg3My0uMDE1IDMuNzE5IDAgNy40MzYtLjAwOSAxMS4xNTUtMi4xOTktMS40MjMtNC45NDItMi4wMzQtNy41MzYtMS43Ny0zLjE2Ni4zNTktNS42NzQgMi43ODktNi45NzMgNS41NzctMS40MTMgMi45NS0xLjY3OSA2LjI4Ny0xLjU5IDkuNTE0IDAgNy40MjguMDA0IDE0Ljg1NyAwIDIyLjI4NmgtMTAuOTkyYy0uMDA5LTE1LjUyNi4wMTMtMzEuMDU0LS4wMDktNDYuNTggMy42NjktLjA0NyA3LjMzOS0uMDI4IDExLjAwOC0uMDEtLjAxNSAyLjY2NyAwIDUuMzMyLS4wMDkgOC4wMDIgMS4xOTItMi45MDEgMi45NjYtNS43MTkgNS43NjItNy4zMDJ6bS04MC4wMDItLjcwMWMzLjY5Ny0uMDE1IDcuMzk4LS4wNTEgMTEuMDk0LjAxOS0uMDQzIDE1LjUyNC0uMDAyIDMxLjA0OC0uMDE4IDQ2LjU3MWgtMTEuMDdjLS4wMDktMTUuNTI5LjAwNC0zMS4wNTgtLjAwNi00Ni41ODl6bTExMC44Ny0uODZjNS4zNTEtLjY4MSAxMC45OTUtLjM3NyAxNS45NjIgMS44ODMgNC4zMSAxLjk0NCA3LjgwMyA1LjUzOSA5LjczOCA5Ljg0NCAyLjA2NCA0LjU4IDIuNTY3IDkuNzI4IDIuMjE3IDE0LjY5OC0uMzQ0IDQuODUxLTEuODY3IDkuNzEzLTQuOTAyIDEzLjU2OC0zLjEwNSA0LjA5NC03Ljc4NiA2Ljg2OC0xMi44IDcuODk5LTQuMjg2Ljg5Mi04Ljc2OS44ODgtMTMuMDU1LS4wMTItNS4xMjctMS4wOTctOS44NzQtNC4wNzItMTIuODgxLTguNDAxLTMuNTI5LTUuMDE2LTQuNTMyLTExLjM5NC00LjA4NC0xNy40MDUuMzAzLTUuMSAxLjg4OS0xMC4yNCA1LjE0Ny0xNC4yNCAzLjU2Ny00LjQ4MSA5LjAzOS03LjEyNSAxNC42NTgtNy44MzR6bTMuMzI1IDguODVjLTIuNjY1LjE0OC01LjM1OSAxLjA1LTcuMzM1IDIuODk0LTIuNzI1IDIuNDY5LTMuOTcgNi4xNDctNC4zMDcgOS43MjMtLjM3MiAzLjkzMy0uMTAzIDguMDc5IDEuNjk0IDExLjY2NCAxLjM5NiAyLjc4NCAzLjk2MyA0Ljk3MSA2Ljk4OCA1Ljc2NiAyLjk3My43NzEgNi4yMDguNzA2IDkuMDg4LS40IDIuNDYxLS45NTkgNC40MTItMi45ODUgNS40NzgtNS4zODEgMS42MDktMy41NTUgMS43NjgtNy41NTIgMS41Ny0xMS4zODgtLjI3Ni0zLjUwNy0xLjI3Mi03LjE4MS0zLjg1LTkuNzE0LTIuNDA4LTIuNDM3LTUuOTc1LTMuMzg0LTkuMzI2LTMuMTY0em04NS41NDUtOC44NjZjNS41NjQtLjY4OSAxMS40NzItLjMxNiAxNi41NSAyLjI0OSA0LjQyOSAyLjIxNCA3Ljg2MiA2LjIxNSA5LjU3NiAxMC44NCAxLjM0MiAzLjUzOSAxLjgxMyA3LjM2IDEuNzM0IDExLjEyOC4wMSA1LjYyOS0xLjUxIDExLjQwNy01LjA0MyAxNS44NzItMy4zMDcgNC4zMjMtOC4zNjYgNy4xMzItMTMuNzA4IDguMDE0LTUuMjIzLjg0NS0xMC43NDIuNjI2LTE1LjcwNS0xLjMyOC01LjAyOC0xLjk3OC05LjIwOC02LjAxNy0xMS4zMjctMTAuOTktMi4yMDctNS4wNjgtMi40NC0xMC43NzItMS43NTItMTYuMTg3LjcyMS01LjQxNyAzLjE3NC0xMC43MTEgNy4zNTQtMTQuMzEyIDMuNDI1LTMuMDA2IDcuODM0LTQuNzA5IDEyLjMyMS01LjI4NnptMy4wMSA4Ljg3NWMtMy4wODUuMTczLTYuMTQ0IDEuNTAyLTguMTM4IDMuOTA0LTIuMTg2IDIuNTc0LTMuMTI1IDUuOTctMy4zNzkgOS4yOC0uMjYyIDMuNDE4IDAgNi45NTggMS4zMjIgMTAuMTUzIDEuMSAyLjY4MiAzLjE4OCA1LjAxMyA1Ljg4IDYuMTUzIDIuNDk3IDEuMDc1IDUuMzA5IDEuMjY2IDcuOTc3Ljg2NyAyLjQ4Ny0uMzY2IDQuODk2LTEuNTU0IDYuNTE2LTMuNTA1IDEuNjA2LTEuOTQxIDIuNDU0LTQuMzg4IDIuODgxLTYuODQuNTQtMy4yOTIuNTQ2LTYuNjgyLS4wOTItOS45NTgtLjU2Ni0yLjc5My0xLjgwMi01LjU2Ny00LjAzNS03LjQxOS0yLjQyLTIuMTI3LTUuNzgzLTIuODU0LTguOTMyLTIuNjM1eiIgZmlsbD0iIzc4Nzg3OCIvPjxwYXRoIGQ9Im0yNi4wODggMjAyLjMzMWMxNy4xODUuMDA2IDM0LjM3LS4wMDIgNTEuNTU1LjAwNi4wMDMgMTcuMTg1IDAgMzQuMzY3IDAgNTEuNTUyaC01MS41NTV6IiBmaWxsPSIjMDBhMWYxIi8+PHBhdGggZD0ibTgyLjkxIDIwMi4zMzdjMTcuMTgyLS4wMDYgMzQuMzY3LS4wMDMgNTEuNTUyLS4wMDN2NTEuNTU1aC01MS41NTVjLjAwMy0xNy4xODUtLjAwMy0zNC4zNy4wMDMtNTEuNTUyeiIgZmlsbD0iI2ZiMCIvPjwvc3ZnPg==
+name: PANW IoT 3rd Party Integration - Microsoft SCCM
+script:
+  commands:
+  - arguments:
+    - defaultValue: "100"
+      description: Number of rows to be fetched at once from SCCM. Shouldn't be greater
+        than 5000.
+      name: page_size_limit
+      required: true
+    - defaultValue: "0"
+      description: Number of rows to be skipped.
+      name: page_offset
+      required: true
+    description: Retrieves client device information in context from Microsoft SCCM
+      SQL Server.
+    name: ms-sccm-get-all-client-details
+  dockerimage: demisto/genericsql:1.1.0.26235
+  runonce: false
+  script: |
+    register_module_line('PANW IoT 3rd Party Integration - Microsoft SCCM', 'start', __line__())
+
+
+    import json
+    import urllib3
+    import dateparser
+    import traceback
+    from typing import Any, Dict, Tuple, List, Optional, Union, cast
+    import pyodbc
+    import re
+    import datetime
+
+
+    # Disable insecure warnings
+    urllib3.disable_warnings()
+
+    ''' CONSTANTS '''
+
+    SQL_DRIVER = "FreeTDS"
+
+    # SQL Query to get all device details from SCCM SQL Server
+    SQL_QUERY_GET_DEVICE_DETAILS = """
+                                    SELECT
+                                        G.SMS_Unique_Identifier0    as windowsGUID,
+                                        G.AD_Site_Name0             as sccmSite,
+                                        G.Full_Domain_Name0         as sccmDomain,
+                                        A.Name0                     as HostName,
+                                        A.Manufacturer0             as vendor,
+                                        A.Model0                    as model,
+                                        B.SerialNumber0             as serialNumber,
+                                        H.Caption0                  as OSName,
+                                        COALESCE(H.CSDVersion0,H.Version0) as OSVer,
+                                        E.ProtectionStatus0         as diskEncryptionStatus,
+                                        J.MACAddress0               as deviceid,
+                                        F.IPAddress0                as ipAddress
+                                    FROM v_R_System G
+                                    JOIN v_GS_COMPUTER_SYSTEM A ON A.ResourceID=G.ResourceID
+                                    JOIN v_GS_PC_BIOS B ON B.ResourceID=G.ResourceId
+                                    JOIN v_GS_OPERATING_SYSTEM H ON H.ResourceID=G.ResourceId
+                                    JOIN v_GS_ENCRYPTABLE_VOLUME E ON E.ResourceID=G.ResourceId
+                                        AND E.DriveLetter0='C:'
+                                    JOIN v_GS_WORKSTATION_STATUS I ON I.ResourceID=G.ResourceId
+                                    JOIN v_GS_NETWORK_ADAPTER J ON J.ResourceID=G.ResourceId
+                                        AND J.AdapterType0!='Tunnel'
+                                    JOIN v_GS_NETWORK_ADAPTER_CONFIGUR F ON F.ResourceID=G.ResourceId
+                                        AND CAST(J.DeviceID0 as int)=F.Index0
+                                        AND F.IPAddress0 IS NOT NULL
+                                        AND F.IPEnabled0=1
+                                    ORDER BY G.SMS_Unique_Identifier0
+                                    OFFSET {skip} ROWS
+                                    FETCH NEXT {next} ROWS ONLY
+                                    """
+
+    # SQL Query to get all installed softwares/programs for a list of hostnames from SCCM SQL Server
+    SQL_QUERY_GET_INSTALLED_PROGRAMS = """
+                                        SELECT DISTINCT
+                                            FCM.[Name] As HostName,
+                                            ARP.DisplayName0 As ProgramName,
+                                            ARP.Version0 As ProgramVersion
+                                        FROM  v_Add_Remove_Programs As ARP
+                                        JOIN v_FullCollectionMembership As FCM on ARP.ResourceID=FCM.ResourceID
+                                        WHERE   FCM.CollectionID = 'SMS00001'
+                                            AND ARP.DisplayName0 IS NOT NULL
+                                            AND FCM.[Name] IN {hostname_list}
+                                        ORDER BY 1,2,3
+                                        """
+
+    # SQL Query to get all installed windows versions for a list of hostnames from SCCM SQL Server
+    SQL_QUERY_GET_INSTALLED_WINDOWS_UPDATES = """
+                                                SELECT S.Netbios_Name0 as HostName, UI.ArticleID, UI.Title
+                                                FROM v_R_System S
+                                                JOIN v_UpdateComplianceStatus UCS ON S.ResourceID = UCS.ResourceID
+                                                JOIN v_UpdateInfo UI ON UCS.CI_ID = UI.CI_ID
+                                                JOIN v_StateNames SN ON UCS.LastEnforcementMessageID = SN.StateID AND SN.TopicType=402 AND SN.StateName LIKE 'Successfully installed%'
+                                                WHERE S.Netbios_Name0 IN {hostname_list}
+                                                ORDER BY 1,3
+                                            """
+
+    ''' HELPER FUNCTIONS  '''
+
+
+    def create_connection_string(sql_server_host: str, sql_server_port: str, sql_db: str, sql_user: str, sql_pwd: str) -> str:
+        """
+        Creates a connection string for the pyodbc connection to SQL Server
+
+        :param sql_server_host: SQL Server Host/IP
+        :param sql_server_port: SQL Server Port(Default 1433)
+        :param sql_db: SQL Server Database name for a SCCM site
+        :param sql_user: SQL Server username
+        :param sql_pwd: SQL Server password
+        :return: str
+        """
+
+        connection_string = "DRIVER={%s};SERVER=%s,%s;DATABASE=%s;UID=%s;PWD=%s" % (SQL_DRIVER, sql_server_host, sql_server_port, sql_db, sql_user, sql_pwd)
+        return connection_string
+
+
+    def close_connection_sccm(connection):
+        """ Perform cleanup functions
+        closes the pyodbc connection that was opened to the server
+
+        :param connection: pyodbc connection handler to SCCM SQL Server
+        :return: void
+        """
+        connection.close()
+
+
+    def extract_ipv4(ip_string):
+        ipAddress = ""
+        if ip_string != "":
+            pattern = re.compile(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})')
+            search_ipv4 = pattern.search(ip_string)
+            if search_ipv4:
+                ipAddress = search_ipv4[0]
+        return ipAddress
+
+
+    def handle_unicode_chars(device_list):
+        # Removes unicode characters like "\u2122", if any
+        if len(device_list) != 0:
+            for device in device_list:
+                for device_propery, device_propery_value in device.items():
+                    device[device_propery] = (device_propery_value.encode("ascii", "ignore")).decode("utf-8")
+
+        return device_list
+
+
+    def extract_guid(guid_string):
+        guid = ""
+        if guid_string != "":
+            guid_string = guid_string.lower()
+            guid_pattern = re.compile("[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?")
+            search_guid = guid_pattern.search(guid_string)
+            if search_guid:
+                guid = search_guid[0]
+        return guid
+
+    def format_mac_address(mac_address: str) -> str:
+        """
+        Mac Address need to be set to canonical format xx:xx:xx:xx:xx:xx for reporting to IoT cloud
+
+        :param connection: pyodbc connection handler to SCCM SQL Server
+        :return: formatted mac_address - if validation is positive, otherwise ""
+        """
+        if mac_address != "":
+            mac_address = mac_address.lower()
+            if not re.match("[0-9a-f]{2}([-:]?)[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", mac_address):
+                mac_address = ""
+        return mac_address
+
+
+    def get_all_installed_programs(connection_string, hostname_list_from_main_query):
+        """
+        input - connection_string
+              - hostname_list_from_main_query
+        """
+
+        sql_query_get_programs_for_hosts = SQL_QUERY_GET_INSTALLED_PROGRAMS.format(hostname_list = hostname_list_from_main_query)
+        final_installed_programs = {}
+
+        try:
+            connection = pyodbc.connect(connection_string)
+            cursor = connection.cursor()
+            cursor.execute(sql_query_get_programs_for_hosts)
+            data_from_query = cursor.fetchall()
+
+            columns = [column[0] for column in cursor.description]
+            installed_programs_on_hostnames_list = [dict(zip(columns, map(str,device))) for device in data_from_query]
+
+            for host_info in installed_programs_on_hostnames_list:
+                program_details = None
+                program_version = host_info.get("ProgramVersion", "")
+                program_name = host_info.get("ProgramName", None)
+                host_name = host_info.get("HostName", None)
+                if host_name and program_name:
+                    version_pattern = re.compile("([0-9]+)([.])([0-9]+)(b)?([0-9]+)?")
+                    version_present = version_pattern.search(program_name)
+                    if program_version not in program_name and program_version != 'None' and not version_present:
+                        program_details = "{} {}".format(program_name, program_version)
+                    else:
+                        program_details = program_name
+                else:
+                    continue
+                if program_details:
+                    if host_name in final_installed_programs.keys():
+                        final_installed_programs[host_name] = "{}{}{}".format(final_installed_programs.get(host_name, ""), ",", program_details)
+                    else:
+                        final_installed_programs[host_name] = program_details
+        except Exception as ex:
+            demisto.error(traceback.format_exc())
+            raise Exception(f"Error while getting list of installed programs from Microsoft SCCM. {str(ex)}")
+        finally:
+            if connection:
+                close_connection_sccm(connection)
+
+        return final_installed_programs
+
+
+    def get_all_installed_windows_updates(connection_string, hostname_list_from_main_query):
+        """
+        input - connection_string
+              - hostname_list_from_main_query
+        """
+
+        sql_query_get_updates_for_hosts = SQL_QUERY_GET_INSTALLED_WINDOWS_UPDATES.format(hostname_list = hostname_list_from_main_query)
+        final_installed_updates = {}
+
+        try:
+            connection = pyodbc.connect(connection_string)
+            cursor = connection.cursor()
+            cursor.execute(sql_query_get_updates_for_hosts)
+            data_from_query = cursor.fetchall()
+            columns = [column[0] for column in cursor.description]
+            installed_updates_on_hostnames_list = [dict(zip(columns, map(str,device))) for device in data_from_query]
+
+            for host_info in installed_updates_on_hostnames_list:
+                update_details = None
+                update_article_id = host_info.get("ArticleID", "")
+                update_title = host_info.get("Title", None)
+                host_name = host_info.get("HostName", None)
+
+                if host_name and update_title:
+                    if update_article_id not in update_title and update_article_id != 'None':
+                        update_details = "{} (KB{})".format(update_title, update_article_id)
+                    else:
+                        update_details = update_title
+                else:
+                    continue
+
+                if update_details:
+                    if host_name in final_installed_updates.keys():
+                        final_installed_updates[host_name] = "{}{}{}".format(final_installed_updates.get(host_name, ""), ",", update_details)
+                    else:
+                        final_installed_updates[host_name] = update_details
+
+        except Exception as ex:
+            demisto.error(traceback.format_exc())
+            raise Exception(f"Error while getting list of installed windows updates from Microsoft SCCM. {str(ex)}")
+
+        finally:
+            if connection:
+                close_connection_sccm(connection)
+
+        return final_installed_updates
+
+
+    def get_validated_device_list_for_reporting(device_list):
+
+        for device in device_list:
+            device["deviceid"] = format_mac_address(device.get("deviceid", "")) #macAddress is deviceid as per bulkUpdateAPI
+
+            device["ipAddress"] = extract_ipv4(device.get("ipAddress", ""))
+
+            if device.get("OSName","None") != "None":
+                OSName = device.get("OSName","")
+                device["windowsVersion"] = "{}/{}".format(OSName, device.get("OSVer",""))
+
+            if device.get("sccmDomain","None") == "None":
+                device.pop("sccmDomain", None)
+
+            winGUID = extract_guid(device.get("windowsGUID",""))
+            if winGUID and winGUID != "":
+                device["windowsGUID"] = winGUID
+
+            diskEncryption = device.get("diskEncryptionStatus",None)
+            if diskEncryption and diskEncryption != "None":
+                if diskEncryption == '1':
+                    device["diskEncryptionStatus"] = "Encrypted"
+                else:
+                    device["diskEncryptionStatus"] = "Unencrypted"
+
+
+            # Pop out the fields that we do not require for reporting
+            device.pop("OSName", None)
+            device.pop("OSVer", None)
+            device.pop("HostName", None)
+
+        return device_list
+
+
+    def get_hostname_list(device_list):
+
+        hostname_list = []
+
+        for device in device_list:
+            # Create hostname list for getting further details
+            hostname_list.append(device.get("HostName"))
+
+        hostname_list = tuple(set(filter(None, hostname_list)))
+        if len(hostname_list) == 1:
+            hostname_list = "('%s')"%hostname_list
+
+        return hostname_list
+
+
+
+    ''' COMMAND FUNCTIONS '''
+
+
+    def test_module(connection_string: str) -> str:
+        """Tests Server connectivity and authentication'
+
+        Returning 'ok' indicates that the integration works like it is supposed to.
+        Connection to the server is successful.
+        Raises exceptions if something goes wrong.
+
+        :param type: ``str``
+        :param name: connection_string to create a connection string for pyodbc connect request.
+
+        :return: 'ok' if test passed, anything else will fail the test.
+        :rtype: ``str``
+        """
+        connection = None
+        try:
+            connection = pyodbc.connect(connection_string)
+
+        except Exception as e:
+            if 'Forbidden' in str(e):
+                return 'Authorization Error: make sure Creds are correctly set.'
+            elif 'Login timeout expired' in str(e):
+                return 'Login timeout expired: make sure the configuration is correct.'
+            else:
+                raise e
+        finally:
+            if connection:
+                close_connection_sccm(connection)
+        return 'ok'
+
+
+
+    def get_all_sccm_clients(connection_string, page_size_limit, page_offset):
+        '''ms-sccm-get-all-client-details command: Returns results for SQL Query - SQL_QUERY_GET_DEVICE_DETAILS
+
+        :type connection_string: ``string``
+        :param connection_string: Connection string to connect SQL Server
+
+
+        :return:
+            A list of unique devices fetched from MS SCCM.
+
+        :rtype: ``Union[Dict[str, Any],CommandResults]``
+        '''
+        connection = None
+        device_list = []
+        hostname_list = []     # Tuple with hostnames separated with ','
+        sql_query_for_device_pull = SQL_QUERY_GET_DEVICE_DETAILS.format(skip=page_offset, next=page_size_limit)
+
+        try:
+            connection = pyodbc.connect(connection_string)
+            cursor = connection.cursor()
+            cursor.execute(sql_query_for_device_pull)
+            data_from_query = cursor.fetchall()
+
+            columns = [column[0] for column in cursor.description]
+
+            if len(data_from_query) != 0:
+                # Creates a list of named dictionary by zipping columns and data, also convert everything to string
+                device_list = [dict(zip(columns, map(str,device))) for device in data_from_query]
+
+                # Prepare the hostname list and get installed Patches and Softwares
+                hostname_list = get_hostname_list(device_list)
+
+                if len(hostname_list) != 0:
+                    # Get Installed programs per hostname
+                    installed_programs_host_map = get_all_installed_programs(connection_string, hostname_list)
+
+                    # Get Installed windows updates per hostname
+                    installed_updates_host_map = get_all_installed_windows_updates(connection_string, hostname_list)
+
+                    # Include the windowsPatches and windowsSoftwares to the device list
+                    for device in device_list:
+                        installed_programs_for_host = installed_programs_host_map.get(device["HostName"], None)
+                        if installed_programs_for_host:
+                            device["windowsInstalledSoftware"] = installed_programs_for_host
+
+                        installed_update_patches_for_host = installed_updates_host_map.get(device["HostName"], None)
+                        if installed_update_patches_for_host:
+                            device["windowsInstalledPatches"] = installed_update_patches_for_host
+
+
+                # Running validations on fields
+                device_list = get_validated_device_list_for_reporting(device_list)
+
+                # Handle the unicode chars if present in device list for reporting
+                device_list = handle_unicode_chars(device_list)
+
+
+        except Exception as ex:
+            demisto.error(traceback.format_exc())
+            raise Exception(f"Exception while getting devices from SCCM SQL Server. {str(ex)}")
+        finally:
+            if connection:
+                close_connection_sccm(connection)
+
+
+        return device_list
+
+
+
+
+    ''' MAIN FUNCTION '''
+
+
+    def main() -> None:
+        """main function, parses params and runs command functions
+
+        :return:
+        :rtype:
+        """
+
+        sql_server_host = demisto.params().get('sql-server-host')
+        sql_server_port = demisto.params().get('sql-server-port')
+        sql_db = demisto.params().get('sql-database-name')
+        sql_user = demisto.params().get('sql-username')
+        sql_pwd = demisto.params().get('sql-password')
+
+        demisto.debug(f'Command being called is {demisto.command()}')
+        try:
+
+            connection_string = create_connection_string(sql_server_host, sql_server_port, sql_db, sql_user, sql_pwd)
+
+            if demisto.command() == 'test-module':
+                # This is the call made when pressing the integration Test button.
+                result = test_module(connection_string)
+                return_results(result)
+
+            elif demisto.command() == 'ms-sccm-get-all-client-details':
+                # This will retrieve all client device information in Context from MS SCCM SQL Server
+                page_size_limit = int(demisto.args().get("page_size_limit"))
+
+                # Defaulting it to 5000, even if user picks a huge number
+                if page_size_limit > 5000:
+                    page_size_limit = 5000
+
+                page_offset = int(demisto.args().get("page_offset"))
+
+                device_list = get_all_sccm_clients(connection_string, page_size_limit, page_offset)
+
+
+                return_info_to_output = {}
+                return_info_to_output["Total Clients"] = len(device_list)
+
+                return_results(CommandResults(
+                    readable_output=tableToMarkdown("Asset Report Summary:", return_info_to_output, removeNull=True),
+                    outputs_prefix='ms-sccm-IoT.devices',
+                    outputs=device_list
+                ))
+
+        # Log exceptions and return errors
+        except Exception as e:
+            demisto.error(traceback.format_exc())  # the traceback
+            return_error(f'Failed to execute {demisto.command()} command.\nError:\n{str(e)}')
+
+
+    ''' ENTRY POINT '''
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+
+    register_module_line('PANW IoT 3rd Party Integration - Microsoft SCCM', 'end', __line__())
+  subtype: python3
+  type: python
