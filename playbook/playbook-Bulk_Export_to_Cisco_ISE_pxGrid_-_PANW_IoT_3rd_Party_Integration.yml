@@ -1,0 +1,442 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: This playbook gets all available device inventory from PANW IoT Cloud
+  and updates/create endpoints with custom attributes on Cisco ISE.
+dirtyInputs: true
+id: f58c15fc-f45b-46b3-8fbc-c4a020810d96
+inputs: []
+name: Bulk Export to Cisco ISE pxGrid - PANW IoT 3rd Party Integration
+outputs: []
+sourceplaybookid: 9d2c6af3-5dc9-4101-8f34-be3359e9a8ca
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: b9749de7-afd6-4b57-8f69-323affe9be7e
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: b9749de7-afd6-4b57-8f69-323affe9be7e
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": -260
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      custom_attributes:
+        simple: ${incident.panwiotdevicecustomattributes}
+      days:
+        simple: ${incident.bulkexportinterval}
+      integration_instance:
+        simple: ${incident.integrationinstancename}
+      sites:
+        simple: ${incident.sitenames}
+      tags:
+        simple: ${incident.panwiotinscopetagenforcement}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Gets all available devices from the IoT cloud and updates or creates
+        them if necessary. new endpoint with custom attributes on Cisco ISE.
+      id: 659af360-1d72-4068-82f5-abaec06fd16c
+      iscommand: false
+      name: Get PANW IoT devices and send to Cisco ISE pxGrid
+      script: 0a2f891b-5731-450f-8dc8-0b64e25ee8ec
+      type: regular
+      version: -1
+    taskid: 659af360-1d72-4068-82f5-abaec06fd16c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 595
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "3"
+      "yes":
+      - "5"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Cisco ISE pxGrid
+      instancename:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available and provided instance
+        is Active. Otherwise returns 'no'.
+      id: 613acfaa-085f-4eca-8c04-4ee86f1f1511
+      iscommand: false
+      name: Is Cisco ISE pxGrid Integration instance enabled?
+      script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+      type: condition
+      version: -1
+    taskid: 613acfaa-085f-4eca-8c04-4ee86f1f1511
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 135
+        }
+      }
+  "3":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: pxgrid
+      message:
+        simple: pxGrid integration is not enabled
+      playbook_name:
+        simple: Increment Export to Cisco ISE pxGrid - PANW IoT 3rd Party Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 5af6a55c-890c-47ea-82fe-f814a08a9af6
+      iscommand: true
+      name: Report disabled status to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 5af6a55c-890c-47ea-82fe-f814a08a9af6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 595
+        }
+      }
+  "4":
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 9730b17e-6670-4131-883f-279f5aaaeaa5
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 9730b17e-6670-4131-883f-279f5aaaeaa5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": 820
+        }
+      }
+  "5":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "6"
+      "no":
+      - "7"
+      "yes":
+      - "1"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - Cisco ISE pxGrid
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 1f6ed668-c830-4166-8693-666e07307a2b
+      iscommand: false
+      name: is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: 1f6ed668-c830-4166-8693-666e07307a2b
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 860,
+          "y": 330
+        }
+      }
+  "6":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: pxgrid
+      message:
+        simple: Failed to get License
+      playbook_name:
+        simple: Bulk Export to Cisco ISE pxGrid - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 05dedc6e-6aad-428a-8ba2-e32b758ac6a6
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 05dedc6e-6aad-428a-8ba2-e32b758ac6a6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 595
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: pxgrid
+      message:
+        simple: Failed to get License
+      playbook_name:
+        simple: Bulk Export to Cisco ISE pxGrid - PANW IoT 3rd Party Integration
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 6c878093-d2f0-4047-88db-7a74c069e8e7
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 6c878093-d2f0-4047-88db-7a74c069e8e7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 595
+        }
+      }
+  "8":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "9"
+      "yes":
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: 02688884-ea1a-4a54-87bc-82123a9192ee
+      iscommand: false
+      name: Is Cisco ISE pxGrid Integration Instance Configured?
+      script: Exists
+      type: condition
+      version: -1
+    taskid: 02688884-ea1a-4a54-87bc-82123a9192ee
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": -80
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: pxgrid
+      message:
+        simple: No Cisco ISE integration instance passed to Job
+      playbook_name:
+        simple: Bulk Export to Cisco ISE pxGrid - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message to PANW IOT cloud.
+      id: 7609302f-f8ae-4f45-878a-648a28244fff
+      iscommand: true
+      name: No Instance passed to this Playbook. Reporting Error
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 7609302f-f8ae-4f45-878a-648a28244fff
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1770,
+          "y": 590
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1175,
+        "width": 2100,
+        "x": 50,
+        "y": -260
+      }
+    }
+  }
