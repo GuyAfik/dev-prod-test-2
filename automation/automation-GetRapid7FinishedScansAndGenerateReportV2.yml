@@ -1,0 +1,315 @@
+args:
+- name: time
+  required: true
+- name: active_rapid7_instance
+  required: true
+- defaultValue: BULK, INCREMENTAL
+  isArray: true
+  name: type
+  required: true
+commonfields:
+  id: GetRapid7FinishedScansAndGenerateReportV2
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GetRapid7FinishedScansAndGenerateReportV2
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('GetRapid7FinishedScansAndGenerateReportV2', 'start', __line__())
+
+
+
+
+
+  import ipaddress
+  from datetime import datetime
+
+  USING_RAPID7_INSTANCE = demisto.args().get('active_rapid7_instance')
+  TYPE = demisto.args().get('type')
+  LIST_NAME = 'Rapid7LaunchedReportsV2-'+str(TYPE)+"-"+str(USING_RAPID7_INSTANCE)
+
+  last_modification_time = demisto.args().get('time')
+  last_modification_time = datetime.strptime(last_modification_time, "%Y-%m-%dT%H:%M:%SZ")
+  SCAN_IP='scan_ip'
+  VALID_IP='valid_ip'
+  SCAN_ID='scan_id'
+  SCAN_TYPE='scan_type'
+  ASSETS='assets'
+  SITE_ID='siteId'
+
+
+  def validate_ip_address(address):
+      try:
+          ip = ipaddress.ip_address(address)
+          return True
+      except ValueError:
+          return False
+
+
+  def clean_up_previous_execution():
+
+      res = demisto.executeCommand('getList', {'listName' : LIST_NAME})
+      if (
+          not isinstance(res, list)
+          or 'Contents' not in res[0]
+          or not isinstance(res[0]['Contents'], str)
+          or 'Item not found (8)' in res[0]['Contents']
+      ):
+          return True
+
+      report_ids = res[0]['Contents']
+      report_id_list = [line.split(',') for line in report_ids.split('\n')]
+      for report_cache_entry in report_id_list[0]:
+          demisto.executeCommand("PANWIoTLaunchedVulnerabilityScanCacheOperations",
+                      {"name":LIST_NAME,"operation":"delete","value":report_cache_entry})
+      return True
+
+  def get_scans():
+      res = demisto.executeCommand("nexpose-get-scans", {'limit':500,'active':False,'sort':'id,DESC','using':USING_RAPID7_INSTANCE})
+      if isError(res[0]):
+          raise Exception(res[0]['Contents'])
+      scans = res[0]['Contents']
+      return scans
+
+  def get_scan_reports():
+
+      try:
+          # clean_up_previous_execution()
+          filtered_list = []
+          scans = get_scans()
+          for each_scan in scans:
+
+              try:
+                  last_scan_date_rapid = datetime.strptime(str(each_scan['startTime']), "%Y-%m-%dT%H:%M:%S.%fZ")
+              except Exception as e:
+                  last_scan_date_rapid = datetime.strptime(str(each_scan['startTime']), "%Y-%m-%dT%H:%M:%SZ")
+
+              if last_scan_date_rapid > last_modification_time:
+                  number_of_assets = each_scan['assets']
+                  scan_type = None
+                  assets=None
+                  siteID=None
+                  if 'scanType' in each_scan:
+                      scan_type=each_scan['scanType']
+                  elif 'ScanType' in each_scan:
+                      scan_type=each_scan['ScanType']
+                  if 'siteId' in each_scan:
+                      siteID = each_scan['siteId']
+                  if 'assets' in each_scan:
+                      assets = each_scan['assets']
+                  if number_of_assets == 0:
+                      continue
+                  elif number_of_assets == 1:
+                      scan_ip='singleIP'
+                  else:
+                      scan_ip='multiIP'
+                  scan_id = each_scan['id']
+                  scan_date = each_scan['startTime']
+                  scan_metadata =  str(scan_ip) + "_" + "False" + "_" + str(scan_id)
+                  scan_metadata={}
+                  scan_metadata[SCAN_IP]=scan_ip
+                  scan_metadata[VALID_IP]="False"
+                  scan_metadata[SCAN_ID]=scan_id
+                  scan_metadata[SCAN_TYPE]=scan_type
+                  scan_metadata[ASSETS] = assets
+                  scan_metadata[SITE_ID] = siteID
+                  filtered_list.append(scan_metadata)
+      except Exception as e:
+          raise Exception("Error while retrieving assets: "+str(e))
+
+      if len(filtered_list) == 0:
+          return 'No PANW IoT launched Scans are in Finished state or No scans available between the delta time specified.'
+
+      appendContext('PANWIoTCloud.scansPresentOnRapid7', "Yes")
+      return get_finished_scan_list(filtered_list)
+
+  def get_finished_scan_list(launched_scan_list):
+      finished_scan_list = []
+      scan_map = {}
+      for entry in launched_scan_list:
+
+          scan_ip_check=entry[SCAN_IP]
+          valid_scan_ip_check=entry[VALID_IP]
+          scan_id_check = entry[SCAN_ID]
+          scan_type = entry[SCAN_TYPE]
+          assets = entry[ASSETS]
+          siteid = entry[SITE_ID]
+
+          if str(scan_id_check) in scan_map:
+              scan_map[scan_id_check].append({'ip': str(scan_ip_check),'isvalidip':valid_scan_ip_check,SCAN_TYPE:scan_type})
+          else:
+              scan_map[scan_id_check] = [{'ip': str(scan_ip_check),'isvalidip':valid_scan_ip_check,SCAN_TYPE:scan_type,SITE_ID:siteid,ASSETS:assets}]
+      if len(scan_map) == 0:
+          return 'Scan Cache '+str(LIST_NAME)+' is Empty'
+      scan_id_list = list(scan_map.keys())
+      scan_id_list = [int(i) for i in scan_id_list]
+      res = demisto.executeCommand("nexpose-get-scan", {'id':scan_id_list, 'using': USING_RAPID7_INSTANCE})
+
+      if isError(res[0]):
+          raise Exception(res[0]['Contents'])
+      try:
+
+          for each_res in res:
+              scan_list = each_res['Contents']
+              if scan_list:
+                  if isinstance(scan_list, list) == False:
+                      scan_list = [scan_list]
+                  for scan in scan_list:
+                      ref = scan['id']
+                      state = scan['status']
+                      scan_type=None
+                      assets=None
+                      siteID=None
+                      if 'scanType' in scan:
+                          scan_type = scan['scanType']
+                      elif 'ScanType' in scan:
+                          scan_type = scan['ScanType']
+                      if ref in scan_map:
+                          scan_obj = scan_map[ref]
+                          if isinstance(scan_obj, list):
+                              for each_scan_obj in scan_obj:
+                                  if 'siteId' in each_scan_obj:
+                                      siteID = each_scan_obj['siteId']
+                          if isinstance(scan_obj, dict):
+                              if 'siteId' in scan_obj:
+                                  siteID = scan_obj['siteId']
+                      if 'assets' in scan:
+                          assets = scan['assets']
+                      if ref in scan_map.keys() and state.lower() == "finished":
+
+                          ip_type = ["multiIP" if len(list(scan_map[ref])) > 1 else "singleIP"][0]
+                          scan_cache_entry = {}
+                          scan_cache_entry[SCAN_ID] = str(ref)
+                          scan_cache_entry[SCAN_IP] = str(scan_map[ref][int(len(list(scan_map[ref]))) - 1]['ip'])
+                          scan_cache_entry[SCAN_TYPE] = scan_type
+                          scan_cache_entry[ASSETS] = assets
+                          scan_cache_entry[SITE_ID] = siteID
+
+                          if str(ip_type) == "multiIP":
+                              scan_cache_entry[VALID_IP] = "False"
+                          else:
+                              scan_cache_entry[VALID_IP] = "True"
+                          finished_scan_list.append(scan_cache_entry)
+
+      except Exception as e:
+          raise Exception("Failed to get Scan List data %s" % str(e))
+
+
+      if len(finished_scan_list) == 0:
+          return 'No PANW IoT launched Scans are in Finished state'
+
+      return launch_reports_for_finished_scans(finished_scan_list)
+
+  def doesIPExistsInIoTCloud(scan_ip):
+
+      res = demisto.executeCommand("panw-iot-3rd-party-device-details",{"ip":scan_ip})
+
+      if '[404] - Not Found' not in res[0]['Contents']:
+          return True
+      return False
+
+
+  def launch_reports_for_finished_scans(scan_list):
+
+      result_list = []
+
+      for entry in scan_list:
+          finished_scan_id = entry[SCAN_ID]
+          finished_scan_ip =entry[SCAN_IP]
+          is_valid_ip = entry[VALID_IP]
+          scan_type = entry[SCAN_TYPE]
+          site_id = entry[SITE_ID]
+          assets = entry[ASSETS]
+          single_or_multi_ip=finished_scan_ip
+
+
+          try:
+              res=None
+              if scan_type and (scan_type.lower()=='agent'):
+                  res = demisto.executeCommand("nexpose-create-scan-site-asset-report", {"scan":int(finished_scan_id),"template":"audit-report","format":"pdf","siteid":site_id,"assets":assets,'using':USING_RAPID7_INSTANCE})
+              else:
+                  res = demisto.executeCommand("nexpose-create-scan-report", {"scan":int(finished_scan_id),"template":"audit-report","format":"pdf", "download_immediately": "false",'using':USING_RAPID7_INSTANCE})
+
+              if isError(res[0]):
+                  raise Exception(res[0]['Contents'])
+              pdf_report_id = res[0]['Contents']['ID']
+              pdf_instance_id = res[0]['Contents']['InstanceID']
+              pdf_format = "pdf"
+              pdf_report_value=""
+
+              if pdf_report_id == "None":
+                  result_list.append('Skipping the PDF scan as for %s - %s - %s, PDF report launched with ID %s.' % (finished_scan_ip, finished_scan_id, pdf_report_id, pdf_instance_id))
+              else:
+                  result_list.append('scan finished for %s(%s) - %s - %s, PDF report launched with ID %s' % (finished_scan_ip, single_or_multi_ip, finished_scan_id, pdf_report_id, pdf_instance_id))
+
+                  pdf_report_value = str(pdf_report_id)+"_"+str(single_or_multi_ip)+"_"+str(finished_scan_id)+"_"+str(pdf_instance_id)+"_"+pdf_format
+
+              res = None
+              if scan_type and (scan_type.lower()=='agent'):
+                  res = demisto.executeCommand("nexpose-create-scan-site-asset-report",
+                  {"scan":int(finished_scan_id),"template":"basic-vulnerability-check-results","format":"csv-export", "download_immediately": "false","siteid":site_id,"assets":assets,'using':USING_RAPID7_INSTANCE})
+              else:
+                  res = demisto.executeCommand("nexpose-create-scan-report",{"scan":int(finished_scan_id),"template":"basic-vulnerability-check-results","format":"csv-export", "download_immediately": "false","using":USING_RAPID7_INSTANCE})
+              if isError(res[0]):
+                  raise Exception(res[0]['Contents'])
+
+              csv_report_id = res[0]['Contents']['ID']
+              csv_instance_id = res[0]['Contents']['InstanceID']
+              csv_format = "csv"
+              csv_report_value=""
+
+              if csv_report_id == "None":
+                  result_list.append('Skipping the CSV scan as for %s - %s - %s, CSV report launched with ID %s.' % (finished_scan_ip, finished_scan_id, csv_report_id, csv_instance_id))
+              else:
+                  result_list.append('scan finished for %s(%s) - %s - %s, CSV report launched with ID %s' % (finished_scan_ip, single_or_multi_ip, finished_scan_id, csv_report_id, csv_instance_id))
+                  csv_report_value = str(csv_report_id)+"_"+str(single_or_multi_ip)+"_"+str(finished_scan_id)+"_"+str(csv_instance_id)+"_"+csv_format
+                  report_value=""
+                  if pdf_report_value!="" and csv_report_value!="":
+                      report_value=str(csv_report_value)+"|"+str(pdf_report_value)
+                  elif pdf_report_value!="":
+                      report_value=pdf_report_value
+                  elif csv_report_value !="":
+                      report_value=csv_report_value
+
+                  demisto.executeCommand("PANWIoTLaunchedVulnerabilityScanCacheOperations",
+                      {"name":LIST_NAME,"operation":"insert",
+                       "value":report_value})
+
+          except Exception as e:
+              raise Exception(f'Failed to launch Rapid7 csv report for scan {finished_scan_id} and error is {str(e)}')
+      return result_list
+
+
+  def main():
+      try:
+          return_results(get_scan_reports())
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute GetRapid7FinishedScansAndGenerateReportforPANWIoTCloudV2. Error: {str(ex)}')
+
+  ''' ENTRY POINT '''
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('GetRapid7FinishedScansAndGenerateReportV2', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
