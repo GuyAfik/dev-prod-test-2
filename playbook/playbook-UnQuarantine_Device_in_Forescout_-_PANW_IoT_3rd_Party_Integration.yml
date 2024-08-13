@@ -31,11 +31,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: db419c63-cfa2-4789-8d4d-d437497dcd87
+      id: c25b5369-4d25-44c9-86af-fa299ded3f0c
       iscommand: false
       name: ""
       version: -1
-    taskid: db419c63-cfa2-4789-8d4d-d437497dcd87
+    taskid: c25b5369-4d25-44c9-86af-fa299ded3f0c
     timertriggers: []
     type: start
     view: |-
@@ -66,13 +66,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: a630a9f8-62f0-41bd-819c-950229f652bf
+      id: 59095640-5023-4cfb-862a-1e0bed8cb29a
       iscommand: false
       name: Is Forescout enabled?
       script: 292ae09c-ada1-4d3c-840a-add10bfefa5a
       type: condition
       version: -1
-    taskid: a630a9f8-62f0-41bd-819c-950229f652bf
+    taskid: 59095640-5023-4cfb-862a-1e0bed8cb29a
     timertriggers: []
     type: condition
     view: |-
@@ -110,13 +110,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message to PANW IOT cloud.
-      id: 61301645-3a04-4f1f-8c16-7cd5a6849561
+      id: bcb84c2f-c45a-4b81-8105-1c7f95eba99c
       iscommand: true
       name: Send disabled status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 61301645-3a04-4f1f-8c16-7cd5a6849561
+    taskid: bcb84c2f-c45a-4b81-8105-1c7f95eba99c
     timertriggers: []
     type: regular
     view: |-
@@ -151,13 +151,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 32a91719-5f7b-49e9-83b3-c30b12aea569
+      id: baab035c-23ff-4945-8825-174294f02521
       iscommand: false
       name: UnQuarantine device using Forescout
       script: QuarantinePANWIoTDeviceOnForescout
       type: regular
       version: -1
-    taskid: 32a91719-5f7b-49e9-83b3-c30b12aea569
+    taskid: baab035c-23ff-4945-8825-174294f02521
     timertriggers: []
     type: regular
     view: |-
@@ -180,13 +180,13 @@ tasks:
     task:
       brand: Builtin
       description: commands.local.cmd.close.inv
-      id: 9cebc7af-c0be-49c8-89a2-8415d2c08e18
+      id: 8d41bc8f-9496-4095-88bc-8c811bb51b5f
       iscommand: true
       name: Close Investigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 9cebc7af-c0be-49c8-89a2-8415d2c08e18
+    taskid: 8d41bc8f-9496-4095-88bc-8c811bb51b5f
     timertriggers: []
     type: regular
     view: |-
