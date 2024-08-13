@@ -1,0 +1,252 @@
+args:
+- name: active_forescout_instance
+  required: true
+- default: true
+  defaultValue: "true"
+  name: force_create_on_update
+- name: sites
+- name: tags
+- isArray: true
+  name: custom_attributes_list
+comment: For Bulk Export
+commonfields:
+  id: SendAllPANWIoTDevicesToForescout
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendAllPANWIoTDevicesToForescout
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendAllPANWIoTDevicesToForescout', 'start', __line__())
+
+
+
+
+
+
+  from typing import Dict, Any
+  import traceback
+
+  #PANW_IOT_INSTANCE = "PANW IoT 3rd Party Integration Instance"
+  USING_FORESCOUT_INSTANCE = demisto.args().get('active_forescout_instance')
+  mac_regex = ("^([0-9A-Fa-f]{2}[:-])"
+               + "{5}([0-9A-Fa-f]{2})|"
+               + "([0-9a-fA-F]{4}\\."
+               + "[0-9a-fA-F]{4}\\."
+               + "[0-9a-fA-F]{4})$")
+
+  mac_pattern = re.compile(mac_regex)
+  FORESCOUT_FIELD_MAP = {}
+
+
+  def send_status_to_panw_iot_cloud(status=None, msg=None):
+      """
+      To send error/success status back to PANW IoT cloud
+      :param status: status needs to send back
+      :param msg: message
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+          "status": status,
+          "message": msg,
+          "integration_name": "forescout",
+          "custom_integration_name": USING_FORESCOUT_INSTANCE,
+          "playbook_name": "Bulk Export Devices to Forescout - PANW IoT 3rd Party Integration",
+          "asset_type": "device",
+          "timestamp": int(round(time.time() * 1000))
+          #"using": PANW_IOT_INSTANCE
+      })
+      if isError(resp[0]):
+          err_msg = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+
+  def get_devices_from_panw_iot_cloud(offset, PAGE_SIZE,tags,sites):
+      """
+      To retrieve a list of devices list from PANW IoT cloud controled by offset and PAGE_SIZE
+      :param offset: The index from DB to return the results.
+      :return: list of device
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-get-asset-list", {
+          "asset_type": "device",
+          "increment_type": None,
+          "offset": offset,
+          "page_length": PAGE_SIZE,
+          "tags" : tags,
+          "sites" : sites
+          #"using": PANW_IOT_INSTANCE
+      })
+
+      if isError(resp[0]):
+          err_msg = f'Error, could not get assets from PANW IoT Cloud - {resp[0].get("Contents")}'
+          #raise Exception(err_msg)
+          return(err_msg)
+
+      return resp[0]['Contents']
+
+
+  def get_filtered_fields_map(custom_attribute_list=None):
+      fields_map = {}
+      if len(custom_attribute_list) == 0:
+          return FORESCOUT_FIELD_MAP
+      else:
+          fields_map = dict((custom_attribute, FORESCOUT_FIELD_MAP[custom_attribute]) for custom_attribute in custom_attribute_list if custom_attribute in FORESCOUT_FIELD_MAP)
+          return fields_map
+
+  def fetch_details_from_PANW_command(device_list,custom_attribute_list=None):
+
+      devices = device_list
+      resp_data = {}
+      op_data = {}
+
+      if len(devices) < 1:
+          return -1
+
+      for device in devices:
+          if device['mac_address'] != 'null':
+              mac = device['mac_address']
+          elif device['MAC'] != 'null':
+              mac = device['MAC']
+          elif device['deviceid'] != 'null':
+              mac = device['deviceid']
+          else:
+              return -1
+
+          if re.fullmatch(mac_pattern, mac):
+              attributes = {}
+              for field, val in device.items():
+                  if val and field in FORESCOUT_FIELD_MAP:
+                      if not isinstance(val, int) and '\\' in r"%r" % val:
+                          #remove the control characters from attribute value
+                          val = re.sub(r'[\x00-\x1f\x7f-\x7f\x90-\xa0]','', val)
+                      attributes[FORESCOUT_FIELD_MAP[field]] = str(val)
+
+              resp_data[mac] = attributes
+
+          else:
+              continue
+
+      return resp_data
+
+
+  def get_all_panw_iot_devices_and_send_to_forescout(force_create_on_update,tags,sites,custom_attribute_list=None):
+      """
+      To send all devices from PANW IoT cloud to Forescout
+      :return: A summary message
+      """
+
+      run_time_count = 1
+      offset = 0
+      PAGE_SIZE = 1000
+      device_count = 0
+
+      while True:
+          device_list = get_devices_from_panw_iot_cloud(offset, PAGE_SIZE,tags,sites)
+
+          size = len(device_list)
+          device_count += size
+          unique_macs = set()
+
+          resp_map = fetch_details_from_PANW_command(device_list,None)
+
+          for response in resp_map:
+              mac = response
+              mac_address = mac
+
+              attributes_map = resp_map[response]
+              if mac_address not in unique_macs:
+                  unique_macs.add(mac_address)
+
+
+              attributes_map = {str(key): str(value) for key, value in attributes_map.items()}
+
+              if mac == None or len(attributes_map) == 0:
+                  continue
+
+
+              res = demisto.executeCommand('forescout-update-host-fields', {
+                                           'mac_address': mac, 'fields_json': attributes_map, 'update_type': 'update', 'force_create_on_update': force_create_on_update,'using':USING_FORESCOUT_INSTANCE})
+
+              if isError(res[0]):
+                  err_msg = f'Failed to update endpoint on Forescout - %s' % res[0]['Contents']
+                  print(err_msg)
+                  raise Exception(err_msg)
+
+          if size == PAGE_SIZE:
+              offset += PAGE_SIZE
+              msg = (
+                  f'{str(run_time_count)}. Successfully update {str(device_count)}'
+              )
+              run_time_count += 1
+          else:
+              break
+
+      # Printing the 3 MAC addresses to Std output for user.
+      if len(list(unique_macs)) != 0:
+          #print("Printing first 3 device MAC, for reference.")
+          for id in range(3):
+              if id < len(list(unique_macs)):
+                  print("Sending device with MAC address: "+str(list(unique_macs)[id]))
+
+      summary_msg = (
+          f'Total {str(device_count)} devices pulled from PANW IOT Cloud.\n'
+          f'Exported {len(unique_macs)} devices (with available mac addresses) to Forescout'
+      )
+      return summary_msg
+
+
+  def main():
+
+      summary_msg = ""
+      args = demisto.args()
+      force_create_on_update = args.get('force_create_on_update')
+      tags = args.get('tags')
+      sites = args.get('sites')
+      custom_attribute_list = args.get('custom_attributes_list')
+
+      if tags:
+          tags = 'Forescout:In Scope'
+      else:
+          tags = None
+
+      for attr in custom_attribute_list:
+          if "exportattribute" in attr and attr['exportattribute']:
+              FORESCOUT_FIELD_MAP[attr['attributename']] = attr['panwiotcustomattribute']
+
+      if len(FORESCOUT_FIELD_MAP) == 0:
+          err_msg = f'Custom attributes field is empty. Please select the custom attributes on the job configuration'
+          #print(err_msg)
+          return_error(err_msg)
+
+      try:
+          summary_msg = get_all_panw_iot_devices_and_send_to_forescout(force_create_on_update,tags,sites,None)
+      except Exception as ex:
+          send_status_to_panw_iot_cloud("error", str(ex))
+          return_error(str(ex))
+      send_status_to_panw_iot_cloud("success", summary_msg)
+      return_results(summary_msg)
+
+
+  if __name__ in ['__main__', 'builtin', 'builtins']:
+      main()
+
+  register_module_line('SendAllPANWIoTDevicesToForescout', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 9080h0m0s
+type: python
