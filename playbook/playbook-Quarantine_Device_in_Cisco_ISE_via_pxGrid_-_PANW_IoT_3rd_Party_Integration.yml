@@ -36,11 +36,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 25b10b97-e05c-4733-8506-9724ab959262
+      id: 731c806f-ae65-4d98-815c-7fc6ab506f82
       iscommand: false
       name: ""
       version: -1
-    taskid: 25b10b97-e05c-4733-8506-9724ab959262
+    taskid: 731c806f-ae65-4d98-815c-7fc6ab506f82
     timertriggers: []
     type: start
     view: |-
@@ -75,13 +75,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 8f94ebbd-09c2-4441-8567-135ca3ed89f7
+      id: 09ee2438-862f-4acd-8898-63037c07d015
       iscommand: false
       name: Is pxGrid Integration enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 8f94ebbd-09c2-4441-8567-135ca3ed89f7
+    taskid: 09ee2438-862f-4acd-8898-63037c07d015
     timertriggers: []
     type: condition
     view: |-
@@ -119,13 +119,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: a3bcddc6-dbef-4532-83cc-4ecad349ddab
+      id: 1b8eb875-8096-44ed-811b-a05e85d7ca23
       iscommand: true
       name: Report disabled status to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: a3bcddc6-dbef-4532-83cc-4ecad349ddab
+    taskid: 1b8eb875-8096-44ed-811b-a05e85d7ca23
     timertriggers: []
     type: regular
     view: |-
@@ -157,13 +157,13 @@ tasks:
     task:
       brand: ""
       description: Quarantines or Un-quarantine a device by mac
-      id: ed2303a3-3727-4580-866f-cdc92cffa702
+      id: 3eb4080d-9c2c-4593-8ed2-f1b994829eb9
       iscommand: true
       name: Quarantine Endpoint on Cisco ISE
       script: '|||pxgrid-quarantine-device-by-mac'
       type: regular
       version: -1
-    taskid: ed2303a3-3727-4580-866f-cdc92cffa702
+    taskid: 3eb4080d-9c2c-4593-8ed2-f1b994829eb9
     timertriggers: []
     type: regular
     view: |-
@@ -186,13 +186,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: ac74d531-6462-4b08-8213-65876fbc9861
+      id: 0d72d400-851c-4bca-8e74-05e7ab65d155
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: ac74d531-6462-4b08-8213-65876fbc9861
+    taskid: 0d72d400-851c-4bca-8e74-05e7ab65d155
     timertriggers: []
     type: regular
     view: |-
@@ -230,13 +230,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: bd3e7e33-0496-4ebb-82da-29b38097b95b
+      id: 4558825e-6720-4bee-8a50-9713738c8909
       iscommand: true
       name: Report success status to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: bd3e7e33-0496-4ebb-82da-29b38097b95b
+    taskid: 4558825e-6720-4bee-8a50-9713738c8909
     timertriggers: []
     type: regular
     view: |-
@@ -274,13 +274,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 706ac42b-c004-4d12-8c39-0c508d991958
+      id: 9c45e686-4441-489d-82d1-4fdc33e457ed
       iscommand: true
       name: Report error status to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 706ac42b-c004-4d12-8c39-0c508d991958
+    taskid: 9c45e686-4441-489d-82d1-4fdc33e457ed
     timertriggers: []
     type: regular
     view: |-
@@ -314,13 +314,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: d6a70103-05cb-4b7d-8200-b0e21a546e2d
+      id: 75e7e385-e334-4de7-8b6b-1962f4dffce3
       iscommand: false
       name: Was there any error attempting quarantine?
       script: isError
       type: condition
       version: -1
-    taskid: d6a70103-05cb-4b7d-8200-b0e21a546e2d
+    taskid: 75e7e385-e334-4de7-8b6b-1962f4dffce3
     timertriggers: []
     type: condition
     view: |-
