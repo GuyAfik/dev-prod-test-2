@@ -31,11 +31,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: ba0bce7c-bccd-42bb-87c6-9e7e69c792c9
+      id: 5b40efbb-ef9d-4f23-8b2f-3d7f409a438f
       iscommand: false
       name: ""
       version: -1
-    taskid: ba0bce7c-bccd-42bb-87c6-9e7e69c792c9
+    taskid: 5b40efbb-ef9d-4f23-8b2f-3d7f409a438f
     timertriggers: []
     type: start
     view: |-
@@ -67,13 +67,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Returns a list of assets for the specified asset type.
-      id: 375955b2-8491-465c-8018-fc111b83d3bb
+      id: 1cefb844-d66f-40a5-89d5-c3cdb7783a62
       iscommand: true
       name: Get incremental device list
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-get-asset-list
       type: regular
       version: -1
-    taskid: 375955b2-8491-465c-8018-fc111b83d3bb
+    taskid: 1cefb844-d66f-40a5-89d5-c3cdb7783a62
     timertriggers: []
     type: regular
     view: |-
@@ -106,13 +106,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 5d9ece8f-dbbb-416c-8a0c-35db0e4efd04
+      id: 7877eae5-b404-45f6-8192-88aaf19f21e0
       iscommand: false
       name: Upsert devices to Nuvolo
       script: cd49735a-a76c-4fbe-823b-810394c5296d
       type: regular
       version: -1
-    taskid: 5d9ece8f-dbbb-416c-8a0c-35db0e4efd04
+    taskid: 7877eae5-b404-45f6-8192-88aaf19f21e0
     timertriggers: []
     type: regular
     view: |-
@@ -135,13 +135,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 9d252835-0671-4ca6-80c9-c9642451585d
+      id: ab3a97d9-6e4d-4551-838d-91ed8ead52ca
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 9d252835-0671-4ca6-80c9-c9642451585d
+    taskid: ab3a97d9-6e4d-4551-838d-91ed8ead52ca
     timertriggers: []
     type: regular
     view: |-
@@ -176,13 +176,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 934173ce-f461-48fb-8cbb-7fe87d13fee1
+      id: 292c54c9-dd64-4817-8be8-fb50ec3e3fda
       iscommand: false
       name: Is Nuvolo integration enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 934173ce-f461-48fb-8cbb-7fe87d13fee1
+    taskid: 292c54c9-dd64-4817-8be8-fb50ec3e3fda
     timertriggers: []
     type: condition
     view: |-
@@ -209,13 +209,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Return the PANW IoT customer id.
-      id: f1da6c9c-e0d1-47b5-8a09-402e1b7d5e29
+      id: 096d8abf-441e-4ff3-8c8a-c77b7614c45d
       iscommand: true
       name: Get PANW IoT Customer Id
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-get-customerid
       type: regular
       version: -1
-    taskid: f1da6c9c-e0d1-47b5-8a09-402e1b7d5e29
+    taskid: 096d8abf-441e-4ff3-8c8a-c77b7614c45d
     timertriggers: []
     type: regular
     view: |-
@@ -253,13 +253,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 2ee01751-daeb-47f1-8cb4-f3f9544297aa
+      id: 03ecbfef-ed03-4899-877d-c6011fa1a804
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 2ee01751-daeb-47f1-8cb4-f3f9544297aa
+    taskid: 03ecbfef-ed03-4899-877d-c6011fa1a804
     timertriggers: []
     type: regular
     view: |-
@@ -282,13 +282,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: c5c9cc4e-2373-4d05-80fb-1915a490530e
+      id: 623a9dc3-4127-46f3-8523-71d5c7309ce0
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: c5c9cc4e-2373-4d05-80fb-1915a490530e
+    taskid: 623a9dc3-4127-46f3-8523-71d5c7309ce0
     timertriggers: []
     type: regular
     view: |-
@@ -321,13 +321,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 29a00044-6b49-4687-89a4-50ecd6798e41
+      id: 994c5f8e-fecf-43f4-86ae-b8d3b69e7a6c
       iscommand: false
       name: Does incremental device list exists?
       script: Exists
       type: condition
       version: -1
-    taskid: 29a00044-6b49-4687-89a4-50ecd6798e41
+    taskid: 994c5f8e-fecf-43f4-86ae-b8d3b69e7a6c
     timertriggers: []
     type: condition
     view: |-
@@ -365,13 +365,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 9ab02487-e3cd-413f-84ab-8055e00a54ac
+      id: ff466abd-350f-4064-8552-2f5e0a56b511
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 9ab02487-e3cd-413f-84ab-8055e00a54ac
+    taskid: ff466abd-350f-4064-8552-2f5e0a56b511
     timertriggers: []
     type: regular
     view: |-
@@ -394,13 +394,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 8c97b70e-3fcd-43a8-8a3a-f0d941223fc2
+      id: e60ffead-4245-4769-8700-03a6ed91aa9a
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 8c97b70e-3fcd-43a8-8a3a-f0d941223fc2
+    taskid: e60ffead-4245-4769-8700-03a6ed91aa9a
     timertriggers: []
     type: regular
     view: |-
@@ -433,13 +433,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: 122b1c06-1ec7-4cab-8683-188827600be3
+      id: 125301cc-531c-48ba-8fb5-a0e400238a32
       iscommand: false
       name: Was there an error when upserting to Nuvolo?
       script: isError
       type: condition
       version: -1
-    taskid: 122b1c06-1ec7-4cab-8683-188827600be3
+    taskid: 125301cc-531c-48ba-8fb5-a0e400238a32
     timertriggers: []
     type: condition
     view: |-
@@ -480,13 +480,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 8afa0f56-536d-40ad-81eb-1adfe65760d4
+      id: ad0626a3-ad70-4573-8367-4e2eaf58a96c
       iscommand: true
       name: Send success status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 8afa0f56-536d-40ad-81eb-1adfe65760d4
+    taskid: ad0626a3-ad70-4573-8367-4e2eaf58a96c
     timertriggers: []
     type: regular
     view: |-
@@ -524,13 +524,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: ec6c4fa3-f589-40a5-8836-09e50f9685c4
+      id: 1f677773-7442-4acc-849b-157e1610765e
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: ec6c4fa3-f589-40a5-8836-09e50f9685c4
+    taskid: 1f677773-7442-4acc-849b-157e1610765e
     timertriggers: []
     type: regular
     view: |-
@@ -553,13 +553,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 19b38d82-46d9-4409-8f78-44c18b7f02b9
+      id: 5ec6d83b-87c4-46c4-8fae-35daa2b507b7
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 19b38d82-46d9-4409-8f78-44c18b7f02b9
+    taskid: 5ec6d83b-87c4-46c4-8fae-35daa2b507b7
     timertriggers: []
     type: regular
     view: |-
@@ -592,13 +592,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 46c47cca-d8fa-4384-8959-1138b545a701
+      id: 32f03b4f-2abb-492a-8417-2f8a4d644f12
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 46c47cca-d8fa-4384-8959-1138b545a701
+    taskid: 32f03b4f-2abb-492a-8417-2f8a4d644f12
     timertriggers: []
     type: condition
     view: |-
@@ -636,13 +636,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: eae6b439-ed85-42f4-8bd9-43a65ef5d6c5
+      id: e503facd-1adf-451c-8b09-e64b4adf4745
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: eae6b439-ed85-42f4-8bd9-43a65ef5d6c5
+    taskid: e503facd-1adf-451c-8b09-e64b4adf4745
     timertriggers: []
     type: regular
     view: |-
@@ -680,13 +680,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 535ab808-4026-4a12-8d94-49b3dfc5679f
+      id: 65901c35-fdfe-4579-8963-1bbe0642297d
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 535ab808-4026-4a12-8d94-49b3dfc5679f
+    taskid: 65901c35-fdfe-4579-8963-1bbe0642297d
     timertriggers: []
     type: regular
     view: |-
@@ -710,13 +710,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 73ea034d-53d3-4b35-83db-6dd47d6b7535
+      id: 5300dc9d-bc2d-441d-8eb3-d4ae80b4c202
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 73ea034d-53d3-4b35-83db-6dd47d6b7535
+    taskid: 5300dc9d-bc2d-441d-8eb3-d4ae80b4c202
     timertriggers: []
     type: regular
     view: |-
