@@ -1,0 +1,182 @@
+args:
+- description: Panorama Instance name
+  name: panorama_instance
+commonfields:
+  id: baecc898-27e6-4687-84c5-3828237902e6
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/netutils:1.0.0.24101
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendAllPanoramaUIDsToPANWIoTToPurge
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendAllPanoramaUIDsToPANWIoTToPurge', 'start', __line__())
+
+
+  import ipaddress
+  import netaddr
+
+  PANW_IOT_INSTANCE = "PANW IoT 3rd Party Integration Instance"
+  USING_PANORAMA_INSTANCE = demisto.args().get('panorama_instance')
+  PANAROMA_DEVICE_GROUPS_LIST_NAME = 'DeviceGroups_'+USING_PANORAMA_INSTANCE
+  PRE_RULEBASE = 'pre-rulebase'
+  POST_RULEBASE = 'post-rulebase'
+
+
+  def send_security_rules_to_panw_iot(uuids):
+      res = demisto.executeCommand("panw-iot-3rd-party-panorama-rules-uuid-purge",{'uuids':uuids})
+      output = res[0]['Contents']
+      if isError(res):
+          raise Exception('Exception while sending panorama rules uuid to purge: ' + str(output))
+      return output
+
+
+  def get_device_group_list_cache():
+      res = demisto.executeCommand('getList', {'listName': PANAROMA_DEVICE_GROUPS_LIST_NAME})
+      if (
+          not isinstance(res, list)
+          or 'Contents' not in res[0]
+          or not isinstance(res[0]['Contents'], str)
+          or res[0]['Contents'] == 'Item not found (8)'
+      ):
+          raise Exception('No device groups cache available - Device Group Cache is Empty'+ str(res[0]['Contents']))
+      devicegroups = res[0]['Contents']
+
+      return devicegroups
+
+  def get_api_type():
+      try:
+          # res = demisto.executeCommand("panw-panorama-api-type",{'using':USING_PANORAMA_INSTANCE})
+          res = demisto.executeCommand("panw-panorama-api-type",{})
+          if (
+                  not isinstance(res, list)
+                  or 'Contents' not in res[0]
+                  or not isinstance(res[0]['Contents'], str)
+                  or res[0]['Contents'] == 'Item not found (8)'
+              ):
+                  return 'No Panorama api type found'
+          return res[0]['Contents']
+      except Exception as e:
+          raise Exception('error while retrieving the panorama api type :'+str(e))
+
+  def get_panorama_security_rules(device_group, pre_post):
+      # res = demisto.executeCommand("panw-panorama-list-rules",{'device_group':device_group, 'pre_post':pre_post,'using':USING_PANORAMA_INSTANCE})
+      res = demisto.executeCommand("panw-panorama-list-rules",{'device_group':device_group, 'pre_post':pre_post})
+      if (
+              not isinstance(res, list)
+              or 'Contents' not in res[0]
+              or 'Request Failed.' in res[0]['Contents']
+          ):
+              demisto.info('No security rules available for device_group:' + str(device_group)+ ' pre_post:'+str(pre_post))
+              return None
+      return res[0]['Contents']
+
+
+  def get_processed_sec_rules(device_group, pre_post):
+      security_rules = get_panorama_security_rules(device_group, pre_post)
+      uuids=[]
+      if security_rules is not None:
+          for each_security_rule in security_rules:
+              uuid = each_security_rule['@uuid']
+              uuids.append(uuid)
+      return uuids
+
+  def get_xml_processed_sec_rules(device_group, pre_post):
+      if device_group=='Shared':
+          device_group=device_group.lower()
+      security_rules = get_panorama_security_rules(device_group, pre_post)
+      # demisto.info(str(security_rules))
+      # return_outputs(str(security_rules))
+      uuids=[]
+      if security_rules is not None and isinstance(security_rules, list):
+          for each_sec_rule in security_rules:
+              uuid = each_sec_rule['@uuid']
+              uuids.append(uuid)
+      elif security_rules is not None and isinstance(security_rules, dict):
+          uuid = security_rules['@uuid']
+          uuids.append(uuid)
+      return uuids
+
+  def process_panorama_rules(args):
+      panorama_api_type = get_api_type()
+      msgs={}
+      if panorama_api_type == 'XML_API':
+          device_groups_json = DEVICE_GROUPS
+          uuids=[]
+          for each_device_group in device_groups_json:
+              if each_device_group=='Shared':
+                  each_device_group=each_device_group.lower()
+              pre_security_rules_uuids = get_xml_processed_sec_rules(each_device_group, PRE_RULEBASE)
+              post_security_rules_uuids = get_xml_processed_sec_rules(each_device_group, POST_RULEBASE)
+              demisto.info('Device Group :'+str(each_device_group) + ' len of pre-security rules : '+str(len(pre_security_rules_uuids))+ ' post sec rules: '+str(len(post_security_rules_uuids)))
+              uuids.extend(pre_security_rules_uuids)
+              uuids.extend(post_security_rules_uuids)
+          msgs1 = send_panorama_security_rules_uuids(uuids)
+          msgs=msgs1['removed']
+          return msgs
+
+      elif panorama_api_type == 'REST_API':
+          device_groups_json = DEVICE_GROUPS
+          uuids=[]
+          for each_device_group in device_groups_json:
+              pre_security_rules_uuids = get_processed_sec_rules(each_device_group, PRE_RULEBASE)
+              post_security_rules_uuids = get_processed_sec_rules(each_device_group, POST_RULEBASE)
+              demisto.info('Device Group :'+str(each_device_group) + ' len of pre-security rules : '+str(len(pre_security_rules_uuids))+ ' post sec rules: '+str(len(post_security_rules_uuids)))
+              uuids.extend(pre_security_rules_uuids)
+              uuids.extend(post_security_rules_uuids)
+          msgs1 = send_panorama_security_rules_uuids(uuids)
+          msgs=msgs1['removed']
+          return msgs
+      else:
+          raise Exception('Invalid Panorama API type')
+
+
+  def send_panorama_security_rules_uuids(uuids):
+      msg = send_security_rules_to_panw_iot(uuids)
+      return msg
+
+  def main():
+      try:
+          global DEVICE_GROUPS
+          DEVICE_GROUPS = json.loads(get_device_group_list_cache())
+          results = process_panorama_rules(demisto.args())
+          msg = f'{results} Security Rules are removed'
+          report_summary = {}
+          report_summary.update({f'Total Security Rules Removed': results})
+          return_results(
+              CommandResults(
+                  readable_output=tableToMarkdown("Panorama Security Rules Purge Summary:", report_summary, removeNull=True),
+                  outputs_prefix="PaloAltoIoTIntegrationBase.Status",
+                  outputs=msg
+              )
+          )
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute SendAllPanoramaUIDsToPANWIoTToPurge. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('SendAllPanoramaUIDsToPANWIoTToPurge', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
