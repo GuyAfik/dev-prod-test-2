@@ -1,0 +1,792 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.3
+    packID: ""
+    packName: Palo Alto Networks IoT 3rd Party Integrations
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: Playbook to be run every 15 minutes via a job. Each run will get incremental
+  updates for devices to send to ServiceNow server.
+dirtyInputs: true
+id: Incremental Export Devices to ServiceNow - PANW IoT 3rd Party Integration
+inputs: []
+name: Incremental Export Devices to ServiceNow - PANW IoT 3rd Party Integration
+outputs: []
+sourceplaybookid: Incremental Export Devices to ServiceNow - PANW IoT 3rd Party Integration
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: ad57054b-c2df-4f93-814c-91ac768a1e56
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: ad57054b-c2df-4f93-814c-91ac768a1e56
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "3"
+      "yes":
+      - "42"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - ServiceNow v2
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available. Otherwise returns
+        'no'
+      id: 560ea71a-0f16-4ef9-87b3-0f2332bef821
+      iscommand: false
+      name: Is ServiceNow integration enabled?
+      script: IsIntegrationAvailable
+      type: condition
+      version: -1
+    taskid: 560ea71a-0f16-4ef9-87b3-0f2332bef821
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 195
+        }
+      }
+  "3":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: servicenow
+      message:
+        simple: ServiceNow Integration is not enabled
+      playbook_name:
+        simple: Incremental Export Devices to ServiceNow - PANW IoT 3rd Party Integration
+      status:
+        simple: disabled
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 9062181f-af48-4d36-87ea-452caeb34cf2
+      iscommand: true
+      name: Send disabled status back to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 9062181f-af48-4d36-87ea-452caeb34cf2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "4":
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 3b333fe5-617c-4526-88b4-73e0bd456b46
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 3b333fe5-617c-4526-88b4-73e0bd456b46
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+  "26":
+    continueonerrortype: ""
+    id: "26"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "30"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: servicenow
+      message:
+        simple: ${SN-IoT.incrementResult}
+      playbook_name:
+        simple: Incremental Export Devices to ServiceNow - PANW IoT 3rd Party Integration
+      status:
+        simple: success
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 64c774e1-e9a3-4a4a-8457-5499b86738a6
+      iscommand: true
+      name: Send success status back to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 64c774e1-e9a3-4a4a-8457-5499b86738a6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 1770
+        }
+      }
+  "30":
+    continueonerrortype: ""
+    id: "30"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: c816c484-7b10-4e52-8300-177e27bde603
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: c816c484-7b10-4e52-8300-177e27bde603
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 1945
+        }
+      }
+  "35":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "35"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "41"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      incident:
+        simple: ${incident}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Get PANW IoT and ServiceNow category mapping
+      id: ee5c76d0-c196-418c-82c7-9e97b0092f49
+      iscommand: false
+      name: Get PANW IoT ServiceNow Category Mapping
+      script: GetPANWIoTServiceNowCategoryMapping
+      type: regular
+      version: -1
+    taskid: ee5c76d0-c196-418c-82c7-9e97b0092f49
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 1070
+        }
+      }
+  "36":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "36"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "35"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      incident:
+        simple: ${incident}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Get all customized table and column names in the customers' ServiceNow.
+      id: c6095a32-ae0d-476f-8960-49a98dd29875
+      iscommand: false
+      name: Get ServiceNow Customized Configuration
+      script: GetServiceNowCustomizedConfiguration
+      type: regular
+      version: -1
+    taskid: c6095a32-ae0d-476f-8960-49a98dd29875
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 895
+        }
+      }
+  "37":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "37"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "38"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      customized_servicenow_config:
+        simple: ${PanwIot3rdParty.SNConfig}
+      device_list:
+        simple: ${PanwIot3rdParty.Devices}
+      iot_servicenow_category_map:
+        simple: ${PanwIot3rdParty.SNCategoryMapping}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Send Incremental PANW IoT Devices To ServiceNow
+      id: 70d4a467-8fc6-4233-8739-0170a13ebd97
+      iscommand: false
+      name: Send Incremental PANW IoT Devices To ServiceNow
+      script: SendIncrementalPANWIoTDevicesToServiceNow
+      type: regular
+      version: -1
+    taskid: 70d4a467-8fc6-4233-8739-0170a13ebd97
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 1420
+        }
+      }
+  "38":
+    continueonerrortype: ""
+    id: "38"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "26"
+      "yes":
+      - "39"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: 90c63fc1-09f5-4c24-8c9c-51140e5de6db
+      iscommand: false
+      name: Was there an error when sending devices to servicenow?
+      script: isError
+      type: condition
+      version: -1
+    taskid: 90c63fc1-09f5-4c24-8c9c-51140e5de6db
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 1595
+        }
+      }
+  "39":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "39"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "40"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: servicenow
+      message:
+        simple: 'Error: Failed to do incremental device sync to ServiceNow. Please
+          see the detailed error message from the playbook.'
+      playbook_name:
+        simple: Incremental Export Devices to ServiceNow - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 256647f6-f526-4abe-89c1-00a47e9579ba
+      iscommand: true
+      name: Send error status back to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 256647f6-f526-4abe-89c1-00a47e9579ba
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1555,
+          "y": 1770
+        }
+      }
+  "40":
+    continueonerrortype: ""
+    id: "40"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: a7cca932-8a0a-463e-8add-f37b0e87c0db
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: a7cca932-8a0a-463e-8add-f37b0e87c0db
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1555,
+          "y": 1945
+        }
+      }
+  "41":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "41"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "37"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      increment_time:
+        simple: "15"
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Returns a list of assets for the specified asset type.
+      id: a5f637f0-0f64-4836-84d1-fcf91d7945c8
+      iscommand: true
+      name: Get PANW IoT Devices
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-get-asset-list
+      type: regular
+      version: -1
+    taskid: a5f637f0-0f64-4836-84d1-fcf91d7945c8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 1245
+        }
+      }
+  "42":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "42"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "43"
+      "no":
+      - "44"
+      "yes":
+      - "46"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_name:
+        simple: ServiceNow v2
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: a8f9b283-f8a5-4046-8c01-12ec9c58c645
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: a8f9b283-f8a5-4046-8c01-12ec9c58c645
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 370
+        }
+      }
+  "43":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "43"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "45"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: servicenow
+      message:
+        simple: 'Error: Failed to get License'
+      playbook_name:
+        simple: Incremental Export Devices to ServiceNow - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 7b82d892-fca9-40b3-8a22-28516146f4df
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 7b82d892-fca9-40b3-8a22-28516146f4df
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 545
+        }
+      }
+  "44":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "44"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "45"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: servicenow
+      message:
+        simple: License Limit Exceeded.
+      playbook_name:
+        simple: Incremental Export Devices to ServiceNow - PANW IoT 3rd Party Integration
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: bc4c6b08-b453-4736-880a-9c0bc63f2050
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: bc4c6b08-b453-4736-880a-9c0bc63f2050
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 545
+        }
+      }
+  "45":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "45"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: ad603278-cb51-49b4-8144-aae97a44fba7
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: ad603278-cb51-49b4-8144-aae97a44fba7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 720
+        }
+      }
+  "46":
+    continueonerrortype: ""
+    id: "46"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "47"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Get ServiceNow Table Mapping Method
+      id: 219f7bea-4649-470d-8fed-b780b0bd0f9d
+      iscommand: true
+      name: Get ServiceNow Mapping Method
+      script: '|||get-mapping-method'
+      type: regular
+      version: -1
+    taskid: 219f7bea-4649-470d-8fed-b780b0bd0f9d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 545
+        }
+      }
+  "47":
+    continueonerrortype: ""
+    id: "47"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "36"
+      "yes":
+      - "48"
+    note: false
+    quietmode: 0
+    results:
+    - AreValuesEqual
+    scriptarguments:
+      left:
+        simple: ${SN.MappingMethod}
+      right:
+        simple: Use ServiceNow Classes
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether the values provided in arguments are equal. If either
+        of the arguments are missing, no is returned.
+      id: a3cdd539-ab50-435d-8fcc-db5fe196e200
+      iscommand: false
+      name: Is ServiceNow OT Mapping?
+      script: AreValuesEqual
+      type: condition
+      version: -1
+    taskid: a3cdd539-ab50-435d-8fcc-db5fe196e200
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 720
+        }
+      }
+  "48":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "48"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "38"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      increment_time:
+        simple: ${incident.playbookpollinterval}
+      panw_sn_category_mapping:
+        simple: ${incident.panwservicenowcategorymap}
+      servicenow_instance_name:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 979fb110-9a04-4b5e-80c9-a65386c7d43c
+      iscommand: false
+      name: SendIncrementalPANWIoTDevicesToServiceNowOTClasses
+      script: 7d7e97a4-d562-4abe-8428-1943618082dc
+      type: regular
+      version: -1
+    taskid: 979fb110-9a04-4b5e-80c9-a65386c7d43c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1555,
+          "y": 1420
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1990,
+        "width": 1885,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
