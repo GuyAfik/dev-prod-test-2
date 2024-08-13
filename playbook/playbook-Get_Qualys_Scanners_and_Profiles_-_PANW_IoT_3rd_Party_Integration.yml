@@ -33,11 +33,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: f5e3ef64-39b6-47db-8121-7b30ef120b82
+      id: da192086-4469-4578-8e49-acd1ac4138f7
       iscommand: false
       name: ""
       version: -1
-    taskid: f5e3ef64-39b6-47db-8121-7b30ef120b82
+    taskid: da192086-4469-4578-8e49-acd1ac4138f7
     timertriggers: []
     type: start
     view: |-
@@ -72,13 +72,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: aef018e4-df02-4da3-8ea0-444f3afdd39c
+      id: d0271c0e-e9b4-4ff9-8e4e-97901d046a27
       iscommand: false
       name: Is Qualys Enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: aef018e4-df02-4da3-8ea0-444f3afdd39c
+    taskid: d0271c0e-e9b4-4ff9-8e4e-97901d046a27
     timertriggers: []
     type: condition
     view: |-
@@ -112,13 +112,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: b4f5fbb6-9d96-4bdb-8340-af8fed8875a9
+      id: 781b3e3b-6366-4343-8236-33006e2790d7
       iscommand: false
       name: Was There an Error Getting Scanner and Profile Lists?
       script: isError
       type: condition
       version: -1
-    taskid: b4f5fbb6-9d96-4bdb-8340-af8fed8875a9
+    taskid: 781b3e3b-6366-4343-8236-33006e2790d7
     timertriggers: []
     type: condition
     view: |-
@@ -141,13 +141,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: fe2fb1cd-10dd-4fb2-852a-f4cd5b69e238
+      id: ba3490c6-8694-4df2-855b-77fe9325a560
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: fe2fb1cd-10dd-4fb2-852a-f4cd5b69e238
+    taskid: ba3490c6-8694-4df2-855b-77fe9325a560
     timertriggers: []
     type: regular
     view: |-
@@ -187,13 +187,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 613d6e45-fd64-4edd-8951-869967098b08
+      id: 2bb8b55d-cf00-4fd5-8fc1-b2a78932fd2f
       iscommand: true
       name: Report Success Status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 613d6e45-fd64-4edd-8951-869967098b08
+    taskid: 2bb8b55d-cf00-4fd5-8fc1-b2a78932fd2f
     timertriggers: []
     type: regular
     view: |-
@@ -231,13 +231,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 0b254e28-eb4d-4953-8570-d380182f167c
+      id: 1318ed66-cc64-4d81-876a-c827aef4111d
       iscommand: true
       name: Report Disabled Status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 0b254e28-eb4d-4953-8570-d380182f167c
+    taskid: 1318ed66-cc64-4d81-876a-c827aef4111d
     timertriggers: []
     type: regular
     view: |-
@@ -277,13 +277,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 95a24ece-7b5d-40a8-87ec-ac2ec8072704
+      id: 54fbb0bf-ff84-4b72-8a72-74bac103edbf
       iscommand: true
       name: Report Error Status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 95a24ece-7b5d-40a8-87ec-ac2ec8072704
+    taskid: 54fbb0bf-ff84-4b72-8a72-74bac103edbf
     timertriggers: []
     type: regular
     view: |-
@@ -316,13 +316,13 @@ tasks:
       brand: ""
       description: |
         Get list of Qualys Scanners and Profiles and write to context
-      id: 967c8f1b-1313-4885-8a32-71bc44a39ab8
+      id: dc400466-efc3-4bb0-8e4e-bcf6daba1e6f
       iscommand: false
       name: Get A list of Qualys Scanners and Scan Profile Options
       script: GetQualysScannersAndProfiles
       type: regular
       version: -1
-    taskid: 967c8f1b-1313-4885-8a32-71bc44a39ab8
+    taskid: dc400466-efc3-4bb0-8e4e-bcf6daba1e6f
     timertriggers: []
     type: regular
     view: |-
@@ -355,13 +355,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 70a5a1c1-3404-41c2-875d-6a0dd0afe1a9
+      id: 8132af99-e94a-4317-811c-4d70642210bf
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 70a5a1c1-3404-41c2-875d-6a0dd0afe1a9
+    taskid: 8132af99-e94a-4317-811c-4d70642210bf
     timertriggers: []
     type: condition
     view: |-
@@ -401,13 +401,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: f78c3244-d616-4931-8b3b-c372aa8d4eea
+      id: da8a7aa7-5a90-4f3c-8040-7409942b3542
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: f78c3244-d616-4931-8b3b-c372aa8d4eea
+    taskid: da8a7aa7-5a90-4f3c-8040-7409942b3542
     timertriggers: []
     type: regular
     view: |-
@@ -447,13 +447,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 1338091a-04e3-4542-8f69-63471aec65ec
+      id: d1ba87f3-026f-41f3-85f3-82d622f10907
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 1338091a-04e3-4542-8f69-63471aec65ec
+    taskid: d1ba87f3-026f-41f3-85f3-82d622f10907
     timertriggers: []
     type: regular
     view: |-
@@ -477,13 +477,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 7ae46901-750a-4039-8129-3054be0d2c09
+      id: 8bd5e60d-a8a9-46e7-81e8-ec99b4bff39b
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 7ae46901-750a-4039-8129-3054be0d2c09
+    taskid: 8bd5e60d-a8a9-46e7-81e8-ec99b4bff39b
     timertriggers: []
     type: regular
     view: |-
@@ -520,13 +520,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: f062646e-2f6a-4f6d-8da1-b268c55d39e9
+      id: ee6b5614-6d68-44cf-8eff-bbf5eecfdb7f
       iscommand: false
       name: Is Qualys  Integration Instance Enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: f062646e-2f6a-4f6d-8da1-b268c55d39e9
+    taskid: ee6b5614-6d68-44cf-8eff-bbf5eecfdb7f
     timertriggers: []
     type: condition
     view: |-
@@ -564,13 +564,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: c7cbdb6f-5875-4ae7-8787-44f9785395ff
+      id: 9469e956-1694-4cf9-8a1b-2e9905652685
       iscommand: true
       name: Report Disabled Status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: c7cbdb6f-5875-4ae7-8787-44f9785395ff
+    taskid: 9469e956-1694-4cf9-8a1b-2e9905652685
     timertriggers: []
     type: regular
     view: |-
