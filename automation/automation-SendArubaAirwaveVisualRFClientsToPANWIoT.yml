@@ -1,0 +1,466 @@
+args:
+- name: instance_name
+commonfields:
+  id: 2f11929a-9cbc-443b-8899-557fcdd0f227
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.14.98254
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendArubaAirwaveVisualRFClientsToPANWIoT
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendArubaAirwaveVisualRFClientsToPANWIoT', 'start', __line__())
+
+
+  from typing import Dict, Any
+  import traceback
+  import ipaddress
+  AIRWAVE_INSTACE = demisto.args().get("instance_name")
+
+  AP_ID_CACHE = {}
+
+  ''' STANDALONE FUNCTION '''
+
+  def send_status_to_panw_iot_cloud(status, msg):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      resp = demisto.executeCommand(
+          "panw-iot-3rd-party-report-status-to-panw",
+          {
+              "status": status,
+              "message": msg,
+              "integration_name": "aruba_airwave",
+              "playbook_name": "Import Aruba AirWave Clients to PANW IoT",
+              "asset_type": "device",
+              "custom_integration_name": AIRWAVE_INSTACE,
+              "timestamp": int(round(time.time() * 1000)),
+
+          },
+      )
+      if isError(resp[0]):
+          err_msg = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+  def validate_ip_address(address):
+      try:
+          ip = ipaddress.IPv4Network(address)
+          return True
+      except ValueError:
+          return False
+
+  def send_devices_to_panw_iot_cloud(devices_list, retry=0):
+      """
+      Sends assets to PANW IoT Cloud.
+      :type devices_list: ``array``
+      :param devices_list: List of assets to be sent to PANW IoT cloud
+      """
+      res = ""
+      resp = demisto.executeCommand(
+          "panw-iot-3rd-party-report-devices",
+          {
+              "DeviceData": devices_list,
+              "pageLength": None,
+              "IntegrationName": "aruba_airwave",
+          },
+      )
+      if isError(resp[0]):
+          if retry == 0:
+              time.sleep(1)
+              return send_devices_to_panw_iot_cloud(devices_list, retry=1)
+          err_msg = f'Error, could not send devices to PANW IoT Cloud - {resp[0].get("Contents")}'
+          demisto.error(err_msg)
+          raise Exception(err_msg)
+      if resp[0]["Contents"]:
+          demisto.info(f"Successfully report devices to PANW IoT Cloud:- {resp[0]['Contents']}")
+          res = resp[0]["Contents"]
+      return res
+
+  def get_client_details(mac_address):
+      res = demisto.executeCommand("aruba-airwave-get-client-details", {
+          "mac_address": mac_address,
+          "using": AIRWAVE_INSTACE
+      })
+      if isError(res[0]):
+          err_msg = f'Error, failed to get Client Details from Aruba Airwave - {res[0].get("Contents")}'
+          print(err_msg)
+          #raise Exception(err_msg)
+
+      res = res[0]["Contents"]
+      for key in res:
+          if "amp_client_detail" in key:
+              client_data = res[key].get("client")
+              return client_data
+      return None
+
+  def get_floor_clients_locations(floor_id):
+      res = demisto.executeCommand("aruba-airwave-vrf-get-client-locations", {
+          "site_id": floor_id,
+          "using": AIRWAVE_INSTACE
+      })
+      if isError(res[0]):
+          err_msg = f'Error, failed to get Client Locations from Aruba Airwave - {res[0].get("Contents")}'
+          print(err_msg)
+          #raise Exception(err_msg)
+
+      res = res[0]["Contents"]
+      for key in res:
+          if "sites" in key:
+              site = res[key].get("site")
+              if site is None:
+                  continue
+              clients = site.get("client")
+              if clients is None:
+                  continue
+              if type(clients) != list:
+                  clients = [clients]
+              return clients
+      return None
+
+  def get_floor_ap_locations(floor_id=None):
+      res = demisto.executeCommand("aruba-airwave-vrf-get-ap-locations", {
+          "site_id": floor_id,
+          "using": AIRWAVE_INSTACE
+      })
+      if isError(res[0]):
+          err_msg = f'Error, failed to get Client Locations from Aruba Airwave - {res[0].get("Contents")}'
+          print(err_msg)
+          #raise Exception(err_msg)
+
+      res = res[0]["Contents"]
+
+      for key in res:
+          if "sites" in key:
+              site = res[key].get("site")
+              if site is None:
+                  continue
+              aps = site.get("ap")
+              if aps is None:
+                  continue
+              if type(aps) != list:
+                  aps = [aps]
+              return aps
+      return None
+
+  def build_iot_client_payload(client_details, client):
+      mac = client.get("mac")
+      if mac:
+          mac = mac.lower()
+      device_payload = {
+          'deviceid' : mac,
+          'MAC': mac,
+      }
+      lan_details = client_details.get("lan_elements")
+      if lan_details:
+          lan_list = lan_details.get("lan")
+          if type(lan_list) != list:
+              lan_list = [lan_list]
+          for lan in lan_list:
+              hostname = lan.get("hostname")
+              if hostname:
+                  device_payload["display_hostname"] = hostname
+              ip = lan.get("ip_address")
+              if validate_ip_address(ip):
+                  device_payload["connect_evtContent.ip"] = ip
+      device_payload["display_vlan"] = client_details.get("vlan")
+      device_payload["snr"] = client_details.get("snr")
+      device_payload["rssi"] = client_details.get("rssi")
+      device_payload["display_ssid"] = client_details.get("ssid")
+
+      ap_details = client_details.get("ap")
+      if ap_details:
+          device_payload["display_ap_name"] = ap_details.get("_text")
+          ap_id = ap_details.get("id")
+          if ap_id and ap_id in AP_ID_CACHE:
+              device_payload["apMacAddress"] = AP_ID_CACHE[ap_id]
+
+      if not device_payload.get("display_hostname") and client.get("name"):
+          device_payload["display_hostname"] = client.get("name")
+
+      if client.get('x') and client.get('y'):
+          device_payload["floor_plan_coordinate"] = client.get('x') + "," + client.get('y')
+
+      return device_payload
+
+
+  def send_aruba_clients_to_panw_iot(campuses):
+      count = 0
+      updates = 0
+      upserts = 0
+      op_client_list = []
+      if not campuses:
+          return None
+      iot_device_list = []
+      for campus in campuses:
+          buildings = campus.get("buildings")
+          if not buildings:
+              continue
+          if type(buildings) != list:
+              buildings = [buildings]
+          for building in buildings:
+              floors = building.get("floors")
+              if not floors:
+                  continue
+              if type(floors) != list:
+                  floors = [floors]
+              for floor in floors:
+                  floor_id = floor.get("uuid")
+                  floor_clients = get_floor_clients_locations(floor_id)
+                  if not floor_clients:
+                      continue
+                  for client in floor_clients:
+                      client_mac = client.get("mac")
+                      image_data = floor.get("image_data")
+                      client_details = get_client_details(client_mac)
+                      device = build_iot_client_payload(client_details, client)
+                      device["display_campus"] = campus.get("name")
+                      device["display_building"] = building.get("name")
+                      device["display_floor"] = floor.get("name")
+                      device["display_ap_location"] = campus.get("name") + "->" + building.get("name") + "->" + floor.get("name")
+                      if image_data:
+                          device["floor_plan_dimension"] = image_data.get("floor_plan_dimension")
+                      device["floorId"] = floor.get("uuid")
+                      device["physical_location"] = None
+                      iot_device_list.append(device)
+                      count += 1
+                      if len(iot_device_list) >= 100:
+                          res = send_devices_to_panw_iot_cloud(iot_device_list)
+                          op_client_list = iot_device_list[:5]
+                          updates += res.get("updatedDeviceNum")
+                          upserts += res.get("upsertedDeviceNum")
+                          iot_device_list = []
+                          send_status_to_panw_iot_cloud("success", "Aruba AirWave Clients Import in Progress")
+
+      #send left over clients:
+      if len(iot_device_list):
+          res = send_devices_to_panw_iot_cloud(iot_device_list)
+          op_client_list = iot_device_list[:5]
+          updates += res.get("updatedDeviceNum")
+          upserts += res.get("upsertedDeviceNum")
+          send_status_to_panw_iot_cloud("success", "Aruba AirWave Clients Import in Progress")
+      results = {
+          "Endpoints Imported From Aruba Airwave VRF": count,
+          "New Endpoints learned on IoT": upserts,
+          "Endpoints Updated on IoT": updates
+      }
+      return results, op_client_list
+
+  def build_iot_ap_payload(ap):
+      mac = ap.get("mac")
+      status = ap.get("status")
+      if status == "down":
+          return None
+      if not mac:
+          return None
+
+      mac = mac.lower()
+      device_payload = {
+          'deviceid' : mac,
+          'MAC': mac,
+      }
+
+      ap_id = ap.get("id")
+      if ap_id:
+          AP_ID_CACHE[ap_id] = mac
+      device_payload["display_hostname"] = ap.get("name")
+      device_payload["display_firmwareVer"] = ap.get("firmware")
+      device_payload["display_model"] = ap.get("model")
+      device_payload["display_sn"] = ap.get("serialNumber")
+      if ap.get('x') and ap.get('y'):
+          device_payload["floor_plan_coordinate"] = ap.get('x') + "," + ap.get('y')
+      return device_payload
+
+  def send_aruba_aps_to_panw_iot(campuses):
+      count = 0
+      updates = 0
+      upserts = 0
+      op_ap_list = [] # Need only 5 for display
+      if not campuses:
+          return None
+      iot_device_list = []
+      for campus in campuses:
+          buildings = campus.get("buildings")
+          if not buildings:
+              continue
+          if type(buildings) != list:
+              buildings = [buildings]
+          for building in buildings:
+              floors = building.get("floors")
+              if not floors:
+                  continue
+              if type(floors) != list:
+                  floors = [floors]
+              for floor in floors:
+                  floor_id = floor.get("uuid")
+                  floor_aps = get_floor_ap_locations(floor_id)
+                  image_data = floor.get("image_data")
+                  if not floor_aps:
+                      continue
+                  for ap in floor_aps:
+                      device = build_iot_ap_payload(ap)
+                      if not device:
+                          continue
+                      device["display_campus"] = campus.get("name")
+                      device["display_building"] = building.get("name")
+                      device["display_floor"] = floor.get("name")
+                      device["display_ap_location"] = campus.get("name") + "->" + building.get("name") + "->" + floor.get("name")
+                      if image_data:
+                          device["floor_plan_dimension"] = image_data.get("floor_plan_dimension")
+                      device["floorId"] = floor.get("uuid")
+                      device["physical_location"] = None
+                      iot_device_list.append(device)
+                      count += 1
+                      if len(iot_device_list) >= 100:
+                          op_ap_list = iot_device_list[:5]
+                          res = send_devices_to_panw_iot_cloud(iot_device_list)
+                          updates += res.get("updatedDeviceNum")
+                          upserts += res.get("upsertedDeviceNum")
+                          iot_device_list = []
+                          send_status_to_panw_iot_cloud("success", "Aruba AirWave Clients Import in Progress")
+
+
+      if len(iot_device_list) > 0:
+          res = send_devices_to_panw_iot_cloud(iot_device_list)
+          op_ap_list = iot_device_list[:5]
+          updates += res.get("updatedDeviceNum")
+          upserts += res.get("upsertedDeviceNum")
+          send_status_to_panw_iot_cloud("success", "Aruba AirWave Clients Import in Progress")
+
+      results = {
+          "APs Imported From Aruba Airwave VRF": count,
+          "New APs learned on IoT": upserts,
+          "APs Updated on IoT": updates
+      }
+      return results, op_ap_list
+
+  def get_floor_plans_metadata():
+      op_data = {
+          "campuses": 0,
+          "buildings": 0,
+          "floors": 0,
+      }
+      res = demisto.executeCommand("aruba-airwave-vrf-get-campuses", {
+          "using": AIRWAVE_INSTACE
+      })
+      if isError(res[0]):
+          err_msg = f'Error, failed to get Floor Plans from Aruba Airwave - {res[0].get("Contents")}'
+          raise Exception(err_msg)
+
+      response = res[0]["Contents"]
+      campuses = []
+      for key in response:
+          if "campuses" in key:
+              campus_data = response[key].get("campus")
+              if not campus_data:
+                  continue
+              if type(campus_data) != list:
+                  campus_data = [campus_data]
+              for campus in campus_data:
+                  campuses_obj = {
+                      "name" : campus.get("name"),
+                      "uuid" : campus.get("id"),
+                      "buildings": []
+                  }
+                  buildings = campus.get("building")
+                  if not buildings:
+                      continue
+                  if type(buildings) != list:
+                      buildings = [buildings]
+                  for building in buildings:
+                      building_obj = {
+                          "name" : building.get("name"),
+                          "address" : building.get("address"),
+                          "uuid" : building.get("id"),
+                          "floors": []
+                      }
+                      floors = building.get("site")
+                      if not floors:
+                          continue
+                      if type(floors) != list:
+                          floors = [floors]
+                      for floor in floors:
+                          floor_obj = {
+                              "name": floor.get("name"),
+                              "uuid": floor.get("id"),
+                              "floor_number": floor.get("floor"),
+                              "image_data" : None
+                          }
+                          images = floor.get("image")
+                          if not images:
+                              continue
+                          if type(images) != list:
+                              images = [images]
+                          for image in images:
+                              if "background" in image.get("filename"):
+                                  image_obj = {
+                                      "floor_plan_dimension": image.get("pixel-width") + "," + image.get("pixel-height"),
+                                      "floor_image_url": image.get("relative-url"),
+                                      "floor_image_name": floor_obj["uuid"] + "_" + image.get("filename").split("/")[-1]
+                                  }
+                                  floor_obj["image_data"] = image_obj
+                                  break
+                          building_obj["floors"].append(floor_obj)
+                      campuses_obj["buildings"].append(building_obj)
+                  campuses.append(campuses_obj)
+      return campuses, op_data
+
+
+  ''' MAIN FUNCTION '''
+
+
+  def main():
+      try:
+          campuses, op_data = get_floor_plans_metadata()
+          ap_summary, aps = send_aruba_aps_to_panw_iot(campuses)
+          client_summary, clients = send_aruba_clients_to_panw_iot(campuses)
+          send_status_to_panw_iot_cloud("success", "Aruba AirWave Clients Imported Successfully")
+          return_results(
+              CommandResults(
+                  readable_output=tableToMarkdown("Aruba AirWave Client Import Summary:", client_summary, removeNull=True),
+                  outputs_prefix="VRF.Clients",
+                  outputs=clients,
+              )
+          )
+          return_results(
+              CommandResults(
+                  readable_output=tableToMarkdown("Aruba AirWave Access Point Import Summary:", ap_summary, removeNull=True),
+                  outputs_prefix="VRF.aps",
+                  outputs=aps,
+              )
+          )
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          err_msg = "Aruba AirWave Clients Import Failed - %s" % str(ex)
+          send_status_to_panw_iot_cloud("error", err_msg)
+          return_error(f'Failed to execute SendArubaAirwaveVisualRFClientsToPANWIoT. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('SendArubaAirwaveVisualRFClientsToPANWIoT', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
