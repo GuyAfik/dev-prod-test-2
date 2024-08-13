@@ -1,0 +1,137 @@
+comment: Pulling devices information from Nuvolo and send to PANW IoT Cloud Side.
+commonfields:
+  id: 74e93f5e-820a-463d-8f5d-741f45aa4cc4
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendNuvoloDataToPANWIoTCloud
+outputs:
+- contextPath: Nuvolo-IoT.bulkPullResult
+  description: The result of the bulk pulling
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendNuvoloDataToPANWIoTCloud', 'start', __line__())
+
+
+  PANW_IOT_INSTANCE = "PANW IoT 3rd Party Integration Instance"
+  PAGE_SIZE = 100
+
+  """
+  Logic behind this feature:
+  1. Fetch all devices in PANW IoT cloud side
+  2. Get all medical devices
+  3. Based on medical devices, pull them from Nuvolo side to enrich the data field
+  4. Pass the result data to PANW IoT cloud side to do the bulk update
+  """
+
+  def get_devices_from_panw_iot_cloud(offset):
+      """
+      To retrieve a list of devices list from PANW IoT cloud controled by offset and PAGE_SIZE
+      :param offset: The index from DB to return the results.
+      :return: list of device
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-get-asset-list", {
+          "asset_type": "device",
+          "offset": offset,
+          "page_length": PAGE_SIZE
+          #"using": PANW_IOT_INSTANCE
+      })
+      if isError(resp[0]):
+          err_msg = f'Error, could not get assets from PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+      return resp[0]['Contents']
+
+  def send_all_devices_to_panw_iot():
+      """
+      Get all devices from PANW IoT cloud and send to Nuvolo
+      """
+      offset = 0
+      total_medical_devices_query_to_nuvolo = 0
+      total_extract_devices_from_nuvolo = 0
+      while True:
+          size = 0
+          device_list = get_devices_from_panw_iot_cloud(offset)
+          size = len(device_list)
+          mac_address_list = []
+          time.sleep(0.2)
+          for i in range (len(device_list)):
+              device = device_list[i]
+              if (('profile_type' not in device) or (device['profile_type'] != 'IoT') or ('profile_vertical' not in device )or (device['profile_vertical'] != 'Medical')):
+                  continue
+              mac = device['deviceid']
+              if (not re.match("[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", mac)):
+                  continue
+              mac_address_list.append(mac)
+
+          if len(mac_address_list) > 0:
+              total_medical_devices_query_to_nuvolo += len(mac_address_list)
+              resp = demisto.executeCommand("nuvolo-get-record", {
+                  "mac_address_list": mac_address_list
+              })
+              if isError(resp[0]):
+                raise Exception(f'Failed to query devices from Nuvolo - {resp[0].get("Contents")}. Mac address list is: {mac_address_list}')
+              if ('Contents' in resp[0] and 'resp' in resp[0]["Contents"]):
+                total_extract_devices_from_nuvolo += len(resp[0]['Contents']['resp'])
+                res = demisto.executeCommand("panw-iot-3rd-party-report-devices", {"DeviceData": resp, "IntegrationName": "nuvolo"})
+
+              if isError(res[0]):
+                  raise Exception(f'Failed to report devices to PANW IoT cloud - {res[0].get("Contents")}')
+
+          if size == PAGE_SIZE:
+              offset += PAGE_SIZE
+          else:
+              break
+
+      return {
+          "total_medical_devices_query_to_nuvolo": total_medical_devices_query_to_nuvolo,
+          "total_extract_devices_from_nuvolo": total_extract_devices_from_nuvolo
+      }
+
+  def main():
+      """
+      Main entry
+      """
+      try:
+          summary = send_all_devices_to_panw_iot()
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(str(ex))
+      op_data = {
+          "total medical devices query to nuvolo": summary.get("total_medical_devices_query_to_nuvolo"),
+          "total extract devices from nuvolo": summary.get("total_extract_devices_from_nuvolo")
+      }
+      return CommandResults(
+          readable_output=tableToMarkdown("Asset import summary:", op_data, removeNull=True),
+          outputs_prefix = "Nuvolo-IoT.bulkPullResult",
+          outputs = summary.get('total_extract_devices_from_nuvolo')
+      )
+
+
+  if __name__ in ['__main__', 'builtin', 'builtins']:
+      res = main()
+      return_results(res)
+
+  register_module_line('SendNuvoloDataToPANWIoTCloud', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- Nuvolo
+- PANW IoT 3rd Party Integration
+timeout: 100800h0m0s
+type: python
