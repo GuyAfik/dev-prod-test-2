@@ -9,7 +9,6 @@ contentitemexportablefields:
     propagationLabels:
     - all
     toServerVersion: ""
-dirtyInputs: true
 id: 379d18e1-a22f-4685-8d1e-a6fbcbc3e5aa
 inputs: []
 name: Bulk Import of  subnet network info from Infoblox IPAM to PANW IoT Cloud
@@ -32,11 +31,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: b199e246-006a-4b83-8c3c-77658ecbd89a
+      id: 506e8709-6109-46d3-878a-e4750c155586
       iscommand: false
       name: ""
       version: -1
-    taskid: b199e246-006a-4b83-8c3c-77658ecbd89a
+    taskid: 506e8709-6109-46d3-878a-e4750c155586
     timertriggers: []
     type: start
     view: |-
@@ -71,13 +70,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 1f7cf6f7-6240-41fd-85c4-112aba6f60fc
+      id: 81e1c462-e461-44d8-8535-ca95ef4917b0
       iscommand: false
       name: Is Infoblox enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 1f7cf6f7-6240-41fd-85c4-112aba6f60fc
+    taskid: 81e1c462-e461-44d8-8535-ca95ef4917b0
     timertriggers: []
     type: condition
     view: |-
@@ -118,13 +117,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: cdbe19db-1ce7-4871-826f-19608d8bf513
+      id: cff2e818-bf26-4d33-839b-ec09e741af3f
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: cdbe19db-1ce7-4871-826f-19608d8bf513
+    taskid: cff2e818-bf26-4d33-839b-ec09e741af3f
     timertriggers: []
     type: regular
     view: |-
@@ -148,13 +147,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: db95ded8-63b8-4ea1-8bad-b24b040d5eae
+      id: b2037b52-83aa-4c62-85c8-3d3b485c32d0
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: db95ded8-63b8-4ea1-8bad-b24b040d5eae
+    taskid: b2037b52-83aa-4c62-85c8-3d3b485c32d0
     timertriggers: []
     type: regular
     view: |-
@@ -193,13 +192,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: c57ce99c-dff2-406f-82e8-1a0498fa52b6
+      id: d13fd513-011b-4e08-8cdc-2fc1697e56c6
       iscommand: false
       name: Export Infoblox Subnet Info and Update PANW IoT cloud
       script: InfoBloxGetSubnetNetwork
       type: regular
       version: -1
-    taskid: c57ce99c-dff2-406f-82e8-1a0498fa52b6
+    taskid: d13fd513-011b-4e08-8cdc-2fc1697e56c6
     timertriggers: []
     type: regular
     view: |-
@@ -233,13 +232,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: de159fb7-a5db-49b6-8fd4-0b71c2d4eff9
+      id: 926d0887-a1a7-4588-868f-23de1cf3e47b
       iscommand: false
       name: Was there an error when sending devices to PANW IoT Cloud?
       script: isError
       type: condition
       version: -1
-    taskid: de159fb7-a5db-49b6-8fd4-0b71c2d4eff9
+    taskid: 926d0887-a1a7-4588-868f-23de1cf3e47b
     timertriggers: []
     type: condition
     view: |-
@@ -280,13 +279,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 2beb9387-2ef2-4053-8b2e-a3f8294994dd
+      id: 07ef00cf-9d8f-4254-85ff-87852f4729e1
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 2beb9387-2ef2-4053-8b2e-a3f8294994dd
+    taskid: 07ef00cf-9d8f-4254-85ff-87852f4729e1
     timertriggers: []
     type: regular
     view: |-
@@ -310,13 +309,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: e34005a2-cfc7-4c21-867a-a34a5e42d0d1
+      id: 06c7595c-484b-4796-8ed5-7f236524c6b7
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: e34005a2-cfc7-4c21-867a-a34a5e42d0d1
+    taskid: 06c7595c-484b-4796-8ed5-7f236524c6b7
     timertriggers: []
     type: regular
     view: |-
@@ -340,13 +339,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: b3123aee-e910-4bee-84f9-6464b24cf51c
+      id: 1adbd4e7-1dc1-4dbf-8b05-1cb948e2e15e
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: b3123aee-e910-4bee-84f9-6464b24cf51c
+    taskid: 1adbd4e7-1dc1-4dbf-8b05-1cb948e2e15e
     timertriggers: []
     type: regular
     view: |-
@@ -387,13 +386,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 930fb0df-9cf9-4d4f-8c64-19a02263395a
+      id: c0523fab-23f9-4fa4-8964-f9f8c0068d42
       iscommand: true
       name: Send success status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 930fb0df-9cf9-4d4f-8c64-19a02263395a
+    taskid: c0523fab-23f9-4fa4-8964-f9f8c0068d42
     timertriggers: []
     type: regular
     view: |-
@@ -428,13 +427,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 533968ab-d267-4fab-8aea-2d4290932f38
+      id: 6b6e671c-51a7-4a2a-8df9-bc616dceb332
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 533968ab-d267-4fab-8aea-2d4290932f38
+    taskid: 6b6e671c-51a7-4a2a-8df9-bc616dceb332
     timertriggers: []
     type: condition
     view: |-
@@ -473,13 +472,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 7d0c2c01-e374-4cd4-8ff1-c9e0617fefc3
+      id: 10c2f6f9-b35f-4f77-8b74-04e2c04d3b37
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 7d0c2c01-e374-4cd4-8ff1-c9e0617fefc3
+    taskid: 10c2f6f9-b35f-4f77-8b74-04e2c04d3b37
     timertriggers: []
     type: regular
     view: |-
@@ -503,13 +502,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 5289613d-2fd7-4cd7-8e0d-5bbdb5a3a426
+      id: 5302c59f-b9c4-440a-8d85-cc7b800a09ae
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 5289613d-2fd7-4cd7-8e0d-5bbdb5a3a426
+    taskid: 5302c59f-b9c4-440a-8d85-cc7b800a09ae
     timertriggers: []
     type: regular
     view: |-
@@ -548,13 +547,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 90266a43-1b92-439a-8054-b9342813ab98
+      id: e185a5f3-5db2-4fd1-8249-bfe9543e5a1a
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 90266a43-1b92-439a-8054-b9342813ab98
+    taskid: e185a5f3-5db2-4fd1-8249-bfe9543e5a1a
     timertriggers: []
     type: regular
     view: |-
@@ -587,13 +586,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: aa7c03ab-3124-48ec-87ed-8cb6ebc61de5
+      id: 7f9e942a-d1e1-4e98-8e55-677baa6391ff
       iscommand: false
       name: Is Infoblox IPAM Integration Instance Available
       script: Exists
       type: condition
       version: -1
-    taskid: aa7c03ab-3124-48ec-87ed-8cb6ebc61de5
+    taskid: 7f9e942a-d1e1-4e98-8e55-677baa6391ff
     timertriggers: []
     type: condition
     view: |-
@@ -632,13 +631,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 51c2e3df-eaf8-4c44-81bb-d7d6e5f5fa7c
+      id: 261c45a5-13ce-4cbc-88eb-562cfa60833b
       iscommand: true
       name: No Instance passed to this Playbook. Reporting Error
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 51c2e3df-eaf8-4c44-81bb-d7d6e5f5fa7c
+    taskid: 261c45a5-13ce-4cbc-88eb-562cfa60833b
     timertriggers: []
     type: regular
     view: |-
