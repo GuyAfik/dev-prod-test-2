@@ -1,0 +1,70 @@
+args:
+- description: Binary value - Yes/No to check whether Tenable returned any Scans.
+  name: scanResultFromTenable
+  required: true
+comment: Condition to check whether Tenable returned any Scans.
+commonfields:
+  id: e2a681bf-ae4f-4da4-8f91-3ec1e5c9c08b
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: CheckTenableScanResultsStatusV2
+outputs:
+- contextPath: "yes"
+  description: Tenable scans are available.
+- contextPath: "no"
+  description: Tenable doesn't have any scans.
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('CheckTenableScanResultsStatusV2', 'start', __line__())
+
+
+  def check_status(args):
+      try:
+          tenable_scan_return_status = args.get('scanResultFromTenable')
+          if (tenable_scan_return_status == "Yes" and tenable_scan_return_status):
+              print("Did Tenable have scans: Yes")
+              return ('yes')
+          else:
+              print("Did Tenable have scans: No")
+              return ('no')
+
+      except Exception as e:
+          print("No scans available from Tenable.")
+          return ('no')
+
+  def main():
+      args = demisto.args()
+      try:
+          return_results(check_status(args))
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute CheckTenableScanResultsStatusV2. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('CheckTenableScanResultsStatusV2', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- Condition
+timeout: 100800h0m0s
+type: python
