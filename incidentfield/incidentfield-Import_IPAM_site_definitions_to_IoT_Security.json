@@ -30,7 +30,7 @@
 	"name": "Import IPAM site definitions to IoT Security",
 	"neverSetAsRequired": false,
 	"openEnded": false,
-	"orgType": "",
+	"orgType": "boolean",
 	"ownerOnly": false,
 	"packID": "",
 	"packName": "",
