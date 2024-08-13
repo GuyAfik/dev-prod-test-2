@@ -1,0 +1,386 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: 840ba626-dac4-47f5-8cc6-bc892aea77f9
+inputs: []
+name: extract-dnac-clients
+outputs: []
+sourceplaybookid: 148aadac-6b17-442a-8d6b-26e9befd59e3
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 344349f5-7f3d-4462-8940-daa7e9546943
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 344349f5-7f3d-4462-8940-daa7e9546943
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 50
+        }
+      }
+  "5":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "12"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      active_range:
+        simple: ${incident.playbookpollinterval}
+      dnac_instance_name:
+        simple: ${incident.integrationinstancename}
+      execution-timeout:
+        simple: "172800"
+      siteids:
+        simple: ${incident.sitenames}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 81c26ee5-d43a-4957-8a49-3ff837f05008
+      iscommand: false
+      name: Send All PANW Device Attributes From DNAC to PANW
+      script: ExportDeviceAttributesFromDnacToPANWIoTCloud
+      type: regular
+      version: -1
+    taskid: 81c26ee5-d43a-4957-8a49-3ff837f05008
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 545
+        }
+      }
+  "10":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "11"
+      "yes":
+      - "25"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - cisco-dnac-IoT
+      using:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available. Otherwise returns
+        'no'
+      id: 5a9f5cff-0c2e-444e-8229-2051f1b784db
+      iscommand: false
+      name: Is DNA Center enabled?
+      script: IsIntegrationAvailable
+      type: condition
+      version: -1
+    taskid: 5a9f5cff-0c2e-444e-8229-2051f1b784db
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 195
+        }
+      }
+  "11":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "12"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: cisco_dnac
+      message:
+        simple: Cisco DNA Center instance is not enabled
+      playbook_name:
+        simple: extract-dnac-clients
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 8136731a-92f1-4799-8e2b-ddf5576b3391
+      iscommand: true
+      name: Send disabled status back to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 8136731a-92f1-4799-8e2b-ddf5576b3391
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.close.inv
+      id: fbd80033-e41c-46e7-8e5a-0c21bbaa68f9
+      iscommand: true
+      name: close investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: fbd80033-e41c-46e7-8e5a-0c21bbaa68f9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 720
+        }
+      }
+  "25":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "26"
+      "no":
+      - "27"
+      "yes":
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_instance_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - cisco-dnac-IoT
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: a0ea9aab-d9d3-456d-8653-b8c64e9d8dc1
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: a0ea9aab-d9d3-456d-8653-b8c64e9d8dc1
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 370
+        }
+      }
+  "26":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "26"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "28"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: cisco_dnac
+      message:
+        simple: 'Error: Failed to get License'
+      playbook_name:
+        simple: extract-dnac-clients
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 1ccf930d-7c58-4ed0-8cba-77633b5776e5
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 1ccf930d-7c58-4ed0-8cba-77633b5776e5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 545
+        }
+      }
+  "27":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "27"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "28"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: cisco_dnac
+      message:
+        simple: License Limit Exceeded.
+      playbook_name:
+        simple: extract-dnac-clients
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 7fcb1e65-658c-403d-8fd3-13195ad9b8ef
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 7fcb1e65-658c-403d-8fd3-13195ad9b8ef
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 545
+        }
+      }
+  "28":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "28"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: ca3e0356-47b7-4aa4-804a-c3b210252f0d
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: ca3e0356-47b7-4aa4-804a-c3b210252f0d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 720
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "10_11_no": 0.46
+    },
+    "paper": {
+      "dimensions": {
+        "height": 765,
+        "width": 1670,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
