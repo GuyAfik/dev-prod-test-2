@@ -1,0 +1,206 @@
+args:
+- auto: PREDEFINED
+  name: integration
+  predefined:
+  - ise
+  - pxgrid
+  - clearpass
+  - forescout
+  required: true
+- name: mac_address
+- name: alert_type
+- name: alert_severity
+- auto: PREDEFINED
+  name: action
+  predefined:
+  - Quarantine
+  - UnQuarantine
+  required: true
+commonfields:
+  id: QuarantinePANWIoTDevice
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: QuarantinePANWIoTDevice
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('QuarantinePANWIoTDevice', 'start', __line__())
+
+
+
+  def mac_validation(mac):
+      if not re.match("[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", mac.lower()):
+          return False
+      return True
+
+  def send_panw_iot_status(instances, integration, status, message):
+
+      if isinstance(instances, list):
+          for instance in instances:
+              if instance != None and instance != "":
+                  # return_outputs('each ins'+str(instance))
+                  response = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+                      "status":status,
+                      "message": message,
+                      "integration_name": integration,
+                      "playbook_name":"None",
+                      "custom_integration_name": instance,
+                      "asset_type":"device"
+                  })
+                  if isError(response[0]):
+                      continue
+      else:
+          # return_outputs('each ins'+str(instances))
+          if instances != None and instances != "":
+              response = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+                  "status":status,
+                  "message": message,
+                  "integration_name": integration,
+                  "playbook_name":"None",
+                  "custom_integration_name": instances,
+                  "asset_type":"device"
+              })
+
+  def get_enabled_instances():
+      brand_name='PANW IoT 3rd Party Integration - Aruba ClearPass'
+      all_instances = demisto.getModules()
+
+      enabled_instances = []
+
+      for instance in all_instances:
+          if all_instances[instance]['brand'] == brand_name:
+              if all_instances[instance]['state'] == 'active':
+                  enabled_instances.append(instance)
+      return enabled_instances
+
+  def quarantine_device_cisco_ise(mac_address, alert_type, alert_severity, action):
+      success_count = 0
+      op_summary = {}
+      try:
+          response_list = demisto.executeCommand("cisco-ise-get-endpoint-id", {"macAddress":mac_address})
+          for response in response_list:
+              instance_name = response['ModuleName']
+              # for connection errors please make sure the timeout value is reasonable. Sometimes its not set and it hangs forever.
+              if isError(response) and response['Contents'] != "list index out of range":
+                  op_summary[instance_name] = "Failed to %s device on Cisco ISE instance %s - %s" % (action, instance_name, response['Contents'])
+              elif response['Contents'] == "list index out of range":
+                  attr_map = {
+                      "ZingboxAlertType": alert_type,
+                      "PanwIoTAlertType": alert_type,
+                      "ZingboxAlertSeverity": alert_severity,
+                      "PanwIoTAlertSeverity": alert_severity
+                  }
+                  resp = demisto.executeCommand("cisco-ise-create-endpoint", {"mac_address":mac_address,
+                      "attributes_map": attr_map,
+                      "using": instance_name
+                  })
+                  if isError(resp[0]):
+                      op_summary[instance_name] = "Failed to %s device on Cisco ISE instance %s - %s" % (action, instance_name, resp[0]['Contents'])
+                  else:
+                      op_summary[instance_name] = "Successfully %sd device on Cisco ISE instance %s" % (action, instance_name)
+                      send_panw_iot_status(instance_name, "ise", "success", op_summary[instance_name])
+                      success_count += 1
+              else:
+                  endpoint_id = response['Contents']
+                  resp = demisto.executeCommand("cisco-ise-update-endpoint-custom-attribute", {
+                      "id": endpoint_id,
+                      "macAddress": mac_address,
+                      "attributeName":"ZingboxAlertType,ZingboxAlertSeverity,PanwIoTAlertType,PanwIoTAlertSeverity",
+                      "attributeValue":"%s,%s,%s,%s" % (alert_type,alert_severity,alert_type,alert_severity),
+                      "using": instance_name
+                  })
+                  if isError(resp[0]):
+                      op_summary[instance_name] = "Failed to %s device on Cisco ISE instance %s - %s" % (action, instance_name, resp[0]['Contents'])
+                  else:
+                      op_summary[instance_name] = "Successfully %sd device on Cisco ISE instance %s" % (action, instance_name)
+                      send_panw_iot_status(instance_name, "ise", "success", op_summary[instance_name])
+                      success_count += 1
+
+      except Exception as e:
+          raise Exception("%s" % e )
+          pass
+      return success_count, op_summary
+
+
+  def quarantine_device_aruba_clearpass(mac_address, alert_type, alert_severity, action):
+
+      success_count = 0
+      op_summary = {}
+      try:
+          return_outputs('alert_type:'+str(alert_type)+' alert_severity:'+str(alert_severity))
+          clearpassEnabledInstances = get_enabled_instances()
+          for instance_name in clearpassEnabledInstances:
+              if instance_name != None and instance_name != "":
+                  access_token_name=instance_name+"_access_token"
+                  context_name = instance_name+".ArubaCP.access_token"
+                  return_outputs('instance:'+str(instance_name))
+                  resp = demisto.executeCommand("aruba-clearpass-update-endpoint-custom-attribute", {"mac_address":mac_address,"attributeName":"PanwIoTAlertType,PanwIoTAlertSeverity",
+                      "attributeValue":"%s,%s" % (alert_type,alert_severity),"context_name":context_name,"using": str(instance_name)})
+                  if isError(resp[0]):
+                      op_summary[instance_name] = "Failed to %s device on Aruba ClearPass instance %s - %s" % (action, instance_name, resp[0]['Contents'])
+                      send_panw_iot_status(instance_name, "clearpass", "error", op_summary[instance_name])
+                  else:
+                      op_summary[instance_name] = "Successfully %s device on Aruba ClearPass instance %s" % (action, instance_name)
+                      send_panw_iot_status(instance_name, "clearpass", "success", op_summary[instance_name])
+                      success_count += 1
+      except Exception as e:
+          raise Exception("Errors:%s" % e )
+          pass
+      return success_count, op_summary
+
+  def main():
+      mac_address = demisto.args().get("mac_address")
+      integration = demisto.args().get("integration")
+
+      if mac_address == None or mac_validation(mac_address) == False:
+          return_error("Invalid mac address.")
+
+      alert_type = demisto.args().get("alert_type")
+      alert_severity = demisto.args().get("alert_severity")
+      action = demisto.args().get("action")
+
+      try:
+          op_summary = {}
+          success_count = 0
+          if integration == "ise":
+              success_count, op_summary = quarantine_device_cisco_ise(mac_address, alert_type, alert_severity, action)
+          elif integration == 'clearpass':
+              if alert_type is None:
+                  alert_type=''
+              if alert_severity is None:
+                  alert_severity=''
+              success_count, op_summary = quarantine_device_aruba_clearpass(mac_address, alert_type, alert_severity, action)
+          return_outputs(tableToMarkdown("PANW IoT %s Device (%s) Summary:" % (action, mac_address), op_summary, removeNull=True))
+          # TO DO: Returning status message is pointless unless the cloud/FE displays feedback to the user.
+          # This will come in the next phase. For now even if one is sucess full we can return success
+          if success_count == 0:
+                  return_error("Failed to %s Endpoint" % action)
+
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute QuarantinePANWIoTDevice. Error: {str(ex)}')
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('QuarantinePANWIoTDevice', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+type: python
