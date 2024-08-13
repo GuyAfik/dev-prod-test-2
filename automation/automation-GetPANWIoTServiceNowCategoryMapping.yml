@@ -1,0 +1,69 @@
+args:
+- description: Xsoar incident.
+  name: incident
+  required: true
+comment: Get PANW IoT and ServiceNow category mapping
+commonfields:
+  id: GetPANWIoTServiceNowCategoryMapping
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GetPANWIoTServiceNowCategoryMapping
+outputs:
+- contextPath: PanwIot3rdParty.SNCategoryMapping
+  description: Get PANW IoT and ServiceNow category mapping
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('GetPANWIoTServiceNowCategoryMapping', 'start', __line__())
+
+
+
+
+  def main():
+      args = demisto.args()
+      incident = args.get("incident")
+
+      category_map_list = incident.get('panwservicenowcategorymap', [])
+      res = {}
+      if category_map_list:
+          for i in range(len(category_map_list)):
+              mapping = category_map_list[i]
+              panw_category = mapping.get("panwiotcategory", "")
+              SN_category = mapping.get("servicenowcategory", "")
+              res[panw_category] = SN_category
+
+
+      results = CommandResults(
+          outputs_prefix = "PanwIot3rdParty.SNCategoryMapping",
+          outputs = res
+      )
+      return results
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      res = main()
+      return_results(res)
+
+
+  register_module_line('GetPANWIoTServiceNowCategoryMapping', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- PANW IoT 3rd Party Integration
+- servicenow v2
+timeout: 10m0s
+type: python
