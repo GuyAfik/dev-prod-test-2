@@ -1,0 +1,678 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 2.0.12
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: 56b204d4-1f47-43d8-83d6-307f0fdc000f
+inputs: []
+name: Incremental SNMP data import to PANW IoT Cloud - PANW IoT 3rd Party Integration
+outputs: []
+sourceplaybookid: 861d916c-638d-41ac-87fe-62436fdf7f44
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 8a63689a-6417-4e4c-8517-bca06480b414
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 8a63689a-6417-4e4c-8517-bca06480b414
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "2"
+      "yes":
+      - "10"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - SNMP
+      instancename:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available and provided instance
+        is Active. Otherwise returns 'no'.
+      id: c8b4fa84-150b-434b-8c27-d9672df522fc
+      iscommand: false
+      name: Is SNMP integration enabled?
+      script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+      type: condition
+      version: -1
+    taskid: c8b4fa84-150b-434b-8c27-d9672df522fc
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: snmp
+      message:
+        simple: SNMP integration is disabled
+      playbook_name:
+        simple: Increment import SNMP data to PANW IoT Cloud - PANW IoT 3rd Party
+          Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message to PANW IOT cloud.
+      id: d27b5ead-fc34-44d9-879e-ec1812006277
+      iscommand: true
+      name: Report disabled status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: d27b5ead-fc34-44d9-879e-ec1812006277
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1420
+        }
+      }
+  "3":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      snmp_instance:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 74144b5e-3344-4811-8e57-7f2b2e5d8b68
+      iscommand: false
+      name: Get Device info and send to PANW IoT Cloud
+      script: SendSNMPDatatoPANWIoTCloud
+      type: regular
+      version: -1
+    taskid: 74144b5e-3344-4811-8e57-7f2b2e5d8b68
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1565,
+          "y": 720
+        }
+      }
+  "4":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "14"
+      "yes":
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: 599e3511-479d-43c7-80f0-a2cbb70f3a65
+      iscommand: false
+      name: Was there any error ?
+      script: isError
+      type: condition
+      version: -1
+    taskid: 599e3511-479d-43c7-80f0-a2cbb70f3a65
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1565,
+          "y": 895
+        }
+      }
+  "5":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: snmp
+      message:
+        simple: Failed to update SNMP data
+      playbook_name:
+        simple: Increment import SNMP data to PANW IoT Cloud - PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message to PANW IOT cloud.
+      id: 6eaca04f-c577-4f5f-8553-7ae653254dd1
+      iscommand: true
+      name: Report error status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 6eaca04f-c577-4f5f-8553-7ae653254dd1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1022.5,
+          "y": 1420
+        }
+      }
+  "6":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: snmp
+      message:
+        simple: Successfully imported SNMP data to PANW IoT Cloud
+      playbook_name:
+        simple: Increment import SNMP data to PANW IoT Cloud - PANW IoT 3rd Party
+          Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message to PANW IOT cloud.
+      id: 51ddfd42-cfac-43a5-8e41-574f195dc035
+      iscommand: true
+      name: Report Success status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 51ddfd42-cfac-43a5-8e41-574f195dc035
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1780,
+          "y": 1420
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 4152d4a9-c1a9-4eb9-81c2-e82ef06ff78e
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 4152d4a9-c1a9-4eb9-81c2-e82ef06ff78e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1022.5,
+          "y": 1595
+        }
+      }
+  "8":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "9"
+      "yes":
+      - "1"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: a88723ee-de3b-4fd3-8437-e388d263237e
+      iscommand: false
+      name: Is SNMP Integration Instance Avaliable
+      script: Exists
+      type: condition
+      version: -1
+    taskid: a88723ee-de3b-4fd3-8437-e388d263237e
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 195
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: snmp
+      message:
+        simple: No SNMP integration instance passed
+      playbook_name:
+        simple: Increment import SNMP data to PANW IoT Cloud - PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message to PANW IOT cloud.
+      id: 146677eb-9453-44d5-8b47-27c26185cef3
+      iscommand: true
+      name: No Instance passed to this Playbook. Reporting Error
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 146677eb-9453-44d5-8b47-27c26185cef3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 275,
+          "y": 720
+        }
+      }
+  "10":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "11"
+      "no":
+      - "12"
+      "yes":
+      - "3"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_instance_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - SNMP
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 3b262565-4bc6-4a82-8fb5-f7d7cf8cf2ad
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: 3b262565-4bc6-4a82-8fb5-f7d7cf8cf2ad
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1135,
+          "y": 545
+        }
+      }
+  "11":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: snmp
+      message:
+        simple: 'Error: Failed to get License'
+      playbook_name:
+        simple: Incremental SNMP data import to PANW IoT Cloud - PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 2d0b2075-198c-4c40-8870-2376c7fb7c74
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 2d0b2075-198c-4c40-8870-2376c7fb7c74
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 705,
+          "y": 720
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: snmp
+      message:
+        simple: License Limit Exceeded.
+      playbook_name:
+        simple: Incremental SNMP data import to PANW IoT Cloud - PANW IoT 3rd Party
+          Integration
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: fee9ac6c-33f8-4c37-8482-f0ce723968c6
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: fee9ac6c-33f8-4c37-8482-f0ce723968c6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1135,
+          "y": 720
+        }
+      }
+  "13":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: f76be154-e533-4c0a-885b-8afb5eb35209
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: f76be154-e533-4c0a-885b-8afb5eb35209
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 705,
+          "y": 895
+        }
+      }
+  "14":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      snmp_instance:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 44b99173-3991-40fe-8e92-a5e0fe7c0351
+      iscommand: false
+      name: Get SNMP Switches as Endpoints and Send to PANW IoT Cloud
+      script: 0cfa9efa-0cae-4413-8906-e0597db0de67
+      type: regular
+      version: -1
+    taskid: 44b99173-3991-40fe-8e92-a5e0fe7c0351
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1770,
+          "y": 1070
+        }
+      }
+  "15":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "6"
+      "yes":
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: f24d6875-702c-4000-8fda-b19443e9032d
+      iscommand: false
+      name: Was there any error ?
+      script: isError
+      type: condition
+      version: -1
+    taskid: f24d6875-702c-4000-8fda-b19443e9032d
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1770,
+          "y": 1245
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "1_2_no": 0.77
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1640,
+        "width": 2110,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
