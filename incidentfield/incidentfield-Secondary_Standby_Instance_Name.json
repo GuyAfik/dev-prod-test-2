@@ -32,7 +32,7 @@
 	"name": "Secondary Standby Instance Name",
 	"neverSetAsRequired": false,
 	"openEnded": false,
-	"orgType": "",
+	"orgType": "shortText",
 	"ownerOnly": false,
 	"packID": "",
 	"packName": "",
