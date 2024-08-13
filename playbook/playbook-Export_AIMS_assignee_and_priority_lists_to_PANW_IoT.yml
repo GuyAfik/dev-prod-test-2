@@ -32,11 +32,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 7479f498-dddc-40ff-82a4-c56e8425c29f
+      id: b255cfa1-0109-4f52-81b7-1443a407e9c1
       iscommand: false
       name: ""
       version: -1
-    taskid: 7479f498-dddc-40ff-82a4-c56e8425c29f
+    taskid: b255cfa1-0109-4f52-81b7-1443a407e9c1
     timertriggers: []
     type: start
     view: |-
@@ -66,13 +66,13 @@ tasks:
     task:
       brand: ""
       description: Get a list of all employees in the AIMS server
-      id: d479d391-4ef3-408a-8e30-007acd55fd8e
+      id: 24343066-ea14-4d30-8d69-eb20a9419f7c
       iscommand: true
       name: Get employee list
       script: '|||aims-get-employee-list'
       type: regular
       version: -1
-    taskid: d479d391-4ef3-408a-8e30-007acd55fd8e
+    taskid: 24343066-ea14-4d30-8d69-eb20a9419f7c
     timertriggers: []
     type: regular
     view: |-
@@ -112,13 +112,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message to PANW IOT cloud.
-      id: bd189f31-5bdd-4c85-8147-edba66a5dce9
+      id: 363a480b-78da-4cc0-8867-741dd4191b4c
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: bd189f31-5bdd-4c85-8147-edba66a5dce9
+    taskid: 363a480b-78da-4cc0-8867-741dd4191b4c
     timertriggers: []
     type: regular
     view: |-
@@ -142,13 +142,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 90214a35-c0ef-4f27-8195-faa035daeefd
+      id: c48040da-5ae2-4f17-8eb3-f36b88103752
       iscommand: true
       name: Close Investigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 90214a35-c0ef-4f27-8195-faa035daeefd
+    taskid: c48040da-5ae2-4f17-8eb3-f36b88103752
     timertriggers: []
     type: regular
     view: |-
@@ -188,13 +188,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message to PANW IOT cloud.
-      id: 22e53d92-e7d6-427b-8740-ae0e46efdbd5
+      id: c6e6c441-c44c-4a06-8787-20f4364cfdd0
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 22e53d92-e7d6-427b-8740-ae0e46efdbd5
+    taskid: c6e6c441-c44c-4a06-8787-20f4364cfdd0
     timertriggers: []
     type: regular
     view: |-
@@ -234,13 +234,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 1c791db7-8f46-4db7-8bd2-490b19bb5ce0
+      id: 930c55aa-2991-4c7d-878f-b0b18bddb0b3
       iscommand: true
       name: Send success status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 1c791db7-8f46-4db7-8bd2-490b19bb5ce0
+    taskid: 930c55aa-2991-4c7d-878f-b0b18bddb0b3
     timertriggers: []
     type: regular
     view: |-
@@ -270,13 +270,13 @@ tasks:
     task:
       brand: ""
       description: Get the priority list for work orders in AIMS
-      id: 9a16ce9a-ad22-4981-8e46-a3c56bcf02e9
+      id: 1169ef7b-d669-4bdf-84ed-aaa67614f9f0
       iscommand: true
       name: Get work order priority list
       script: '|||aims-get-work-order-priority-list'
       type: regular
       version: -1
-    taskid: 9a16ce9a-ad22-4981-8e46-a3c56bcf02e9
+    taskid: 1169ef7b-d669-4bdf-84ed-aaa67614f9f0
     timertriggers: []
     type: regular
     view: |-
@@ -310,13 +310,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: c8f52ace-0649-4bb6-8d03-c7505152021b
+      id: c69d3648-682f-4334-8df4-5c23ac3b13dc
       iscommand: false
       name: Was there an error getting data from AIMS?
       script: isError
       type: condition
       version: -1
-    taskid: c8f52ace-0649-4bb6-8d03-c7505152021b
+    taskid: c69d3648-682f-4334-8df4-5c23ac3b13dc
     timertriggers: []
     type: condition
     view: |-
@@ -349,13 +349,13 @@ tasks:
     task:
       brand: ""
       description: Send AIMS maps and list data to PANW IOT cloud
-      id: 0c8789e2-650b-406f-8f3b-758c3a728b10
+      id: b063bb5c-8fdb-41e8-8b95-7d4ab1511200
       iscommand: true
       name: Send assignee and priority lists to PANW IoT
       script: '|||panw-iot-3rd-party-report-metadata'
       type: regular
       version: -1
-    taskid: 0c8789e2-650b-406f-8f3b-758c3a728b10
+    taskid: b063bb5c-8fdb-41e8-8b95-7d4ab1511200
     timertriggers: []
     type: regular
     view: |-
@@ -389,13 +389,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: d5a99ac2-69d1-4c31-8381-cf0ef16541c2
+      id: 9fb2771f-ff82-4b75-8698-7a6190e8fb69
       iscommand: false
       name: Was there an error sending data to PANW IoT?
       script: isError
       type: condition
       version: -1
-    taskid: d5a99ac2-69d1-4c31-8381-cf0ef16541c2
+    taskid: 9fb2771f-ff82-4b75-8698-7a6190e8fb69
     timertriggers: []
     type: condition
     view: |-
@@ -433,13 +433,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: 21bdb61b-b9e9-493c-82a8-a230cc0c1871
+      id: 28275a16-86ac-4984-86a9-a9ff858eea1f
       iscommand: false
       name: Is AIMS Integration enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: 21bdb61b-b9e9-493c-82a8-a230cc0c1871
+    taskid: 28275a16-86ac-4984-86a9-a9ff858eea1f
     timertriggers: []
     type: condition
     view: |-
