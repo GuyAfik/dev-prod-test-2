@@ -1,0 +1,86 @@
+args:
+- name: instance_name
+commonfields:
+  id: CheckConfiguredSIEMAssetTypes
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 2.0.16
+    packID: ""
+    packName: Palo Alto Networks IoT 3rd Party Integrations
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.13.89873
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: CheckConfiguredSIEMAssetTypes
+outputs:
+- contextPath: alert
+  description: if set, alert is configured as an asset type
+- contextPath: vulnerability
+  description: if set, vulnerability is configured as an asset type
+- contextPath: device
+  description: if set, device is configured as an asset type
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('CheckConfiguredSIEMAssetTypes', 'start', __line__())
+
+
+
+  def main():
+      asset_types = []
+      try:
+          demisto.setContext("asset.alert", "no")
+          demisto.setContext("asset.vulnerability", "no")
+          demisto.setContext("asset.device", "no")
+
+          SIEM_INSTANCE = demisto.get(demisto.args(), 'instance_name')
+          if SIEM_INSTANCE == "" or SIEM_INSTANCE == None:
+              SIEM_INSTANCE = "PANW IoT 3rd Party SIEM Integration Instance"
+          res = demisto.executeCommand("get-panw-iot-syslog-asset-types", {"using":SIEM_INSTANCE})
+          if isError(res[0]):
+              err_msg = f'Failed to get configured SIEM asset types - {res[0].get("Contents")}'
+              raise Exception(err_msg)
+          asset_types = (res[0]['Contents'])
+          print(asset_types)
+          for asset_type in asset_types:
+              print("asset type is:", asset_type)
+              if asset_type == "alert":
+                  demisto.setContext("asset.alert", "yes")
+              elif asset_type == "device":
+                  demisto.setContext("asset.device", "yes")
+              elif asset_type == "vulnerability":
+                  demisto.setContext("asset.vulnerability", "yes")
+      except Exception as ex:
+          error_msg = "An error occurred while processing SIEM asset types. Details: " + str(ex)
+          return_error(error_msg)
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  register_module_line('CheckConfiguredSIEMAssetTypes', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+type: python
