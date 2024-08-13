@@ -1,0 +1,543 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: 53b142cd-d8f2-4d84-874c-2c6ccbb9f891
+inputs: []
+name: Import Aruba AirWave VisualRF Floor Plans to PANW IoT
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 82fedde6-f865-4ecc-8cab-906047ba864f
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 82fedde6-f865-4ecc-8cab-906047ba864f
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      instance_name:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 15482025-069f-400b-8f15-3073f0893532
+      iscommand: false
+      name: Import Aruba AirWave Location Data
+      script: 701bf9e6-3948-41b8-8aa9-b9098d069049
+      type: regular
+      version: -1
+    taskid: 15482025-069f-400b-8f15-3073f0893532
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1677.5,
+          "y": 720
+        }
+      }
+  "3":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "14"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      file_list:
+        simple: ${InfoFile}
+      instance_name:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 6a594d75-426b-4ede-8f24-352ca07d6f54
+      iscommand: false
+      name: Upload Floor Plans to IoT
+      script: d04b33ef-792c-48bb-84c4-fa6f1b3a3bf1
+      type: regular
+      version: -1
+    taskid: 6a594d75-426b-4ede-8f24-352ca07d6f54
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1677.5,
+          "y": 895
+        }
+      }
+  "5":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "8"
+      "no":
+      - "9"
+      "yes":
+      - "10"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Aruba AirWave
+      instancename:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available and provided instance
+        is Active. Otherwise returns 'no'.
+      id: 45216fdc-5bb0-40fa-8ef0-e5c0fa8fcfb3
+      iscommand: false
+      name: Is Aruba AirWave integration enabled?
+      script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+      type: condition
+      version: -1
+    taskid: 45216fdc-5bb0-40fa-8ef0-e5c0fa8fcfb3
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 807.5,
+          "y": 370
+        }
+      }
+  "6":
+    continueonerror: true
+    continueonerrortype: ""
+    defaultassigneecomplex:
+      simple: ${incident.integrationinstancename}
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "7"
+      "yes":
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: 2e0a0cf2-a24b-4d31-8fcb-e7093710cec6
+      iscommand: false
+      name: Is Aruba AirWave Instance Available
+      script: Exists
+      type: condition
+      version: -1
+    taskid: 2e0a0cf2-a24b-4d31-8fcb-e7093710cec6
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 195
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "11"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: aruba_airwave
+      message:
+        simple: No SolarWinds Integration instance passed
+      playbook_name:
+        simple: Import Aruba AirWave assets to PANW IoT cloud
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 75ff380b-398c-47cc-8ea5-9a85c8c0a1f9
+      iscommand: true
+      name: No Instance passed to this Playbook. Reporting Error
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 75ff380b-398c-47cc-8ea5-9a85c8c0a1f9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+  "8":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "11"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: aruba_airwave
+      message:
+        simple: Invalid integration instance name provided
+      playbook_name:
+        simple: Import Aruba AirWave FloorPlans to PANW IoT
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 6ca7e074-1a6d-46dd-81e1-83626c4bc70c
+      iscommand: true
+      name: Send error status back to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 6ca7e074-1a6d-46dd-81e1-83626c4bc70c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 545
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "11"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: aruba_airwave
+      message:
+        simple: SolarWinds UDT integration is not enabled
+      playbook_name:
+        simple: Import Aruba AirWave VisualRF Floor Plans to PANW IoT
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 7c1a0b4a-90da-4981-8680-60ee11033a94
+      iscommand: true
+      name: Send disabled status back to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 7c1a0b4a-90da-4981-8680-60ee11033a94
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 545
+        }
+      }
+  "10":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "13"
+      "no":
+      - "12"
+      "yes":
+      - "1"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_instance_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - Aruba AirWave
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 474b28c2-7302-4016-8cb9-6bcbf43f46d3
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: 474b28c2-7302-4016-8cb9-6bcbf43f46d3
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 545
+        }
+      }
+  "11":
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: f7f637a2-f3f6-4633-87a3-3c31bc451464
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: f7f637a2-f3f6-4633-87a3-3c31bc451464
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 720
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: aruba_airwave
+      message:
+        simple: License Limit Exceeded.
+      playbook_name:
+        simple: Import Aruba AirWave VisualRF Floor Plans to PANW IoT
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: d022aac6-c175-43ce-889e-0386468951b9
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: d022aac6-c175-43ce-889e-0386468951b9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1247.5,
+          "y": 720
+        }
+      }
+  "13":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "14"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: aruba_airwave
+      message:
+        simple: 'Error: Failed to get License'
+      playbook_name:
+        simple: Import Aruba AirWave VisualRF Floor Plans to PANW IoT
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 8d99acef-811a-4e93-8a31-cddc763be47e
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 8d99acef-811a-4e93-8a31-cddc763be47e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1022.5,
+          "y": 895
+        }
+      }
+  "14":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: d5ddaa32-6fdc-49a0-8b55-2e81dad07933
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: d5ddaa32-6fdc-49a0-8b55-2e81dad07933
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1462.5,
+          "y": 1070
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1115,
+        "width": 2007.5,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
