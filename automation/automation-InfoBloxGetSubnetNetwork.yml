@@ -1,0 +1,194 @@
+args:
+- defaultValue: Infoblox Instance Name
+  name: infoblox_instance_name
+  required: true
+- description: 'Overwrites the IPAM data ex: vlan, description'
+  name: data_overwrite
+- description: Overwrite the site data
+  name: site_overwrite
+- description: Import IPAM site definitions to IoT Security
+  name: import_ipam_site_definitions
+commonfields:
+  id: InfoBloxGetSubnetNetwork
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: InfoBloxGetSubnetNetwork
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('InfoBloxGetSubnetNetwork', 'start', __line__())
+
+
+  INFOBLOX_INSTANCE = demisto.args().get('infoblox_instance_name')
+  LOG_PREFIX = 'PaloAltoNetworks3rdPartyIntegration_Infoblox_IPAM_'+INFOBLOX_INSTANCE
+  OVERRIDE_IPAM_DATA = ''
+  OVERRIDE_IPAM_DATA = demisto.args().get('data_overwrite')
+  if OVERRIDE_IPAM_DATA is None or OVERRIDE_IPAM_DATA == '':
+      OVERRIDE_IPAM_DATA='false'
+  OVERRIDE_IPAM_SITE = demisto.args().get('site_overwrite')
+  if OVERRIDE_IPAM_SITE is None or OVERRIDE_IPAM_SITE == '':
+      OVERRIDE_IPAM_SITE='false'
+  IMPORT_IPAM_SITE_DEFINITIONS = demisto.args().get('import_ipam_site_definitions')
+  demisto.info(LOG_PREFIX + 'initial ' + str(IMPORT_IPAM_SITE_DEFINITIONS))
+  if IMPORT_IPAM_SITE_DEFINITIONS is None or IMPORT_IPAM_SITE_DEFINITIONS == '' or IMPORT_IPAM_SITE_DEFINITIONS == False:
+      IMPORT_IPAM_SITE_DEFINITIONS='false'
+  else:
+      IMPORT_IPAM_SITE_DEFINITIONS='true'
+  def get_info_blox_subnet_networks():
+      response = demisto.executeCommand("infoblox-get-network", {
+          "page_size":'100',
+          "using": INFOBLOX_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = f'Error, could not get infoblox subnet network - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def get_info_blox_subnet_network_containers():
+      response = demisto.executeCommand("infoblox-get-network-container", {
+          "page_size":'100',
+          "using": INFOBLOX_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = f'Error, could not get infoblox subnet network containers - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def send_subnet_info_to_panw_iot_cloud(infoblox_subnet_network_list):
+      response = demisto.executeCommand("panw-iot-3rd-party-report-subnets", {
+          "integration_name":"ipam_infoblox",
+          "subnet_data":infoblox_subnet_network_list,
+          "data_overwrite":str(OVERRIDE_IPAM_DATA),
+          "site_overwrite":str(OVERRIDE_IPAM_SITE),
+          "page_length":"1000"
+      })
+      if isError(response[0]):
+          err_msg = f'Error, couldn\'t report the infoblox subnet network info to panw iot cloud - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def get_subnet_network(networkObj, network_containerObj):
+      subnet_list=[]
+      global OVERRIDE_IPAM_SITE
+      # return_outputs('before chaning'+ str(OVERRIDE_IPAM_SITE))
+      if IMPORT_IPAM_SITE_DEFINITIONS == False or IMPORT_IPAM_SITE_DEFINITIONS == 'false':
+          if OVERRIDE_IPAM_SITE == 'true' or OVERRIDE_IPAM_SITE == True:
+              OVERRIDE_IPAM_SITE='false'
+              demisto.info(LOG_PREFIX + 'Changing OVERRIDE_IPAM_SITE from true to '+ str(OVERRIDE_IPAM_SITE))
+      if networkObj is not None:
+          for each_network in networkObj:
+              subnet={}
+              vlan_id=""
+              extra_attr_vlan=""
+              network = each_network['network']
+              parent = each_network['network_container']
+              if parent == '/':
+                  parent = ""
+              extattrs = each_network['extattrs']
+
+              for key in extattrs:
+                  if key == 'Site':
+                      site = extattrs['Site']
+                      site_value = site["value"]
+                      if IMPORT_IPAM_SITE_DEFINITIONS == False or IMPORT_IPAM_SITE_DEFINITIONS == 'false':
+                          subnet['site'] = ''
+                      else:
+                          subnet['site'] = site_value
+                  elif key == 'VLAN':
+                      vlan = extattrs['VLAN']
+                      extra_attr_vlan = vlan["value"]
+              vlans_attr = each_network['vlans']
+              if len(vlans_attr) > 0:
+                  for each_vlan in vlans_attr:
+                      vlan_id = str(each_vlan["id"])
+                      break
+              if vlan_id != "":
+                  subnet['vlan'] = str(int(vlan_id))
+              elif extra_attr_vlan != "":
+                  subnet['vlan'] = str(int(extra_attr_vlan))
+              else:
+                  subnet['vlan'] = ""
+
+              subnet['prefix']=network
+              subnet['parent']=parent
+              subnet['type']='subnet'
+              if 'comment' in each_network:
+                  comment = each_network['comment']
+                  subnet['description']=comment
+              subnet_list.append(subnet)
+
+      if network_containerObj is not None:
+          for each_network_container in network_containerObj:
+              subnet={}
+              network = each_network_container['network']
+              parent = each_network_container['network_container']
+              if parent == '/':
+                  parent = ""
+              extattrs = each_network_container['extattrs']
+              for key in extattrs:
+                  if key == 'Site':
+                      site = extattrs['Site']
+                      site_value = site["value"]
+                      if IMPORT_IPAM_SITE_DEFINITIONS == False or IMPORT_IPAM_SITE_DEFINITIONS == 'false':
+                          subnet['site'] = ''
+                      else:
+                          subnet['site'] = site_value
+              subnet['prefix']=network
+              if IMPORT_IPAM_SITE_DEFINITIONS == False or IMPORT_IPAM_SITE_DEFINITIONS == 'false':
+                  subnet['site'] = ''
+              else:
+                  subnet['site']=site_value
+
+              subnet['parent']=parent
+              subnet['type']='block'
+              if 'comment' in each_network_container:
+                  comment = each_network_container['comment']
+                  subnet['description'] = comment
+              subnet_list.append(subnet)
+      return subnet_list
+
+  def get_info_blox_subnet_networks_and_send_to_panw():
+      infoblox_subnet_networks = get_info_blox_subnet_networks()
+      demisto.info(LOG_PREFIX + ' infoblox_subnet_networks : ' + str(infoblox_subnet_networks))
+      infoblox_subnet_network_containers = get_info_blox_subnet_network_containers()
+      demisto.info(LOG_PREFIX + 'infoblox_subnet_network_containers : ' + str(infoblox_subnet_network_containers))
+      infoblox_subnet_network_list = get_subnet_network(infoblox_subnet_networks, infoblox_subnet_network_containers)
+      demisto.info(LOG_PREFIX + 'infoblox_subnet_network_list : '+ str(infoblox_subnet_network_list))
+      demisto.info(LOG_PREFIX + 'infoblox_subnet_network_list: '+ str(infoblox_subnet_network_list))
+      subnet_info = send_subnet_info_to_panw_iot_cloud(infoblox_subnet_network_list)
+      return subnet_info
+
+  def main():
+      try:
+          endpoints_info = get_info_blox_subnet_networks_and_send_to_panw()
+          return_results(endpoints_info)
+      except Exception as e:
+          raise Exception("Failed to get Infoblox Subnet Network data: %s" % str(e))
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('InfoBloxGetSubnetNetwork', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+type: python
