@@ -1,0 +1,200 @@
+args:
+- name: snmp_instance
+commonfields:
+  id: SendSNMPDatatoPANWIoTCloud
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendSNMPDatatoPANWIoTCloud
+outputs:
+- {}
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendSNMPDatatoPANWIoTCloud', 'start', __line__())
+
+
+  SNMP_INSTANCE = demisto.args().get('snmp_instance')
+  NEIGHBOR_SWITCHES_CACHE = SNMP_INSTANCE+"_Neighbor_Switches"
+  PAGE_SIZE = 100
+  ENDPOINT_COUNT = set()
+
+  def send_devices_to_panw_iot_cloud(devices_list,retry=0):
+      """
+      Sends devices to PANW IoT Cloud.
+      :type devices_list: ``array``
+      :param devices_list: List of devices to be sent to PANW IoT cloud
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-devices", {
+          "DeviceData": devices_list,
+          "pageLength": None,
+          "IntegrationName": 'snmp'
+      })
+      if isError(resp[0]):
+          # if retry == 0:
+          #     time.sleep(1)
+          #     return send_devices_to_panw_iot_cloud(devices_list, retry=1)
+          err_msg = f'Error, could not send devices to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+      return resp[0]['Contents']
+
+  def get_snmp_device_info(entry):
+      result_map = {}
+
+      switch_name = demisto.executeCommand("snmp-v2-get-switch-name-command", {'ip':entry, 'using': SNMP_INSTANCE})[0]['Contents']
+      if switch_name == "":
+          return []
+
+      response = demisto.executeCommand("snmp-v2-get-mac-ip-command", {'ip':entry, 'using': SNMP_INSTANCE})
+      if isError(response[0]):
+          raise Exception("Failed to get mac ip pair %s" % response[0]['Contents'])
+      mac_ip_map = response[0]['Contents']
+
+      response = demisto.executeCommand("snmp-v2-get-phys-port-command", {'ip':entry, "execution-timeout":864000, 'using': SNMP_INSTANCE})
+      if isError(response[0]):
+          raise Exception("Failed to get mac port map %s" % response[0]['Contents'])
+      mac_port_map = response[0]['Contents']
+
+      demisto.info('Switch IP: '+ str(entry)+ ' mac_port_map: '+str(mac_port_map))
+      if type(mac_port_map) is dict:
+          for mac, [port, isAccess] in mac_port_map.items():
+              if not is_mac_address(mac):
+                  continue
+              if mac not in result_map:
+                  result_map[mac] = {}
+              result_map[mac]["deviceid"] = mac
+              if isAccess:
+                  result_map[mac]["snmpIsAccessPort"] = True #isAccess
+              result_map[mac]["display_phyPort"] = port
+              result_map[mac]["display_switchName"] = switch_name
+              result_map[mac]["display_switchIP"] = entry
+              ENDPOINT_COUNT.add(mac)
+
+      if type(mac_ip_map) is dict:
+          for mac, ip in mac_ip_map.items():
+              if not is_mac_address(mac):
+                  continue
+              if mac not in result_map:
+                  result_map[mac] = {}
+              result_map[mac]["deviceid"] = mac
+              result_map[mac]["connect_evtContent.ip"] = ip
+              result_map[mac]["display_switchName"] = switch_name
+              result_map[mac]["display_switchIP"] = entry
+              # result_map[mac]["snmpIsAccessPort"] = True
+              ENDPOINT_COUNT.add(mac)
+
+      result = list(result_map.values())
+      return result
+
+  def get_switches_list_cache(list_name):
+      res = demisto.executeCommand('getList', {'listName': list_name})
+      if (
+          not isinstance(res, list)
+          or 'Contents' not in res[0]
+          or 'Item not found (8)' in res[0]['Contents']
+      ):
+          return None
+      contents = json.loads(res[0]['Contents'])
+      return contents
+
+  def create_neighbor_switches(list_name, neighbor_switches):
+      current_in_millisec = int(round(time.time()*1000))
+      result={}
+      result['updated_time']=current_in_millisec
+      result['neighbor_switches']=neighbor_switches
+      demisto.executeCommand('createList', {'listName': list_name, 'listData': json.dumps(result)})
+
+
+  def get_neighbor_switches():
+      neighbor_switches = get_switches_list_cache(NEIGHBOR_SWITCHES_CACHE)
+      if neighbor_switches:
+          demisto.info('Found the cache and it is being validated')
+          updated_time = int(neighbor_switches['updated_time'])
+          demisto.info(f'updated_time:{updated_time}')
+          neighbor_switches_list = neighbor_switches['neighbor_switches']
+          demisto.info(f'neighbor_switches_list:{neighbor_switches_list}')
+          curr_time = int(round(time.time()*1000))
+          diff = round((curr_time-updated_time)/1000)
+          twenty_four_hours = 24*60*60
+          if twenty_four_hours > round(diff):
+              demisto.info(f'Cache {NEIGHBOR_SWITCHES_CACHE} is available. Hence returning the neighbor_switches cache : {neighbor_switches}')
+              return neighbor_switches_list
+          else:
+              demisto.info(f'Cache {NEIGHBOR_SWITCHES_CACHE} is expired and Hence executing the get_switches_command()')
+              switches = get_switches_command()
+              create_neighbor_switches(NEIGHBOR_SWITCHES_CACHE, switches)
+              return switches
+      else:
+          demisto.info(f'No neighbor switch cache is available for the list {NEIGHBOR_SWITCHES_CACHE}. Hence executing the get_switches_command()')
+          switches = get_switches_command()
+          create_neighbor_switches(NEIGHBOR_SWITCHES_CACHE, switches)
+          return switches
+
+  def get_switches_command():
+      response = demisto.executeCommand("snmp-v2-get-switches-command", {"execution-timeout":864000,'using': SNMP_INSTANCE})
+      if isError(response[0]):
+          raise Exception("Failed to get snmp switch data %s" % response[0]['Contents'])
+      device_pairs = response[0]['Contents']
+      return device_pairs
+
+  def main():
+      op_msg = {}
+      try:
+          total = 0
+          device_pairs = get_neighbor_switches()
+          snmp_device_ips = []
+          snmp_device_ips = list(device_pairs.keys())
+          heading = "SNMP Summary"
+          name = "Total SNMP devices discovered : %d" % len(snmp_device_ips)
+          devices_list = []
+          for device_ip in snmp_device_ips:
+              count = 0
+              devices_list = get_snmp_device_info(device_ip)
+              if devices_list:
+                  count = len(devices_list)
+                  device_sent = 0
+                  demisto.info(f'host:{device_ip} and its devices:{devices_list}')
+                  while device_sent != count:
+                      end_index = (device_sent + PAGE_SIZE) if (count - device_sent) > PAGE_SIZE else count
+                      sub_device_list = devices_list[device_sent:end_index]
+                      resp = send_devices_to_panw_iot_cloud(sub_device_list)
+                      device_sent = end_index
+                      time.sleep(1)
+              total += count
+
+          op_msg["Total SNMP devices discovered"] = len(snmp_device_ips)
+          op_msg["Total Endpoints exported to PANW IoT Cloud"] = len(ENDPOINT_COUNT)
+
+          return_results(
+              CommandResults(
+                  readable_output=tableToMarkdown(heading, op_msg, removeNull=True)
+              )
+          )
+      except Exception as ex:
+          return_error(str(ex))
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('SendSNMPDatatoPANWIoTCloud', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
