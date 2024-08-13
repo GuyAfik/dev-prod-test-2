@@ -1,0 +1,125 @@
+{
+	"XDRBuiltInField": false,
+	"XsiamIncidentFieldExtraData": null,
+	"aliasTo": "",
+	"aliases": null,
+	"associatedToAll": true,
+	"associatedTypes": [],
+	"autoCompleteTags": null,
+	"breachScript": "",
+	"cacheVersn": 0,
+	"caseInsensitive": true,
+	"cliName": "rockwellassetcentreassetpropertyuuids",
+	"closeForm": false,
+	"columns": [
+		{
+			"displayName": "Rockwell Attribute Name",
+			"fieldCalcScript": "",
+			"isDefault": true,
+			"isReadOnly": true,
+			"key": "rockwellattributename",
+			"orgType": "shortText",
+			"required": false,
+			"script": "",
+			"selectValues": null,
+			"type": "shortText",
+			"width": 220
+		},
+		{
+			"displayName": "Rockwell Attribute UUID",
+			"fieldCalcScript": "",
+			"isDefault": true,
+			"isReadOnly": false,
+			"key": "rockwellattributeuuid",
+			"orgType": "shortText",
+			"required": true,
+			"script": "",
+			"selectValues": null,
+			"type": "shortText",
+			"width": 219
+		}
+	],
+	"content": false,
+	"defaultRows": [
+		{
+			"rockwellattributename": "AddressingInfo",
+			"rockwellattributeuuid": "C9418759-9035-4FAE-9AB6-76AC27094BB4"
+		},
+		{
+			"rockwellattributename": "Manufacturer",
+			"rockwellattributeuuid": "69D5FC5B-FBCE-4075-8FA0-F668EF9B9B27"
+		},
+		{
+			"rockwellattributename": "DeviceName",
+			"rockwellattributeuuid": "204E4FFA-DE18-44B0-BF28-3075F6581EA0"
+		},
+		{
+			"rockwellattributename": "FirmwareRevision",
+			"rockwellattributeuuid": "FFCC3DD3-F62F-47E9-82C5-56B03F3B7AF6"
+		},
+		{
+			"rockwellattributename": "HardwareRevision",
+			"rockwellattributeuuid": "F6BBE12F-5568-4359-8D97-82B4B38FFDCD"
+		},
+		{
+			"rockwellattributename": "HardwareType",
+			"rockwellattributeuuid": "A4BC3502-C96A-4877-960A-46D37A6424B9"
+		},
+		{
+			"rockwellattributename": "AssetNumber",
+			"rockwellattributeuuid": "E80D1CEB-75FA-4EC7-8A0B-3A8F1A83ED7E"
+		},
+		{
+			"rockwellattributename": "Location",
+			"rockwellattributeuuid": "9571D716-B7E7-47B7-8E8A-03F377D87645"
+		},
+		{
+			"rockwellattributename": "SerialNumber",
+			"rockwellattributeuuid": "D0EB93AA-30DB-4673-8938-B56152396655"
+		}
+	],
+	"definitionId": "",
+	"description": "This table is to get UUIDs for attribute properties.",
+	"editForm": true,
+	"fieldCalcScript": "",
+	"fromServerVersion": "",
+	"group": 0,
+	"hidden": false,
+	"id": "incident_rockwellassetcentreassetpropertyuuids",
+	"ipVersion": "",
+	"isReadOnly": false,
+	"itemVersion": "",
+	"locked": false,
+	"mergeStrategy": "",
+	"name": "Rockwell AssetCentre Asset Property UUIDs",
+	"neverSetAsRequired": false,
+	"openEnded": false,
+	"orgType": "grid",
+	"ownerOnly": false,
+	"packID": "",
+	"packName": "",
+	"placeholder": "",
+	"pretty_name": "",
+	"propagationLabels": [
+		"all"
+	],
+	"required": false,
+	"runScriptAfterUpdate": false,
+	"script": "",
+	"selectValues": [],
+	"selectValuesMap": null,
+	"sla": 0,
+	"system": false,
+	"systemAssociatedTypes": null,
+	"template": "",
+	"threshold": 72,
+	"toServerVersion": "",
+	"type": "grid",
+	"unmapped": false,
+	"unsearchable": false,
+	"useAsKpi": false,
+	"validatedError": "",
+	"validationRegex": "",
+	"version": -1,
+	"x2_fields": ""
+}
