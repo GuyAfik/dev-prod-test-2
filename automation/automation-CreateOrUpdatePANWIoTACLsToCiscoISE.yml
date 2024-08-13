@@ -1,0 +1,251 @@
+args:
+- description: Job ID
+  name: jobId
+  required: true
+- description: List of all the acls
+  isArray: true
+  name: acls
+  required: true
+- description: authorization profile
+  name: authorization_profile
+- description: Acl Type
+  name: acl_type
+  required: true
+comment: Creates or Updates ACLs in Cisco ISE.
+commonfields:
+  id: CreateOrUpdatePANWIoTACLsToCiscoISE
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: CreateOrUpdatePANWIoTACLsToCiscoISE
+outputs:
+- contextPath: CiscoISE.ACL.Status
+  description: status of the acls
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('CreateOrUpdatePANWIoTACLsToCiscoISE', 'start', __line__())
+
+
+
+  # CISCO_ISE_ACTIVE_INSTANCE = demisto.args().get("active_ise_instance")
+  def create_update_acl():
+      try:
+          op_summary = {}
+          acl_type = demisto.args().get("acl_type")
+          iseEnabledInstances = get_enabled_instances()
+          for instance in iseEnabledInstances:
+              if instance != None and instance != "":
+                  # return_outputs('instance:'+str(instance))
+                  try:
+                      if acl_type.lower() == 'dacl':
+                          create_or_update_dacl(instance)
+                          op_summary[instance]='Successfully created/updated dacl in the instance:'+ str(instance)
+                      elif acl_type.lower() == 'sgacl':
+                          create_or_update_sgacl(instance)
+                          op_summary[instance]='Successfully created/updated sgacl in the instance:'+ str(instance)
+                  except Exception as e:
+                      op_summary[instance]=str(e)
+                      # raise Exception(str(e))
+          return op_summary
+      except Exception as e:
+          raise Exception(traceback.format_exc())
+
+  def create_or_update_sgacl(using_instance):
+      try:
+          jobId = demisto.args().get("jobId")
+          acls = demisto.args().get("acls")
+          auth_profile = demisto.args().get("authorization_profile")
+          auth_profile_json = auth_profile
+          # ise_acls = json.loads(acls)
+          result=[]
+          for each_acl in acls:
+              name = each_acl['name']
+              content = each_acl['content']
+              source = each_acl['source']
+              dest = each_acl['dest']
+              res = demisto.executeCommand("cisco-ise-get-sgacl-id", {"name":name,"using":using_instance})
+              result.append(res[0]['Contents'])
+              if isError(res[0]):
+                  raise Exception(res[0]['Contents'])
+              # return_outputs('isError:'+str(isError(res[0])))
+              acl_id = res[0]['Contents']
+              sgacl_id=None
+              if acl_id == 'None':
+                  return_outputs('ACL Not found and hence creating new')
+                  resp = demisto.executeCommand("cisco-ise-create-sgacl", {"name":name,"content":content,"using":using_instance})
+                  sgacl_new_name = str(resp[0]['Contents'])
+                  res = demisto.executeCommand("cisco-ise-get-sgacl-id", {"name":sgacl_new_name,"using":using_instance})
+                  # result.append(res[0]['Contents'])
+                  sgacl_id = res[0]['Contents']
+                  return_outputs('sgacl_name'+sgacl_new_name+'sgacl_id:'+sgacl_id)
+              else:
+                  return_outputs('sgacl_id:' + acl_id)
+                  resp = demisto.executeCommand("cisco-ise-update-sgacl", {"id":acl_id, "name":name,"content":content,"using":using_instance})
+                  # return_outputs('Updated Resp')
+                  sgacl_id = str(resp[0]['Contents'])
+                  sgacl_id=acl_id
+                  return_outputs('Updated acl with content: '+str(content)+' and response: '+sgacl_id)
+              #gets src and dest sgt ids
+              src_sgt_id = get_sgt_id(source,using_instance)
+              dest_sgt_id = get_sgt_id(dest,using_instance)
+              return_outputs('src_sgt ID:'+src_sgt_id+' dest_sgt ID:'+dest_sgt_id)
+              #gets, updates and create matrix with sgacls if doesn't exists
+              matrix_ids = get_matrix_id(source,dest,using_instance)
+              return_outputs('matrix_ids:'+str(matrix_ids))
+              if len(matrix_ids)==0:
+                  sgacls_list=[sgacl_id]
+                  create_egress_matrix = demisto.executeCommand("cisco-ise-create-egress-matrix", {"srcSgtID":src_sgt_id,"destSgtID":dest_sgt_id,"sgaclIDs":sgacls_list,"using":using_instance})
+                  matrix_status = create_egress_matrix[0]['Contents']
+                  return_outputs('egress matrix with status:'+matrix_status)
+              else:
+                  matrix_id=None
+                  matrix_obj=None
+                  for each_matrix_id in matrix_ids:
+                      matrix_id=each_matrix_id
+                      matrix_obj=get_matrix(each_matrix_id,using_instance)
+                      return_outputs('matrix_obj:'+str(matrix_obj))
+                      sgacls = matrix_obj['sgacls']
+                      defaultRule = matrix_obj['defaultRule']
+                      matrixCellStatus = matrix_obj['matrixCellStatus']
+                      if sgacl_id in sgacls:
+                          return_outputs('Sgacl:\"'+name+'\" with id:'+ sgacl_id +' already exists in the egress matrix with source:'+source+' and destination:'+dest)
+                          break
+                      else:
+                          sgacls.append(sgacl_id)
+                      create_egress_matrix = demisto.executeCommand("cisco-ise-update-egress-matrix", {"id":matrix_id,"srcSgtID":src_sgt_id,"destSgtID":dest_sgt_id,"sgaclIDs":sgacls_list,"defaultRule":defaultRule,"matrixCellStatus":matrixCellStatus,"using":using_instance})
+                      matrix_status = create_egress_matrix[0]['Contents']
+                      return_outputs('Sgacl:\"'+name+'\" with id:'+ sgacl_id +'is updated to the egress matrix with source:'+source+' and destination:'+dest)
+                      break
+
+
+      except Exception as e:
+          raise Exception(traceback.format_exc())
+
+  def get_matrix_id(source,dest, using_instance):
+      egress_matrix_id = demisto.executeCommand("cisco-ise-get-egress-matrix-id", {"sourceSgt":source,"destSgt":dest,"using":using_instance})
+      matrix_ids = egress_matrix_id[0]['Contents']
+      return matrix_ids
+
+  def get_matrix(matrix_id, using_instance):
+      egress_matrix = demisto.executeCommand("cisco-ise-get-egress-matrix", {"id":matrix_id,"using":using_instance})
+      matrix_res = egress_matrix[0]['Contents']
+      return matrix_res
+
+  def get_sgt_id(sgtName, using_instance):
+      sgt_res = demisto.executeCommand("cisco-ise-get-sgt-id", {"name":sgtName,"using":using_instance})
+      sgt_id = sgt_res[0]['Contents']
+      #return_outputs('sgt_id:'+sgt_id)
+      if sgt_id == 'None':
+          sgt_create_res = demisto.executeCommand("cisco-ise-create-sgt", {"name":sgtName,"using":using_instance})
+          sgt_name_new = str(sgt_create_res[0]['Contents'])
+          sgt_new_res = demisto.executeCommand("cisco-ise-get-sgt-id", {"name":sgt_name_new,"using":using_instance})
+          sgt_id = sgt_new_res[0]['Contents']
+          return_outputs('Created new sgt: '+ sgtName+ 'and its id is:'+sgt_id)
+      return sgt_id
+
+  def create_or_update_dacl(using_instance):
+      try:
+          jobId = demisto.args().get("jobId")
+          acls = demisto.args().get("acls")
+          auth_profile = demisto.args().get("authorization_profile")
+          # auth_profile_json = json.loads(auth_profile)
+          # acls = json.loads(acls)
+          auth_profile_json = auth_profile
+          result=[]
+          for each_acl in acls:
+              name = each_acl['name']
+              content = each_acl['content']
+              # return_outputs('name:'+name+' #content:'+str(content)+" instance-"+using_instance)
+              res = demisto.executeCommand("cisco-ise-get-dacl-id", {"name":name,"using":using_instance})
+              result.append(res[0]['Contents'])
+              # return_outputs('contents:'+str(result))
+              # return_outputs('isError:'+str(isError(res[0])))
+              if isError(res[0]):
+                  raise Exception(res[0]['Contents'])
+              acl_id = res[0]['Contents']
+              if acl_id == 'None':
+                  return_outputs('ACL Not found, and hence creatina a new dacl')
+                  resp = demisto.executeCommand("cisco-ise-create-dacl", {"name":name,"content":content,"using":using_instance})
+                  return_outputs('Created new Dacl and its ID is: '+str(resp[0]['Contents']))
+              else:
+                  resp1 = demisto.executeCommand("cisco-ise-update-dacl", {"id":acl_id, "name":name,"content":content,"using":using_instance})
+                  # return_outputs('Updated Resp')
+                  return_outputs('Updated acl with content: '+str(content)+' and response: '+str(resp1[0]['Contents']))
+              return_outputs('Stared auth profile:'+str(auth_profile_json))
+              create_or_update_dacl_auth_profile(auth_profile_json, using_instance)
+      except Exception as e:
+          raise Exception(traceback.format_exc())
+
+  def create_or_update_dacl_auth_profile(auth_profile_json, using_instance):
+      try:
+          authProfileName = auth_profile_json['authName']
+          content = auth_profile_json['content']
+          auth_content={}
+          try:
+              daclName = content['dACL']
+              if daclName and daclName !='':
+                  auth_content['daclName']=daclName
+          except:
+              pass
+          try:
+              wlcName = content['wlc']
+              if wlcName and wlcName !='':
+                  auth_content['airespaceACL']=wlcName
+          except:
+              pass
+
+          # return_outputs('Contents-'+authProfileName+':'+str(auth_content))
+          ########
+          return_outputs('using_instance'+using_instance)
+          auth_res=demisto.executeCommand("CreateOrUpdateAuthorizationProfileToCiscoISE", {"name":authProfileName,"content":auth_content,"active_ise_instance":using_instance})
+          return_outputs(auth_res[0]['Contents'])
+          #######
+      except Exception as e:
+          raise Exception(traceback.format_exc())
+
+  def get_enabled_instances():
+      brand_name='PANW IoT 3rd Party Integration - Cisco ISE'
+      all_instances = demisto.getModules()
+
+      enabled_instances = []
+
+      for instance in all_instances:
+          if all_instances[instance]['brand'] == brand_name:
+              if all_instances[instance]['state'] == 'active':
+                  enabled_instances.append(instance)
+      return enabled_instances
+
+  def main():
+      op_summary={}
+      try:
+          op_summary = create_update_acl()
+      except Exception as ex:
+          return_error(str(ex))
+      return_outputs(tableToMarkdown("Cisco ISE ACL Summary:", op_summary, removeNull=True))
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('CreateOrUpdatePANWIoTACLsToCiscoISE', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- Cisco ISE
+- PANW IoT 3rd Party Integration
+timeout: 20m0s
+type: python
