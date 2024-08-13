@@ -11,7 +11,6 @@ contentitemexportablefields:
     toServerVersion: ""
 description: This playbook will import device attributes from CrowdStrike Falcon To
   PANW IoT Cloud
-dirtyInputs: true
 id: dbfa64f9-fb41-4958-858a-10175d118c58
 inputs: []
 name: Incremental Import of CrowdStrike Falcon - PANW IoT 3rd Party Integration
@@ -34,11 +33,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: acc521f9-ddfb-4c81-8ab6-0eb821845351
+      id: fde19167-5273-42dc-8dfc-2975ea867067
       iscommand: false
       name: ""
       version: -1
-    taskid: acc521f9-ddfb-4c81-8ab6-0eb821845351
+    taskid: fde19167-5273-42dc-8dfc-2975ea867067
     timertriggers: []
     type: start
     view: |-
@@ -75,13 +74,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: 0309ac8a-76c6-4526-8522-30e2a1c5264a
+      id: eab90960-1aea-4d09-8446-7971be5be1bc
       iscommand: false
       name: Is CrowdStrike Falcon integration enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: 0309ac8a-76c6-4526-8522-30e2a1c5264a
+    taskid: eab90960-1aea-4d09-8446-7971be5be1bc
     timertriggers: []
     type: condition
     view: |-
@@ -127,13 +126,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 69d624e7-6233-4f14-87f2-d3557d4425ae
+      id: c6ae5ebb-37bb-4ddb-8672-dd5708f54123
       iscommand: true
       name: Send Disable Status to IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 69d624e7-6233-4f14-87f2-d3557d4425ae
+    taskid: c6ae5ebb-37bb-4ddb-8672-dd5708f54123
     timertriggers: []
     type: regular
     view: |-
@@ -157,13 +156,13 @@ tasks:
     task:
       brand: Builtin
       description: commands.local.cmd.close.inv
-      id: ac6b60d2-7125-4d54-8225-7924961dd2ac
+      id: 6c72224b-9208-4061-8d5c-bae5ca962e1e
       iscommand: true
       name: Close Investigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: ac6b60d2-7125-4d54-8225-7924961dd2ac
+    taskid: 6c72224b-9208-4061-8d5c-bae5ca962e1e
     timertriggers: []
     type: regular
     view: |-
@@ -198,13 +197,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 91d935ce-f477-4f73-8839-8145d95c21e1
+      id: 3aca0981-04b4-42c5-82c7-2e678579d140
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 91d935ce-f477-4f73-8839-8145d95c21e1
+    taskid: 3aca0981-04b4-42c5-82c7-2e678579d140
     timertriggers: []
     type: condition
     view: |-
@@ -246,13 +245,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 9036e4a2-3492-448a-87cb-c6da00aef981
+      id: fee92d84-4d86-4447-86f4-ad413b09639f
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 9036e4a2-3492-448a-87cb-c6da00aef981
+    taskid: fee92d84-4d86-4447-86f4-ad413b09639f
     timertriggers: []
     type: regular
     view: |-
@@ -292,13 +291,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 66cc2560-5d5f-4e16-872e-7c8cffae13ca
+      id: a25bab0c-0775-4c8a-8e78-69f851cbe77f
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 66cc2560-5d5f-4e16-872e-7c8cffae13ca
+    taskid: a25bab0c-0775-4c8a-8e78-69f851cbe77f
     timertriggers: []
     type: regular
     view: |-
@@ -322,13 +321,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: b5d2df45-69dc-487f-8aa5-2b1f89193a2c
+      id: 93926f25-6a2f-4ae6-8676-f293b68f4468
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: b5d2df45-69dc-487f-8aa5-2b1f89193a2c
+    taskid: 93926f25-6a2f-4ae6-8676-f293b68f4468
     timertriggers: []
     type: regular
     view: |-
@@ -361,13 +360,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: f79b770b-a8bd-4761-8989-3a63a31b40d3
+      id: ecc68010-7795-41c5-864d-d2bba820bd98
       iscommand: false
       name: Is CrowdStrike Falcon Integration Instance Available
       script: Exists
       type: condition
       version: -1
-    taskid: f79b770b-a8bd-4761-8989-3a63a31b40d3
+    taskid: ecc68010-7795-41c5-864d-d2bba820bd98
     timertriggers: []
     type: condition
     view: |-
@@ -407,13 +406,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 5a6dfff6-9f4a-4d0c-8206-ea9ab3d75e44
+      id: 81ae9e34-2b85-4444-8981-b9650987eeba
       iscommand: true
       name: No Instance passed to this Playbook. Reporting Error
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 5a6dfff6-9f4a-4d0c-8206-ea9ab3d75e44
+    taskid: 81ae9e34-2b85-4444-8981-b9650987eeba
     timertriggers: []
     type: regular
     view: |-
@@ -449,13 +448,13 @@ tasks:
     task:
       brand: ""
       description: Importing CrowdStrike Falcon devices to Palo Alto IoT Cloud
-      id: 4c86e5f7-32d0-4311-8431-4ed78edc3c3f
+      id: 245b72c9-7164-4839-8877-aeb0eefcc8c5
       iscommand: false
       name: Import Device Attributes From CrowdStrike Falcon To PANW IoT Cloud
       script: b460678e-ab1e-476e-8670-734c87888832
       type: regular
       version: -1
-    taskid: 4c86e5f7-32d0-4311-8431-4ed78edc3c3f
+    taskid: 245b72c9-7164-4839-8877-aeb0eefcc8c5
     timertriggers: []
     type: regular
     view: |-
