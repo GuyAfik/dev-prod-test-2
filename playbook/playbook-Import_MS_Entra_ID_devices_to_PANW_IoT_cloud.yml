@@ -10,7 +10,6 @@ contentitemexportablefields:
     - all
     toServerVersion: ""
 description: Fetch data from MS Entra ID and send it to PANW IoT Platform
-dirtyInputs: true
 id: cb6dc39a-2314-4d9a-83e9-dfbf36982b67
 inputs: []
 name: Import MS Entra ID devices to PANW IoT cloud
@@ -33,11 +32,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: ec20d0ee-92e8-4d73-8525-1d76e4681607
+      id: b6f053c6-82c3-4389-8690-f8746dfd5875
       iscommand: false
       name: ""
       version: -1
-    taskid: ec20d0ee-92e8-4d73-8525-1d76e4681607
+    taskid: b6f053c6-82c3-4389-8690-f8746dfd5875
     timertriggers: []
     type: start
     view: |-
@@ -76,13 +75,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: 5bab74d3-0f02-4f70-8761-cc07de4e1c73
+      id: bf49efc7-93a8-4ca9-8a1e-1d1a3b0f495b
       iscommand: false
       name: Is MS Entra integration enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: 5bab74d3-0f02-4f70-8761-cc07de4e1c73
+    taskid: bf49efc7-93a8-4ca9-8a1e-1d1a3b0f495b
     timertriggers: []
     type: condition
     view: |-
@@ -122,13 +121,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: b579f041-31ac-4eed-8a46-862ee5874fbb
+      id: 452e860b-c4a1-4e1d-89f1-142a4fb5363b
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: b579f041-31ac-4eed-8a46-862ee5874fbb
+    taskid: 452e860b-c4a1-4e1d-89f1-142a4fb5363b
     timertriggers: []
     type: regular
     view: |-
@@ -152,13 +151,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 144cb9fa-2a85-4239-84b9-6caae9d50a1f
+      id: 9e7005bf-61eb-473e-8914-33ac65b32572
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 144cb9fa-2a85-4239-84b9-6caae9d50a1f
+    taskid: 9e7005bf-61eb-473e-8914-33ac65b32572
     timertriggers: []
     type: regular
     view: |-
@@ -198,13 +197,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: aede9cf8-74d5-447e-88df-8a74860a4ad9
+      id: beb45ca1-227a-40a2-8695-d5e763d79c30
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: aede9cf8-74d5-447e-88df-8a74860a4ad9
+    taskid: beb45ca1-227a-40a2-8695-d5e763d79c30
     timertriggers: []
     type: regular
     view: |-
@@ -239,13 +238,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 6fcc63db-d074-498b-8fc0-b20b0d5d9146
+      id: 465e98a9-4839-4f8b-8fb0-98c4603ef2e9
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 6fcc63db-d074-498b-8fc0-b20b0d5d9146
+    taskid: 465e98a9-4839-4f8b-8fb0-98c4603ef2e9
     timertriggers: []
     type: condition
     view: |-
@@ -285,13 +284,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 0f827477-79d4-4a7c-8ada-74fdf6c4e8bf
+      id: d43136ad-7ff4-4601-875d-740e16694729
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 0f827477-79d4-4a7c-8ada-74fdf6c4e8bf
+    taskid: d43136ad-7ff4-4601-875d-740e16694729
     timertriggers: []
     type: regular
     view: |-
@@ -331,13 +330,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: b3c3fe4a-a9cb-436d-8476-12d3dda74c6f
+      id: 49cee1b7-18ed-43b8-83a1-881fca563c2d
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: b3c3fe4a-a9cb-436d-8476-12d3dda74c6f
+    taskid: 49cee1b7-18ed-43b8-83a1-881fca563c2d
     timertriggers: []
     type: regular
     view: |-
@@ -361,13 +360,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: e8eb5316-eaf1-4a7d-869e-95699e513adb
+      id: 7b0cc9f8-d606-486a-8c8c-5ec7c52ed9ec
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: e8eb5316-eaf1-4a7d-869e-95699e513adb
+    taskid: 7b0cc9f8-d606-486a-8c8c-5ec7c52ed9ec
     timertriggers: []
     type: regular
     view: |-
@@ -390,13 +389,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 275b8fd3-67f9-431d-8356-bcdab2739cee
+      id: 7395abfd-ab88-4330-812a-01188105bc2e
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 275b8fd3-67f9-431d-8356-bcdab2739cee
+    taskid: 7395abfd-ab88-4330-812a-01188105bc2e
     timertriggers: []
     type: regular
     view: |-
@@ -431,13 +430,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 2df188f8-1bb2-42e8-8ac6-ccf26555c49e
+      id: c0dff461-f141-4f08-8530-ae7d0f3ecae8
       iscommand: false
       name: Is MS Entra Integration Instance Available
       script: Exists
       type: condition
       version: -1
-    taskid: 2df188f8-1bb2-42e8-8ac6-ccf26555c49e
+    taskid: c0dff461-f141-4f08-8530-ae7d0f3ecae8
     timertriggers: []
     type: condition
     view: |-
@@ -475,13 +474,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: d7a6830e-609a-4bfa-862b-b71ed70ce86b
+      id: d1f259a0-ba6f-4584-8c47-873778a22fd2
       iscommand: true
       name: No Instance passed to this Playbook. Reporting Error
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: d7a6830e-609a-4bfa-862b-b71ed70ce86b
+    taskid: d1f259a0-ba6f-4584-8c47-873778a22fd2
     timertriggers: []
     type: regular
     view: |-
@@ -509,13 +508,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 5e8cc669-87c2-41d9-8cdf-03868f57eaa0
+      id: dc441e18-e673-433d-809f-486df7961b29
       iscommand: false
       name: SendMSEntraIDDevicesToPANWIoT
       script: SendMSEntraIDDevicesToPANWIoT
       type: regular
       version: -1
-    taskid: 5e8cc669-87c2-41d9-8cdf-03868f57eaa0
+    taskid: dc441e18-e673-433d-809f-486df7961b29
     timertriggers: []
     type: regular
     view: |-
