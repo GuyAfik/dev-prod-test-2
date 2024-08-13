@@ -33,11 +33,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: d2b1a9ab-f6f8-4816-82b5-59e3b839a1d7
+      id: d7318d01-0c44-404c-8ead-c4ccfef053e0
       iscommand: false
       name: ""
       version: -1
-    taskid: d2b1a9ab-f6f8-4816-82b5-59e3b839a1d7
+    taskid: d7318d01-0c44-404c-8ead-c4ccfef053e0
     timertriggers: []
     type: start
     view: |-
@@ -76,13 +76,13 @@ tasks:
       brand: ""
       description: Gets all available devices from the IoT cloud and updates or creates
         them if necessary. new endpoint with custom attributes on Cisco ISE.
-      id: 59018a1c-80af-473c-8cdf-3e89cd447b9a
+      id: 11b1af99-9582-4401-8a95-4987fa91678d
       iscommand: false
       name: Get PANW IoT devices and send to Cisco ISE pxGrid
       script: 0a2f891b-5731-450f-8dc8-0b64e25ee8ec
       type: regular
       version: -1
-    taskid: 59018a1c-80af-473c-8cdf-3e89cd447b9a
+    taskid: 11b1af99-9582-4401-8a95-4987fa91678d
     timertriggers: []
     type: regular
     view: |-
@@ -119,13 +119,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: 611adcb3-2bc8-432c-8a86-88b3ce26577d
+      id: 38aedf9d-d260-4671-8344-fb8346055c8b
       iscommand: false
       name: Is Cisco ISE pxGrid Integration instance enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: 611adcb3-2bc8-432c-8a86-88b3ce26577d
+    taskid: 38aedf9d-d260-4671-8344-fb8346055c8b
     timertriggers: []
     type: condition
     view: |-
@@ -165,13 +165,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 03d30fc8-0a43-4562-8aca-ce3c24bb549f
+      id: 573a5e5a-f1a7-4fb0-8ec6-845f89597366
       iscommand: true
       name: Report disabled status to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 03d30fc8-0a43-4562-8aca-ce3c24bb549f
+    taskid: 573a5e5a-f1a7-4fb0-8ec6-845f89597366
     timertriggers: []
     type: regular
     view: |-
@@ -194,13 +194,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: bc2d1449-9a35-4cf4-876b-21d1b278f150
+      id: 12667215-fd05-48a7-8b55-8e983f11418c
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: bc2d1449-9a35-4cf4-876b-21d1b278f150
+    taskid: 12667215-fd05-48a7-8b55-8e983f11418c
     timertriggers: []
     type: regular
     view: |-
@@ -233,13 +233,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 63d83e08-c183-4bae-878b-8015b3c0e230
+      id: 6149eb3d-e896-4e48-8a9e-5c13d52b6720
       iscommand: false
       name: is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 63d83e08-c183-4bae-878b-8015b3c0e230
+    taskid: 6149eb3d-e896-4e48-8a9e-5c13d52b6720
     timertriggers: []
     type: condition
     view: |-
@@ -279,13 +279,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 4347028d-a05a-47bd-889c-2e3654795bb4
+      id: 7c3c92a7-ce59-494a-832c-8a0c89d1a70e
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 4347028d-a05a-47bd-889c-2e3654795bb4
+    taskid: 7c3c92a7-ce59-494a-832c-8a0c89d1a70e
     timertriggers: []
     type: regular
     view: |-
@@ -325,13 +325,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 326870a1-55ae-458f-8aec-81c6bd1eed6e
+      id: 329357b2-3be7-426b-8711-c781e2b0c1a0
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 326870a1-55ae-458f-8aec-81c6bd1eed6e
+    taskid: 329357b2-3be7-426b-8711-c781e2b0c1a0
     timertriggers: []
     type: regular
     view: |-
@@ -364,13 +364,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 14f85967-f330-403d-8280-8e83fdf9d4f9
+      id: 664c7312-7776-4bef-872b-e1af655c385c
       iscommand: false
       name: Is Cisco ISE pxGrid Integration Instance Configured?
       script: Exists
       type: condition
       version: -1
-    taskid: 14f85967-f330-403d-8280-8e83fdf9d4f9
+    taskid: 664c7312-7776-4bef-872b-e1af655c385c
     timertriggers: []
     type: condition
     view: |-
@@ -410,13 +410,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message to PANW IOT cloud.
-      id: 3fb45e45-6e1d-405e-882a-81825a5af0b3
+      id: b0ac9403-3291-4815-862f-ef76363179f1
       iscommand: true
       name: No Instance passed to this Playbook. Reporting Error
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 3fb45e45-6e1d-405e-882a-81825a5af0b3
+    taskid: b0ac9403-3291-4815-862f-ef76363179f1
     timertriggers: []
     type: regular
     view: |-
