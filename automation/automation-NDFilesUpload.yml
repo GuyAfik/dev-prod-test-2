@@ -1,0 +1,85 @@
+args:
+- description: file info context data
+  isArray: true
+  name: files
+  required: true
+commonfields:
+  id: NDFilesUpload
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.0
+    packID: ""
+    packName: Palo Alto Networks IoT 3rd Party Integrations
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: NDFilesUpload
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('NDFilesUpload', 'start', __line__())
+
+
+
+
+  def upload_files_to_panwdb(entry_id, api):
+      response = demisto.executeCommand("panw-iot-3rd-party-upload-network-discovery-file", {
+          "file_upload":entry_id,
+          "api": api
+      })
+      if isError(response[0]):
+          err_msg = 'Error, couldn\'t upload file for api: '+ api + ' and entry ID: '+ entry_id + ' and the error is: '+str(response[0]['Contents'])
+          # return_outputs(err_msg)
+          raise Exception(err_msg)
+      return response[0]['Contents']
+
+
+
+  def upload_files(files_info):
+      file_responses=[]
+
+      for file_info in files_info:
+          entry_id = file_info['EntryID']
+          file_name = file_info['Name']
+          api=""
+          if file_name.startswith("nd_nodegraph"):
+              api="NODE_GRAPH"
+          elif file_name.startswith("nd_endpoints"):
+              api="ENDPOINTS"
+          else:
+              api="L2L3"
+          try:
+              response = upload_files_to_panwdb(entry_id, api)
+              file_responses.append(response)
+          except Exception as ex:
+              file_responses.append(ex)
+      return file_responses
+
+  def main():
+      try:
+          files_info = demisto.args().get('files')
+          res = upload_files(files_info)
+          return_results(res)
+
+      except Exception as e:
+          raise Exception("NDFilesUpload - Failed to get upload files"+str(e))
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('NDFilesUpload', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
