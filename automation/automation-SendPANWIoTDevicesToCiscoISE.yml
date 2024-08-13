@@ -1,0 +1,416 @@
+args:
+- description: Active ISE instance
+  name: active_ise
+  required: true
+- description: Increment time in minutes. Default is 15 minutes
+  name: increment_time
+- description: 'PANW IoT site(s). '
+  isArray: true
+  name: sites
+- description: 'PANW IoT device tag(s). '
+  isArray: true
+  name: tags
+- description: List of custom attributes. All attributes will be exported per device
+    if empty.
+  isArray: true
+  name: custom_attributes
+comment: This script takes in custom attributes from PANW IoT cloud as an argument
+  and creates or updates endpoints in ISE with the  input custom attributes.
+commonfields:
+  id: 2b4bf245-b0bc-4f96-89c7-97f5c0277cc5
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendPANWIoTDevicesToCiscoISE
+outputs:
+- {}
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendPANWIoTDevicesToCiscoISE', 'start', __line__())
+
+
+  PANW_IOT_INSTANCE = "PANW IoT 3rd Party Integration Instance"
+  CISCO_ISE_ACTIVE_INSTANCE = demisto.args().get("active_ise")
+  GET_EP_ID_CMD = 'cisco-ise-get-endpoint-id-by-name'
+
+  CISCO_ISE_FIELD_MAP = {}
+  '''
+  CISCO_ISE_FIELD_MAP = {
+      "deviceid": ["ZingboxDeviceID", "PanwIoDeviceID"],
+      "hostname": ["ZingboxHostname", "PanwIoTHostname"],
+      "last_activity" : ["ZingboxLastActivity", "PanwIoTLastActivity"],
+      "category": ["ZingboxCategory", "PanwIoTCategory"],
+      "profile": ["ZingboxProfile", "PanwIoTProfile"],
+      "ip_address": ["ZingboxIP", "PanwIoTIP"],
+      "risk_score": ["ZingboxRiskScore", "PanwIoTRiskScore"],
+      "risk_level": ["ZingboxRiskLevel", "PanwIoTRiskLevel"],
+      "profile_vertical" : ["ZingboxProfileVertical", "PanwIoTProfileVertical"],
+      "profile_type" : ["ZingboxProfileType", "PanwIoTProfileType"],
+      "mac_address" : ["ZingboxMacAddress", "PanwIoTMacAddress"],
+      "confidence_score": ["ZingboxConfidenceScore", "PanwIoTConfidenceScore"],
+      "site_name" : ["ZingboxSiteName", "PanwIoTSiteName"],
+      "location" : ["ZingboxLocation", "PanwIoTLocation"],
+      "in_use": ["ZingboxInUse", "PanwIoTInUse"],
+      "dnac_location" : ["ZingboxDnacLocation", "PanwIoTDnacLocation"],
+      "vendor": ["ZingboxVendor", "PanwIoTVendor"],
+      "model": ["ZingboxModel", "PanwIoTModel"],
+      "description": ["ZingboxDescription", "PanwIoTDescription"],
+      "long_description" : ["ZingboLongDescription", "PanwIoTLongDescription"],
+      "asset_tag": ["ZingboxTag", "PanwIoTTag"],
+      "os_group": ["ZingboxOSGroup", "PanwIoTOSGroud"],
+      "os/firmware_version" : ["ZingboxOSFirmwareVersion", "PanwIoTOSFirmwareVersion"],
+      "osCombined": ["ZingboxOS", "PanwIoTOS"],
+      "Serial_Number": ["ZingboxSerial", "PanwIoTSerial"],
+      "endpoint_protection": ["ZingboxEPP", "PanwIoTEPP"],
+      "endpoint_protection_vendor": ["ZingboxEPPVendor", "PanwIoTEPPVendor"],
+      "NetworkLocation": ["ZingboxNetworkLocation", "PanwIoTNetworkLocation"],
+      "AET": ["ZingboxAET", "PanwIoTAET"],
+      "DHCP": ["ZingboxDHCP", "PanwIoTDHCP"],
+      "wire_or_wireless": ["ZingboxWireOrWireless", "PanwIoTWireOrWireless"],
+      "department": ["ZingboxDepartment", "PanwIoTDepartment"],
+      "SMB":  ["ZingboxSMB", "PanwIoTSMB"],
+      "Switch_Port": ["ZingboxSwitchPort", "PanwIoTSwitchPort"],
+      "Switch_Name": ["ZingboxSwitchName", "PanwIoTSwitchName"],
+      "Switch_IP": ["ZingboxSwitchIP", "PanwIoTSwitchIP"],
+      "source": ["ZingboxSource", "PanwIoTSource"],
+      "services": ["ZingboxServices", "PanwIoTServices"],
+      "is_server": ["ZingboxisServer", "PanwIoTisServer"],
+      "parent_mac": ["ZingboxParentMac", "PanwIoTParentMac"],
+      "NAC_profile": ["ZingboxNACProfile", "PanwIoTNACProfile"],
+      "NAC_profile_source": ["ZingboxNACProfileSource", "PanwIoTNACProfileSource"],
+      "NAC_Auth_State": ["ZingboxNACAuthState", "PanwIoTNACAuthState"],
+      "NAC_Auth_Info": ["ZingboxNACAuthInfo", "PanwIoTNACAuthInfo"],
+      "Access_Point_IP": ["ZingboxAccessPointIP", "PanwIoTAccessPointIP"],
+      "SSID": ["ZingboxSSID", "PanwIoTSSID"],
+      "Authentication_Method": ["ZingboxAuthenticationMethod", "PanwIoTAuthenticationMethod"],
+      "Encryption_Cipher": ["ZingboxEncryptionCipher", "PanwIoTEncryptionCipher"],
+      "CMMS_Source": ["ZingboxCMMSSource", "PanwIoTCMMSSource"],
+      "CMMS_Category" : ["ZingboxCMMSCategory", "PanwIoTCMMSCategory"],
+      "CMMS_State": ["ZingboxCMMSState", "PanwIoTCMMSState"],
+      "AD_Username": ["ZingboxADUserName", "PanwIoTADUserName"],
+      "AD_Domain": ["ZingboxADDomain", "PanwIoTADDomain"],
+      "WIFI_Auth_Timestamp": ["ZingboxWIFIAuthTimeStamp", "PanwIoTWIFIAuthTimeStamp"],
+      "WIFI_Auth_Status": ["ZingboxWIFIAuthStatus", "PanwIoTWIFIAuthStatus"],
+      "EAP_Method": ["ZingboxEAPMethod", "PanwIoTEAPMethod"],
+      "MAC":["ZingboxMAC", "PanwIoTMAC"],
+      "display_tags" : ["ZingboxDisplayTags", "PanwIoTDisplayTags"],
+      "vlan": ["ZingboxVLAN", "PanwIoTVLAN"],
+      "subnet": ["ZingboxSubnet", "PanwIoTSubnet"],
+      "number_of_critical_alerts": ["ZingboxNumberOfCriticalAlerts", "PanwIoTNumberOfCriticalAlerts"],
+      "number_of_warning_alerts": ["ZingboxNumberOfWarningAlerts", "PanwIoTNumberOfWarningAlerts"],
+      "number_of_caution_alerts": ["ZingboxNumberOfCautionAlerts", "PanwIoTNumberOfCautionAlerts"],
+      "number_of_info_alerts": ["ZingboxNumberOfInfoAlerts", "PanwIoTNumberOfInfoAlerts"],
+      "first_seen_date": ["ZingboxFirstSeenDate", "PanwIoTFirstSeenDate"],
+
+
+      "External Network": ["ZingboxInternetAccess", "PanwIoTInternetAccess"],
+  }
+  '''
+
+  INT_FIELDS = ["risk_score", "confidence_score", "number_of_critical_alerts", "number_of_warning_alerts", "number_of_caution_alerts", "number_of_info_alerts", "vlan"]
+
+  def mac_validation(mac):
+      if not re.match("[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", mac.lower()):
+          return False
+      return True
+
+  def get_devices_from_panw_iot_cloud(increment_time=None, sites=None, tags=None, retry=0):
+      """
+      Gets assets from PANW IoT cloud.
+      param offset: Offset number for the asset list.
+      param page_size: Page size of the response being requested.
+      """
+
+      response = demisto.executeCommand("panw-iot-3rd-party-get-asset-list", {
+          "asset_type":"device",
+          "increment_time": increment_time,
+          "site_names": sites,
+          "tags": tags,
+      })
+
+      if isError(response[0]):
+          if retry == 0:
+              time.sleep(1)
+              return get_devices_from_panw_iot_cloud(increment_time, retry=1)
+          err_msg = f'Error, could not get assets from PANW IoT Cloud - {response[0].get("Contents")}'
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def convert_device_map_to_cisco_ise_attributes(device_map, custom_attributes=None):
+      """
+      Converts a PANW IoT device_map to Cisco ISE custom attributes map.
+      param device_map: Single PANW IoT device_map with device attributes .
+      """
+      attribute_list = {}
+      if 'deviceid' in device_map:
+          if device_map['deviceid'] is None or device_map['deviceid'] == "":
+              return None
+          attribute_list['mac'] = device_map['deviceid']
+          if not is_mac_address(attribute_list['mac']) or mac_validation(attribute_list['mac']) == False:
+              return None
+          zb_attributes = {}
+          for field in device_map:
+              if custom_attributes is not None and field not in custom_attributes:
+                  continue
+              if device_map[field] is None or device_map[field] == "":
+                  continue
+              if field in CISCO_ISE_FIELD_MAP:
+                  if field in INT_FIELDS:
+                      try:
+                          int_val = int(device_map[field])
+                      except Exception:
+                          continue
+                      zb_attributes[CISCO_ISE_FIELD_MAP[field]] = int_val
+                      #zb_attributes[CISCO_ISE_FIELD_MAP[field][0]] = int_val
+                      #zb_attributes[CISCO_ISE_FIELD_MAP[field][1]] = int_val
+                  else:
+                      if type(device_map[field]) is str:
+                          str_val = device_map[field]
+                          str_val = str_val.replace(',', '.')
+                          zb_attributes[CISCO_ISE_FIELD_MAP[field]] = str_val
+                          #zb_attributes[CISCO_ISE_FIELD_MAP[field][0]] = str_val
+                          #zb_attributes[CISCO_ISE_FIELD_MAP[field][1]] = str_val
+          attribute_list['zb_attributes'] = zb_attributes
+      return attribute_list
+
+
+  def send_status_to_panw_iot_cloud(status, msg):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      global CISCO_ISE_ACTIVE_INSTANCE
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+          "status": status,
+          "message": msg,
+          "integration_name": "ise",
+          "custom_integration_name": CISCO_ISE_ACTIVE_INSTANCE,
+          "playbook_name": "PANW IoT 3rd Party Cisco ISE Integration - Bulk Export to Cisco ISE",
+          "asset_type": 'device',
+          "timestamp": int(round(time.time() * 1000))
+          #"using": PANW_IOT_INSTANCE
+      })
+
+      if isError(resp[0]):
+          pass
+          #err_msg = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get("Contents")}'
+          #raise Exception(err_msg)
+
+
+  def extract_ise_api_error(err_msg):
+      """
+      Extract any connection error or error code if possible,
+      Otherwise just return the original error
+      """
+      err_msg = err_msg.split('-')[0]
+      if err_msg.startswith("Error in API call to Cisco"):
+          start = err_msg.find('[') + 1
+          end = err_msg.find(']')
+          return err_msg[start:end]
+      elif err_msg.startswith("Connection Error. Verify"):
+          return "Connection Error"
+      else:
+          return err_msg
+
+
+  def update_existing_endpoint(mac, attr_map, ep_id, active_instance):
+      """
+      Update an existing endpoint with the given custom attributes.
+      Param mac: mac address of the endpoint that needs to be updated.
+      Param attr_map: a map containing various ise custom attributes.
+      Param ep_id: ID for endpoint that needs to be updated.
+      Param active_instance: The primary/active ISE instance.
+      """
+      attribute_names = ""
+      attribute_values = ""
+      for key in attr_map:
+          attribute_names += key + ","
+          attribute_values += str(attr_map[key]) + ","
+      attribute_names = attribute_names[:-1]
+      attribute_values = attribute_values[:-1]
+
+      resp = demisto.executeCommand("cisco-ise-update-endpoint-custom-attribute", {
+              "id": ep_id,
+              "macAddress": mac,
+              "attributeName": attribute_names,
+              "attributeValue": attribute_values,
+              "using": active_instance
+          })
+
+      # try:
+      #     resp = demisto.executeCommand("cisco-ise-update-endpoint-custom-attribute", {
+      #         "id": ep_id,
+      #         "macAddress": mac,
+      #         "attributeName": attribute_names,
+      #         "attributeValue": attribute_values,
+      #         "using": active_instance
+      #     })
+      # except Exception as ex:
+      #     for error in ENGINE_ERRORS:
+      #         if error in str(ex):
+      #             time.sleep(5)
+      #             return
+      if isError(resp[0]):
+          err_msg = f'Error, failed to update custom attributes for endpoint {id} - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+
+  def create_new_ep(mac, attr_map, active_instance):
+      """
+      Create a new endpoint with the given params
+      Param mac: mac address of the endpoint that needs to be created.
+      Param attr_map: a map containing various ise custom attributes.
+      Param active_instance: The primary/active ISE instance.
+      """
+      resp = demisto.executeCommand("cisco-ise-create-endpoint", {
+              "mac_address": mac,
+              "attributes_map": attr_map,
+              "using": active_instance
+          })
+      # try:
+      #     resp = demisto.executeCommand("cisco-ise-create-endpoint", {
+      #         "mac_address": mac,
+      #         "attributes_map": attr_map,
+      #         "using": active_instance
+      #     })
+      # except Exception as ex:
+      #     for error in ENGINE_ERRORS:
+      #         if error in str(ex):
+      #             time.sleep(5)
+      #             return None
+      if isError(resp[0]):
+          err_msg = f'Failed to create new Endpoint {mac} - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+
+  def create_or_update_ep(mac, attr_map):
+      """
+      Check if an enpoint exists in ISE, if not create one with the custom attributes
+      otherwise update it. If at any point the connection goes down or we get a 401 -
+      unautherized access we will attempt to get the new active instance.
+      Params mac: Mac adress of the endpoint.
+      attr_map: Custom attributes for the endpoint.
+      """
+
+      global CISCO_ISE_ACTIVE_INSTANCE
+      global GET_EP_ID_CMD
+
+      cmd_mac_syntax_map = {
+          "cisco-ise-get-endpoint-id-by-name": "mac_address",
+          "cisco-ise-get-endpoint-id": "macAddress"
+      }
+
+      resp = demisto.executeCommand(GET_EP_ID_CMD, {
+              cmd_mac_syntax_map[GET_EP_ID_CMD]: mac,
+              "using": CISCO_ISE_ACTIVE_INSTANCE
+          })
+      # Check if this mac address (endpoint) is present in ISE by attempting to get its ID
+      # try:
+      #     resp = demisto.executeCommand(GET_EP_ID_CMD, {
+      #         cmd_mac_syntax_map[GET_EP_ID_CMD]: mac,
+      #         "using": CISCO_ISE_ACTIVE_INSTANCE
+      #     })
+      # except Exception as ex:
+      #     for error in ENGINE_ERRORS:
+      #         if error in str(ex):
+      #             time.sleep(5)
+      #             return None
+
+      if isError(resp[0]):
+          err_msg = extract_ise_api_error(resp[0].get("Contents"))
+
+          # 404 Not Found or empty results, we need to create a new EP
+          if err_msg == "404" or err_msg == "list index out of range":
+              create_new_ep(mac, attr_map, CISCO_ISE_ACTIVE_INSTANCE)
+
+          # 405 - Method not allowed means we need to switch to an old filter based API
+          elif err_msg == '405':
+              GET_EP_ID_CMD = "cisco-ise-get-endpoint-id"
+
+          else:
+              raise Exception(resp[0].get("Contents"))
+      else:
+          ep_id = resp[0]['EntryContext']['Endpoint(val.ID === obj.ID)']['ID']
+          update_existing_endpoint(mac, attr_map, ep_id, CISCO_ISE_ACTIVE_INSTANCE)
+
+
+  def send_panw_iot_devices_to_send_to_cisco_ise(device_list, custom_attributes=None):
+      """
+      For given device lists consisting of custom attributes, create or update
+      endpoints in Cisco ISE.
+      Param device_list: a list of devices and their custom attributes.
+      """
+      count = len(device_list)
+      unique_macs = set()
+      for device in device_list:
+          attrs = convert_device_map_to_cisco_ise_attributes(device, custom_attributes)
+          if attrs is not None:
+              mac = attrs['mac']
+              attr_map = attrs['zb_attributes']
+              if mac not in unique_macs:
+                  create_or_update_ep(mac, attr_map)
+                  unique_macs.add(mac)
+                  time.sleep(0.2)
+
+      return(f'Total {count} devices pulled from PANW IoT Cloud.\n'
+             f'Exported {len(unique_macs)} devices (with available mac addresses) to Cisco ISE')
+
+  def main():
+      global CISCO_ISE_FIELD_MAP
+      increment_time = demisto.args().get('increment_time')
+      sites = demisto.args().get('sites')
+      tags = demisto.args().get('tags')
+      custom_attributes = demisto.args().get('custom_attributes')
+
+      if tags:
+          tags = "Cisco ISE:In Scope"
+      else:
+          tags = None
+
+      for attr in custom_attributes:
+          if "exportattribute" in attr and attr['exportattribute']:
+              CISCO_ISE_FIELD_MAP[attr['attributename']] = attr['panwiotcustomattribute']
+
+
+      if increment_time == None or increment_time == "":
+          increment_time = "15"
+      try:
+          send_status_to_panw_iot_cloud("success", "Starting export to Cisco ISE")
+          device_list = get_devices_from_panw_iot_cloud(increment_time, sites, tags)
+          if device_list == None :
+              status_msg = "No new devices discovered. Nothing to export"
+          else:
+              status_msg = send_panw_iot_devices_to_send_to_cisco_ise(device_list, None)
+
+      except Exception as ex:
+          send_status_to_panw_iot_cloud("error", "Failed to export devices to Cisco ISE %s" % str(ex))
+          return_error(str(ex))
+
+      return_results(status_msg)
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('SendPANWIoTDevicesToCiscoISE', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
