@@ -1,0 +1,152 @@
+args:
+- auto: PREDEFINED
+  name: integration
+  predefined:
+  - ise
+  - pxgrid
+  - clearpass
+  - forescout
+  required: true
+- name: mac_address
+- auto: PREDEFINED
+  name: action
+  predefined:
+  - Quarantine
+  - UnQuarantine
+  required: true
+- defaultValue: "false"
+  name: force_create_on_update
+  required: true
+- default: true
+  defaultValue: PanwIoTQuarantine
+  name: field
+commonfields:
+  id: QuarantinePANWIoTDeviceOnForescout
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: QuarantinePANWIoTDeviceOnForescout
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('QuarantinePANWIoTDeviceOnForescout', 'start', __line__())
+
+
+
+  def mac_validation(mac):
+      if not re.match("[0-9a-f]{2}([-:])[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", mac.lower()):
+          return False
+      return True
+
+  def send_panw_iot_status(instances, integration, status, message):
+
+      if isinstance(instances, list):
+          for instance in instances:
+              if instance != None and instance != "":
+                  # return_outputs('each ins'+str(instance))
+                  response = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+                      "status":status,
+                      "message": message,
+                      "integration_name": integration,
+                      "playbook_name":"None",
+                      "custom_integration_name": instance,
+                      "asset_type":"device"
+                  })
+                  if isError(response[0]):
+                      continue
+      else:
+          # return_outputs('each ins'+str(instances))
+          if instances != None and instances != "":
+              response = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+                  "status":status,
+                  "message": message,
+                  "integration_name": integration,
+                  "playbook_name":"None",
+                  "custom_integration_name": instances,
+                  "asset_type":"device"
+              })
+
+
+  def quarantine_device_forescout(mac_address, force_create_on_update, action, field, value):
+      success_count = 0
+      op_summary = {}
+      try:
+          resp = demisto.executeCommand('forescout-update-host-fields', {
+                                           'mac_address': mac_address, 'field':field, 'value':value, 'update_type': 'update', 'force_create_on_update': force_create_on_update})
+
+          for response in resp:
+
+              instance_name = response['ModuleName']
+
+              if "Successfully updated 1 properties" not in response['Contents']:
+                  if 'resubmit with CREATE_NEW_HOST="true"' in response['Contents']:
+                      op_summary[instance_name] = "Failed to %s device on Forescout instance %s - as device doesn't exist on Forescout." % (action, instance_name)
+                  else:
+                      op_summary[instance_name] = "Failed to %s device on Forescout instance %s - %s" % (action, instance_name, response['Contents'])
+                  send_panw_iot_status(instance_name, "forescout", "failure", op_summary[instance_name])
+              else:
+                  op_summary[instance_name] = "Successfully %sd device on Forescout instance %s" % (action, instance_name)
+                  send_panw_iot_status(instance_name, "forescout", "success", op_summary[instance_name])
+                  success_count += 1
+
+      except Exception as e:
+          #raise Exception("%s" % e )
+          pass
+
+      return success_count, op_summary
+
+
+
+  def main():
+      mac_address = demisto.args().get("mac_address")
+      integration = demisto.args().get("integration")
+
+      if mac_address == None or mac_validation(mac_address) == False:
+          return_error("Invalid mac address.")
+
+      action = demisto.args().get("action")
+      force_create_on_update = demisto.args().get('force_create_on_update')
+      field = demisto.args().get('field')
+      if action == 'Quarantine':
+          value = 'true'
+      elif action == 'UnQuarantine':
+          value = 'false'
+
+      try:
+          op_summary = {}
+          success_count = 0
+          if integration == "forescout":
+              success_count, op_summary = quarantine_device_forescout(mac_address, force_create_on_update, action, field, value)
+
+          return_outputs(tableToMarkdown("PANW IoT %s Device (%s) Summary:" % (action, mac_address), op_summary, removeNull=True))
+
+          if success_count == 0:
+                  return_error("Failed to %s Endpoint" % action)
+
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute QuarantinePANWIoTDevice. Error: {str(ex)}')
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('QuarantinePANWIoTDeviceOnForescout', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+type: python
