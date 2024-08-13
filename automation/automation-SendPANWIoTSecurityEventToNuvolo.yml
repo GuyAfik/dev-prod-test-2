@@ -1,0 +1,309 @@
+args:
+- description: PANW IoT customer id.
+  name: customer_id
+  required: true
+- description: Incident triggered by PANW IoT cloud API.
+  name: incident
+  required: true
+- auto: PREDEFINED
+  description: Type of asset.
+  name: asset_type
+  predefined:
+  - alert
+  - vulnerability
+  required: true
+commonfields:
+  id: 89c1450e-b144-4b38-8559-11ecbd629c1f
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendPANWIoTSecurityEventToNuvolo
+outputs:
+- contextPath: Nuvolo-IoT.sendData
+  description: Alert data detail sending to Nuvolo
+pswd: ""
+runas: DBotWeakRole
+runonce: true
+script: |
+  register_module_line('SendPANWIoTSecurityEventToNuvolo', 'start', __line__())
+
+
+  PANW_IOT_INSTANCE = "PANW IoT 3rd Party Integration Instance"
+  NUVOLO_INSTANCE = "PANW IoT 3rd Party Nuvolo Integration Instance"
+  FACILITY_SET = {
+      'Automation',
+      'Camera',
+      'Energy Management',
+      'Industrial Automation',
+      'Industrial PC',
+      'Intercom System',
+      'IP Phone',
+      'Physical Security',
+      'Smart Building',
+      'Synchronized Clock',
+      'Temperature Monitoring',
+      'Workforce Management'
+  }
+  PANW_SUBDOMAIN = 'iot.paloaltonetworks.com'
+
+  def get_panw_iot_single_asset_detail(asset_type, asset_id):
+      """
+      Get single asset from PANW IoT Cloud side
+      """
+      asset_resp = demisto.executeCommand("panw-iot-3rd-party-get-single-asset",
+          {
+              "asset_type": asset_type,
+              "asset_id": asset_id
+              #"using": PANW_IOT_INSTANCE
+          })
+
+      asset = asset_resp[0]['Contents']
+      if not asset:
+          raise Exception(f'failed to retrieve {asset_type} from PANW IoT cloud')
+      return asset
+
+  def check_value_is_null(value, type):
+      """
+      Replaced the null value to empty string or empty dict
+      """
+      if not value:
+          if type == 'object':
+              return {}
+          else:
+              return ''
+      else:
+          value
+
+  def send_alert_to_nuvolo(externaltenantid):
+      """
+      Send the device has the alert to Nuvolo
+      """
+      incident = demisto.args().get('incident')
+      device_id = incident.get('mac_address')
+      uid = incident.get('uid', '')
+      zb_ticketid = incident.get('correlation_id')
+      alert = get_panw_iot_single_asset_detail('alert', zb_ticketid)[0]
+      device = get_panw_iot_single_asset_detail('device', device_id)
+
+      recommendation = alert.get('msg', {
+          "recommendation": {'content': []}
+      })
+      content_list = recommendation.get('content', [])
+
+      content_str = ''
+
+      for content in content_list:
+          content_str += content
+
+      alert_id = alert.get('msg').get('id')
+      dashboard_url = f'https://{externaltenantid}.{PANW_SUBDOMAIN}/guardian/policies/alert?id={alert_id}'
+      device_details_url = f'https://{externaltenantid}.{PANW_SUBDOMAIN}/guardian/monitor/inventory/device/{device_id}'
+
+      parameters = [
+          # data from cloud side
+          {"uid": uid},
+          {"Title": incident.get('name', '')},
+          {"Description": incident.get('problem', 'No Description Provided')},
+          {"Comment": incident.get('notes', '')},
+          {"Priority": incident.get('priority', '')},
+
+
+          {"labels": 'Attacker, Medical Workstation, Default Site 0'},
+          {"Alert Details Link": dashboard_url},
+          {"Device Details Link": device_details_url},
+
+          {"Severity": alert.get("msg", {"severity": ''}).get('severity')},
+          {"Alert Create Date": check_value_is_null(alert.get("msg", {"date": ''}).get('date'), 'str')},
+          {"Recommended Actions": content_str},
+
+          {"IP": device.get('connect_evtContent', {'ip': ''}).get('ip')},
+          {'Switch Name': device.get('display_switchName', '')},
+          {'Switch Port': device.get('display_phyPort', '')},
+          {'Switch IP': device.get('display_switchIP', '')},
+          {'Serial Number': device.get('display_sn', '')},
+          {'Location': device.get('display_location', '')},
+          {'Hostname': device.get('display_hostname', '')},
+          {'Make': device.get('display_vendor', '')},
+          {'Model': device.get('display_model', '')},
+          {'Profile': device.get('display_profileid', '')},
+          {'Category': device.get('display_profile_category', '')},
+          {'Asset Tag': device.get('display_asset_tag', '')},
+          {'Tag': device.get('tags', {})}
+      ]
+
+      table_name = get_table_name_by_device(device)
+
+      device_identifiers = [
+          {"Mac Address": device_id}
+      ]
+
+      resp = demisto.executeCommand("nuvolo-create-record", {
+          "asset_id":device_id,
+          "table_name":table_name,
+          "payload": "Alert Event",
+          "parameters":parameters,
+          "asset_type":"alert",
+          "device_identifiers": device_identifiers
+          #"using": NUVOLO_INSTANCE
+      })
+
+      return {
+          "resp": resp,
+          "parameters":parameters,
+          "device_identifiers": device_identifiers
+      }
+
+
+  def send_vulnerability_to_nuvolo(externaltenantid):
+      """
+      Send the devices has the vulnerability to Nuvolo
+      """
+      incident = demisto.args().get('incident')
+      device_ids = incident.get('devices')
+      zb_ticketid = incident.get('correlation_id')
+      cve_link = incident.get('cve_link', '')
+      title = incident.get('title', '')
+      cvss = incident.get('cvss', '')
+      description = incident.get('description', '')
+      severity = incident.get('severity', '')
+      impact = incident.get('impact', '')
+      recommendation = incident.get('recommendation', '')
+
+      vulnerability = get_panw_iot_single_asset_detail('vulnerability', zb_ticketid)[0]
+      vulnerability_name = vulnerability.get('vulnerability_name')
+
+      result_resp_list = []
+
+      for i in range(len(device_ids)):
+          device_id = device_ids[i]
+          device = get_panw_iot_single_asset_detail('device', device_id)
+
+          payload = f'Vulnerability: {vulnerability_name}'
+          asset_id = device_id
+          device_identifiers = [
+              {"Mac Address": device_id}
+          ]
+
+          dashboard_url = f'https://{externaltenantid}.{PANW_SUBDOMAIN}/guardian/risks/vulnerabilities/{vulnerability_name}'
+          device_details_url = f'https://{externaltenantid}.{PANW_SUBDOMAIN}/guardian/monitor/inventory/device/{device_id}'
+          parameters = [
+              {"uid": device_id},
+              {"Comment": 'Pushed automatically'},
+              {"Vulnerability Details Link": dashboard_url},
+              {"CVE Link": cve_link},
+              {"Title": title},
+              {"CVSS": cvss},
+              {"Description": description},
+              {"Severity": severity},
+              {"Impact": impact},
+              {"Recommended Actions": recommendation},
+
+              {"IP": device.get('connect_evtContent', {'ip': ''}).get('ip')},
+              {'Switch Name': device.get('display_switchName', '')},
+              {'Switch Port': device.get('display_phyPort', '')},
+              {'Switch IP': device.get('display_switchIP', '')},
+              {'Serial Number': device.get('display_sn', '')},
+              {'Location': device.get('display_location', '')},
+              {'Hostname': device.get('display_hostname', '')},
+              {'Make': device.get('display_vendor', '')},
+              {'Model': device.get('display_model', '')},
+              {'Profile': device.get('display_profileid', '')},
+              {'Category': device.get('display_profile_category', '')},
+              {'Asset Tag': device.get('display_asset_tag', '')},
+              {'Tag': device.get('tags', {})}
+          ]
+
+          table_name = get_table_name_by_device(device)
+          response = demisto.executeCommand("nuvolo-create-record", {
+              "asset_id": asset_id,
+              "table_name": table_name,
+              "payload": payload,
+              "parameters": parameters,
+              "asset_type":"vulnerability",
+              "device_identifiers": device_identifiers
+              #"using": NUVOLO_INSTANCE
+          })
+          resp_content = response[0]["Contents"]
+          if isinstance(resp_content, str):
+              if resp_content.startswith('Script failed to run') or "Error" in resp_content:
+                  raise Exception(resp_content)
+          result_resp_list.append(resp_content)
+      return result_resp_list
+
+
+  def get_table_name_by_device(device):
+      """
+      Get the table_name based on the device vertical
+      """
+      table_name = ''
+      if device.get('profile_vertical', '') == 'Medical':
+          table_name = 'x_nuvo_eam_clinical_devices'
+      elif device.get('profile_vertical', '') =='Office' and device.get('display_profile_category', '') in FACILITY_SET:
+          table_name = 'x_nuvo_eam_facilities_devices'
+      else:
+          table_name = 'x_nuvo_eam_unmatched_devices'
+      return table_name
+
+  def main():
+      """
+      Main entry of the code
+      """
+      asset_type = demisto.args().get('asset_type')
+      resp = ''
+      externaltenantid = demisto.args().get('customer_id')
+      function_name = ''
+      result = ''
+      try:
+          if asset_type == 'alert':
+              response = send_alert_to_nuvolo(externaltenantid)
+              function_name = "send_alert_to_nuvolo"
+              resp = response.get('resp')[0]['Contents']
+              if isinstance(resp, str):
+                  if resp.startswith('Script failed to run') or "Error" in resp:
+                      raise Exception(resp)
+              result = {
+                  "device_iden": response.get("device_identifiers"),
+                  "parameters": response.get("parameters"),
+              }
+          elif asset_type == 'vulnerability':
+              result = send_vulnerability_to_nuvolo(externaltenantid)
+              resp = result
+              function_name = "send_vulnerability_to_nuvolo"
+      except Exception as e:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute {function_name} function.\nError:\n{str(e)}')
+
+      op_data = {
+          "Response": resp
+      }
+
+      return CommandResults(
+          readable_output=tableToMarkdown("Nuvolo Response", op_data, removeNull=True),
+          outputs_prefix = 'Nuvolo-IoT.sendData',
+          outputs = result
+      )
+
+
+  if __name__ in ['__main__', 'builtin', 'builtins']:
+      res = main()
+      return_results(res)
+
+  register_module_line('SendPANWIoTSecurityEventToNuvolo', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
