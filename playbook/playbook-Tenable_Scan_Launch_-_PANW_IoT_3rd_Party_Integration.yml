@@ -1,0 +1,671 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 1.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: 5fde057b-bb45-4a90-8db4-5873a3419115
+inputs: []
+name: Tenable Scan Launch - PANW IoT 3rd Party Integration
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: eb9d63a1-26f0-4444-8921-bee7f7e6cbe9
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: eb9d63a1-26f0-4444-8921-bee7f7e6cbe9
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 562.5,
+          "y": -110
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "3"
+      "yes":
+      - "9"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Tenable.io
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available. Otherwise returns
+        'no'
+      id: c2618c9c-e9be-46e0-8eb8-eb773266fd89
+      iscommand: false
+      name: Is Tenable Integration Enabled?
+      script: IsIntegrationAvailable
+      type: condition
+      version: -1
+    taskid: c2618c9c-e9be-46e0-8eb8-eb773266fd89
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 570,
+          "y": 40
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      scanId:
+        simple: ${Tenable.scanId}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Launches a scan with existing or custom targets. You can specify
+        custom targets in the command arguments.
+      id: 4b77988a-be91-4e7d-88ee-8f27cd0e5a3e
+      iscommand: true
+      name: Launch Tenable.io vulnerability Scan
+      script: '|||tenable-io-launch-scan'
+      type: regular
+      version: -1
+    taskid: 4b77988a-be91-4e7d-88ee-8f27cd0e5a3e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 777.5,
+          "y": 930
+        }
+      }
+  "3":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: Tenable integration is not enabled
+      playbook_name:
+        simple: Tenable Scan Launch - PANW IoT 3rd Party Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message to PANW IOT cloud.
+      id: 27475b4b-4dbc-4fd7-8255-22a399e0ec79
+      iscommand: true
+      name: Report disabled status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 27475b4b-4dbc-4fd7-8255-22a399e0ec79
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -210,
+          "y": 1920
+        }
+      }
+  "4":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "6"
+      "yes":
+      - "5"
+      - "12"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+      path:
+        simple: Tenable.scanLaunchfailStatus
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks for errors in a given task. If found, write it to the path
+        provided as an argument.
+      id: edc1d0b5-52ca-4a0b-8eab-915e7e4889be
+      iscommand: false
+      name: Did the Scan Launch Fail?
+      script: GetPANWIoTTenableErrors
+      type: condition
+      version: -1
+    taskid: edc1d0b5-52ca-4a0b-8eab-915e7e4889be
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 777.5,
+          "y": 1095
+        }
+      }
+  "5":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: The Tenable scan launch failed for ip - ${incident.ip}
+      playbook_name:
+        simple: Tenable Scan Launch - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message to PANW IOT cloud.
+      id: 7c3ce3e5-5e7b-4381-8a67-60b454b06740
+      iscommand: true
+      name: Report Scan Launch Error to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 7c3ce3e5-5e7b-4381-8a67-60b454b06740
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 640,
+          "y": 1920
+        }
+      }
+  "6":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "11"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      name:
+        simple: TenableLaunchedScans
+      operation:
+        simple: insert
+      value:
+        simple: ${Tenable.scanId}_${Tenable.scanUUID}_${incident.ip}_${incident.jobid}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: List operations, will create a new list if list does not exist
+      id: fbd5b695-7f7d-4ba7-8a6c-a8fd97a377a1
+      iscommand: false
+      name: Update Tenable launched scan cache
+      script: 546f3d11-a5cf-488e-8952-87e66e17e951
+      type: regular
+      version: -1
+    taskid: fbd5b695-7f7d-4ba7-8a6c-a8fd97a377a1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1137.5,
+          "y": 1310
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: Successfully launched scan for ip - ${incident.ip}
+      playbook_name:
+        simple: Tenable Scan Launch - PANW IoT 3rd Party Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message to PANW IOT cloud.
+      id: 82dc0d3b-a49c-4181-83a6-969edbcf44a7
+      iscommand: true
+      name: Report Success Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 82dc0d3b-a49c-4181-83a6-969edbcf44a7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1460,
+          "y": 1900
+        }
+      }
+  "8":
+    continueonerrortype: ""
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.close.inv
+      id: b157c962-63a3-4ceb-88e3-965f95522c33
+      iscommand: true
+      name: Close Investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: b157c962-63a3-4ceb-88e3-965f95522c33
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 700,
+          "y": 2130
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "17"
+      - "19"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      IP:
+        simple: ${incident.ip}
+      job_id:
+        simple: ${incident.jobid}
+      profile_Id:
+        simple: ${incident.profileId}
+      scan_name:
+        simple: ${incident.ip}_panw_iot_scan
+      scanner_Id:
+        simple: ${incident.scannerId}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: 'Initiate scan '
+      id: fbb6d66e-d151-44a1-8a1e-98843849fffe
+      iscommand: true
+      name: Initiate Tenable.io vulnerability Scan
+      script: '|||tenable-io-initiate-scan'
+      type: regular
+      version: -1
+    taskid: fbb6d66e-d151-44a1-8a1e-98843849fffe
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 777.5,
+          "y": 220
+        }
+      }
+  "10":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      seconds:
+        simple: "10"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sleep for X seconds
+      id: ea716313-ae14-46a3-87d1-751997b93346
+      iscommand: false
+      name: Wait for 10 sec
+      script: Sleep
+      type: regular
+      version: -1
+    taskid: ea716313-ae14-46a3-87d1-751997b93346
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 777.5,
+          "y": 780
+        }
+      }
+  "11":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "7"
+      "yes":
+      - "16"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: be536104-b93d-4870-8838-9a3bb7179da3
+      iscommand: false
+      name: Was there any error in updating the Tenable Launched scan cache?
+      script: isError
+      type: condition
+      version: -1
+    taskid: be536104-b93d-4870-8838-9a3bb7179da3
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1137.5,
+          "y": 1460
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      job_id:
+        simple: ${incident.jobid}
+      message:
+        simple: ${Tenable.scanLaunchfailStatus}
+      scan_type:
+        simple: tenable
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Upload reports (PDF + XML) for specified scan to IoT Cloud
+      id: cd2c10ad-cc43-4e07-8da2-2369767ee1bd
+      iscommand: true
+      name: Report Scan Launch Error As Event
+      script: '|||panw-iot-3rd-party-upload-vulnerability-scan-report'
+      type: regular
+      version: -1
+    taskid: cd2c10ad-cc43-4e07-8da2-2369767ee1bd
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 212.5,
+          "y": 1920
+        }
+      }
+  "16":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "12"
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: Tenable.scanLaunchfailStatus
+      value:
+        simple: Unable to update XSOAR scan cache list for IP ${incident.ip}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 3925250e-fe02-4c86-8397-5285fdf66c70
+      iscommand: false
+      name: Format error message for launch cache update
+      script: Set
+      type: regular
+      version: -1
+    taskid: 3925250e-fe02-4c86-8397-5285fdf66c70
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1130,
+          "y": 1740
+        }
+      }
+  "17":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "10"
+      "yes":
+      - "12"
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: a9870bda-99f5-41d9-8a8e-26ad1b3b1570
+      iscommand: false
+      name: Did the Scan Initiation fail?
+      script: isError
+      type: condition
+      version: -1
+    taskid: a9870bda-99f5-41d9-8a8e-26ad1b3b1570
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 777.5,
+          "y": 565
+        }
+      }
+  "19":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "19"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      contextKey:
+        simple: Tenable.scanLaunchfailStatus
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: "Takes the comments of a given entry ID and stores them in the
+        incident context, under a provided context key. \nFor accessing the last executed
+        task's comments, provide ${lastCompletedTaskEntries.[0]} as the value for
+        the entryId input parameter."
+      id: 647027e0-91da-4671-82d9-06c1fb157535
+      iscommand: false
+      name: Add output to error message
+      script: commentsToContext
+      type: regular
+      version: -1
+    taskid: 647027e0-91da-4671-82d9-06c1fb157535
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1030,
+          "y": 390
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 2335,
+        "width": 2050,
+        "x": -210,
+        "y": -110
+      }
+    }
+  }
