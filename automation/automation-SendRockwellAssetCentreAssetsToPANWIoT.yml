@@ -1,0 +1,207 @@
+args:
+- description: Active Rockwell AssetCentre Instance
+  name: active_rockwell_assetcentre_instance
+- defaultValue: "0"
+  description: Retrieve the updated assets at the specified time intervals.
+  name: playbook_poll_interval
+- description: Attributes with their corresponding UUIDs
+  isArray: true
+  name: get_attribute_table
+- description: Asset types with their corresponding UUIDs
+  isArray: true
+  name: get_asset_type_table
+commonfields:
+  id: SendRockwellAssetCentreAssetsToPANWIoT
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendRockwellAssetCentreAssetsToPANWIoT
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendRockwellAssetCentreAssetsToPANWIoT', 'start', __line__())
+
+
+  register_module_line("SendRockwellAssetCentreAssetsToPANWIoT", "start", __line__())
+
+
+  import json
+  import traceback
+  import time
+
+
+
+  def send_status_to_panw_iot_cloud(status, msg, rockwell_assetcentre_active_instance):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      demisto.info(f"Function send_status_to_panw_iot_cloud has been triggered")
+      resp = demisto.executeCommand(
+          "panw-iot-3rd-party-report-status-to-panw",
+          {
+              "status": status,
+              "message": msg,
+              "integration_name": "rockwell",
+              "playbook_name": "Import Rockwell AssetCentre assets to PANW IoT cloud",
+              "asset_type": "device",
+              "custom_integration_name": rockwell_assetcentre_active_instance,
+              "timestamp": int(round(time.time() * 1000))
+          },
+      )
+      if isError(resp[0]):
+          err_msg = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+      demisto.info(f"Successfully report status to PANW IoT Cloud")
+
+
+  def send_devices_to_panw_iot_cloud(devices_list, retry=0):
+      """
+      Sends assets to PANW IoT Cloud.
+      :type devices_list: ``array``
+      :param devices_list: List of assets to be sent to PANW IoT cloud
+      """
+      demisto.info(f"Function send_devices_to_panw_iot_cloud has been triggered")
+      res = ""
+      resp = demisto.executeCommand(
+          "panw-iot-3rd-party-report-devices",
+          {
+              "DeviceData": devices_list,
+              "pageLength": None,
+              "IntegrationName": "rockwell"
+          },
+      )
+      if isError(resp[0]):
+          if retry == 0:
+              time.sleep(1)
+              return send_devices_to_panw_iot_cloud(devices_list, retry=1)
+          err_msg = f'Error, could not send devices to PANW IoT Cloud - {resp[0].get("Contents")}'
+          demisto.error(err_msg)
+          raise Exception(err_msg)
+      if resp[0]["Contents"]:
+          demisto.info(f"Successfully report devices to PANW IoT Cloud:- {resp[0]['Contents']}")
+          res = resp[0]["Contents"]
+      return res
+
+
+  def get_asset_data(offset, limit, poll_interval, attribute_list, asset_type_list):
+      """
+      Get assets from Rockwell AssetCentre.
+      """
+      demisto.info(f"Function get_asset_data has been triggered")
+      res = ""
+      result = demisto.executeCommand(
+          "get-all-asset-details",
+          {
+              "poll_interval": poll_interval,
+              "attribute_list": attribute_list,
+              "asset_type_list": asset_type_list,
+              "page_size_limit": limit,
+              "page_offset": offset,
+          },
+      )
+      if isError(result[0]):
+          err_msg = f'Error, failed to get all assets from Rockwell AssetCentre - {result[0].get("Contents")}'
+          demisto.error(err_msg)
+          raise Exception(err_msg)
+      demisto.info(f"Successfully fetched data from Rockwell AssetCentre Integration using get-all-asset-details :- {result[0]['Contents']}")
+      return result[0]["Contents"]
+
+
+  def import_assets_and_send_to_PAN_IoT(poll_interval, limit, attribute_list, asset_type_list):
+      demisto.info(f"Function import_assets_and_send_to_PAN_IoT has been triggered")
+      result, offset, count = "", 0, 0
+      status_msg = ""
+      ip_address = []
+      limit = int(limit)
+      while True:
+          asset_data = ""
+          ip = ""
+          assets = get_asset_data(offset, limit, poll_interval, attribute_list, asset_type_list)
+          if isinstance(assets, list):
+              if not assets:
+                  break
+          else:
+              status_msg = 'Failed to get data from get-all-asset-details command'
+              demisto.error(status_msg)
+              return result, status_msg, count, ip
+          resp = send_devices_to_panw_iot_cloud(assets)
+          ip = [ip["connect_evtContent.ip"] for ip in assets]
+          ip_address.append(ip)
+          count += len(assets)
+          demisto.info(f"Sent {count} assets successfully to PAN IoT Cloud :- {assets}")
+          time.sleep(5)
+          offset += limit
+      status_msg = f"Successfully imported total {count} Rockwell AssetCentre assets to PANW IoT"
+      demisto.info(status_msg)
+      return result, status_msg, count, ip_address
+
+
+  def main():
+      demisto.info(f"The 'SendRockwellAssetCentreAssetsToPANWIoT' process has been triggered to import assets from the Rockwell AssetCentre Integration into PAN IoT.")
+      rockwell_assetcentre_active_instance = demisto.args().get("active_rockwell_assetcentre_instance")
+
+      asset_type_table = demisto.args().get("get_asset_type_table")
+      playbook_poll_interval = demisto.args().get("playbook_poll_interval")
+      attribute_uuids = demisto.args().get("get_attribute_table")
+
+      attribute_list = [{item["rockwellattributename"]: item["rockwellattributeuuid"]} for item in attribute_uuids]
+      asset_type_list = [{item["rockwellassettype"]: item["rockwellassettypeuuid"]} for item in asset_type_table]
+
+      if playbook_poll_interval:
+          poll_interval = int(playbook_poll_interval)
+      else:
+          poll_interval = 0
+      limit = 1000
+      try:
+          result, status_msg, count, ip_address_list = import_assets_and_send_to_PAN_IoT(
+              poll_interval, limit, attribute_list, asset_type_list
+          )
+          send_status_to_panw_iot_cloud("success", status_msg, rockwell_assetcentre_active_instance)
+
+          status_reported_clients = {"status": status_msg, "reported-clients": ip_address_list}
+
+          report_summary = {"Asset Type": "Total Assets Reported"}
+          report_summary.update({"Assets": count})
+          return_results(
+              CommandResults(
+                  readable_output=tableToMarkdown("Asset Report Summary:", report_summary, removeNull=True),
+                  outputs_prefix="Rockwell-AssetCentre",
+                  outputs=status_reported_clients,
+              )
+          )
+      except Exception as ex:
+          send_status_to_panw_iot_cloud("error", str(ex), rockwell_assetcentre_active_instance)
+          demisto.error(traceback.format_exc())
+          return_error(str(ex))
+
+
+  if __name__ in ("__main__", "__builtin__", "builtins"):
+      main()
+
+  register_module_line("SendRockwellAssetCentreAssetsToPANWIoT", "end", __line__())
+
+  register_module_line('SendRockwellAssetCentreAssetsToPANWIoT', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- PANW IoT 3rd Party Integration
+- Rockwell AssetCentre
+timeout: 100800h0m0s
+type: python
