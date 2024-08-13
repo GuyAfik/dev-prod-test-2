@@ -1,0 +1,71 @@
+args:
+- description: Number of days or hours
+  name: number
+- auto: PREDEFINED
+  name: unit
+  predefined:
+  - DAYS
+  - HOURS
+commonfields:
+  id: GetLastDateTime
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GetLastDateTime
+outputs:
+- contextPath: PANWIoTCloud.DateTimeDelta
+  description: DateTime of last no of days
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('GetLastDateTime', 'start', __line__())
+
+
+  import datetime
+
+  def get_last_no_of_days_date_time():
+      number = int(demisto.args().get('number'))
+      unit = demisto.args().get('unit')
+      now = datetime.datetime.now()
+      deltaDateTime=None
+      if unit == 'DAYS':
+         deltaDateTime = now - datetime.timedelta(days=number)
+      else:
+          deltaDateTime = now - datetime.timedelta(hours=number)
+
+      delta_time_format = deltaDateTime.strftime("%Y-%m-%dT%H:%M:%SZ")
+      return delta_time_format
+
+  def main():
+      try:
+          time=get_last_no_of_days_date_time()
+          appendContext('PANWIoTCloud.DateTimeDelta', time)
+          return_results(time)
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute GetLastDateTime. Error: {str(ex)}')
+
+  ''' ENTRY POINT '''
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('GetLastDateTime', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- PANW IoT 3rd Party Integration
+type: python
