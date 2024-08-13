@@ -1,0 +1,126 @@
+args:
+- description: PANW IoT customer Id
+  name: customer_id
+  required: true
+commonfields:
+  id: 0a484f76-3ae9-4db1-8fc9-036ffbb9e77a
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendAllPANWIoTDevicesToNuvolo
+outputs:
+- contextPath: Nuvolo-IoT.bulkResult
+  description: The result of the bulk exporting.
+pswd: ""
+runas: DBotWeakRole
+runonce: true
+script: |
+  register_module_line('SendAllPANWIoTDevicesToNuvolo', 'start', __line__())
+
+
+  PANW_IOT_INSTANCE = "PANW IoT 3rd Party Integration Instance"
+  PAGE_SIZE = 100
+
+  def create_nuvolo_record(device_list, customer_id):
+      """
+      Run SendIncrementalPANWIoTDevicesToNuvolo script to send all devices to Nuvolo
+      """
+      device_distribution = demisto.executeCommand("SendIncrementalPANWIoTDevicesToNuvolo", {
+          "device_list": device_list,
+          "customer_id": customer_id
+      })
+      return device_distribution[0]['Contents']
+
+  def get_devices_from_panw_iot_cloud(offset):
+      """
+      To retrieve a list of devices list from PANW IoT cloud controled by offset and PAGE_SIZE
+      :param offset: The index from DB to return the results.
+      :return: list of device
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-get-asset-list", {
+          "asset_type": "device",
+          "offset": offset,
+          "page_length": PAGE_SIZE
+          #"using": PANW_IOT_INSTANCE
+      })
+      if isError(resp[0]):
+          err_msg = f'Error, could not get assets from PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+      return resp[0]['Contents']
+
+  def get_all_panw_iot_devices_and_send_to_nuvolo(args):
+      """
+      Get all devices from PANW IoT cloud and send to Nuvolo
+      """
+      offset = 0
+      customer_id = args.get('customer_id')
+      total_export_devices = 0
+      total_skipped_devices = 0
+      while True:
+          size = 0
+          device_list = get_devices_from_panw_iot_cloud(offset)
+          size = len(device_list)
+          device_distribution = create_nuvolo_record(device_list, customer_id)
+          cur_total_devices = device_distribution.get("medical_count")
+          cur_total_devices += device_distribution.get("facility_count")
+          cur_total_devices += device_distribution.get("unmatch_count")
+          total_export_devices += cur_total_devices
+          total_skipped_devices += device_distribution.get("skip_count")
+          if size == PAGE_SIZE:
+              offset += PAGE_SIZE
+          else:
+              break
+
+      return {
+          "total_export_devices": total_export_devices,
+          "total_skipped_devices": total_skipped_devices
+      }
+
+  def main():
+      """
+      Main entry
+      """
+      args = demisto.args()
+      try:
+          summary = get_all_panw_iot_devices_and_send_to_nuvolo(args)
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(str(ex))
+      op_data = {
+          "total export devices": summary.get('total_export_devices'),
+          "total skipped devices": summary.get('total_skipped_devices')
+      }
+      return CommandResults(
+          readable_output=tableToMarkdown("Asset import summary:", op_data, removeNull=True),
+          outputs_prefix = "Nuvolo-IoT.bulkResult",
+          outputs = summary.get('total_export_devices')
+      )
+
+
+  if __name__ in ['__main__', 'builtin', 'builtins']:
+      res = main()
+      return_results(res)
+
+
+
+
+  register_module_line('SendAllPANWIoTDevicesToNuvolo', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
