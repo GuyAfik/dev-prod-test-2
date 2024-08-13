@@ -32,11 +32,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 53021490-f896-4016-8284-5ec3a0e685d5
+      id: bbfb2818-5c53-4fb9-8e01-b273240f4729
       iscommand: false
       name: ""
       version: -1
-    taskid: 53021490-f896-4016-8284-5ec3a0e685d5
+    taskid: bbfb2818-5c53-4fb9-8e01-b273240f4729
     timertriggers: []
     type: start
     view: |-
@@ -75,13 +75,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: 15844345-e561-42f3-84ef-01de289b853c
+      id: 25376efc-58ed-42ab-80c3-874631b2491e
       iscommand: false
       name: Is Tanium integration enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: 15844345-e561-42f3-84ef-01de289b853c
+    taskid: 25376efc-58ed-42ab-80c3-874631b2491e
     timertriggers: []
     type: condition
     view: |-
@@ -121,13 +121,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 610b3f3b-936b-4199-849a-b866640b541f
+      id: 460e07bb-433f-4fbd-80db-40e6c3f9f42a
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 610b3f3b-936b-4199-849a-b866640b541f
+    taskid: 460e07bb-433f-4fbd-80db-40e6c3f9f42a
     timertriggers: []
     type: regular
     view: |-
@@ -151,13 +151,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 6c469389-16c8-4f02-8a1d-68e4d38dcfef
+      id: a0d9adcd-f8c2-4c52-8d4d-d72dbd8a5e97
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 6c469389-16c8-4f02-8a1d-68e4d38dcfef
+    taskid: a0d9adcd-f8c2-4c52-8d4d-d72dbd8a5e97
     timertriggers: []
     type: regular
     view: |-
@@ -188,13 +188,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 18f4758b-d6c5-476a-8a07-e387894e5c10
+      id: 22d3aac9-1635-43d6-8bd3-b48b0696c9ac
       iscommand: false
       name: Send Tanium Vulnerabilities to PANW IoT
       script: SendTaniumVulnerabilityToPANWIoT
       type: regular
       version: -1
-    taskid: 18f4758b-d6c5-476a-8a07-e387894e5c10
+    taskid: 22d3aac9-1635-43d6-8bd3-b48b0696c9ac
     timertriggers: []
     type: regular
     view: |-
@@ -234,13 +234,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 6166c139-da08-4860-8bb5-cd6f43dda754
+      id: b4f18fbf-ddd6-41cf-8927-df2c38adee44
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 6166c139-da08-4860-8bb5-cd6f43dda754
+    taskid: b4f18fbf-ddd6-41cf-8927-df2c38adee44
     timertriggers: []
     type: regular
     view: |-
@@ -275,13 +275,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 2faaa9f6-4132-4ea1-8689-105a73f9459e
+      id: dc5ffbd4-46bc-49b0-80e6-14f80cf291e8
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 2faaa9f6-4132-4ea1-8689-105a73f9459e
+    taskid: dc5ffbd4-46bc-49b0-80e6-14f80cf291e8
     timertriggers: []
     type: condition
     view: |-
@@ -321,13 +321,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: e128275b-13f1-464c-85cd-1e1c06b04447
+      id: 276c57fd-e0a0-4453-82b3-135c789b8cde
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: e128275b-13f1-464c-85cd-1e1c06b04447
+    taskid: 276c57fd-e0a0-4453-82b3-135c789b8cde
     timertriggers: []
     type: regular
     view: |-
@@ -367,13 +367,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 1ec12359-944b-4aa9-8822-15c795ee7e4c
+      id: 7411d260-de54-4262-84d9-b23064a54890
       iscommand: true
       name: License Limit Exceed. Report status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 1ec12359-944b-4aa9-8822-15c795ee7e4c
+    taskid: 7411d260-de54-4262-84d9-b23064a54890
     timertriggers: []
     type: regular
     view: |-
@@ -397,13 +397,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 405afae5-1ff6-436b-805f-351a1a4d996b
+      id: d1418477-a7f7-42db-8495-40b9434fe13c
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 405afae5-1ff6-436b-805f-351a1a4d996b
+    taskid: d1418477-a7f7-42db-8495-40b9434fe13c
     timertriggers: []
     type: regular
     view: |-
@@ -427,13 +427,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 8f2d5696-6f4c-4d80-888d-728b567a618d
+      id: 1a74de85-2925-4311-824a-1edc78a8a8a8
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 8f2d5696-6f4c-4d80-888d-728b567a618d
+    taskid: 1a74de85-2925-4311-824a-1edc78a8a8a8
     timertriggers: []
     type: regular
     view: |-
@@ -467,13 +467,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: bdaa6df3-0f4c-4636-8b47-fe2b0524af6f
+      id: 5e7f596a-e722-471f-8422-210638ffc00e
       iscommand: false
       name: Is Tanium Integration Instance Available
       script: Exists
       type: condition
       version: -1
-    taskid: bdaa6df3-0f4c-4636-8b47-fe2b0524af6f
+    taskid: 5e7f596a-e722-471f-8422-210638ffc00e
     timertriggers: []
     type: condition
     view: |-
@@ -511,13 +511,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: cd874076-a87e-4364-8417-8dd584875a62
+      id: b28d23ce-3184-4a8c-88b7-52c186d4038c
       iscommand: true
       name: No Instance passed to this Playbook. Reporting Error
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: cd874076-a87e-4364-8417-8dd584875a62
+    taskid: b28d23ce-3184-4a8c-88b7-52c186d4038c
     timertriggers: []
     type: regular
     view: |-
@@ -556,13 +556,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 848214a9-9ee6-4305-85e7-369a39dcf292
+      id: cd36be87-344e-42d8-82f7-9ab0e11a8b47
       iscommand: true
       name: Send success status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 848214a9-9ee6-4305-85e7-369a39dcf292
+    taskid: cd36be87-344e-42d8-82f7-9ab0e11a8b47
     timertriggers: []
     type: regular
     view: |-
@@ -595,13 +595,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: b7b864fc-5422-433b-88d4-d328fa925603
+      id: e413c70d-86bb-4aaf-851e-0ad3cfb03bda
       iscommand: false
       name: Was there an error when sending vulnerabilities to PANW IoT Cloud?
       script: isError
       type: condition
       version: -1
-    taskid: b7b864fc-5422-433b-88d4-d328fa925603
+    taskid: e413c70d-86bb-4aaf-851e-0ad3cfb03bda
     timertriggers: []
     type: condition
     view: |-
@@ -641,13 +641,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 095a4e6b-513f-430a-8801-22db8e82cdc6
+      id: 0792b976-edcb-4cc8-86c1-9d5babc2fe86
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 095a4e6b-513f-430a-8801-22db8e82cdc6
+    taskid: 0792b976-edcb-4cc8-86c1-9d5babc2fe86
     timertriggers: []
     type: regular
     view: |-
