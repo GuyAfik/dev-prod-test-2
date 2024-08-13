@@ -11,7 +11,6 @@ contentitemexportablefields:
     toServerVersion: ""
 description: Playbook to handle incident triggered from PANW Iot (Zingbox) UI to send
   Alert to SIEM.
-dirtyInputs: true
 id: Export Single Asset to SIEM - PANW IoT 3rd Party Integration
 inputs: []
 name: Export Single Asset to SIEM - PANW IoT 3rd Party Integration
@@ -37,11 +36,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: d3f5a490-20ee-4d28-8dbb-60903e6f0e07
+      id: bacb64da-7852-4042-8c2e-5c72a71419d4
       iscommand: false
       name: ""
       version: -1
-    taskid: d3f5a490-20ee-4d28-8dbb-60903e6f0e07
+    taskid: bacb64da-7852-4042-8c2e-5c72a71419d4
     timertriggers: []
     type: start
     view: |-
@@ -76,13 +75,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 8fd8332b-0125-479a-875e-3ed9a7e87e7f
+      id: 4dfe3d9c-f5c2-424b-828d-fef7a25daa0a
       iscommand: false
       name: Is Syslog Sender(SIEM) Enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 8fd8332b-0125-479a-875e-3ed9a7e87e7f
+    taskid: 4dfe3d9c-f5c2-424b-828d-fef7a25daa0a
     timertriggers: []
     type: condition
     view: |-
@@ -120,13 +119,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: c1c69adf-330b-447f-88fd-6c770a8de875
+      id: 0a8442ff-5a74-428d-87af-fc4552ee9f99
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: c1c69adf-330b-447f-88fd-6c770a8de875
+    taskid: 0a8442ff-5a74-428d-87af-fc4552ee9f99
     timertriggers: []
     type: regular
     view: |-
@@ -159,13 +158,13 @@ tasks:
       brand: ""
       description: For a given a asset ID (alert-id, vulnerability-id or mac-address)
         returns the asset details.
-      id: 47cfacd5-373a-49e1-8469-eb647d9ceeb3
+      id: ef0897da-3016-496e-8d30-de574a12351f
       iscommand: true
       name: Get PANW IoT Asset details
       script: '|||panw-iot-3rd-party-get-single-asset'
       type: regular
       version: -1
-    taskid: 47cfacd5-373a-49e1-8469-eb647d9ceeb3
+    taskid: ef0897da-3016-496e-8d30-de574a12351f
     timertriggers: []
     type: regular
     view: |-
@@ -198,13 +197,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: c15f806f-bd89-4d2b-8d20-f38bbee05d8b
+      id: 5462e2c0-9598-4714-86d6-ba3afdd19519
       iscommand: false
       name: Was there an error getting asset details?
       script: isError
       type: condition
       version: -1
-    taskid: c15f806f-bd89-4d2b-8d20-f38bbee05d8b
+    taskid: 5462e2c0-9598-4714-86d6-ba3afdd19519
     timertriggers: []
     type: condition
     view: |-
@@ -237,13 +236,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 63651ab2-e4fc-46e4-84ef-9e96eea4187c
+      id: 7c31d4f3-0b74-4854-8050-f67e2f5cc881
       iscommand: false
       name: Does the asset exist?
       script: Exists
       type: condition
       version: -1
-    taskid: 63651ab2-e4fc-46e4-84ef-9e96eea4187c
+    taskid: 7c31d4f3-0b74-4854-8050-f67e2f5cc881
     timertriggers: []
     type: condition
     view: |-
@@ -281,13 +280,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: b1c490ef-869c-448d-8eee-721da7895e30
+      id: ba6b3d94-8e9e-4c0b-8c45-ced1b52c3bd3
       iscommand: true
       name: Send error status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: b1c490ef-869c-448d-8eee-721da7895e30
+    taskid: ba6b3d94-8e9e-4c0b-8c45-ced1b52c3bd3
     timertriggers: []
     type: regular
     view: |-
@@ -322,13 +321,13 @@ tasks:
       brand: ""
       description: For a given asset (alert, device, vuln) converts it to 3rd party
         format.
-      id: 7ef18536-fdb4-47a0-8b00-230f164c2c99
+      id: bcad26b4-2873-4c01-8d4e-50ae6fa84aeb
       iscommand: true
       name: Convert asset to CEF format
       script: '|||panw-iot-3rd-party-convert-assets-to-external-format'
       type: regular
       version: -1
-    taskid: 7ef18536-fdb4-47a0-8b00-230f164c2c99
+    taskid: bcad26b4-2873-4c01-8d4e-50ae6fa84aeb
     timertriggers: []
     type: regular
     view: |-
@@ -366,13 +365,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 6e0630a5-8263-422a-859e-ef2aea8d007c
+      id: 11af55e7-a2bd-40f7-89fd-1212ddab3064
       iscommand: true
       name: send status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 6e0630a5-8263-422a-859e-ef2aea8d007c
+    taskid: 11af55e7-a2bd-40f7-89fd-1212ddab3064
     timertriggers: []
     type: regular
     view: |-
@@ -404,13 +403,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: b3748a89-e1c6-49bc-8bbd-5fcc5f1d48df
+      id: 1b423387-b66f-427f-82ed-b0714290ea2c
       iscommand: false
       name: Is there any syslog (CEF) available?
       script: Exists
       type: condition
       version: -1
-    taskid: b3748a89-e1c6-49bc-8bbd-5fcc5f1d48df
+    taskid: 1b423387-b66f-427f-82ed-b0714290ea2c
     timertriggers: []
     type: condition
     view: |-
@@ -440,13 +439,13 @@ tasks:
     task:
       brand: ""
       description: Sends a message to Syslog.
-      id: f805d816-f71b-4b48-860e-9b22eb812f65
+      id: 8a5a288c-e054-4b11-81d0-293ad5da85e5
       iscommand: true
       name: 'Send asset syslog '
       script: '|||syslog-send'
       type: regular
       version: -1
-    taskid: f805d816-f71b-4b48-860e-9b22eb812f65
+    taskid: 8a5a288c-e054-4b11-81d0-293ad5da85e5
     timertriggers: []
     type: regular
     view: |-
@@ -484,13 +483,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: e5f715ab-3ecd-4cac-8485-59567c26c7e3
+      id: 411f93ae-cc5a-4e8b-8491-276e2356627a
       iscommand: true
       name: Send error status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: e5f715ab-3ecd-4cac-8485-59567c26c7e3
+    taskid: 411f93ae-cc5a-4e8b-8491-276e2356627a
     timertriggers: []
     type: regular
     view: |-
@@ -528,13 +527,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: d6bceebb-6822-47be-8d8e-8ff687402068
+      id: 56902206-418d-4afc-88e1-71716346934a
       iscommand: true
       name: Send success status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: d6bceebb-6822-47be-8d8e-8ff687402068
+    taskid: 56902206-418d-4afc-88e1-71716346934a
     timertriggers: []
     type: regular
     view: |-
@@ -557,13 +556,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: f804b54c-d2d3-4fed-82c3-4d45e94ac202
+      id: 66c504e5-d059-4e97-8318-0bf33c013e92
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: f804b54c-d2d3-4fed-82c3-4d45e94ac202
+    taskid: 66c504e5-d059-4e97-8318-0bf33c013e92
     timertriggers: []
     type: regular
     view: |-
@@ -598,13 +597,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 327d7c62-b83c-4278-8a11-42b7f3daae54
+      id: a920bb9e-b1d3-453f-86de-dc046a534280
       iscommand: false
       name: Does severity level match configuration filter?
       script: 2ef6f81e-1456-41a9-8ce5-3b6ebf04ea9d
       type: condition
       version: -1
-    taskid: 327d7c62-b83c-4278-8a11-42b7f3daae54
+    taskid: a920bb9e-b1d3-453f-86de-dc046a534280
     timertriggers: []
     type: condition
     view: |-
