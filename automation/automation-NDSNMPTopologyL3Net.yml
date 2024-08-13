@@ -1,0 +1,219 @@
+args:
+- description: Local Entry IP
+  name: local_entry_ip
+  required: true
+- description: Network Discovery Instance name
+  name: nd_instance
+  required: true
+commonfields:
+  id: NDSNMPTopologyL3Net
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: NDSNMPTopologyL3Net
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('NDSNMPTopologyL3Net', 'start', __line__())
+
+
+  from pysnmp.hlapi import *
+  import socket
+  import re
+
+  NETWORK_DISCOVERY_INSTANCE=demisto.args().get("nd_instance")
+
+  # ***************** IP Subnet Functions ******************
+  IP_CIDR_ROUTES_OID  = '1.3.6.1.2.1.4.24.4.1.5'
+
+  IP_SUBNET      = "ip_subnet"
+  IP_SUBNET_MASK = "ip_subnet_mask"
+  IP_SUBNET_GATEWAY = "ip_subnet_gateway"
+  IP_SUBNET_IF   = "ip_subnet_interface"
+  IP_DEFAULT_ROUTE_ADDR = "0.0.0.0"
+
+  # *************** Get L3 Network Information *********************
+  IP_IF_LIST = "ip_interface_list"
+  IP_SUBNET_LIST = "ip_subnet_list"
+
+  # Below two OIDs for VLAN Subnet discovery
+  IF_IDX_TO_IF_NAME_OID               = '1.3.6.1.2.1.31.1.1.1.1'
+  IF_IDX_TO_IF_DESC_OID               = '1.3.6.1.2.1.2.2.1.2'
+  IF_IDX_TO_IP_ADDR_OID               = '1.3.6.1.2.1.4.20.1.2'
+  IF_IDX_TO_MAC_ADDRESS_OID           = '1.3.6.1.2.1.2.2.1.6'
+  IF_IDX_TO_OPER_STATUS_OID           = '1.3.6.1.2.1.2.2.1.8'
+
+  IF_OPER_STATUS = "intf_operational_status"
+  IF_MAC_ADDR = "intf_mac_addr"
+  IF_INDEX = "intf_index"
+  IF_NAME = "intf_name"
+  IF_IP4_ADDR = "intf_ipv4_addr"
+
+  def walk(ip,oid):
+      response = demisto.executeCommand("nd-snmp-v2-walk-command", {
+          "ip":ip,
+          "oid": oid,
+          "using": NETWORK_DISCOVERY_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = 'Error, couldn\'t snmp v2 walk - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+      return response[0]['Contents']
+
+  def get_ip_interface_info(host):
+      if_info = {}
+      # SNMP Walk to get IF Names
+      raw_result = walk(host, IF_IDX_TO_IF_DESC_OID)
+      for k, v in raw_result.items():
+          if_idx = k.split('.')[-1]
+          if if_idx not in if_info:
+              if_info[if_idx] = {}
+          if_info[if_idx][IF_NAME] = v.strip()
+
+      # SNMP Walk to get IF IP address
+      raw_result = walk(host, IF_IDX_TO_IP_ADDR_OID)
+      for k, v in raw_result.items():
+          if_idx = v
+          ip = '.'.join(k.strip().split('.')[-4:])
+          if is_valid_ipv4_address(ip):
+              if if_idx in if_info:
+                  if_info[if_idx][IF_IP4_ADDR] = ip
+
+      # SNMP Walk to get IF MAC address
+      raw_result = walk(host, IF_IDX_TO_MAC_ADDRESS_OID)
+      for k, v in raw_result.items():
+          if(v!=''):
+              if_idx = k.strip().split('.')[-1]
+              mac = remove_prefix(v,"0x")
+              if(len(mac) == 12):
+                  mac_colon = ':'.join(mac[i:i + 2] for i in range(0, 12, 2))
+              if if_idx in if_info:
+                  if_info[if_idx][IF_MAC_ADDR]=mac_colon
+
+      # SNMP Walk to get IF operational status
+      raw_result = walk(host, IF_IDX_TO_OPER_STATUS_OID)
+      for k, v in raw_result.items():
+          if(v!=''):
+              if_idx = k.strip().split('.')[-1]
+              if if_idx in if_info:
+                  val=''
+                  if v == '1':
+                      val='up'
+                  elif v == '2':
+                      val='down'
+                  elif v == '3':
+                      val='testing'
+                  elif v == '4':
+                      val='unknown'
+                  elif v == '5':
+                      val='dormant'
+                  elif v == '6':
+                      val='notPresent'
+                  else:
+                      val='lowerLayerDown'
+                  if_info[if_idx][IF_OPER_STATUS]=val
+      # Return the IP Interface list
+      return if_info
+
+  def is_valid_ipv4_address(address):
+      try:
+          socket.inet_pton(socket.AF_INET, address)
+      except AttributeError:  # no inet_pton here, sorry
+          try:
+              socket.inet_aton(address)
+          except socket.error:
+              return False
+          return address.count('.') == 3
+      except socket.error:  # not a valid address
+          return False
+
+      return True
+
+  def get_ip_subnet_info(host, ip_if_list):
+      ip_subnet_info = {}
+      # SNMP Walk to get IF Names
+      raw_result = walk(host, IP_CIDR_ROUTES_OID)
+      for k, v in raw_result.items():
+          ip_rem_prefix = remove_prefix(k, IP_CIDR_ROUTES_OID)
+          ip_entry = ip_rem_prefix.split('.')
+          # return_outputs("ip entry: ",ip_entry)
+          if len(ip_entry) == 14:
+              # Get IP address
+              ip_addr = '.'.join(ip_entry[1:5])
+              if ip_addr not in ip_subnet_info:
+                  ip_subnet_info[ip_addr] = {}
+              ip_subnet_info[ip_addr][IP_SUBNET] = ip_addr
+              # Get IP Subnet Mask
+              ip_mask = '.'.join(ip_entry[5:9])
+              ip_subnet_info[ip_addr][IP_SUBNET_MASK] = ip_mask
+              # Get Gateway if present
+              ip_gateway = '.'.join(ip_entry[10:14])
+              if ip_gateway != IP_DEFAULT_ROUTE_ADDR:
+                  ip_subnet_info[ip_addr][IP_SUBNET_GATEWAY] = ip_gateway
+              # Get IF name
+              if v in ip_if_list:
+                  ip_subnet_info[ip_addr][IP_SUBNET_IF] = ip_if_list[v][IF_NAME]
+
+      # Return the IP Subnet list
+      return ip_subnet_info
+
+  def get_l3_network_info(host):
+      result_map = {}
+      # Get IP Interface List
+      demisto.info('NDSNMPTopologyL3Net-host-'+str(host))
+      ip_if_list = get_ip_interface_info(host)
+      demisto.info('NDSNMPTopologyL3Net-ip_if_list-'+str(ip_if_list))
+      if len(ip_if_list) == 0:
+          return result_map
+      else:
+          result_map[IP_IF_LIST] = ip_if_list
+      # Get the IP Subnet list
+      ip_subnet_list = get_ip_subnet_info(host, ip_if_list)
+      demisto.info('NDSNMPTopologyL3Net-ip_subnet_list-'+str(ip_subnet_list))
+      if len(ip_subnet_list) == 0:
+          return result_map
+      # Populate the dict
+      result_map[IP_SUBNET_LIST] = ip_subnet_list
+      demisto.info('NDSNMPTopologyL3Net-result_map-'+str(result_map))
+      # Return the result
+      return result_map
+
+  def remove_prefix(text, prefix):
+      if text.startswith(prefix):
+          return text[len(prefix):]
+      return text
+
+  def main():
+      try:
+          ENTRY_IP = demisto.args().get('local_entry_ip')
+          l3net_info = get_l3_network_info(ENTRY_IP)
+          # return_outputs("NDSNMPTopologyL3Net - finished SNMP probing for IP Networks data for Node!"+ str(l3net_info))
+          return_results(l3net_info)
+      except Exception as e:
+          raise Exception("Failed to get Node L3 Networks data: %s" % str(e))
+
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('NDSNMPTopologyL3Net', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
