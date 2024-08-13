@@ -32,11 +32,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 54dc75c9-f81a-44ed-827e-9eee816ed8dd
+      id: 4855639f-2d83-4f85-8967-3d4ba5b719de
       iscommand: false
       name: ""
       version: -1
-    taskid: 54dc75c9-f81a-44ed-827e-9eee816ed8dd
+    taskid: 4855639f-2d83-4f85-8967-3d4ba5b719de
     timertriggers: []
     type: start
     view: |-
@@ -70,13 +70,13 @@ tasks:
     task:
       brand: PANW IoT 3rd Party Integration - Cisco WLAN Controller
       description: Apply ACL in Cisco WLC
-      id: 4feebf1f-b3da-4c47-8787-ff30810a5ba9
+      id: 656b8704-8ded-40d2-8771-9b68a7b798bb
       iscommand: false
       name: Apply ACL to Cisco WLAN Controller
       script: 1d46f200-06e7-4b1b-8a4c-a1a54d9739ff
       type: regular
       version: -1
-    taskid: 4feebf1f-b3da-4c47-8787-ff30810a5ba9
+    taskid: 656b8704-8ded-40d2-8771-9b68a7b798bb
     timertriggers: []
     type: regular
     view: |-
@@ -100,13 +100,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 517f7f2e-e3ea-4179-8bb2-7c4e2b591ff4
+      id: 80d2f9b0-a616-4395-8e41-734fcb3632eb
       iscommand: true
       name: Close Investigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 517f7f2e-e3ea-4179-8bb2-7c4e2b591ff4
+    taskid: 80d2f9b0-a616-4395-8e41-734fcb3632eb
     timertriggers: []
     type: regular
     view: |-
@@ -141,13 +141,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: beca8ba7-2241-4932-8a31-24f691aad52c
+      id: 70e3cca3-035c-45a8-866b-41734b2cf989
       iscommand: false
       name: Is Cisco WLC integration available?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: beca8ba7-2241-4932-8a31-24f691aad52c
+    taskid: 70e3cca3-035c-45a8-866b-41734b2cf989
     timertriggers: []
     type: condition
     view: |-
@@ -185,13 +185,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 949660ef-531e-483d-85ff-639c8f0a1f5f
+      id: 6d29db93-416c-4484-8aea-534d9d58f339
       iscommand: true
       name: Report disable status to PAN IoT
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 949660ef-531e-483d-85ff-639c8f0a1f5f
+    taskid: 6d29db93-416c-4484-8aea-534d9d58f339
     timertriggers: []
     type: regular
     view: |-
@@ -223,13 +223,13 @@ tasks:
     task:
       brand: PANW IoT 3rd Party Integration - Cisco WLAN Controller
       description: Checks and delete ACL from Cisco WLC if exists
-      id: 6683a681-d34d-43de-8ca3-7600d35cf599
+      id: 81c8d936-543f-44f5-8d63-ed29ad9108b2
       iscommand: false
       name: Check and delete ACL on Cisco WLC
       script: 8a629001-b62d-45dd-8c49-dd3d64e6788b
       type: regular
       version: -1
-    taskid: 6683a681-d34d-43de-8ca3-7600d35cf599
+    taskid: 81c8d936-543f-44f5-8d63-ed29ad9108b2
     timertriggers: []
     type: regular
     view: |-
@@ -263,13 +263,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: 9a330b54-3628-4983-8a88-8216fc62d470
+      id: e10377bf-fd6f-42d2-8d65-3eaea7556517
       iscommand: false
       name: Any error occurred while checking for ACL from Cisco WLC?
       script: isError
       type: condition
       version: -1
-    taskid: 9a330b54-3628-4983-8a88-8216fc62d470
+    taskid: e10377bf-fd6f-42d2-8d65-3eaea7556517
     timertriggers: []
     type: condition
     view: |-
@@ -308,13 +308,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: ed228c38-bb74-49e8-82d5-cd2b235a6434
+      id: d39171e2-e641-43b5-8e43-4080488b0976
       iscommand: true
       name: Invalid ACL action specified. Report error.
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: ed228c38-bb74-49e8-82d5-cd2b235a6434
+    taskid: d39171e2-e641-43b5-8e43-4080488b0976
     timertriggers: []
     type: regular
     view: |-
@@ -354,12 +354,12 @@ tasks:
     task:
       brand: ""
       description: Check ACL action.
-      id: 7f400b3d-9462-4395-8e0d-52e978d2afa5
+      id: 4336de6c-636a-4ca8-868a-9c57a2da437f
       iscommand: false
       name: Check ACL action.
       type: condition
       version: -1
-    taskid: 7f400b3d-9462-4395-8e0d-52e978d2afa5
+    taskid: 4336de6c-636a-4ca8-868a-9c57a2da437f
     timertriggers: []
     type: condition
     view: |-
@@ -399,12 +399,12 @@ tasks:
     task:
       brand: ""
       description: Is ACL add action ?
-      id: 828838c4-bfd4-40d4-8f0f-ec632c3535a2
+      id: 8f06969e-fe8d-4e8c-8846-3bce3990256d
       iscommand: false
       name: Is ACL add action ?
       type: condition
       version: -1
-    taskid: 828838c4-bfd4-40d4-8f0f-ec632c3535a2
+    taskid: 8f06969e-fe8d-4e8c-8846-3bce3990256d
     timertriggers: []
     type: condition
     view: |-
@@ -438,13 +438,13 @@ tasks:
     task:
       brand: ""
       description: Reports ACLs sync status
-      id: 1ef4db43-526b-4c80-86c8-d34a45260740
+      id: 852ab8a0-34d6-497a-8122-b3f77732a8c6
       iscommand: true
       name: Report failed status for job to apply acl
       script: '|||panw-iot-3rd-party-report-aclsync-status'
       type: regular
       version: -1
-    taskid: 1ef4db43-526b-4c80-86c8-d34a45260740
+    taskid: 852ab8a0-34d6-497a-8122-b3f77732a8c6
     timertriggers: []
     type: regular
     view: |-
@@ -478,13 +478,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: 8da8365e-3426-462b-8745-6549d0f861be
+      id: 64721021-78aa-473c-805d-20ff5eda658a
       iscommand: false
       name: Any error occurred while applying ACL to Cisco WLC?
       script: isError
       type: condition
       version: -1
-    taskid: 8da8365e-3426-462b-8745-6549d0f861be
+    taskid: 64721021-78aa-473c-805d-20ff5eda658a
     timertriggers: []
     type: condition
     view: |-
@@ -516,13 +516,13 @@ tasks:
       brand: ""
       description: Determines which configured Cisco ISE instance is in active/primary
         state. state and returns the name of this instance.
-      id: c80f2601-94b9-4e56-85e5-088035a36106
+      id: a349de48-e880-44fe-80fe-452da9436ed9
       iscommand: false
       name: GetCiscoISEActiveInstance
       script: GetCiscoISEActiveInstance
       type: regular
       version: -1
-    taskid: c80f2601-94b9-4e56-85e5-088035a36106
+    taskid: a349de48-e880-44fe-80fe-452da9436ed9
     timertriggers: []
     type: regular
     view: |-
@@ -555,13 +555,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: e50329e7-031f-4803-8eaa-1fe05fc067ec
+      id: 7cd53023-02df-44c7-8363-99b716616e4e
       iscommand: false
       name: Create authorization profile in Cisco ISE
       script: 1d49e0cc-bff0-40af-851b-aa816cbf34d2
       type: regular
       version: -1
-    taskid: e50329e7-031f-4803-8eaa-1fe05fc067ec
+    taskid: 7cd53023-02df-44c7-8363-99b716616e4e
     timertriggers: []
     type: regular
     view: |-
@@ -595,13 +595,13 @@ tasks:
     task:
       brand: ""
       description: Reports ACLs sync status
-      id: 2c12028a-8997-4e23-8769-8481e4620c64
+      id: da11f3d8-c458-4194-8f1b-a91494936084
       iscommand: true
       name: Report success status for job to apply acl
       script: '|||panw-iot-3rd-party-report-aclsync-status'
       type: regular
       version: -1
-    taskid: 2c12028a-8997-4e23-8769-8481e4620c64
+    taskid: da11f3d8-c458-4194-8f1b-a91494936084
     timertriggers: []
     type: regular
     view: |-
@@ -637,13 +637,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: 83164bad-2645-46d1-824d-a8315b23c194
+      id: 452c5154-13b5-4ad5-87b1-807e55ca63c7
       iscommand: false
       name: Any error occurred while applying authorization profile to Cisco ISE?
       script: isError
       type: condition
       version: -1
-    taskid: 83164bad-2645-46d1-824d-a8315b23c194
+    taskid: 452c5154-13b5-4ad5-87b1-807e55ca63c7
     timertriggers: []
     type: condition
     view: |-
@@ -677,13 +677,13 @@ tasks:
     task:
       brand: ""
       description: Reports ACLs sync status
-      id: ecab0148-9c5f-4d67-8a91-6a88a947d612
+      id: dbac9110-4d89-412a-80b8-d30e6288217c
       iscommand: true
       name: Report failed status for job to acl apply
       script: '|||panw-iot-3rd-party-report-aclsync-status'
       type: regular
       version: -1
-    taskid: ecab0148-9c5f-4d67-8a91-6a88a947d612
+    taskid: dbac9110-4d89-412a-80b8-d30e6288217c
     timertriggers: []
     type: regular
     view: |-
@@ -718,13 +718,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 5d9186e0-7369-446a-88de-5d39488856ef
+      id: 5d6fea77-4935-480e-8c01-67e1f2aa8e63
       iscommand: false
       name: Is Cisco ISE integration available?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 5d9186e0-7369-446a-88de-5d39488856ef
+    taskid: 5d6fea77-4935-480e-8c01-67e1f2aa8e63
     timertriggers: []
     type: condition
     view: |-
@@ -762,13 +762,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: cf1bc990-b584-46bf-8bc2-3bad92251976
+      id: 8177dabe-fccd-4bd6-8cd2-da0913242e16
       iscommand: true
       name: Report ACL applied/deleted successfully for Cisco WLC
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: cf1bc990-b584-46bf-8bc2-3bad92251976
+    taskid: 8177dabe-fccd-4bd6-8cd2-da0913242e16
     timertriggers: []
     type: regular
     view: |-
@@ -806,13 +806,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 9cba57e2-164c-4937-8f99-7673a858a933
+      id: 4487fd7f-226d-4976-8dc8-4c4d988e4aa7
       iscommand: true
       name: Unable to  apply/delete ACL for Cisco WLC
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 9cba57e2-164c-4937-8f99-7673a858a933
+    taskid: 4487fd7f-226d-4976-8dc8-4c4d988e4aa7
     timertriggers: []
     type: regular
     view: |-
@@ -850,13 +850,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 34a6ff15-95f1-4ca0-801b-b0b294a7a184
+      id: 992cfc3e-0530-49ad-8e3b-6c7133fc4030
       iscommand: true
       name: Report disable status to PAN IoT
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 34a6ff15-95f1-4ca0-801b-b0b294a7a184
+    taskid: 992cfc3e-0530-49ad-8e3b-6c7133fc4030
     timertriggers: []
     type: regular
     view: |-
@@ -889,13 +889,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 0ec42b27-cb2c-4380-89bd-7dad1c8efd31
+      id: 1a2de9c7-5dde-4f0f-80f5-0455653d5826
       iscommand: false
       name: Is authorization profile available?
       script: Exists
       type: condition
       version: -1
-    taskid: 0ec42b27-cb2c-4380-89bd-7dad1c8efd31
+    taskid: 1a2de9c7-5dde-4f0f-80f5-0455653d5826
     timertriggers: []
     type: condition
     view: |-
@@ -928,13 +928,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 2c8e2806-d310-40cb-8621-ff2f20434ec5
+      id: 6ad85bd3-9385-4d0a-8ee5-b1cb32bc1639
       iscommand: false
       name: Is authorization profile available?
       script: Exists
       type: condition
       version: -1
-    taskid: 2c8e2806-d310-40cb-8621-ff2f20434ec5
+    taskid: 6ad85bd3-9385-4d0a-8ee5-b1cb32bc1639
     timertriggers: []
     type: condition
     view: |-
@@ -968,13 +968,13 @@ tasks:
     task:
       brand: ""
       description: Reports ACLs sync status
-      id: eccafa78-fb0b-4ba8-86c2-82176c436751
+      id: 8ee546b0-9175-4d21-8b24-a5f094d8a568
       iscommand: true
       name: Report failed status for job to acl apply
       script: '|||panw-iot-3rd-party-report-aclsync-status'
       type: regular
       version: -1
-    taskid: eccafa78-fb0b-4ba8-86c2-82176c436751
+    taskid: 8ee546b0-9175-4d21-8b24-a5f094d8a568
     timertriggers: []
     type: regular
     view: |-
@@ -1012,13 +1012,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: cd2a1a8f-8623-4440-86e8-fa24de81b9f8
+      id: c4652377-60ff-4497-87c7-5f7d95c38f35
       iscommand: true
       name: Report error status for Cisco ISE to PAN IoT
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: cd2a1a8f-8623-4440-86e8-fa24de81b9f8
+    taskid: c4652377-60ff-4497-87c7-5f7d95c38f35
     timertriggers: []
     type: regular
     view: |-
@@ -1056,13 +1056,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: a37b8c27-bdf4-44f6-8ae5-dbcbba6f90d8
+      id: 9b221e56-1c8a-4194-843f-e266230d9374
       iscommand: true
       name: Report success status to PAN IoT for Cisco ISE
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: a37b8c27-bdf4-44f6-8ae5-dbcbba6f90d8
+    taskid: 9b221e56-1c8a-4194-843f-e266230d9374
     timertriggers: []
     type: regular
     view: |-
