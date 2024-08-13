@@ -1,0 +1,229 @@
+comment: Gets all available devices from the IoT cloud and updates or creates them
+  if necessary. new endpoint with custom attributes on Cisco ISE.
+commonfields:
+  id: 0a2f891b-5731-450f-8dc8-0b64e25ee8ec
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendAllPANWIoTDevicesToCiscoISEpxGrid
+pswd: ""
+runas: DBotWeakRole
+runonce: true
+script: |
+  register_module_line('SendAllPANWIoTDevicesToCiscoISEpxGrid', 'start', __line__())
+
+
+
+  PANW_IOT_INSTANCE = ""
+  PXGRID_INSTANCE = ""
+  UNIQUE_MACS = set()
+  ENGINE_ERRORS = [
+      "connection reset by peer",
+      "verify you have proper integration enabled to support it",
+      "Unsupported Command"
+  ]
+
+  CISCO_ISE_FIELD_MAP = {
+      "ip": ["ZingboxIpAddress", "PanwIoTIpAddress"],
+      "ip address": ["ZingboxIP", "PanwIoTIP"],
+      "ip_address": ["ZingboxIP", "PanwIoTIP"],
+      "profile": ["ZingboxProfile", "PanwIoTProfile"],
+      "category": ["ZingboxCategory", "PanwIoTCategory"],
+      "risk_score": ["ZingboxRiskScore", "PanwIoTRiskScore"],
+      "risk score": ["ZingboxRiskScore", "PanwIoTRiskScore"],
+      "confidence": ["ZingboxConfidence", "PanwIoTConfidence"],
+      "confidence score": ["ZingboxConfidence", "PanwIoTConfidence"],
+      "confidence_score": ["ZingboxConfidence", "PanwIoTConfidence"],
+      "tag": ["ZingboxTag", "PanwIoTTag"],
+      "asset_tag": ["ZingboxTag", "PanwIoTTag"],
+      "Tags": ["ZingboxTag", "PanwIoTTag"],
+      "hostname": ["ZingboxHostname", "PanwIoTHostname"],
+      "osCombined": ["ZingboxOS", "PanwIoTOS"],
+      "model": ["ZingboxModel", "PanwIoTModel"],
+      "vendor": ["ZingboxVendor", "PanwIoTVendor"],
+      "Serial Number": ["ZingboxSerial", "PanwIoTSerial"],
+      "Serial_Number": ["ZingboxSerial", "PanwIoTSerial"],
+      "endpoint protection": ["ZingboxEPP", "PanwIoTEPP"],
+      "endpoint_protection": ["ZingboxEPP", "PanwIoTEPP"],
+      "AET": ["ZingboxAET", "PanwIoTAET"],
+      "External Network": ["ZingboxInternetAccess", "PanwIoTInternetAccess"],
+  }
+
+  INT_FIELDS = ["risk_score", "risk score", "confidence", "confidence score", "confidence_score"]
+
+  def send_status_to_panw_iot_cloud(status, msg):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+          "status": status,
+          "message": msg,
+          "integration_name": "ise",
+          "playbook_name": "PANW IoT 3rd Party Cisco ISE Integration - Bulk Export to Cisco ISE",
+          "asset_type": 'device',
+          "timestamp": int(round(time.time() * 1000)),
+          "custom_integration_name": PXGRID_INSTANCE
+          #"using": PANW_IOT_INSTANCE
+      })
+
+      if isError(resp[0]):
+          err_msg = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+
+  def get_devices_from_panw_iot_cloud(offset, page_size, stime=None, sites=None, tags=None, retry=0):
+      """
+      Gets assets from PANW IoT cloud.
+      param offset: Offset number for the asset list.
+      param page_size: Page size of the response being requested.
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-get-asset-list", {
+          "asset_type": 'device',
+          "stime": stime,
+          "offset": offset,
+          "page_length": page_size,
+          "tags": tags,
+          "site_names": sites
+          #"using": PANW_IOT_INSTANCE
+
+      })
+      if isError(resp[0]):
+          if retry == 0:
+              return get_devices_from_panw_iot_cloud(offset, page_size, stime, sites, tags, retry=1)
+          else:
+              err_msg = f'Error, could not get assets from PANW IoT Cloud - {resp[0].get("Contents")}'
+              raise Exception(err_msg)
+
+      return resp[0]['Contents']
+
+
+  def convert_panw_iot_devices(device_list):
+      global UNIQUE_MACS
+      asset_topic_list = []
+      for device_map in device_list:
+          if 'deviceid' in device_map:
+              if device_map['deviceid'] is None or device_map['deviceid'] == "":
+                  continue
+              if not is_mac_address(device_map['deviceid']):
+                  continue
+              if device_map['deviceid'] in UNIQUE_MACS:
+                  continue
+              UNIQUE_MACS.add(device_map['deviceid'])
+              asset_topic = {"opType": "UPDATE",}
+              asset = {}
+              assetCustomAttributes = []
+              asset['assetMacAddress'] = device_map['deviceid']
+              asset['assetIpAddress'] = ""
+
+
+              for attribute in device_map:
+                  if device_map[attribute] is None or device_map[attribute] == "":
+                      continue
+                  if attribute in CISCO_ISE_FIELD_MAP:
+                      zb_attribute = {
+                          "key": CISCO_ISE_FIELD_MAP[attribute][0],
+                          "value": device_map[attribute]
+                      }
+                      panw_attribute = {
+                          "key": CISCO_ISE_FIELD_MAP[attribute][1],
+                          "value": device_map[attribute]
+                      }
+                      assetCustomAttributes.append(zb_attribute)
+                      assetCustomAttributes.append(panw_attribute)
+
+              asset_topic["asset"] = asset
+              asset_topic["asset"]["assetCustomAttributes"] = assetCustomAttributes
+              asset_topic_list.append(asset_topic)
+
+      return asset_topic_list
+
+  def send_devices_to_cisco_ise(assset_topic_list):
+      if len(assset_topic_list) != 0:
+          try:
+              response = demisto.executeCommand("pxgrid-update-endpoint-custom-attributes", {
+                  "assetTopicList": assset_topic_list,
+                  "using": PXGRID_INSTANCE
+              })
+          except Exception as ex:
+              for error in ENGINE_ERRORS:
+                  if error in str(ex):
+                      time.sleep(5)
+                      return
+
+          if isError(response[0]):
+              err_msg = f'Error, could not send devices to Cisco ISE via pxGrid - {response[0].get("Contents")}'
+              for error in ENGINE_ERRORS:
+                  if error in err_msg:
+                      time.sleep(5)
+                      return
+              raise Exception(err_msg)
+      else:
+          return_results("Nothign to send")
+
+  def get_all_panw_iot_devices_and_send_to_cisco_ise():
+      """
+      Retrieves all devices from PANW IoT Cloud, 1000 devices at a time and sends it
+      to the primary/active cisco ise.
+      """
+      count = 0
+      offset = 0
+      page_size = 1000
+      mac_count = 0
+      global UNIQUE_MACS
+
+      while True:
+          device_list = get_devices_from_panw_iot_cloud(offset, page_size)
+          size = len(device_list)
+          count += size
+          assset_topic_list = convert_panw_iot_devices(device_list)
+          mac_count += len(assset_topic_list)
+          send_devices_to_cisco_ise(assset_topic_list)
+          if size == page_size:
+              offset += page_size
+              msg = f'Successfully exported {count} devices to Cisco ISE'
+              send_status_to_panw_iot_cloud("success", msg,)
+          else:
+              break
+      op_data = {}
+      op_data['Status'] = (f'Total {count} devices pulled from PANW IoT Cloud.\n'
+             f'Exported {len(UNIQUE_MACS)} devices (with available mac addresses) to Cisco ISE')
+      return CommandResults(
+          readable_output=tableToMarkdown("Asset export summary:", op_data, removeNull=True),
+      )
+      #return(f'Total {count} devices pulled from PANW IoT Cloud.\n'
+      #       f'Exported {len(UNIQUE_MACS)} devices (with available mac addresses) to Cisco ISE')
+
+  def main():
+      try:
+          return_results(get_all_panw_iot_devices_and_send_to_cisco_ise())
+      except Exception as ex:
+          send_status_to_panw_iot_cloud("error", str(ex))
+          return_error(str(ex))
+
+      send_status_to_panw_iot_cloud("success", "Bulk export to cisco ISE successful")
+      #return_results(status_msg)
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('SendAllPANWIoTDevicesToCiscoISEpxGrid', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
