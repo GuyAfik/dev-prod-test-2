@@ -1,0 +1,76 @@
+args:
+- description: Devices inventory list.
+  isArray: true
+  name: devices
+  required: true
+comment: Generate a single query or query list to query for ServiceNow.
+commonfields:
+  id: GeneratePANWIoTDeviceTableQueryForServiceNow
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GeneratePANWIoTDeviceTableQueryForServiceNow
+outputs:
+- contextPath: PanwIot3rdParty.Query
+  description: list of query
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('GeneratePANWIoTDeviceTableQueryForServiceNow', 'start', __line__())
+
+
+
+
+
+
+  def main():
+      device_list = demisto.args().get('devices')
+
+      query_strs = []
+      query_str = 'mac_addressIN'
+      DEFAULT_VALUE_SIZE = 100  # each query contains 100 deviceid
+      res = {}
+      output_description = f'Total data length is {len(device_list)}'
+
+      for i, entry in enumerate(device_list):
+          query_str += entry['deviceid'] + ','
+          if ((i + 1) % DEFAULT_VALUE_SIZE == 0 or i == (len(device_list) - 1)):
+              query_strs.append(query_str[0:len(query_str) - 1])
+              query_str = 'mac_addressIN'
+      res['query'] = query_strs
+      output_description = f'{output_description} total number of query is {len(query_strs)}'
+
+      results = CommandResults(
+          readable_output=output_description,
+          outputs_prefix="PanwIot3rdParty.Query",
+          outputs=res
+      )
+      return results
+
+
+  if __name__ in ['__main__', 'builtin', 'builtins']:
+      res = main()
+      return_results(res)
+
+  register_module_line('GeneratePANWIoTDeviceTableQueryForServiceNow', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- PANW IoT 3rd Party Integration
+- servicenow v2
+timeout: 10m0s
+type: python
