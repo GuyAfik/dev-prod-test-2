@@ -37,11 +37,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: fa6ba7f1-d5df-46f1-8084-be6b648ea44a
+      id: 6f319583-7f01-4d69-888b-fe042480ed2a
       iscommand: false
       name: ""
       version: -1
-    taskid: fa6ba7f1-d5df-46f1-8084-be6b648ea44a
+    taskid: 6f319583-7f01-4d69-888b-fe042480ed2a
     timertriggers: []
     type: start
     view: |-
@@ -76,13 +76,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 7284463e-2eae-4fbf-8e82-8a11b6229151
+      id: f7908062-d3b9-4afb-8efe-035812c87f51
       iscommand: false
       name: Is pxGrid Integration enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 7284463e-2eae-4fbf-8e82-8a11b6229151
+    taskid: f7908062-d3b9-4afb-8efe-035812c87f51
     timertriggers: []
     type: condition
     view: |-
@@ -120,13 +120,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 51add30f-0fd5-4da9-8a59-d4501734de39
+      id: b062b6fd-7555-407c-8d41-4de1bff9b105
       iscommand: true
       name: Report disabled status to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 51add30f-0fd5-4da9-8a59-d4501734de39
+    taskid: b062b6fd-7555-407c-8d41-4de1bff9b105
     timertriggers: []
     type: regular
     view: |-
@@ -160,13 +160,13 @@ tasks:
     task:
       brand: ""
       description: Quarantines or Un-quarantine a device by mac
-      id: a4d2c490-82b0-427d-81c8-b7bd4411c466
+      id: bbfaff12-b05a-44f5-87e9-03f48d343b42
       iscommand: true
       name: Un-quarantine Endpoint on Cisco ISE
       script: '|||pxgrid-quarantine-device-by-mac'
       type: regular
       version: -1
-    taskid: a4d2c490-82b0-427d-81c8-b7bd4411c466
+    taskid: bbfaff12-b05a-44f5-87e9-03f48d343b42
     timertriggers: []
     type: regular
     view: |-
@@ -189,13 +189,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: d425bd4f-5b30-464c-829b-55d09f39c444
+      id: f6d27236-a61b-4aa9-81a8-91a7acd9fb86
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: d425bd4f-5b30-464c-829b-55d09f39c444
+    taskid: f6d27236-a61b-4aa9-81a8-91a7acd9fb86
     timertriggers: []
     type: regular
     view: |-
@@ -233,13 +233,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: f2cf9dcc-f5fb-453e-848f-7e62f77aa3db
+      id: c665c8e9-d599-43f9-8ab9-7401158e629a
       iscommand: true
       name: Report success status to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: f2cf9dcc-f5fb-453e-848f-7e62f77aa3db
+    taskid: c665c8e9-d599-43f9-8ab9-7401158e629a
     timertriggers: []
     type: regular
     view: |-
@@ -273,13 +273,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: 1df5f429-b8f4-4ae2-873d-a91ba6a3be0c
+      id: e03a3d5d-7031-4ba5-8149-fdd063268a58
       iscommand: false
       name: was there an error attempting release from quarantine?
       script: isError
       type: condition
       version: -1
-    taskid: 1df5f429-b8f4-4ae2-873d-a91ba6a3be0c
+    taskid: e03a3d5d-7031-4ba5-8149-fdd063268a58
     timertriggers: []
     type: condition
     view: |-
@@ -317,13 +317,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 9d93f37d-d19b-4a08-8bcc-4ad570d0a2d4
+      id: 775830c1-265c-445e-881b-a67e310b4c15
       iscommand: true
       name: Report error status to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 9d93f37d-d19b-4a08-8bcc-4ad570d0a2d4
+    taskid: 775830c1-265c-445e-881b-a67e310b4c15
     timertriggers: []
     type: regular
     view: |-
