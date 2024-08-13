@@ -11,7 +11,6 @@ contentitemexportablefields:
     toServerVersion: ""
 description: This playbook gets all available device inventory from PANW IoT Cloud
   and updates/create endpoints with custom attributes on Aruba ClearPass.
-dirtyInputs: true
 id: 8b048af1-28b5-4687-849b-8e25894c8058
 inputs: []
 name: Bulk Export to Aruba ClearPass - PANW IoT 3rd Party Integration
@@ -34,11 +33,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 790bf01a-8df9-4d30-8cfc-e395a5566252
+      id: 6581d999-f414-403c-807c-8bc767a3f6e5
       iscommand: false
       name: ""
       version: -1
-    taskid: 790bf01a-8df9-4d30-8cfc-e395a5566252
+    taskid: 6581d999-f414-403c-807c-8bc767a3f6e5
     timertriggers: []
     type: start
     view: |-
@@ -73,13 +72,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 65ec3bee-dd3c-45c6-88eb-b223e7f35a95
+      id: 89521188-78f1-4f4d-89d2-166821b780ed
       iscommand: false
       name: Is Aruba CP enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 65ec3bee-dd3c-45c6-88eb-b223e7f35a95
+    taskid: 89521188-78f1-4f4d-89d2-166821b780ed
     timertriggers: []
     type: condition
     view: |-
@@ -117,13 +116,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 5aac1848-caed-4081-8a72-16f1986edd04
+      id: 78da2c73-da36-47c7-828f-b89cc0b88bd2
       iscommand: true
       name: Send disabled status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 5aac1848-caed-4081-8a72-16f1986edd04
+    taskid: 78da2c73-da36-47c7-828f-b89cc0b88bd2
     timertriggers: []
     type: regular
     view: |-
@@ -160,13 +159,13 @@ tasks:
       brand: ""
       description: Gets all available devices from the IoT cloud and updates or creates
         them if necessary. new endpoint with custom attributes on Aruba ClearPass.
-      id: 5fa00c31-b577-4d56-8610-0cf5f7704d37
+      id: 61ccaf40-00f8-4db9-8886-2ee863231c7e
       iscommand: false
       name: Export all PANW IoT device inventory to Aruba ClearPass
       script: SendAllPANWIoTDevicesToArubaClearPass
       type: regular
       version: -1
-    taskid: 5fa00c31-b577-4d56-8610-0cf5f7704d37
+    taskid: 61ccaf40-00f8-4db9-8886-2ee863231c7e
     timertriggers: []
     type: regular
     view: |-
@@ -190,13 +189,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: f46861a8-db8d-4380-8367-8a8208e1e065
+      id: 5c0b9844-ebb1-4fae-876a-9083dab17671
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: f46861a8-db8d-4380-8367-8a8208e1e065
+    taskid: 5c0b9844-ebb1-4fae-876a-9083dab17671
     timertriggers: []
     type: regular
     view: |-
@@ -230,13 +229,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: e3d18509-54fe-4adc-8e6d-8446c531ea6e
+      id: 5675e6cc-57c3-443a-8760-cfad475557ea
       iscommand: false
       name: Was there any errors while bulk exporting?
       script: isError
       type: condition
       version: -1
-    taskid: e3d18509-54fe-4adc-8e6d-8446c531ea6e
+    taskid: 5675e6cc-57c3-443a-8760-cfad475557ea
     timertriggers: []
     type: condition
     view: |-
@@ -274,13 +273,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 0d704d86-f907-4d24-86c2-5d4313879ab6
+      id: 19326e69-df3f-4c59-8bbd-e72858122d39
       iscommand: true
       name: Send error status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 0d704d86-f907-4d24-86c2-5d4313879ab6
+    taskid: 19326e69-df3f-4c59-8bbd-e72858122d39
     timertriggers: []
     type: regular
     view: |-
@@ -318,13 +317,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 4db155d3-5b8e-4536-82fe-b205659695de
+      id: 8917a6d7-4e21-47f3-810f-7d5add81e20c
       iscommand: true
       name: Send success status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 4db155d3-5b8e-4536-82fe-b205659695de
+    taskid: 8917a6d7-4e21-47f3-810f-7d5add81e20c
     timertriggers: []
     type: regular
     view: |-
@@ -357,13 +356,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: c182ff61-f445-4f7d-85c7-e637c9da8ef5
+      id: fe67a94a-4d22-4754-8232-a4731ade9139
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: c182ff61-f445-4f7d-85c7-e637c9da8ef5
+    taskid: fe67a94a-4d22-4754-8232-a4731ade9139
     timertriggers: []
     type: condition
     view: |-
@@ -401,13 +400,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 834e6b30-47b4-4600-8057-86ca6d220b49
+      id: d9563d27-d58b-4506-87a2-983b71376146
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 834e6b30-47b4-4600-8057-86ca6d220b49
+    taskid: d9563d27-d58b-4506-87a2-983b71376146
     timertriggers: []
     type: regular
     view: |-
@@ -445,13 +444,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 32b1f098-1ed6-4cfd-80a6-396f5dafd75d
+      id: 0ca94f1a-876a-40cb-8603-57a2fb285e31
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 32b1f098-1ed6-4cfd-80a6-396f5dafd75d
+    taskid: 0ca94f1a-876a-40cb-8603-57a2fb285e31
     timertriggers: []
     type: regular
     view: |-
@@ -474,13 +473,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 77a25b39-5a75-415e-800f-c8619843f9a4
+      id: 80b65e9b-3b26-4049-877c-5fef98e0060e
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 77a25b39-5a75-415e-800f-c8619843f9a4
+    taskid: 80b65e9b-3b26-4049-877c-5fef98e0060e
     timertriggers: []
     type: regular
     view: |-
