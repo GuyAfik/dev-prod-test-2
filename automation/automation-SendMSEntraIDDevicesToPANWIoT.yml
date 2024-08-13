@@ -1,0 +1,129 @@
+args:
+- description: Active MS Entra ID Instance
+  name: active_ms_entra_id_instance
+  required: true
+commonfields:
+  id: SendMSEntraIDDevicesToPANWIoT
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.13.89873
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendMSEntraIDDevicesToPANWIoT
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: "register_module_line('SendMSEntraIDDevicesToPANWIoT', 'start', __line__())\n\n\n
+  \ \n\n\nimport json\nimport traceback\nimport time\nimport uuid\nimport re\nfrom
+  datetime import datetime, timedelta\n\n\nMS_EntraID_ACTIVE_INSTANCE = demisto.args().get(\"active_ms_entra_id_instance\")\n\ndef
+  sendStatusToPanwIotCloud(status, msg):\n    \"\"\"\n    Reports status details back
+  to PANW IoT Cloud.\n    param status: Status (error, disabled, success) to be send
+  to PANW IoT cloud.\n    param msg: Debug message to be send to PANW IoT cloud.\n
+  \   \"\"\"\n    res = \"\"\n    count = 0\n    while True:\n        count += 1\n
+  \       resp = demisto.executeCommand(\n            \"panw-iot-3rd-party-report-status-to-panw\",\n
+  \           {\n                \"status\": status,\n                \"message\":
+  msg,\n                \"integration_name\": \"ms_entra_id\",\n                \"playbook_name\":
+  \"Import MS Entra ID devices to PANW IoT cloud\",\n                \"asset_type\":
+  \"device\",\n                \"custom_integration_name\": MS_EntraID_ACTIVE_INSTANCE,\n
+  \               \"timestamp\": int(round(time.time() * 1000))\n            },\n
+  \       )\n        if isError(resp[0]):\n            if count < 6:\n                time.sleep(2)\n
+  \           else:\n                errMsg = f'Error, failed to send status to PANW
+  IoT Cloud - {resp[0].get(\"Contents\")}'\n                raise Exception(errMsg)\n
+  \       else:\n            break\n    if isinstance(resp, list):\n        res =
+  resp[0].get(\"Contents\",None)\n    demisto.debug(f\"Successfully send status to
+  PAN IoT API:- {res}\")\n    return res\n\ndef sendDevicesToPANWIotCloud(deviceList,
+  retry=0):\n    \"\"\"\n    Sends devices to PANW IoT Cloud.\n    :type deviceList:
+  ``array``\n    :param deviceList: List of devices to be sent to PANW IoT cloud\n
+  \   \"\"\"\n    res = \"\"\n    count = 0\n    while True:\n        count += 1\n
+  \       res = \"\"\n        resp = demisto.executeCommand(\"panw-iot-3rd-party-report-devices\",
+  {\n            \"DeviceData\": deviceList,\n            \"pageLength\": None,\n
+  \           \"IntegrationName\": 'ms_entra_id'\n        })\n        if isError(resp[0]):\n
+  \           if count < 6:\n                time.sleep(2)\n            else:\n                errMsg
+  = f'Error, could not send devices to PANW IoT Cloud - {resp[0].get(\"Contents\")}'\n
+  \               raise Exception(errMsg)\n        else:\n            break\n    if
+  isinstance(resp, list):\n        res = resp[0].get(\"Contents\",None)\n    demisto.debug(f\"Successfully
+  send devices to PAN IoT API:- {res}\")\n    return res\n\ndef executeGetAllDevices(accessToken,
+  next_page_link, limit):\n    res = ''\n    result = demisto.executeCommand(\"ms-entra-id-get-all-devices\",
+  {'token': accessToken, 'limit': limit, 'next_page_link': next_page_link, \"using\":
+  MS_EntraID_ACTIVE_INSTANCE})\n    if isError(result[0]):\n        errMsg = f'Error,
+  failed to get all devices from MS Entra ID - {result[0].get(\"Contents\")}'\n        raise
+  Exception(errMsg)\n    demisto.debug(f\"Successfully fetched all devices via MS
+  Entra API.\")\n    return result[0]['Contents']\n\ndef getAllDevicesAndSendToPANIoT(accessToken):\n
+  \   next_page_link, count = None, 0\n    totalDevicesUpserted=0\n    totalDevicesUpdated=0\n
+  \   statusMsg, deviceInfo = '', {}\n    macAddress = []\n    limit = 1000\n    if
+  accessToken:\n        while True:\n            deviceData = ''\n            devicesUpdated,
+  devicesUpserted = 0, 0\n            mac = ''\n            deviceData = executeGetAllDevices(accessToken,
+  next_page_link, limit)\n            if isinstance(deviceData, dict):\n                next_page_link
+  = deviceData.get(\"next_page_link\",None)\n                data = deviceData.get('data',
+  '')\n                if next_page_link == None and len(data) == 0:\n                    break\n
+  \           else:\n                statusMsg = 'Failed to get device data from ms-entra-id-get-all-devices
+  command'\n                return statusMsg, count, macAddress, deviceInfo\n            resp
+  = sendDevicesToPANWIotCloud(deviceData.get(\"data\"))\n            if resp and isinstance(resp,
+  dict):\n                devicesUpdated = resp.get('updatedDeviceNum')\n                devicesUpserted
+  = resp.get('upsertedDeviceNum')\n            totalDevicesUpserted += devicesUpserted\n
+  \           totalDevicesUpdated += devicesUpdated\n            mac = [mac['deviceid']
+  for mac in deviceData.get(\"data\")]\n            macAddress.append(mac)\n            count
+  += len(deviceData.get(\"data\"))\n            demisto.info(f\"Send {count} devices
+  successfully to PAN IoT Cloud\")\n            time.sleep(5)\n\n            if next_page_link
+  == None:\n                break\n\n        statusMsg = f'Successfully imported total
+  {count} MS Entra ID devices to PANW IoT'\n        demisto.debug(f'Successfully imported
+  total {count} MS Entra ID devices to PANW IoT')\n        deviceInfo = {\n          'Total
+  Device Upserted' : totalDevicesUpserted,\n          'Total Device Updated' : totalDevicesUpdated\n
+  \       }\n        return statusMsg, count, macAddress, deviceInfo\n    statusMsg
+  = 'Access token is not available'\n    demisto.error('Error while getting all devices
+  '+ str(ex))\n    return statusMsg, count, macAddress, deviceInfo\n\ndef getNewAccessToken(accessTokenName):\n
+  \   demisto.debug(\"Creating a new token\")\n    accessToken = \"\"\n    result
+  = demisto.executeCommand(\"ms-entra-id-generate-token\", {\"name\": accessTokenName})\n
+  \   if isinstance(result, list) and len(result) != 0:\n        if isError(result[0])
+  or \"access_token\" not in result[0].get(\"Contents\", None):\n            errMsg
+  = f'Error, failed to generate access token from MS Entra ID - {result[0].get(\"Contents\")}'\n
+  \           raise Exception(errMsg)\n        listData = result[0].get(\"Contents\",
+  None)\n        if listData:\n            demisto.executeCommand(\"createList\",
+  {\"listName\": accessTokenName, \"listData\": [listData]})\n            accessToken
+  = listData.get(\"access_token\", \"\")\n            demisto.debug(\"Access token
+  generated successfully via MS Entra ID API.\")\n    return accessToken\n\ndef validateAccessToken(tokenData):\n
+  \   \"\"\"\n    Function will check the given access token is expired or not\n    \"\"\"\n
+  \   accessToken = ''\n    tokenData = json.loads(tokenData)\n    expire = datetime.fromtimestamp(int(tokenData[0].get(\"expires_on\")))\n
+  \   # Get current datetime\n    currentTime = datetime.now()\n    # Calculate the
+  time difference\n    if expire > currentTime:\n        accessToken = tokenData[0].get(\"access_token\")\n
+  \       demisto.debug(\"Validated the access token successfully\")\n    return accessToken\n\ndef
+  executeGetAccessTokenCmd(accessTokenName):\n    \"\"\"\n    Function will fetch
+  the access token\n    \"\"\"\n    accessToken = \"\"\n    listData = demisto.executeCommand(\"getList\",
+  {\"listName\": accessTokenName})\n    if isinstance(listData, list) and len(listData)
+  != 0:\n        tokenData = listData[0].get(\"Contents\", None)\n        if tokenData:\n
+  \           if \"Item not found\" not in tokenData:\n                accessToken
+  = validateAccessToken(tokenData)\n            if accessToken:\n                return
+  accessToken\n            accessToken = getNewAccessToken(accessTokenName)\n    demisto.debug(f\"Got
+  the access token {accessToken} successfully\")\n    return accessToken\n\n\ndef
+  main():\n    accessTokenName = MS_EntraID_ACTIVE_INSTANCE + \"_token\"\n    try:\n
+  \       accessToken = executeGetAccessTokenCmd(accessTokenName)\n        if accessToken:\n
+  \           statusMsg, count, macAddress, deviceInfo = getAllDevicesAndSendToPANIoT(accessToken)\n\n
+  \           if \"Successfully\" in statusMsg:\n                sendStatusToPanwIotCloud(\"success\",
+  statusMsg)\n            else:\n                sendStatusToPanwIotCloud(\"error\",
+  statusMsg)\n\n            statusReportedClients = {\n              \"status\": statusMsg,\n
+  \             \"reported-clients\": macAddress\n            }\n            reportSummary
+  = {\"Total Device Reported\": count}\n            reportSummary.update(deviceInfo)\n
+  \           return_results(\n              CommandResults(\n                  readable_output=tableToMarkdown(\"Asset
+  Report Summary:\", reportSummary, removeNull=True),\n                  outputs_prefix=\"ms_entra_id\",\n
+  \                 outputs=statusReportedClients\n              )\n            )\n
+  \       else:\n            return return_error(\"No access token\")\n    except
+  Exception as ex:\n        sendStatusToPanwIotCloud(\"error\", str(ex))\n        demisto.error(traceback.format_exc())\n
+  \       return_error(str(ex))\n\nif __name__ in (\"__main__\", \"__builtin__\",
+  \"builtins\"):\n    main()\n\n\n\nregister_module_line('SendMSEntraIDDevicesToPANWIoT',
+  'end', __line__())\n"
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
