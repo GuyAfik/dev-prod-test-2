@@ -10,7 +10,6 @@ contentitemexportablefields:
     - all
     toServerVersion: ""
 description: 'Playbook used to check pxGrid account status. '
-dirtyInputs: true
 id: 42657470-5b69-4793-8018-b3a746d7d11f
 inputs: []
 name: Setup pxGrid Account
@@ -32,11 +31,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 3e24c10d-0c80-479f-85df-10a194c14a16
+      id: f1ae5a3f-910e-4a03-814b-7055d2596c29
       iscommand: false
       name: ""
       version: -1
-    taskid: 3e24c10d-0c80-479f-85df-10a194c14a16
+    taskid: f1ae5a3f-910e-4a03-814b-7055d2596c29
     timertriggers: []
     type: start
     view: |-
@@ -71,13 +70,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 152b6c0e-1e45-450a-8f70-3379083c6dfc
+      id: 853c3123-4387-494c-812e-a18bcc5c424c
       iscommand: false
       name: Is pxGrid Integration enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 152b6c0e-1e45-450a-8f70-3379083c6dfc
+    taskid: 853c3123-4387-494c-812e-a18bcc5c424c
     timertriggers: []
     type: condition
     view: |-
@@ -115,13 +114,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: e81637c8-69d8-4a81-8b64-df0910eaa015
+      id: edd6bcb1-d657-4c38-867c-b09fe95511f4
       iscommand: true
       name: Report disabled status to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: e81637c8-69d8-4a81-8b64-df0910eaa015
+    taskid: edd6bcb1-d657-4c38-867c-b09fe95511f4
     timertriggers: []
     type: regular
     view: |-
@@ -148,13 +147,13 @@ tasks:
     task:
       brand: ""
       description: Gets pxGrid account status
-      id: 38bb70c5-b011-4b6d-8ef6-f59e6d6c5a9f
+      id: b52a34eb-d890-4023-891b-ff4cd1da472d
       iscommand: true
       name: Get pxGrid Status
       script: '|||pxgrid-get-account-status'
       type: regular
       version: -1
-    taskid: 38bb70c5-b011-4b6d-8ef6-f59e6d6c5a9f
+    taskid: b52a34eb-d890-4023-891b-ff4cd1da472d
     timertriggers: []
     type: regular
     view: |-
@@ -177,13 +176,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 11b3cc4c-9d3f-4570-85c0-79b84d5a8181
+      id: af7ce61d-6eef-467e-8445-65551c6c635e
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 11b3cc4c-9d3f-4570-85c0-79b84d5a8181
+    taskid: af7ce61d-6eef-467e-8445-65551c6c635e
     timertriggers: []
     type: regular
     view: |-
