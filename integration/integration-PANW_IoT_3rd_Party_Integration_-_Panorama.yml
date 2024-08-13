@@ -1,0 +1,703 @@
+category: Network Security
+commonfields:
+  id: PANW IoT 3rd Party Integration - Panorama
+  version: -1
+configuration:
+- display: Server URL (e.g., https://192.168.0.1)
+  name: server
+  required: true
+  type: 0
+- display: API Key
+  displaypassword: API Key
+  hiddenusername: true
+  name: key
+  required: false
+  type: 4
+- defaultvalue: "443"
+  display: Port (e.g 443)
+  name: port
+  required: false
+  type: 0
+- display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+- defaultvalue: REST_API
+  display: API Type
+  name: api_type
+  options:
+  - REST_API
+  - XML_API
+  required: true
+  type: 15
+- additionalinfo: Only for REST API
+  display: API Version
+  name: version
+  required: false
+  type: 0
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: Manage Palo Alto Networks Firewall and Panorama. For more information
+  see Panorama documentation.
+detaileddescription: |-
+  ### Community Contributed Integration
+   #### Integration Author: Cortex XSOAR
+   No support or maintenance is provided by the author. Customers are encouraged to engage with the user community for questions and guidance at the [Cortex XSOAR Live Discussions](https://live.paloaltonetworks.com/t5/cortex-xsoar-discussions/bd-p/Cortex_XSOAR_Discussions).
+  ***
+  ## Hello World
+  - This section explains how to configure the instance of HelloWorld in Cortex XSOAR.
+  - You can use the following API Key: `43ea9b2d-4998-43a6-ae91-aba62a26868c`
+
+  ---
+  [View Integration Documentation](https://xsoar.pan.dev/docs/reference/integrations/hello-world)
+display: PANW IoT 3rd Party Integration - Panorama
+image: data:image/png;base64,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
+name: PANW IoT 3rd Party Integration - Panorama
+script:
+  commands:
+  - arguments:
+    - auto: PREDEFINED
+      description: The rules location. Mandatory for Panorama instances.
+      name: pre_post
+      predefined:
+      - pre-rulebase
+      - post-rulebase
+    - description: The device group for which to return addresses (Panorama instances).
+      name: device_group
+    - description: The tag to filter the rules.
+      name: tag
+    description: Returns a list of predefined security rules.
+    name: panw-panorama-list-rules
+    outputs:
+    - contextPath: Panorama.SecurityRule.Name
+      description: The rule name.
+      type: string
+    - contextPath: Panorama.SecurityRule.Action
+      description: The action for the rule.
+      type: string
+    - contextPath: Panorama.SecurityRule.Location
+      description: The rule location.
+      type: string
+    - contextPath: Panorama.SecurityRule.Category
+      description: The rule category.
+      type: string
+    - contextPath: Panorama.SecurityRule.Application
+      description: The application for the rule.
+      type: string
+    - contextPath: Panorama.SecurityRule.Destination
+      description: The destination address.
+      type: string
+    - contextPath: Panorama.SecurityRule.From
+      description: The rule from zone.
+      type: string
+    - contextPath: Panorama.SecurityRule.Service
+      description: The service for the rule.
+      type: string
+    - contextPath: Panorama.SecurityRule.To
+      description: The rule to zone
+      type: string
+    - contextPath: Panorama.SecurityRule.Source
+      description: The source address.
+      type: string
+    - contextPath: Panorama.SecurityRule.DeviceGroup
+      description: The device group for the rule (Panorama instances).
+      type: string
+    - contextPath: Panorama.SecurityRules.Tags
+      description: The rule tags.
+      type: string
+  - arguments: []
+    description: Gets all the device groups available in the Panorama.
+    name: panw-panorama-get-device-groups
+    outputs:
+    - contextPath: Panorama.DeviceGroups
+      description: The device groups
+  - arguments:
+    - description: Device Group
+      name: device_group
+      required: true
+    description: Gets all the object addresses based on device group
+    name: panw-panorama-object-addresses
+    outputs:
+    - contextPath: Panorama.ObjectAddresses
+      description: Object Addresses
+  - arguments:
+    - description: Device Group
+      name: device_group
+      required: true
+    description: Gets all the object address groups based on device group
+    name: panw-panorama-object-address-groups
+    outputs:
+    - contextPath: Panorama.ObjectAddressGroups
+      description: Object address groups
+  - arguments: []
+    description: Panorama API Type
+    name: panw-panorama-api-type
+    outputs:
+    - contextPath: Panorama.APIType
+      description: Panorama API Type
+  dockerimage: demisto/panw-iot:1.0.0.79918
+  runonce: false
+  script: |
+    register_module_line('PANW IoT 3rd Party Integration - Panorama', 'start', __line__())
+
+
+
+    import shutil
+    ''' IMPORTS '''
+    import json
+    import uuid
+
+    import requests
+    import urllib3
+    from urllib.parse import urlparse
+
+    # disable insecure warnings
+    urllib3.disable_warnings()
+    URL = ''
+    API_KEY = None
+    USE_SSL = None
+    PRE_POST = ''
+    DEVICE_GROUP=''
+    PAN_OS_ERROR_DICT = {
+        '1': 'Unknown command - The specific config or operational command is not recognized.',
+        '2': 'Internal errors - Check with technical support when seeing these errors.',
+        '3': 'Internal errors - Check with technical support when seeing these errors.',
+        '4': 'Internal errors - Check with technical support when seeing these errors.',
+        '5': 'Internal errors - Check with technical support when seeing these errors.',
+        '6': 'Bad Xpath -The xpath specified in one or more attributes of the command is invalid.'
+             'Check the API browser for proper xpath values.',
+        '7': 'Object not present - Object specified by the xpath is not present. For example,'
+             'entry[@name=value] where no object with name value is present.',
+        '8': 'Object not unique - For commands that operate on a single object, the specified object is not unique.',
+        '10': 'Reference count not zero - Object cannot be deleted as there are other objects that refer to it.'
+              'For example, address object still in use in policy.',
+        '11': 'Internal error - Check with technical support when seeing these errors.',
+        '12': 'Invalid object - Xpath or element values provided are not complete.',
+        '14': 'Operation not possible - Operation is allowed but not possible in this case.'
+              'For example, moving a rule up one position when it is already at the top.',
+        '15': 'Operation denied - Operation is allowed. For example, Admin not allowed to delete own account,'
+              'Running a command that is not allowed on a passive device.',
+        '16': 'Unauthorized -The API role does not have access rights to run this query.',
+        '17': 'Invalid command -Invalid command or parameters.',
+        '18': 'Malformed command - The XML is malformed.',
+        # 19,20: success
+        '21': 'Internal error - Check with technical support when seeing these errors.',
+        '22': 'Session timed out - The session for this query timed out.'
+    }
+
+    def initialize_instance(args: Dict[str, str], params: Dict[str, str]):
+        global URL, API_KEY, USE_SSL, USE_URL_FILTERING, VSYS, DEVICE_GROUP, XPATH_SECURITY_RULES, XPATH_OBJECTS, \
+            XPATH_RULEBASE, TEMPLATE, PRE_POST, API_TYPE, API_VERSION, REST_API_URL, REST_API_HEADERS
+        if not params.get('port'):
+            raise DemistoException('Set a port for the instance')
+        SERVER_URL = params.get('server', '').rstrip('/:') + ':' + params.get('port', '')
+        URL = SERVER_URL + '/api/'
+        #API_KEY = str(params.get('key')) or str((params.get('credentials') or {}).get('password', ''))  # type: ignore
+        API_KEY = str(params.get('key'))
+        if not API_KEY:
+            raise Exception('API Key must be provided.')
+        USE_SSL = not params.get('insecure')
+        API_TYPE = params.get('api_type', None)
+        API_VERSION = params.get('version', None)
+        if API_TYPE == 'REST_API':
+          REST_API_URL = SERVER_URL + '/restapi/v'+API_VERSION+'/'
+        REST_API_HEADERS={}
+        REST_API_HEADERS['X-PAN-KEY']=API_KEY
+
+    def prettify_rules(rules: Union[List[dict], dict], target: Optional[str] = None):
+        if not isinstance(rules, list):
+            rules = [rules]
+        pretty_rules_arr = []
+        for rule in rules:
+            if target and not target_filter(rule, target):
+                continue
+            pretty_rule = prettify_rule(rule)
+            pretty_rules_arr.append(pretty_rule)
+
+        return pretty_rules_arr
+
+    def target_filter(rule: dict, target: str) -> bool:
+        """
+        Args:
+            rule (dict): A rule from the panorama instance.
+            target (str): A serial number to filter the rule on
+
+        Returns:
+            True if the rule contains the firewall serial number (target), False if not.
+        """
+        firewalls_the_rule_applies_to = rule.get('target', {}).get('devices', {}).get('entry')
+        if not isinstance(firewalls_the_rule_applies_to, list):
+            firewalls_the_rule_applies_to = [firewalls_the_rule_applies_to]
+        for entry in firewalls_the_rule_applies_to:
+            if entry and entry.get('@name', None) == target:
+                return True
+
+        return False
+
+    def panorama_list_rules_command(args: dict):
+        if API_TYPE=='XML_API':
+            panorama_list_rules_xml(args)
+        else:
+            panorama_list_rules_rest_api(args)
+
+    def panorama_list_rules_rest_api(args: dict):
+        device_group = args.get('device_group')
+        PRE_POST = args.get('pre_post')
+        device_group_lower = device_group
+        if device_group:
+            device_group_lower = device_group.lower()
+        REQUEST_URL = REST_API_URL
+        if PRE_POST == 'pre-rulebase':
+            REQUEST_URL = REST_API_URL + 'Policies/SecurityPreRules'
+        else:
+            REQUEST_URL = REST_API_URL + 'Policies/SecurityPostRules'
+        params={}
+        if device_group_lower == 'shared':
+            params['location'] = 'shared'
+        else:
+            params['location'] = 'device-group'
+            params['device-group'] = device_group
+        rules = http_request_rest_api(
+            REQUEST_URL,
+            'GET',
+            params=params,
+            headers=REST_API_HEADERS,
+        )
+        # return_results(rules)
+        return_results({
+            'Type': entryTypes['note'],
+            'ContentsFormat': formats['json'],
+            'Contents': rules,
+            'ReadableContentsFormat': formats['markdown'],
+            'HumanReadable': tableToMarkdown('Security Rules:', rules,
+                                             ['Name', 'Location', 'Action', 'From', 'To',
+                                              'CustomUrlCategory', 'Service', 'Tags'],
+                                             removeNull=True),
+            'EntryContext': {
+                "Panorama.SecurityRule(val.Name == obj.Name)": rules
+            }
+        })
+
+    def panorama_list_rules_xml(args: dict):
+        """
+        List security rules
+        """
+        DEVICE_GROUP = args.get('device_group')
+        PRE_POST = args.get('pre_post')
+        if DEVICE_GROUP:
+            device_group_shared = DEVICE_GROUP.lower()
+        if DEVICE_GROUP == 'shared':
+            XPATH_SECURITY_RULES = "/config/shared/"
+        else:
+            XPATH_SECURITY_RULES = "/config/devices/entry/device-group/entry[@name=\'" + DEVICE_GROUP + "\']/"
+        xpath = XPATH_SECURITY_RULES + PRE_POST + '/security/rules/entry'
+        tag = args.get('tag')
+        target = args.get('target')
+        rules = panorama_list_rules(xpath, tag)
+        # pretty_rules = prettify_rules(rules, target)
+
+        return_results({
+            'Type': entryTypes['note'],
+            'ContentsFormat': formats['json'],
+            'Contents': rules,
+            'ReadableContentsFormat': formats['markdown'],
+            'HumanReadable': tableToMarkdown('Security Rules:', rules,
+                                             ['Name', 'Location', 'Action', 'From', 'To',
+                                              'CustomUrlCategory', 'Service', 'Tags'],
+                                             removeNull=True),
+            'EntryContext': {
+                "Panorama.SecurityRule(val.Name == obj.Name)": rules
+            }
+        })
+
+    @logger
+    def panorama_list_rules(xpath: str, tag: str = None):
+        params = {
+            'action': 'get',
+            'type': 'config',
+            'xpath': xpath,
+            'key': API_KEY
+        }
+
+        if tag:
+            params["xpath"] = f'{params["xpath"]}[( tag/member = \'{tag}\')]'
+
+        result = http_request(
+            URL,
+            'GET',
+            params=params,
+        )
+
+        return result['response']['result']['entry']
+
+    def http_request(uri: str, method: str, headers: dict = {},
+                     body: dict = {}, params: dict = {}, files: dict = None, is_pcap: bool = False, is_xml: bool = False) -> Any:
+        """
+        Makes an API call with the given arguments
+        """
+        demisto.info('uri - '+str(uri)+ ' params = '+ str(params))
+        result = requests.request(
+            method,
+            uri,
+            headers=headers,
+            data=body,
+            verify=USE_SSL,
+            params=params,
+            files=files
+        )
+
+        if result.status_code < 200 or result.status_code >= 300:
+            raise Exception(
+                'Request Failed. with status: ' + str(result.status_code) + '. Reason is: ' + str(result.reason))
+
+        # if pcap download
+        if is_pcap:
+            return result
+        if is_xml:
+            return result.text
+
+        json_result = json.loads(xml2json(result.text))
+
+        # handle raw response that does not contain the response key, e.g configuration export
+        if ('response' not in json_result or '@code' not in json_result['response']) and \
+                not json_result['response']['@status'] != 'success':
+            return json_result
+
+        # handle non success
+        if json_result['response']['@status'] != 'success':
+            if 'msg' in json_result['response'] and 'line' in json_result['response']['msg']:
+                response_msg = json_result['response']['msg']['line']
+                # catch non existing object error and display a meaningful message
+                if response_msg == 'No such node':
+                    raise Exception(
+                        'Object was not found, verify that the name is correct and that the instance was committed.')
+
+                #  catch urlfiltering error and display a meaningful message
+                elif str(response_msg).find('test -> url') != -1:
+                    if DEVICE_GROUP:
+                        raise Exception('URL filtering commands are only available on Firewall devices.')
+                    if 'Node can be at most 1278 characters' in response_msg:
+                        raise InvalidUrlLengthException('URL Node can be at most 1278 characters.')
+                    raise Exception('The URL filtering license is either expired or not active.'
+                                    ' Please contact your PAN-OS representative.')
+
+                # catch non valid jobID errors and display a meaningful message
+                elif isinstance(json_result['response']['msg']['line'], str) and \
+                        json_result['response']['msg']['line'].find('job') != -1 and \
+                        (json_result['response']['msg']['line'].find('not found') != -1
+                         or json_result['response']['msg']['line'].find('No such query job')) != -1:
+                    raise Exception('Invalid Job ID error: ' + json_result['response']['msg']['line'])
+
+                # catch already at the top/bottom error for rules and return this as an entry.note
+                elif str(json_result['response']['msg']['line']).find('already at the') != -1:
+                    return_results('Rule ' + str(json_result['response']['msg']['line']))
+                    sys.exit(0)
+
+                # catch already registered ip tags and return this as an entry.note
+                elif str(json_result['response']['msg']['line']).find('already exists, ignore') != -1:
+                    if isinstance(json_result['response']['msg']['line']['uid-response']['payload']['register']['entry'],
+                                  list):
+                        ips = [o['@ip'] for o in
+                               json_result['response']['msg']['line']['uid-response']['payload']['register']['entry']]
+                    else:
+                        ips = json_result['response']['msg']['line']['uid-response']['payload']['register']['entry']['@ip']
+                    return_results(
+                        'IP ' + str(ips) + ' already exist in the tag. All submitted IPs were not registered to the tag.')
+                    sys.exit(0)
+
+                # catch timed out log queries and return this as an entry.note
+                elif str(json_result['response']['msg']['line']).find('Query timed out') != -1:
+                    return_results(str(json_result['response']['msg']['line']) + '. Rerun the query.')
+                    sys.exit(0)
+
+            if '@code' in json_result['response']:
+                raise Exception(
+                    'Request Failed.\nStatus code: ' + str(json_result['response']['@code']) + '\nWith message: ' + str(
+                        json_result['response']['msg']['line']))
+            else:
+                raise Exception('Request Failed.\n' + str(json_result['response']))
+
+        if json_result['response']['@code'] not in ['19', '20']:
+            # error code non exist in dict and not of success
+            if 'msg' in json_result['response']:
+                raise Exception(
+                    'Request Failed.\nStatus code: ' + str(json_result['response']['@code']) + '\nWith message: ' + str(
+                        json_result['response']['msg']))
+            else:
+                raise Exception('Request Failed.\n' + str(json_result['response']))
+
+        return json_result
+
+    def http_request_rest_api(uri: str, method: str, headers: dict = {},
+                     body: dict = {}, params: dict = {}, files: dict = None, is_pcap: bool = False, is_xml: bool = False) -> Any:
+        """
+        Makes an API call with the given arguments
+        """
+        result = requests.request(
+            method,
+            uri,
+            headers=headers,
+            data=body,
+            verify=USE_SSL,
+            params=params,
+            files=files
+        )
+
+        if result.status_code < 200 or result.status_code >= 300:
+            raise Exception(
+                'Request Failed. with status: ' + str(result.status_code) + '. Reason is: ' + str(result.reason))
+
+        json_result = json.loads(result.text)
+
+        # handle raw response that does not contain the response key, e.g configuration export
+        if json_result['@status'] != 'success':
+            return json_result
+
+        # handle non success
+        if json_result['@status'] != 'success':
+            if '@code' in json_result:
+                raise Exception(
+                    'Request Failed.\nStatus code: ' + str(json_result['@code']) + '\nWith message: ' + str(
+                        json_result))
+            else:
+                raise Exception('Request Failed.\n' + str(json_result['response']))
+
+        if json_result['@code'] not in ['19', '20']:
+            # error code non exist in dict and not of success
+            return []
+
+        return json_result['result']['entry']
+
+
+    def panorama_test():
+        """
+        test module
+        """
+        params = {
+            'type': 'op',
+            'cmd': '<show><system><info></info></system></show>',
+            'key': API_KEY
+        }
+
+        http_request(
+            URL,
+            'GET',
+            params=params
+        )
+        return_results('ok')
+
+
+    def panorama_get_device_groups_command(args: dict):
+        if API_TYPE=='XML_API':
+            panorama_get_device_groups_xml(args)
+        else:
+            panorama_get_device_groups_rest_api(args)
+
+    def panorama_get_device_groups_xml(args: dict):
+        params = {
+            'action': 'get',
+            'type': 'config',
+            'xpath': '/config/devices/entry/device-group/entry',
+            'key': API_KEY
+        }
+
+        result = http_request(
+            URL,
+            'GET',
+            params=params,
+        )
+        command_results = CommandResults(
+            outputs_prefix='Panorama.DeviceGroups',
+            outputs=result['response']['result']['entry']
+        )
+        return_results(command_results)
+
+    def panorama_get_device_groups_rest_api(args: dict):
+        REQUEST_URL = REST_API_URL + 'Panorama/DeviceGroups'
+        results = http_request_rest_api(
+            REQUEST_URL,
+            'GET',
+            headers=REST_API_HEADERS,
+        )
+        command_results = CommandResults(
+            outputs_prefix='Panorama.DeviceGroups',
+            outputs=results
+        )
+        return_results(command_results)
+
+    def panorama_get_object_addresses_command(args: dict):
+        if API_TYPE=='XML_API':
+            panorama_get_object_addresses_xml(args)
+        else:
+            panorama_get_object_addresses_rest_api(args)
+
+    def panorama_get_object_addresses_xml(args: dict):
+        XPATH_OBJECT_ADDRESSES=''
+        device_group = args.get('device_group')
+        device_group_lower = device_group
+        if DEVICE_GROUP:
+            device_group_lower = DEVICE_GROUP.lower()
+        if device_group_lower == 'shared':
+            XPATH_OBJECT_ADDRESSES = "/config/shared/"
+        else:
+            XPATH_OBJECT_ADDRESSES = "/config/devices/entry/device-group/entry[@name=\'" + device_group + "\']/"
+        xpath = XPATH_OBJECT_ADDRESSES  + 'address'
+
+        params = {
+            'action': 'get',
+            'type': 'config',
+            'xpath': xpath,
+            'key': API_KEY
+        }
+
+        result = http_request(
+            URL,
+            'GET',
+            params=params,
+        )
+        command_results = CommandResults(
+            outputs_prefix='Panorama.ObjectAddresses',
+            outputs=result['response']['result']['address']
+        )
+        return_results(command_results)
+
+    def panorama_get_object_addresses_rest_api(args: dict):
+        REQUEST_URL = REST_API_URL + 'Objects/Addresses'
+        params={}
+        device_group = args.get('device_group')
+        device_group_lower = device_group
+        if device_group:
+            device_group_lower = device_group.lower()
+        if device_group_lower == 'shared':
+            params['location'] = 'shared'
+        else:
+            params['location'] = 'device-group'
+            params['device-group'] = device_group
+
+        results = http_request_rest_api(
+            REQUEST_URL,
+            'GET',
+            params=params,
+            headers=REST_API_HEADERS,
+        )
+        command_results = CommandResults(
+            outputs_prefix='Panorama.ObjectAddresses',
+            outputs=results
+        )
+        return_results(command_results)
+
+    def panorama_get_object_address_groups_command(args: dict):
+        if API_TYPE=='XML_API':
+            panorama_get_object_address_groups_xml(args)
+        else:
+            panorama_get_object_address_groups_rest_api(args)
+
+    def panorama_get_object_address_groups_xml(args: dict):
+        XPATH_OBJECT_ADDRESS_GRP=''
+        device_group = args.get('device_group')
+        device_group_lower = device_group
+        if DEVICE_GROUP:
+            device_group_lower = DEVICE_GROUP.lower()
+        if device_group_lower == 'shared':
+            XPATH_OBJECT_ADDRESS_GRP = "/config/shared/"
+        else:
+            XPATH_OBJECT_ADDRESS_GRP = "/config/devices/entry/device-group/entry[@name=\'" + device_group + "\']/"
+        xpath = XPATH_OBJECT_ADDRESS_GRP  + 'address-group'
+
+        params = {
+            'action': 'get',
+            'type': 'config',
+            'xpath': xpath,
+            'key': API_KEY
+        }
+
+        result = http_request(
+            URL,
+            'GET',
+            params=params,
+        )
+        command_results = CommandResults(
+            outputs_prefix='Panorama.ObjectAddressGroups',
+            outputs=result['response']['result']['address-group']
+        )
+        return_results(command_results)
+
+    def panorama_get_object_address_groups_rest_api(args: dict):
+        REQUEST_URL = REST_API_URL + 'Objects/AddressGroups'
+        params={}
+        device_group = args.get('device_group')
+        device_group_lower = device_group
+        if device_group:
+            device_group_lower = device_group.lower()
+        if device_group_lower == 'shared':
+            params['location'] = device_group
+        else:
+            params['location'] = 'device-group'
+            params['device-group'] = device_group
+
+        results = http_request_rest_api(
+            REQUEST_URL,
+            'GET',
+            params=params,
+            headers=REST_API_HEADERS,
+        )
+        command_results = CommandResults(
+            outputs_prefix='Panorama.ObjectAddressGroups',
+            outputs=results
+        )
+        return_results(command_results)
+
+    def panorama_get_api_type_command(args):
+        # command_results = CommandResults(
+        #     outputs_prefix='Panorama.APIType',
+        #     outputs=API_TYPE
+        # )
+        return_results(API_TYPE)
+
+
+    def main():
+        try:
+            args = demisto.args()
+            params = demisto.params()
+            handle_proxy()
+            initialize_instance(args=args, params=params)
+            command = demisto.command()
+            if command == 'test-module':
+                panorama_test()
+            elif command == 'panw-panorama-list-rules':
+                panorama_list_rules_command(args)
+            elif command == 'panw-panorama-get-device-groups':
+                panorama_get_device_groups_command(args)
+            elif command == 'panw-panorama-object-addresses':
+                panorama_get_object_addresses_command(args)
+            elif command == 'panw-panorama-object-address-groups':
+                panorama_get_object_address_groups_command(args)
+            elif command == 'panw-panorama-api-type':
+                panorama_get_api_type_command(args)
+            else:
+                raise NotImplementedError(f'Command {command} is not implemented.')
+        except Exception as err:
+                return_error(str(err), error=traceback.format_exc())
+
+        finally:
+            LOG.print_log()
+
+    if __name__ in ["__builtin__", "builtins", '__main__']:
+        main()
+
+    register_module_line('PANW IoT 3rd Party Integration - Panorama', 'end', __line__())
+  subtype: python3
+  type: python
