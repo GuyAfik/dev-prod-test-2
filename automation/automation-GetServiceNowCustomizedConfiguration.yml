@@ -1,0 +1,111 @@
+args:
+- description: Xsoar incident.
+  name: incident
+  required: true
+comment: Get all customized table and column names in the customers' ServiceNow.
+commonfields:
+  id: GetServiceNowCustomizedConfiguration
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GetServiceNowCustomizedConfiguration
+outputs:
+- contextPath: PanwIot3rdParty.SNConfig
+  description: customized table and column names in the customers' ServiceNow.
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('GetServiceNowCustomizedConfiguration', 'start', __line__())
+
+
+
+
+  def main():
+      args = demisto.args()
+      incident = args.get("incident")
+
+      device_table_name = str(incident.get("servicenowdiscoverediotdevicetablename", "u_zingbox_discovered_devices"))
+      u_category = str(incident.get("servicenowiotdevicecategory", "u_category"))
+      u_iot_tag = str(incident.get("servicenowiotdevicetag", "u_iot_tag"))
+      u_iot_vendor = str(incident.get("servicenowiotdevicevendor", "u_iot_vendor"))
+      u_iot_model = str(incident.get("servicenowiotdevicemodel", "u_iot_model"))
+      u_iot_os = str(incident.get("servicenowiotdeviceos", "u_iot_os"))
+      u_iot_ssid = str(incident.get("servicenowiotdevicessid", "u_iot_ssid"))
+      u_iot_site = str(incident.get("servicenowiotdevicesite", "u_iot_site"))
+      u_iot_vlan = str(incident.get("servicenowiotdevicevlan", "u_iot_vlan"))
+      u_iot_wired_wireless = str(incident.get("servicenowiotwiredwirelessdevice", "u_iot_wired_wireless"))
+      u_os_support = str(incident.get("servicenowiotdevicesupportedos", "u_os_support"))
+      u_profile = str(incident.get("servicenowiotdeviceprofile", "u_profile"))
+
+      if not device_table_name:
+          device_table_name = "u_zingbox_discovered_devices"
+      if not u_category:
+          u_category = "u_category"
+      if not u_iot_tag:
+          u_iot_tag = "u_iot_tag"
+      if not u_iot_vendor:
+          u_iot_vendor = "u_iot_vendor"
+      if not u_iot_model:
+          u_iot_model = "u_iot_model"
+      if not u_iot_os:
+          u_iot_os = "u_iot_os"
+      if not u_iot_ssid:
+          u_iot_ssid = "u_iot_ssid"
+      if not u_iot_site:
+          u_iot_site = "u_iot_site"
+      if not u_iot_vlan:
+          u_iot_vlan = "u_iot_vlan"
+      if not u_iot_wired_wireless:
+          u_iot_wired_wireless = "u_iot_wired_wireless"
+      if not u_os_support:
+          u_os_support = "u_os_support"
+      if not u_profile:
+          u_profile = "u_profile"
+
+      res = {
+          "device_table_name": device_table_name,
+          "u_category": u_category,
+          "u_iot_tag": u_iot_tag,
+          "u_iot_vendor": u_iot_vendor,
+          "u_iot_model": u_iot_model,
+          "u_iot_os": u_iot_os,
+          "u_iot_ssid": u_iot_ssid,
+          "u_iot_site": u_iot_site,
+          "u_iot_vlan": u_iot_vlan,
+          "u_iot_wired_wireless": u_iot_wired_wireless,
+          "u_os_support": u_os_support,
+          "u_profile": u_profile
+      }
+      results = CommandResults(
+          outputs_prefix="PanwIot3rdParty.SNConfig",
+          outputs=res
+      )
+      return results
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      res = main()
+      return_results(res)
+
+
+  register_module_line('GetServiceNowCustomizedConfiguration', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- PANW IoT 3rd Party Integration
+- servicenow v2
+timeout: 10m0s
+type: python
