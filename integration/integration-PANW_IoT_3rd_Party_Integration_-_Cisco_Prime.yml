@@ -1,0 +1,402 @@
+category: Network Security
+commonfields:
+  id: PANW IoT 3rd Party Integration - Cisco Prime
+  version: -1
+configuration:
+- display: 'Cisco Prime Server URL '
+  name: url
+  required: true
+  type: 0
+- display: Cisco Prime username
+  name: credentials
+  required: true
+  type: 9
+- display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: Cisco Prime Integration
+detaileddescription: Cisco Prime Integration with PAN IOT Cloud
+display: PANW IoT 3rd Party Integration - Cisco Prime
+image: data:image/png;base64,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
+name: PANW IoT 3rd Party Integration - Cisco Prime
+script:
+  commands:
+  - arguments:
+    - description: Client Mac Address
+      isArray: true
+      name: client
+      required: true
+    description: Get Cisco Prime Clients
+    name: prime-clients
+    outputs:
+    - contextPath: cisco-prime-IoT.clients
+      description: client list
+      type: string
+  - arguments:
+    - description: client MAC Address
+      isArray: true
+      name: client
+      required: true
+    description: Get Cisco Prime Client Details
+    name: prime-client-detail
+    outputs:
+    - contextPath: cisco-prime-IoT.client_detail
+      description: Client Details
+      type: string
+  - arguments:
+    - description: client mac address
+      name: client
+      required: true
+    description: Get Cisco Prime Client Count
+    name: prime-client-count
+    outputs:
+    - contextPath: cisco-prime-IoT.client_count
+      description: Client Count
+      type: string
+  - arguments:
+    - description: client mac address
+      name: client
+      required: true
+    description: Get Cisco Prime device
+    name: prime-device
+    outputs:
+    - contextPath: cisco-prime-IoT.device
+      description: Cisco prime Device
+      type: string
+  - arguments:
+    - description: Client Mac Address
+      isArray: true
+      name: client
+      required: true
+    description: Get Cisco Prime Inventory Details
+    name: prime-inventory-details
+    outputs:
+    - contextPath: cisco-prime-IoT.inventory_detail
+      description: Inventory Details
+      type: string
+  - arguments: []
+    description: Get Cisco Prime Sites
+    name: prime-sites
+    outputs:
+    - contextPath: cisco-prime-IoT.sites
+      description: Comma seperated sites
+      type: string
+  dockerimage: demisto/panw-iot:1.0.0.79918
+  runonce: false
+  script: |
+    register_module_line('PANW IoT 3rd Party Integration - Cisco Prime', 'start', __line__())
+
+
+
+    import urllib3
+    from requests.auth import HTTPBasicAuth
+
+    # Disable insecure warnings
+    urllib3.disable_warnings()
+
+
+    ''' CONSTANTS '''
+
+    INVALID_TOKEN_RESPONSE_CODE = 401
+    RATE_LIMIT_RESPONSE_CODE = 503
+    CONNECTION_TIME_OUT_RESPONSE_CODE = 504
+
+    BASE_URL = demisto.params().get('url')
+    USERNAME = demisto.params().get('credentials').get('identifier')
+    PASSWORD = demisto.params().get('credentials').get('password')
+    #SITES = demisto.params().get('sites')
+    params = {}
+    USE_SSL = not demisto.params().get('insecure', False)
+    LOG_PREFIX = 'PaloAltoNetworks3rdPartyIntegration_Cisco_Prime'
+    DEFAULT_HEADERS = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Connection': 'keep_alive'
+    }
+
+    CLIENT = '/webacs/api/v2/data/Clients'
+    CLIENT_DETAILS = '/webacs/api/v2/data/ClientDetails'
+    CLIENT_COUNT = '/webacs/api/v1/data/ClientCounts'
+    DEVICES = '/webacs/api/v1/data/Devices'
+    INVENTORY_DETAILS = 'webacs/api/v1/data/InventoryDetails'
+    #PLATFORM_INFO = '/webacs/api/v1/op/update/platformInfo'
+    PLATFORM_INFO = '/webacs/api/v1/op/apiHealth/callsPerClient'
+
+    def http_request(method, url_suffix, params=None, auth=None, data=None, headers=None):
+        if headers is None:
+            headers = DEFAULT_HEADERS
+        if params is None:
+            params = {}
+        url = BASE_URL + url_suffix
+        demisto.info(f'{LOG_PREFIX} - running {method} request with url={url}')
+        while True:
+            try:
+                time.sleep(0.3)
+                response = requests.request(
+                    method,
+                    url,
+                    headers=headers,
+                    auth=auth,
+                    verify=USE_SSL,
+                    params=params,
+                    data=data,
+                    timeout=30
+                )
+            except requests.exceptions.SSLError:
+                err_msg = 'Could not connect to Cisco Prime: Could not verify certificate.'
+                demisto.error(f'{LOG_PREFIX} - {err_msg}')
+                return_error(err_msg)
+            except requests.exceptions.ConnectionError:
+                err_msg = 'Connection Error. Verify that the Server URL and port are correct, and that the port is open.'
+                demisto.error(f'{LOG_PREFIX} - {err_msg}')
+                raise requests.ConnectionError(f'{LOG_PREFIX} - {err_msg}')
+            except requests.exceptions.ReadTimeout:
+                msg="Read Timed Out while reaching server"
+                demisto.error(f'{LOG_PREFIX} - {msg}')
+                raise requests.ReadTimeout(f'{LOG_PREFIX} - {msg}')
+            except Exception as e:
+                demisto.error(f'{LOG_PREFIX} - {str(e)}')
+                demisto.error(traceback.format_exc())  # print the traceback
+                return_error(f'Exception:\n{str(e)}')
+            else:
+                # handle rate limit
+                if response.status_code == RATE_LIMIT_RESPONSE_CODE:
+                    retry_after = max(1, int(response.headers.get('Retry-After', 1)))
+                    demisto.error(f'{LOG_PREFIX} - Rate Limit exceeded: retry after {retry_after}')
+                    time.sleep(retry_after)
+                    continue
+                elif response.status_code == CONNECTION_TIME_OUT_RESPONSE_CODE:
+                    msg="Connection Timed Out while reaching server and the status code is : "+str(CONNECTION_TIME_OUT_RESPONSE_CODE)
+                    demisto.error(f'{LOG_PREFIX} - {msg}')
+                    continue
+                else:
+                    break
+        if response.status_code in {500,501,502,503}:
+            demisto.error(f'{LOG_PREFIX} - Server error in API call to cisco prime - {response}')
+            demisto.info('Server error in API call to cisco prime - '+str(response))
+            return None
+        # handle request failure
+        if response.status_code not in {200, 201, 202, 204}:
+            err_msg = f'Error in API call to Cisco Prime Integration [{response.status_code}] - {response.content}'
+            demisto.error(f'{LOG_PREFIX} - {err_msg}')
+            return_error(err_msg)
+
+        try:
+            response = response.json()
+        except ValueError:
+            return_error(f'error: {response}')
+
+        return response
+
+
+    ''' COMMAND FUNCTIONS '''
+
+    def test_module() -> str:
+        """
+        :return: 'ok' if test passed, anything else will fail the test.
+        :rtype: ``str``
+        """
+        try:
+            token = get_platform_info()
+        except DemistoException as e:
+            raise e
+        else:
+            return 'ok'
+
+    def get_platform_info():
+        response = http_request('GET', PLATFORM_INFO, params,
+        auth=HTTPBasicAuth(USERNAME, PASSWORD))
+        demisto.info(f'platform_info: {response}')
+        try:
+            token = response['mgmtResponse']
+        except Exception:
+            return_error(f'error: while parsing platform info')
+        else:
+            return token
+
+
+    def get_device(headers):
+        mac_address = demisto.args().get('client')
+        res = []
+        for mac in mac_address:
+            params['macAddress'] = mac
+            response = http_request('GET', DEVICES, params=params, auth=HTTPBasicAuth(USERNAME, PASSWORD))
+            res.append(response)
+        return CommandResults(
+            readable_output=f'got {len(res)} device detail responses',
+            outputs_prefix='cisco-prime-IoT.device',
+            outputs=res
+        )
+
+    def get_clients(headers):
+        mac_address = demisto.args().get('client')
+        result = []
+        for mac in mac_address:
+            params['macAddress'] = "\""+mac+"\""
+            params['.full']='true'
+            response = http_request('GET', CLIENT+".json", params=params, auth=HTTPBasicAuth(USERNAME, PASSWORD))
+            try:
+                if response:
+                    clientInfo = response['queryResponse']['entity'][0]['clientsDTO']
+                    result.append(clientInfo)
+            except Exception:
+                pass
+        return CommandResults(
+            readable_output=f'got {len(result)} clients responses',
+            outputs_prefix='cisco-prime-IoT.clients',
+            outputs=result
+        )
+
+    def get_client_detail(headers):
+        client_mac_address = demisto.args().get('client')
+        mac_address = client_mac_address[0]['mac_list']
+        res = []
+        demisto.info(f'no. of mac_address :'+str(len(mac_address)))
+        for macAddr in mac_address:
+            params['macAddress'] = "\""+macAddr+"\""
+            params['.full']='true'
+            response = None
+            try:
+                response = http_request('GET', CLIENT_DETAILS+".json", params=params, auth=HTTPBasicAuth(USERNAME, PASSWORD))
+                if response and response['queryResponse']['@count'] > 0:
+                    clientDetails = response['queryResponse']['entity'][0]['clientDetailsV2DTO']
+                    demisto.info(f'{LOG_PREFIX} - client details for the mac={macAddr} are = {clientDetails} ')
+                    res.append(clientDetails)
+                else:
+                    pass
+            except KeyError:
+                clientDetails = response['queryResponse']['entity'][0]['clientDetailsDTO']
+                demisto.error(f'{LOG_PREFIX} - Error while retrieving client details for the mac={macAddr} and the error = {clientDetails} ')
+                res.append(clientDetails)
+            except requests.ConnectionError:
+                err_msg = 'Ignore Connection Error. Verify that the Server URL and port are correct, and that the port is open and ignore'
+                demisto.error(f'{LOG_PREFIX} - {err_msg}')
+                continue
+            except requests.ReadTimeout:
+                msg="Ignore Read Timed Out while reaching server and ignore"
+                demisto.error(f'{LOG_PREFIX} - {msg}')
+                continue
+            except Exception as e:
+                msg="Exception while calling client details api :"+str(e)
+                demisto.error(f'{LOG_PREFIX} - {msg}')
+                continue
+        return CommandResults(
+            readable_output=f'got {len(res)} client detail responses',
+            outputs_prefix='cisco-prime-IoT.client_detail',
+            outputs=res
+        )
+
+    def get_client_count(headers):
+        mac_address = demisto.args().get('client')
+        res = []
+        for mac in mac_address:
+            params['macAddress'] = mac
+            params['.full']='true'
+            response = http_request('GET', CLIENT_COUNT, params=params, auth=HTTPBasicAuth(USERNAME, PASSWORD))
+            res.append(response)
+        return CommandResults(
+            readable_output=f'got {len(res)} client count responses',
+            outputs_prefix='cisco-prime-IoT.client_count',
+            outputs=res
+        )
+
+
+    def get_inventory_detail(headers):
+        mac_address = demisto.args().get('client')
+        res = []
+        for mac in mac_address:
+            params['macAddress'] = mac
+            response = http_request('GET', INVENTORY_DETAILS, params=params, auth=HTTPBasicAuth(USERNAME, PASSWORD))
+            res.append(response)
+        return CommandResults(
+            readable_output=f'got {len(res)} inventory detail responses',
+            outputs_prefix='cisco-prime-IoT.inventory_detail',
+            outputs=res
+        )
+
+    # def get_sites():
+    #     return CommandResults(
+    #         readable_output=f'got sites information',
+    #         outputs_prefix='cisco-prime-IoT.sites',
+    #         outputs=SITES
+    #     )
+
+    def main() -> None:
+        """main function, parses params and runs command functions
+
+        :return:
+        :rtype:
+        """
+        global BASE_URL
+
+        # get the service API url
+        #BASE_URL = demisto.params()['url']
+        verify_certificate = not demisto.params().get('insecure', False)
+
+        handle_proxy()
+
+        demisto.info(f'Command being called is {demisto.command()}')
+        try:
+            #base64_basic_auth_token = base64.b64encode('%s:%s' % (USERNAME, PASSWORD))
+            headers = {
+                #'Authorization': 'Basic '+base64_basic_auth_token,
+                'Content-Type': 'application/json'
+            }
+            command = demisto.command()
+            if command == 'test-module':
+                # This is the call made when pressing the integration Test button.
+                return_results(test_module())
+            elif command == 'prime-device':
+                return_results(get_device(headers))
+
+            elif command == 'prime-clients':
+                return_results(get_clients(headers))
+
+            elif command == 'prime-client-detail':
+                return_results(get_client_detail(headers))
+
+            elif command == 'prime-client-count':
+                return_results(get_client_count(headers))
+
+            elif command == 'prime-inventory-details':
+                return_results(get_inventory_detail(headers))
+
+            # elif command == 'prime-sites':
+            #     return_results(get_sites())
+
+        # Log exceptions and return errors
+        except Exception as e:
+            demisto.error(traceback.format_exc())  # print the traceback
+            return_error(f'Failed to execute {demisto.command()} command.\nError:\n{str(e)}')
+
+        finally:
+            LOG.print_log()
+
+    ''' ENTRY POINT '''
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+
+
+
+
+    register_module_line('PANW IoT 3rd Party Integration - Cisco Prime', 'end', __line__())
+  subtype: python3
+  type: python
+sourcemoduleid: Cisco Prime
