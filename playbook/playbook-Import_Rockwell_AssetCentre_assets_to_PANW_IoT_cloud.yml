@@ -10,7 +10,6 @@ contentitemexportablefields:
     - all
     toServerVersion: ""
 description: Fetch data from Rockwell AssetCentre and send it to PANW IoT Platform
-dirtyInputs: true
 id: Import Rockwell AssetCentre assets to PANW IoT cloud
 inputs: []
 name: Import Rockwell AssetCentre assets to PANW IoT cloud
@@ -33,11 +32,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 0f7f5c63-4c79-4813-8894-7b12f36fa8b2
+      id: 5513ea55-2b13-450e-8247-be8714db0d9b
       iscommand: false
       name: ""
       version: -1
-    taskid: 0f7f5c63-4c79-4813-8894-7b12f36fa8b2
+    taskid: 5513ea55-2b13-450e-8247-be8714db0d9b
     timertriggers: []
     type: start
     view: |-
@@ -76,13 +75,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: 152ec5c6-7be6-4139-8d84-8ad9f2f24004
+      id: 46e785a7-d08b-4b0d-8493-976a97dfe147
       iscommand: false
       name: Is Rockwell AssetCentre integration enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: 152ec5c6-7be6-4139-8d84-8ad9f2f24004
+    taskid: 46e785a7-d08b-4b0d-8493-976a97dfe147
     timertriggers: []
     type: condition
     view: |-
@@ -122,13 +121,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: a33af12e-c5ea-48b5-8211-2218adca69a9
+      id: 72bbf2f1-e808-4e70-8cdf-f8b05777c263
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: a33af12e-c5ea-48b5-8211-2218adca69a9
+    taskid: 72bbf2f1-e808-4e70-8cdf-f8b05777c263
     timertriggers: []
     type: regular
     view: |-
@@ -167,13 +166,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: cd74445c-2d2d-4822-8e88-5f5aba310954
+      id: e1601c96-c197-4e23-8ff5-41b38e343c25
       iscommand: false
       name: Send Rockwell AssetCentre assets to PANW IoT
       script: SendRockwellAssetCentreAssetsToPANWIoT
       type: regular
       version: -1
-    taskid: cd74445c-2d2d-4822-8e88-5f5aba310954
+    taskid: e1601c96-c197-4e23-8ff5-41b38e343c25
     timertriggers: []
     type: regular
     view: |-
@@ -213,13 +212,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 7b992ae4-f817-4dc5-885a-5a4343ffbb22
+      id: b29e94ed-6589-40c7-8b65-c45dfdfcf08c
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 7b992ae4-f817-4dc5-885a-5a4343ffbb22
+    taskid: b29e94ed-6589-40c7-8b65-c45dfdfcf08c
     timertriggers: []
     type: regular
     view: |-
@@ -254,13 +253,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 13dfaaa6-30ec-412d-8051-b8271fa0c5ff
+      id: 66b6d9b7-e51d-4cee-8a6b-ded73b7a144b
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 13dfaaa6-30ec-412d-8051-b8271fa0c5ff
+    taskid: 66b6d9b7-e51d-4cee-8a6b-ded73b7a144b
     timertriggers: []
     type: condition
     view: |-
@@ -300,13 +299,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: eb09babb-5de5-4d56-80d9-fbe8ff6a5b16
+      id: 2f4ddc0e-ac1f-45cc-8003-648a9daece07
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: eb09babb-5de5-4d56-80d9-fbe8ff6a5b16
+    taskid: 2f4ddc0e-ac1f-45cc-8003-648a9daece07
     timertriggers: []
     type: regular
     view: |-
@@ -346,13 +345,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: a10f1e02-d75f-420c-8b5e-e76de90d0a7f
+      id: 50ab1189-667b-4238-86eb-98d548614e96
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: a10f1e02-d75f-420c-8b5e-e76de90d0a7f
+    taskid: 50ab1189-667b-4238-86eb-98d548614e96
     timertriggers: []
     type: regular
     view: |-
@@ -376,13 +375,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 95b8f5a0-f6b4-497e-8735-86f63e209338
+      id: 608729ec-0e4b-4987-8606-8db6d9c30c1e
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 95b8f5a0-f6b4-497e-8735-86f63e209338
+    taskid: 608729ec-0e4b-4987-8606-8db6d9c30c1e
     timertriggers: []
     type: regular
     view: |-
@@ -406,13 +405,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 07200200-496e-4eed-8bdf-d5731512a5e1
+      id: 68044089-5b00-41bf-893f-9e436a8c6726
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 07200200-496e-4eed-8bdf-d5731512a5e1
+    taskid: 68044089-5b00-41bf-893f-9e436a8c6726
     timertriggers: []
     type: regular
     view: |-
@@ -447,13 +446,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: df477b36-3d8a-4b8a-8c2b-d9975380d7ae
+      id: b0d68813-7a28-4274-848f-342c2b15895f
       iscommand: false
       name: Is Rockwell AssetCentre Integration Instance Available
       script: Exists
       type: condition
       version: -1
-    taskid: df477b36-3d8a-4b8a-8c2b-d9975380d7ae
+    taskid: b0d68813-7a28-4274-848f-342c2b15895f
     timertriggers: []
     type: condition
     view: |-
@@ -491,13 +490,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: fb356e9a-0372-4205-8156-4c5fd17ea4e3
+      id: 89ef66bb-83fd-497a-857c-ce9cf43b6d25
       iscommand: true
       name: No Instance passed to this Playbook. Reporting Error
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: fb356e9a-0372-4205-8156-4c5fd17ea4e3
+    taskid: 89ef66bb-83fd-497a-857c-ce9cf43b6d25
     timertriggers: []
     type: regular
     view: |-
