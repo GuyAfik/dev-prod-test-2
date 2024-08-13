@@ -1,0 +1,121 @@
+args:
+- name: brand_name
+  required: true
+commonfields:
+  id: 292ae09c-ada1-4d3c-840a-add10bfefa5a
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: CheckPANWIoTIntegrationInstances
+outputs:
+- contextPath: "yes"
+  description: If integration is available and at least one of the input instances
+    is active
+- contextPath: "no"
+  description: If the integration is unavailable or none of the input instances are
+    active
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('CheckPANWIoTIntegrationInstances', 'start', __line__())
+
+
+
+
+  ''' MAIN FUNCTION '''
+
+  INTEGRATION_MAP = {
+      "PANW IoT 3rd Party Integration - Syslog Sender": "siem",
+      "PANW IoT 3rd Party Integration - Cisco ISE": "ise",
+      "PANW IoT 3rd Party Integration - Cisco Prime": "cisco_prime",
+      "PANW IoT 3rd Party Integration - cisco-dnac-IoT": "cisco_dnac",
+      "PANW IoT 3rd Party Integration - SNMP": "snmp",
+      "PANW IoT 3rd Party Integration - Qualys": "qualys",
+      "PANW IoT 3rd Party Integration - Aruba ClearPass": "clearpass",
+      "PANW IoT 3rd Party Integration - ServiceNow v2" : "servicenow",
+      "PANW IoT 3rd Party Integration - Cisco ISE pxGrid" : "pxgrid",
+      "PANW IoT 3rd Party Integration - Aruba WLAN Controller" : "aruba_wlc",
+      "PANW IoT 3rd Party Integration - Cisco WLAN Controller" : "cisco_wlc",
+      "PANW IoT 3rd Party Integration - Forescout": "forescout",
+  }
+
+  def check_instance_states(brand_name):
+
+      all_instances = demisto.getModules()
+
+      enabled_instances = []
+      disabled_instances = []
+
+      for instance in all_instances:
+          if all_instances[instance]['brand'] == brand_name:
+              if all_instances[instance]['state'] == 'active':
+                  enabled_instances.append(instance)
+              elif all_instances[instance]['state'] == 'disabled':
+                  disabled_instances.append(instance)
+      return enabled_instances, disabled_instances
+
+
+  def send_panw_iot_disabled_status(instances, brand_name):
+      for instance in instances:
+          if instance != None and instance != "":
+              response = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+                  "status":"disabled",
+                  "message":"%s instance %s is disabled" % (brand_name, instance),
+                  "integration_name": INTEGRATION_MAP[brand_name],
+                  "playbook_name":"None",
+                  "custom_integration_name": instance,
+                  "asset_type":"device"
+              })
+              if isError(response[0]):
+                  continue
+
+
+  def main():
+      brand_name = demisto.args().get('brand_name')
+      if brand_name not in INTEGRATION_MAP:
+          return_error("Invalid brand name")
+      try:
+          active_instances, disabled_instances = check_instance_states(brand_name)
+          if disabled_instances:
+              send_panw_iot_disabled_status(disabled_instances, brand_name)
+
+          if active_instances:
+              demisto.results("Found active instances = %s" % active_instances)
+              demisto.results('yes')
+          else:
+              demisto.results("No instances found in enabled state. Make sure job/incident fields are populated")
+              if disabled_instances:
+                  demisto.results("Disabled instances = %s" % disabled_instances)
+              demisto.results('no')
+
+      except Exception as ex:
+          return_error(f'Failed to execute BaseScript. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('CheckPANWIoTIntegrationInstances', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- Condition
+type: python
