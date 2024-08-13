@@ -32,11 +32,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 40e6de9b-9d85-41a4-8c5c-f3a4686e1bae
+      id: 39776879-2080-4658-8590-1d7769c305c0
       iscommand: false
       name: ""
       version: -1
-    taskid: 40e6de9b-9d85-41a4-8c5c-f3a4686e1bae
+    taskid: 39776879-2080-4658-8590-1d7769c305c0
     timertriggers: []
     type: start
     view: |-
@@ -75,13 +75,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: 7aa44a56-4f43-4f93-8f6c-a73d57eaccb1
+      id: 5e5ef922-7a5c-44ea-8fcd-27d2835b6170
       iscommand: false
       name: Is Aruba Central integration enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: 7aa44a56-4f43-4f93-8f6c-a73d57eaccb1
+    taskid: 5e5ef922-7a5c-44ea-8fcd-27d2835b6170
     timertriggers: []
     type: condition
     view: |-
@@ -121,13 +121,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 4679337d-46c3-4da5-84e7-ffb1c1b1bc31
+      id: d0fb7673-b781-404e-8b35-83a971ce5ec7
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 4679337d-46c3-4da5-84e7-ffb1c1b1bc31
+    taskid: d0fb7673-b781-404e-8b35-83a971ce5ec7
     timertriggers: []
     type: regular
     view: |-
@@ -151,13 +151,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: c34bea80-0c9c-477b-8422-3f3298687e1a
+      id: 59fd0535-5f1e-4121-8eb6-f257650abb8d
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: c34bea80-0c9c-477b-8422-3f3298687e1a
+    taskid: 59fd0535-5f1e-4121-8eb6-f257650abb8d
     timertriggers: []
     type: regular
     view: |-
@@ -190,13 +190,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: d40de8b8-7c2a-457d-8b09-4db3c3639b13
+      id: 027257b5-aa87-4925-8575-960278e2dcfa
       iscommand: false
       name: Send Aruba Central clients to PANW IoT
       script: 5616fc46-082b-46ac-86d9-f1f317c8aed8
       type: regular
       version: -1
-    taskid: d40de8b8-7c2a-457d-8b09-4db3c3639b13
+    taskid: 027257b5-aa87-4925-8575-960278e2dcfa
     timertriggers: []
     type: regular
     view: |-
@@ -236,13 +236,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 331ebc61-4115-4a3e-8405-32858392e3da
+      id: 0cd18740-e737-4c10-8711-18782bc93768
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 331ebc61-4115-4a3e-8405-32858392e3da
+    taskid: 0cd18740-e737-4c10-8711-18782bc93768
     timertriggers: []
     type: regular
     view: |-
@@ -277,13 +277,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: a2577d18-1494-49bd-8b4e-70caa37a8c49
+      id: 9e9b064b-7df6-4055-8877-7a00e01a1b58
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: a2577d18-1494-49bd-8b4e-70caa37a8c49
+    taskid: 9e9b064b-7df6-4055-8877-7a00e01a1b58
     timertriggers: []
     type: condition
     view: |-
@@ -323,13 +323,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 6fe364b8-b972-4ba3-8a5b-eb885a362628
+      id: feb1548c-8af3-4ae5-835f-189efece30ad
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 6fe364b8-b972-4ba3-8a5b-eb885a362628
+    taskid: feb1548c-8af3-4ae5-835f-189efece30ad
     timertriggers: []
     type: regular
     view: |-
@@ -369,13 +369,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 4b1b9cb0-6f42-41c4-8831-041583a74eae
+      id: ca60a5c5-b770-46ef-8a95-ee687813d38a
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 4b1b9cb0-6f42-41c4-8831-041583a74eae
+    taskid: ca60a5c5-b770-46ef-8a95-ee687813d38a
     timertriggers: []
     type: regular
     view: |-
@@ -399,13 +399,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: dc9c1f95-effe-454f-8523-dce48b368c48
+      id: 28b72edb-ebf7-4d98-8758-efeaa32e18dd
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: dc9c1f95-effe-454f-8523-dce48b368c48
+    taskid: 28b72edb-ebf7-4d98-8758-efeaa32e18dd
     timertriggers: []
     type: regular
     view: |-
@@ -429,13 +429,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: acac4219-50ef-455a-8fb1-97f614352fce
+      id: d5445a9d-7e85-4b3c-87d7-edf0bce8c532
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: acac4219-50ef-455a-8fb1-97f614352fce
+    taskid: d5445a9d-7e85-4b3c-87d7-edf0bce8c532
     timertriggers: []
     type: regular
     view: |-
@@ -469,13 +469,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 4b73fe62-3b66-46ae-87a7-e58c85aa5413
+      id: a5b469d6-f0bd-4996-8340-b66b7bb0d065
       iscommand: false
       name: Is Aruba Central Integration Instance Available
       script: Exists
       type: condition
       version: -1
-    taskid: 4b73fe62-3b66-46ae-87a7-e58c85aa5413
+    taskid: a5b469d6-f0bd-4996-8340-b66b7bb0d065
     timertriggers: []
     type: condition
     view: |-
@@ -513,13 +513,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: b7eff75f-b992-473a-8a77-be3a61e570d1
+      id: 029c3e7b-01cd-46f9-8e93-700a8cfbd420
       iscommand: true
       name: No Instance passed to this Playbook. Reporting Error
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: b7eff75f-b992-473a-8a77-be3a61e570d1
+    taskid: 029c3e7b-01cd-46f9-8e93-700a8cfbd420
     timertriggers: []
     type: regular
     view: |-
