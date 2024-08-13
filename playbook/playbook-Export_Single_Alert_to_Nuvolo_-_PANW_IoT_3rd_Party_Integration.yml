@@ -1,0 +1,434 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: acee6fd5-71eb-4d99-832c-c30aa7961004
+inputs: []
+name: Export Single Alert to Nuvolo - PANW IoT 3rd Party Integration
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: a9b586ff-142b-461a-813e-db90e0bd4034
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: a9b586ff-142b-461a-813e-db90e0bd4034
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "2"
+      "yes":
+      - "12"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Nuvolo
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available. Otherwise returns
+        'no'
+      id: fe8243d4-06c5-4322-8fad-a1a156573d89
+      iscommand: false
+      name: Is Nuvolo enabled?
+      script: IsIntegrationAvailable
+      type: condition
+      version: -1
+    taskid: fe8243d4-06c5-4322-8fad-a1a156573d89
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 195
+        }
+      }
+  "2":
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: alert
+      integration_name:
+        simple: nuvolo
+      message:
+        simple: Nuvolo instance is not enabled
+      playbook_name:
+        simple: Export Single Alert to Nuvolo - PANW IoT 3rd Party Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 9ac9b796-b676-4e6f-8850-56e84a577fc6
+      iscommand: true
+      name: Send disabled status back to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 9ac9b796-b676-4e6f-8850-56e84a577fc6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "4":
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 198cd156-8def-4281-82bc-c542c520764d
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 198cd156-8def-4281-82bc-c542c520764d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+  "6":
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: alert
+      integration_name:
+        simple: nuvolo
+      message:
+        simple: 'Error: Failed to get alert instance zb_ticket id ${incident.correlation_id}.
+          ${Nuvolo-IoT.sendData}'
+      playbook_name:
+        simple: Export Single Alert to Nuvolo - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: dbf21891-f40d-457a-86b8-3eda820369c6
+      iscommand: true
+      name: Send error status back to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: dbf21891-f40d-457a-86b8-3eda820369c6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 895
+        }
+      }
+  "7":
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 5b2f5c89-c8b3-4563-839a-45dce9f4aa1b
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 5b2f5c89-c8b3-4563-839a-45dce9f4aa1b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 1070
+        }
+      }
+  "8":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: alert
+      correlation_id:
+        simple: ${incident.correlation_id}
+      customer_id:
+        simple: ${PanwIot3rdParty.customerid}
+      device_id:
+        simple: d4:f4:be:b0:c3:10
+      incident:
+        simple: ${incident}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 44da6d5f-d209-4a0c-80ed-e51be3d72752
+      iscommand: false
+      name: Send alert to Nuvolo
+      script: 89c1450e-b144-4b38-8559-11ecbd629c1f
+      type: regular
+      version: -1
+    taskid: 44da6d5f-d209-4a0c-80ed-e51be3d72752
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 545
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "10"
+      "yes":
+      - "6"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: dd28cd7b-c57a-44b7-8fd7-f70baed94e3b
+      iscommand: false
+      name: Was there an error when get alert details?
+      script: isError
+      type: condition
+      version: -1
+    taskid: dd28cd7b-c57a-44b7-8fd7-f70baed94e3b
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 720
+        }
+      }
+  "10":
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "11"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: alert
+      integration_name:
+        simple: nuvolo
+      message:
+        simple: Successfully send alert ${incident.correlation_id} to Nuvolo. ${Nuvolo-IoT.sendData}
+      playbook_name:
+        simple: Export Single Alert to Nuvolo - PANW IoT 3rd Party Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: a8a070fb-ec07-4e15-84d9-5ebd2468250b
+      iscommand: true
+      name: Send success status back to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: a8a070fb-ec07-4e15-84d9-5ebd2468250b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 895
+        }
+      }
+  "11":
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 87505904-482f-4f48-8b21-90b5dd257840
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 87505904-482f-4f48-8b21-90b5dd257840
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 1070
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Return the PANW IoT customer id.
+      id: 945a86d7-3817-4794-8d25-d6a0c153553e
+      iscommand: true
+      name: Get PANW IoT customer id.
+      script: panw-iot-3rd-party-get-customerid
+      type: regular
+      version: -1
+    taskid: 945a86d7-3817-4794-8d25-d6a0c153553e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 370
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1115,
+        "width": 1025,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
