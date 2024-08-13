@@ -32,11 +32,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 5bdb6d46-4bfb-47f9-871c-db57165cd7e5
+      id: d10376ae-0393-45ce-852b-db838fb99a8e
       iscommand: false
       name: ""
       version: -1
-    taskid: 5bdb6d46-4bfb-47f9-871c-db57165cd7e5
+    taskid: d10376ae-0393-45ce-852b-db838fb99a8e
     timertriggers: []
     type: start
     view: |-
@@ -65,13 +65,13 @@ tasks:
     skipunavailable: false
     task:
       brand: PANW IoT 3rd Party Integration - Microsoft SCCM
-      id: d3185af2-8f61-493a-8523-91ef16c43e5c
+      id: a7c7c00a-586b-448f-85b4-5d70a907107d
       iscommand: false
       name: Send Microsoft SCCM clients/devices to PANW IoT
       script: d4259325-0b09-4e73-8101-cc5df499fa8f
       type: regular
       version: -1
-    taskid: d3185af2-8f61-493a-8523-91ef16c43e5c
+    taskid: a7c7c00a-586b-448f-85b4-5d70a907107d
     timertriggers: []
     type: regular
     view: |-
@@ -94,13 +94,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: f16bb222-413f-42fc-8eb9-598177d0e6f5
+      id: a40afb45-9281-4893-8a12-fb4736502064
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: f16bb222-413f-42fc-8eb9-598177d0e6f5
+    taskid: a40afb45-9281-4893-8a12-fb4736502064
     timertriggers: []
     type: regular
     view: |-
@@ -138,13 +138,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 7066ef70-8207-4cfe-8435-fd3aff96144b
+      id: 6cb5b2c1-061c-4176-8bde-f9d8e1153bab
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 7066ef70-8207-4cfe-8435-fd3aff96144b
+    taskid: 6cb5b2c1-061c-4176-8bde-f9d8e1153bab
     timertriggers: []
     type: regular
     view: |-
@@ -182,13 +182,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 9ae14c64-09e2-48ac-82eb-d1df62408e7d
+      id: fa28bd73-e2a8-4c50-8b27-c055955d1efc
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 9ae14c64-09e2-48ac-82eb-d1df62408e7d
+    taskid: fa28bd73-e2a8-4c50-8b27-c055955d1efc
     timertriggers: []
     type: regular
     view: |-
@@ -212,13 +212,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 96a2c91c-5c37-40ed-8e62-0581ce02d2b4
+      id: 424754a5-1e02-4339-84d2-dc401f676d6f
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 96a2c91c-5c37-40ed-8e62-0581ce02d2b4
+    taskid: 424754a5-1e02-4339-84d2-dc401f676d6f
     timertriggers: []
     type: regular
     view: |-
@@ -253,13 +253,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 400ee69e-0721-4f10-8730-fb006ab35120
+      id: bc8fd992-e555-4a8a-854b-f692272605de
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 400ee69e-0721-4f10-8730-fb006ab35120
+    taskid: bc8fd992-e555-4a8a-854b-f692272605de
     timertriggers: []
     type: condition
     view: |-
@@ -297,13 +297,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 3102d03e-655c-4363-844e-fd55550738de
+      id: 2aa7fb40-a0d3-438c-8692-cfd9a76b4678
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 3102d03e-655c-4363-844e-fd55550738de
+    taskid: 2aa7fb40-a0d3-438c-8692-cfd9a76b4678
     timertriggers: []
     type: regular
     view: |-
@@ -341,13 +341,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: e9930d50-0f00-4363-8cb4-0450813f3a81
+      id: 880b45ec-7588-4045-859a-6db38de25613
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: e9930d50-0f00-4363-8cb4-0450813f3a81
+    taskid: 880b45ec-7588-4045-859a-6db38de25613
     timertriggers: []
     type: regular
     view: |-
@@ -371,13 +371,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 43dacd9d-6a2e-4b64-8f12-d9f4d6492b4f
+      id: 175beacb-02a9-4496-8d7e-6c428c6c3133
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 43dacd9d-6a2e-4b64-8f12-d9f4d6492b4f
+    taskid: 175beacb-02a9-4496-8d7e-6c428c6c3133
     timertriggers: []
     type: regular
     view: |-
@@ -416,13 +416,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: 1c9d66da-2caf-41ba-88fd-b16a1d283664
+      id: 43c8fa2c-1899-47bc-89cd-6b12a51ad756
       iscommand: false
       name: Is Microsoft SCCM integration enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: 1c9d66da-2caf-41ba-88fd-b16a1d283664
+    taskid: 43c8fa2c-1899-47bc-89cd-6b12a51ad756
     timertriggers: []
     type: condition
     view: |-
@@ -455,13 +455,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 5ecf6eb4-855e-4999-87cd-5d27ac866ca9
+      id: 7ff9c59f-cc99-4dc9-86a5-73570da26699
       iscommand: false
       name: Is Microsoft SCCM Integration Instance available in Job?
       script: Exists
       type: condition
       version: -1
-    taskid: 5ecf6eb4-855e-4999-87cd-5d27ac866ca9
+    taskid: 7ff9c59f-cc99-4dc9-86a5-73570da26699
     timertriggers: []
     type: condition
     view: |-
