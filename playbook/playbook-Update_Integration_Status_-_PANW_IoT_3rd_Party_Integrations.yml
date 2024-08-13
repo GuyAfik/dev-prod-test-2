@@ -1,0 +1,120 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: 227ab96f-0b0e-411b-8db6-1d3344925246
+inputs: []
+name: Update Integration Status - PANW IoT 3rd Party Integrations
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: c2dce68f-3175-44df-8282-8366e292e781
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: c2dce68f-3175-44df-8282-8366e292e781
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 630,
+          "y": -10
+        }
+      }
+  "1":
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 6fae840b-14be-4bd9-8be2-ed67aed7186f
+      iscommand: false
+      name: UpdatePANWIoTIntegrationStatus
+      script: UpdatePANWIoTIntegrationStatus
+      type: regular
+      version: -1
+    taskid: 6fae840b-14be-4bd9-8be2-ed67aed7186f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 630,
+          "y": 170
+        }
+      }
+  "2":
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: d98fa3f1-cbe7-454e-858b-008b9bd44d9b
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: d98fa3f1-cbe7-454e-858b-008b9bd44d9b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 630,
+          "y": 350
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 455,
+        "width": 380,
+        "x": 630,
+        "y": -10
+      }
+    }
+  }
