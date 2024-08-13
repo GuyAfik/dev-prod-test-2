@@ -9,7 +9,6 @@ contentitemexportablefields:
     propagationLabels:
     - all
     toServerVersion: ""
-dirtyInputs: true
 id: 227ab96f-0b0e-411b-8db6-1d3344925246
 inputs: []
 name: Update Integration Status - PANW IoT 3rd Party Integrations
@@ -31,11 +30,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: c2dce68f-3175-44df-8282-8366e292e781
+      id: 76e4ac58-e3c0-4f77-8a4f-e9e68efa99ea
       iscommand: false
       name: ""
       version: -1
-    taskid: c2dce68f-3175-44df-8282-8366e292e781
+    taskid: 76e4ac58-e3c0-4f77-8a4f-e9e68efa99ea
     timertriggers: []
     type: start
     view: |-
@@ -60,13 +59,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 6fae840b-14be-4bd9-8be2-ed67aed7186f
+      id: 0d0b45b8-84b5-4a50-89bc-ee3aafa282bf
       iscommand: false
       name: UpdatePANWIoTIntegrationStatus
       script: UpdatePANWIoTIntegrationStatus
       type: regular
       version: -1
-    taskid: 6fae840b-14be-4bd9-8be2-ed67aed7186f
+    taskid: 0d0b45b8-84b5-4a50-89bc-ee3aafa282bf
     timertriggers: []
     type: regular
     view: |-
@@ -89,13 +88,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: d98fa3f1-cbe7-454e-858b-008b9bd44d9b
+      id: 95811e13-04fa-4c37-894a-63a8edd46c24
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: d98fa3f1-cbe7-454e-858b-008b9bd44d9b
+    taskid: 95811e13-04fa-4c37-894a-63a8edd46c24
     timertriggers: []
     type: regular
     view: |-
