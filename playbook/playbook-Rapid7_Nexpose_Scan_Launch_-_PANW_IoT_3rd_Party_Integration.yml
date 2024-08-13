@@ -1,0 +1,437 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 2.0.13
+    packID: ""
+    packName: Palo Alto Networks IoT 3rd Party Integrations
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: This playbook is meant to be triggered by incident type from PANW IoT
+  Cloud. The custom fields (jobid, ip, site, engine, scanType and template) are used
+  to launch a scan on Rapid7
+dirtyInputs: true
+id: 184fda38-0a70-41a7-87b6-f3a34f3a5505
+inputs: []
+name: Rapid7 Nexpose Scan Launch - PANW IoT 3rd Party Integration
+outputs:
+- contextPath: incident
+  type: unknown
+sourceplaybookid: 38d9fa0d-80ca-4d0b-8424-4d388ebce25b
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 87dff7a6-2005-4856-881e-fb031d67e8e5
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 87dff7a6-2005-4856-881e-fb031d67e8e5
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 50
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 93140e26-ff4d-4ce7-8cc1-257733481af3
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 93140e26-ff4d-4ce7-8cc1-257733481af3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 1070
+        }
+      }
+  "5":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "6"
+      "yes":
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Rapid7 Nexpose
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available. Otherwise returns
+        'no'
+      id: 60f5cd20-e8cd-4cd4-8ae5-c05775913acd
+      iscommand: false
+      name: Is Rapid7 Nexpose Integration Enabled?
+      script: IsIntegrationAvailable
+      type: condition
+      version: -1
+    taskid: 60f5cd20-e8cd-4cd4-8ae5-c05775913acd
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 195
+        }
+      }
+  "6":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      integration_name:
+        simple: rapid7
+      message:
+        simple: Rapid7 Nexpose integration is not enabled
+      playbook_name:
+        simple: Rapid7 Nexpose Scan Launch - PANW IoT 3rd Party Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 57f4bcda-c9f9-49ee-8547-810fd45df904
+      iscommand: true
+      name: Report disabled status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 57f4bcda-c9f9-49ee-8547-810fd45df904
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 895
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      engine:
+        simple: ${incident.scannerid}
+      hosts:
+        simple: ${incident.ip}
+      name:
+        simple: ${incident.jobid}
+      site:
+        simple: ${incident.siteid}
+      template:
+        simple: ${incident.profileid}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Starts a scan for the specified engine and template.
+      id: 677663c2-a54d-4ee5-8c65-aeb92b21ee82
+      iscommand: true
+      name: Launch Rapid7 vulnerability Scan
+      script: '|||nexpose-start-scan-using-template-engine'
+      type: regular
+      version: -1
+    taskid: 677663c2-a54d-4ee5-8c65-aeb92b21ee82
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 370
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      integration_name:
+        simple: rapid7
+      message:
+        simple: ${Nexpose.scanLaunchfailStatus}
+      playbook_name:
+        simple: Rapid7 Nexpose Scan Launch - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: b87dc870-13d4-40a3-8b9b-e65939b6f26b
+      iscommand: true
+      name: Report Scan Launch Error to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: b87dc870-13d4-40a3-8b9b-e65939b6f26b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 895
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      name:
+        simple: Rapid7LaunchedScans
+      operation:
+        simple: insert
+      value:
+        simple: ${Nexpose.Scan.Id}_${incident.ip}_${incident.jobid}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: List operations, will create a new list if list does not exist
+      id: 7a1e4c0e-7017-4fde-8d5d-b050392eb8a6
+      iscommand: false
+      name: Update Rapid7 launched scan cache
+      script: PANWIoTLaunchedVulnerabilityScanCacheOperations
+      type: regular
+      version: -1
+    taskid: 7a1e4c0e-7017-4fde-8d5d-b050392eb8a6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 720
+        }
+      }
+  "15":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "12"
+      "yes":
+      - "9"
+      - "16"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+      path:
+        simple: Nexpose.scanLaunchfailStatus
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks for errors in a given task. If found, write it to the path
+        provided as an argument.
+      id: f24e6bcb-fd4a-400a-88eb-8d6eda6437ac
+      iscommand: false
+      name: Did the Scan Launch Fail?
+      script: ba739f62-3f46-417e-809b-3c73715e062d
+      type: condition
+      version: -1
+    taskid: f24e6bcb-fd4a-400a-88eb-8d6eda6437ac
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 545
+        }
+      }
+  "16":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      ip:
+        simple: ${incident.ip}
+      job_id:
+        simple: ${incident.jobid}
+      message:
+        simple: ${Nexpose.scanLaunchfailStatus}
+      scan_type:
+        simple: rapid7
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Upload reports (PDF + XML) for specified scan to IoT Cloud
+      id: 918dae58-6b1b-4599-8e50-118f4ea0ae94
+      iscommand: true
+      name: Report Scan Launch Error As Event
+      script: '|||panw-iot-3rd-party-upload-vulnerability-scan-report'
+      type: regular
+      version: -1
+    taskid: 918dae58-6b1b-4599-8e50-118f4ea0ae94
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 895
+        }
+      }
+  "17":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      integration_name:
+        simple: rapid7
+      message:
+        simple: Successfully launched scan for ip ${incident.ip} with job id ${incident.jobid}
+      playbook_name:
+        simple: Rapid7 Nexpose Scan Launch - PANW IoT 3rd Party Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: d4a52e9b-1bda-4640-84b5-84574fc98ad8
+      iscommand: true
+      name: Report Success Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: d4a52e9b-1bda-4640-84b5-84574fc98ad8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 895
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1115,
+        "width": 1670,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
