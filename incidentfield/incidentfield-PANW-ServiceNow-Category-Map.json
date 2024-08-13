@@ -57,7 +57,7 @@
 	"name": "PANW-ServiceNow-Category-Map",
 	"neverSetAsRequired": false,
 	"openEnded": false,
-	"orgType": "",
+	"orgType": "grid",
 	"ownerOnly": false,
 	"packID": "",
 	"packName": "",
