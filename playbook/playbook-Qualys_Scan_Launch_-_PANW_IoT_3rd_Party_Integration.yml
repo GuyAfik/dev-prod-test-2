@@ -35,11 +35,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: d7dbf7e9-5142-4350-8471-d0bde0c4808d
+      id: 707272bc-d7aa-4428-8197-d77231307263
       iscommand: false
       name: ""
       version: -1
-    taskid: d7dbf7e9-5142-4350-8471-d0bde0c4808d
+    taskid: 707272bc-d7aa-4428-8197-d77231307263
     timertriggers: []
     type: start
     view: |-
@@ -62,13 +62,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 33cb9d99-e754-4ed7-8e55-5ed6a3f652ec
+      id: 5a090f9a-8b17-4825-8641-8346d480616d
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 33cb9d99-e754-4ed7-8e55-5ed6a3f652ec
+    taskid: 5a090f9a-8b17-4825-8641-8346d480616d
     timertriggers: []
     type: regular
     view: |-
@@ -103,13 +103,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: f51b3a20-cf20-4e3b-8432-bcaa733e79d9
+      id: 35e63648-bef0-4600-8866-23232549f853
       iscommand: false
       name: Is Qualys Integration Enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: f51b3a20-cf20-4e3b-8432-bcaa733e79d9
+    taskid: 35e63648-bef0-4600-8866-23232549f853
     timertriggers: []
     type: condition
     view: |-
@@ -149,13 +149,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: d1257a5e-e885-4bfa-83f6-b7907e5e5e60
+      id: cb59e898-e999-4bcc-8e37-99a64c9a07a3
       iscommand: true
       name: Report disabled status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: d1257a5e-e885-4bfa-83f6-b7907e5e5e60
+    taskid: cb59e898-e999-4bcc-8e37-99a64c9a07a3
     timertriggers: []
     type: regular
     view: |-
@@ -191,13 +191,13 @@ tasks:
     task:
       brand: ""
       description: ' launch vulnerability scans in the user’s account.'
-      id: 1875306e-5966-44d4-8c93-5067a15d9bd2
+      id: 04b8caa9-f301-4fef-86d8-46bea56b9541
       iscommand: true
       name: Launch Qualys VM vulnerability Scan
       script: '|||qualys-vm-scan-launch'
       type: regular
       version: -1
-    taskid: 1875306e-5966-44d4-8c93-5067a15d9bd2
+    taskid: 04b8caa9-f301-4fef-86d8-46bea56b9541
     timertriggers: []
     type: regular
     view: |-
@@ -237,13 +237,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 78a3883c-f08c-49d3-87ab-3e349d76ca7a
+      id: 27a2df0f-998c-4185-8284-17724ebf18b4
       iscommand: true
       name: Report Scan Launch Error to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 78a3883c-f08c-49d3-87ab-3e349d76ca7a
+    taskid: 27a2df0f-998c-4185-8284-17724ebf18b4
     timertriggers: []
     type: regular
     view: |-
@@ -277,13 +277,13 @@ tasks:
     task:
       brand: ""
       description: List operations, will create a new list if list does not exist
-      id: 6266a0e5-7551-4c8d-8bc8-693f1ed30196
+      id: c7a58d74-363d-49a4-854c-d21f38d84f0d
       iscommand: false
       name: Update Qualys launched scan cache
       script: PANWIoTLaunchedVulnerabilityScanCacheOperations
       type: regular
       version: -1
-    taskid: 6266a0e5-7551-4c8d-8bc8-693f1ed30196
+    taskid: c7a58d74-363d-49a4-854c-d21f38d84f0d
     timertriggers: []
     type: regular
     view: |-
@@ -319,13 +319,13 @@ tasks:
       brand: ""
       description: Checks for errors in a given task. If found, write it to the path
         provided as an argument.
-      id: 46e22052-9499-4747-8c0c-5700b106ceb5
+      id: 8db0b237-23dd-438e-8739-068cbd134738
       iscommand: false
       name: Did the Scan Launch Fail?
       script: ea2fa025-47c1-420b-895b-d5b62cfab9b3
       type: condition
       version: -1
-    taskid: 46e22052-9499-4747-8c0c-5700b106ceb5
+    taskid: 8db0b237-23dd-438e-8739-068cbd134738
     timertriggers: []
     type: condition
     view: |-
@@ -361,13 +361,13 @@ tasks:
     task:
       brand: ""
       description: Upload reports (PDF + XML) for specified scan to IoT Cloud
-      id: a254c6d4-7e06-4db1-8e19-6274104b2dff
+      id: 1166df4a-3542-41ac-8dcd-ff06c0b1f7a2
       iscommand: true
       name: Report Scan Launch Error As Event
       script: '|||panw-iot-3rd-party-upload-vulnerability-scan-report'
       type: regular
       version: -1
-    taskid: a254c6d4-7e06-4db1-8e19-6274104b2dff
+    taskid: 1166df4a-3542-41ac-8dcd-ff06c0b1f7a2
     timertriggers: []
     type: regular
     view: |-
@@ -407,13 +407,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: ba432654-3b02-4cf1-8280-85c74c9988f5
+      id: 2526fb11-2ce9-4a76-80a8-a01ed69e89ac
       iscommand: true
       name: Report Success Status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: ba432654-3b02-4cf1-8280-85c74c9988f5
+    taskid: 2526fb11-2ce9-4a76-80a8-a01ed69e89ac
     timertriggers: []
     type: regular
     view: |-
