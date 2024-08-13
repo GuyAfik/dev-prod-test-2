@@ -1,0 +1,232 @@
+args:
+- description: Delta time to retrieve the scans
+  name: time
+- name: active_tenable_io_instance
+  required: true
+- defaultValue: BULK,INCREMENTAL
+  isArray: true
+  name: type
+  required: true
+commonfields:
+  id: GetTenableFinishedScansAndGenerateReportforPANWIoTCloudV2
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GetTenableFinishedScansAndGenerateReportforPANWIoTCloudV2
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('GetTenableFinishedScansAndGenerateReportforPANWIoTCloudV2', 'start', __line__())
+
+
+
+  import ipaddress
+
+  USING_TENABLE = demisto.args().get('active_tenable_io_instance')
+  TYPE = demisto.args().get('type')
+  LIST_NAME = 'TenableLaunchedReportsV2-'+str(TYPE)+"-"+str(USING_TENABLE)
+
+  def get_single_ip(ip):
+      if ',' in ip:
+          ip = ip.split(',')[0]
+          ip = get_single_ip(ip)
+      elif '-' in ip:
+          ip = ip.split('-')[0]
+      elif '/' in ip:
+          ip = ip.split('/')[0]
+      return str(ip)
+
+
+  def get_asset_id(ip_address):
+      try:
+          res = demisto.executeCommand("tenable-io-fetch-assetID", {"IP": ip_address, "using":USING_TENABLE})
+          asset_id = res[0]['Contents']
+
+          return asset_id
+
+      except Exception as e:
+          print('Exception when getting asset ID for ' + ip_address + ': ' + str(e))
+          return 'ErroredAssetId'
+
+
+  def validate_ip_address(address):
+      try:
+          ip = ipaddress.ip_address(address)
+          return True
+      except ValueError:
+          return False
+
+  def clean_up_previous_execution():
+
+      res = demisto.executeCommand('getList', {'listName' : LIST_NAME})
+      if (
+          not isinstance(res, list)
+          or 'Contents' not in res[0]
+          or not isinstance(res[0]['Contents'], str)
+          or 'Item not found (8)' in res[0]['Contents']
+      ):
+          return True
+
+      report_ids = res[0]['Contents']
+      report_id_list = [line.split(',') for line in report_ids.split('\n')]
+      for report_cache_entry in report_id_list[0]:
+          demisto.executeCommand("PANWIoTLaunchedVulnerabilityScanCacheOperations",
+                      {"name":LIST_NAME,"operation":"delete","value":report_cache_entry})
+      return True
+
+  def get_scan_reports():
+
+      clean_up_previous_execution()
+
+      last_modification_time = demisto.args().get('time')
+      res=None
+      if len(last_modification_time) == len('YYYY-MM-DD'):
+          res = scan_tenable = demisto.executeCommand("tenable-io-list-scans", {'lastModificationDate': last_modification_time, "using":USING_TENABLE})
+      elif len(last_modification_time) == len('YYYY-MM-DD hh:mm:ss'):
+          res = scan_tenable = demisto.executeCommand("tenable-io-list-scans", {'lastModificationTimestamp': last_modification_time, "using":USING_TENABLE})
+      else:
+          return_error("Error: Either lastModificationDate Or lastModificationTimestamp is incorrect.")
+
+
+      finished_scan_list = []
+
+      report_ids = res[0]['Contents']
+
+      try:
+          if report_ids != 'There is no output result':
+              for scan in range(len(report_ids)):
+                  scan_target_ip = report_ids[scan]['Targets']
+
+                  is_valid_ip = validate_ip_address(scan_target_ip)
+
+                  scan_target_ip = get_single_ip(scan_target_ip)
+
+                  scan_asset_id = get_asset_id(scan_target_ip)
+                  if scan_asset_id == 'ErroredAssetId':
+                      print("Skipping the IpAddress as its AssetId doesn't exist: "+scan_target_ip)
+
+                  scan_status = report_ids[scan]['Status']
+                  scan_id = report_ids[scan]['Id']
+
+
+                  if (scan_status == 'completed' and scan_asset_id != 'ErroredAssetId'):
+                      scan_metadata = scan_target_ip + "_" + str(scan_id) + "_" + str(scan_asset_id) + "_" + str(is_valid_ip)
+                      finished_scan_list.append(scan_metadata)
+          else:
+              appendContext('PANWIoTCloud.scansPresentOnTenable', "No")
+              return "No scans available on Tenable"
+
+      except Exception as e:
+          appendContext('PANWIoTCloud.scansPresentOnTenable', "No")
+          return "No Scans available on Tenable "+str(e)
+
+
+      if len(finished_scan_list) == 0:
+          appendContext('PANWIoTCloud.scansPresentOnTenable', "No")
+          return 'No PANW IoT launched Scans are in Finished state'
+
+      appendContext('PANWIoTCloud.scansPresentOnTenable', "Yes")
+      return launch_reports_for_finished_scans(finished_scan_list)
+
+
+  def doesIPExistsInIoTCloud(scan_ip):
+
+      res = demisto.executeCommand("panw-iot-3rd-party-device-details",{"ip":scan_ip})
+
+      if '[404] - Not Found' not in res[0]['Contents']:
+          return True
+      return False
+
+  def launch_reports_for_finished_scans(scan_list):
+      result_list = []
+      for entry in scan_list:
+          scan_ip, scan_id, asset_id, is_valid_ip = entry.split('_')
+
+
+          single_or_multi_ip=None
+          if(is_valid_ip == "False"):
+              single_or_multi_ip='multiIP'
+          else:
+              single_or_multi_ip=scan_ip
+
+          if(single_or_multi_ip!='multiIP' and not doesIPExistsInIoTCloud(scan_ip)):
+              result_list.append('IP doesn\'t exists in PANW IoT cloud: %s'%scan_ip)
+
+          else:
+              try:
+                  res = demisto.executeCommand("tenable-io-generate-report",
+                                       {"scanUUID": scan_id,
+                                        "assetID": asset_id,
+                                        "format": 'pdf',
+                                        "using":USING_TENABLE
+                                        })
+
+
+                  if isError(res):
+                      raise Exception(res[0]['Contents'])
+
+                  pdf_report_id = str(res[0]['Contents'])
+
+                  if pdf_report_id == "None":
+                      result_list.append('Skipping the PDF and CSV scan as for %s - %s - %s, PDF report launched with ID %s.' % (scan_ip, scan_id, asset_id, pdf_report_id))
+                  else:
+                      result_list.append('scan finished for %s(%s) - %s - %s, PDF report launched with ID %s' % (scan_ip,single_or_multi_ip, scan_id, asset_id, pdf_report_id))
+
+                      demisto.executeCommand("PANWIoTLaunchedVulnerabilityScanCacheOperations",
+                          {"name":LIST_NAME,"operation":"insert",
+                           "value":pdf_report_id+"_"+single_or_multi_ip+"_"+scan_id})
+
+
+                      res = demisto.executeCommand("tenable-io-generate-report",
+                                           {"scanUUID": scan_id,
+                                            "assetID": asset_id,
+                                            "format": 'csv',
+                                            "using":USING_TENABLE
+                                            })
+
+
+                      if isError(res):
+                          raise Exception(res[0]['Contents'])
+                      csv_report_id = str(res[0]['Contents'])
+                      # also add launched reports to cache
+                      result_list.append('scan finished for %s(%s) - %s - %s, CSV report launched with ID %s' % (scan_ip,single_or_multi_ip, scan_id, asset_id, csv_report_id))
+                      demisto.executeCommand("PANWIoTLaunchedVulnerabilityScanCacheOperations",
+                          {"name":LIST_NAME,"operation":"insert",
+                           "value":csv_report_id+"_"+single_or_multi_ip+"_"+scan_id})
+
+              except Exception as e:
+                  raise Exception("Failed to launch Tenable report "+str(e))
+
+      return result_list
+
+  def main():
+      try:
+          return_results(get_scan_reports())
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute GetTenableFinishedScansAndGenerateReportforPANWIoTCloudV2. Error: {str(ex)}')
+
+  ''' ENTRY POINT '''
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('GetTenableFinishedScansAndGenerateReportforPANWIoTCloudV2', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
