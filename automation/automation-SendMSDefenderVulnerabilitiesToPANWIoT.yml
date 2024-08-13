@@ -1,0 +1,253 @@
+args:
+- description: Active MS Defender XDR Instance
+  name: active_defender_instance
+  required: true
+- default: true
+  defaultValue: Critical
+  description: Get severities to filter tanium data.
+  name: severities
+- default: true
+  defaultValue: "30"
+  description: Get polling interval.
+  name: poll_interval
+commonfields:
+  id: SendMSDefenderVulnerabilitiesToPANWIoT
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.14.90585
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendMSDefenderVulnerabilitiesToPANWIoT
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendMSDefenderVulnerabilitiesToPANWIoT', 'start', __line__())
+
+
+
+  import json
+  import traceback
+  import time
+  import uuid
+  import re
+  from datetime import datetime, timedelta
+
+
+  DEFENDER_ACTIVE_INSTANCE = demisto.args().get("active_defender_instance")
+
+  def sendStatusToPanwIotCloud(status, msg):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      res = ""
+      count = 0
+      while True:
+          count += 1
+          resp = demisto.executeCommand(
+              "panw-iot-3rd-party-report-status-to-panw",
+              {
+                  "status": status,
+                  "message": msg,
+                  "integration_name": "ms_defender_xdr",
+                  "playbook_name": "Import MS Defender Vulnerability to PANW IoT cloud",
+                  "asset_type": 'vulnerability',
+                  "custom_integration_name": DEFENDER_ACTIVE_INSTANCE,
+                  "timestamp": int(round(time.time() * 1000))
+              },
+          )
+          if isError(resp[0]):
+              if count < 6:
+                  time.sleep(2)
+              else:
+                  errMsg = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get("Contents")}'
+                  raise Exception(errMsg)
+          else:
+              break
+      if isinstance(resp, list):
+          res = resp[0].get("Contents",None)
+      demisto.debug(f"Successfully send status to PAN IoT API:- {res}")
+      return res
+
+  def sendVulnerabilityToPanwIotCloud(defenderData, retry=0):
+      """
+      Sends vulnerabilities to PANW IoT Cloud.
+      :type defenderData: ``array``
+      :param defenderData: List of endpoints along with thier CVE findings to be sent to PANW IoT cloud
+      """
+      res = ""
+      count = 0
+      while True:
+          count += 1
+          res = ""
+          randomUuid = uuid.uuid4()
+          resp = demisto.executeCommand(
+              "panw-iot-3rd-party-report-vulnerabilities",
+              {"VulnerabilityData": defenderData, "batchId": str(randomUuid), "IntegrationName": "ms_defender_xdr"},
+          )
+          if isError(resp[0]):
+              if count < 6:
+                  time.sleep(2)
+              else:
+                  errMsg = f'Error, could not send endpoints to PANW IoT Cloud - {resp[0].get("Contents")}'
+                  raise Exception(errMsg)
+          else:
+              break
+      if isinstance(resp, list):
+          res = resp[0].get("Contents",None)
+      demisto.debug(f"Successfully send vulnerabilities to PAN IoT API:- {res}")
+      return res
+
+  def executeGetAllVulnerabilities(accessToken, offset, limit, severities, pollInterval):
+      res = ''
+      result = demisto.executeCommand("ms-defender-get-all-vulnerabilities", {'token': accessToken, 'limit': limit, 'offset': offset, "severity": severities, "poll_interval": pollInterval, "using": DEFENDER_ACTIVE_INSTANCE})
+      if result is not None and isError(result[0]):
+          errMsg = f'Error, failed to get all vulnerability from MS Defender - {result[0].get("Contents")}'
+          raise Exception(errMsg)
+      demisto.debug(f"Successfully get all vulnerabilities from MS Defender API")
+      return result[0]['Contents']
+
+  def getVulnerabilitiesCount(vulnerabilityData):
+      count = 0
+      for vulnerability in vulnerabilityData.get("data"):
+          cves = vulnerability.get("cve")
+          cveCount = len([cve for cve in cves if isinstance(cve, dict)])
+          count += cveCount
+      return count
+
+  def getAllVulnerabilitiesAndSendToPANIoT(accessToken, severities, pollInterval):
+      demisto.debug("Fetching vulnerabilities and sending them to PAN IoT")
+      offset, count = 0, 0
+      statusMsg = ''
+      macAddress = []
+      limit = 1000
+      vulnerabilitiesCount = 0
+      if accessToken:
+          while True:
+              vulnerabilityData = ''
+              mac = ''
+              vulnerabilityData = executeGetAllVulnerabilities(accessToken, offset, limit, severities, pollInterval)
+              if isinstance(vulnerabilityData, dict):
+                  data = vulnerabilityData.get('data', '')
+                  if data == '' or len(data) == 0:
+                      break
+              else:
+                  statusMsg = 'Failed to get vulnerability data from ms-defender-get-all-vulnerabilities command'
+                  return statusMsg, count, macAddress, vulnerabilitiesCount
+              vulnerabilitiesCount += getVulnerabilitiesCount(vulnerabilityData)
+              resp = sendVulnerabilityToPanwIotCloud(vulnerabilityData.get("data"))
+              mac = [mac['deviceid'] for mac in vulnerabilityData.get("data")]
+              macAddress.append(mac)
+              count += len(vulnerabilityData.get("data"))
+              demisto.info(f"Send {count} vulnerabilities successfully to PAN IoT Cloud")
+              time.sleep(5)
+              offset += limit
+          statusMsg = f'Successfully imported total {count} MS Defender vulnerabilities to PANW IoT'
+          return statusMsg, count, macAddress, vulnerabilitiesCount
+      statusMsg = 'Access token is not available'
+      demisto.error('Error while getting all vulnerabilities '+ str(ex))
+      return statusMsg, count, macAddress, vulnerabilitiesCount
+
+  def getNewAccessToken(accessTokenName):
+      demisto.debug("Creating a new token")
+      accessToken = ""
+      result = demisto.executeCommand("ms-defender-generate-token", {"name": accessTokenName})
+      if isinstance(result, list) and len(result) != 0:
+          if isError(result[0]) or "access_token" not in result[0].get("Contents", None):
+              errMsg = f'Error, failed to generate access token from MS Defendner - {result[0].get("Contents")}'
+              raise Exception(errMsg)
+          listData = result[0].get("Contents", None)
+          if listData:
+              demisto.executeCommand("createList", {"listName": accessTokenName, "listData": [listData]})
+              accessToken = listData.get("access_token", "")
+              demisto.debug("Successfully generated access token from MS Defender API")
+      return accessToken
+
+  def validateAccessToken(tokenData):
+      """
+      Function will check the given access token is expired or not
+      """
+      accessToken = ''
+      tokenData = json.loads(tokenData)
+      expire = datetime.fromtimestamp(int(tokenData[0].get("expires_on")))
+      # Get current datetime
+      currentTime = datetime.now()
+      # Calculate the time difference
+      if expire > currentTime:
+          accessToken = tokenData[0].get("access_token")
+          demisto.debug("Successfully validated the access token")
+      return accessToken
+
+  def executeGetAccessTokenCmd(accessTokenName):
+      """
+      Function will fetch the access token
+      """
+      accessToken = ""
+      listData = demisto.executeCommand("getList", {"listName": accessTokenName})
+      if isinstance(listData, list) and len(listData) != 0:
+          tokenData = listData[0].get("Contents", None)
+          if tokenData:
+              if "Item not found" not in tokenData:
+                  accessToken = validateAccessToken(tokenData)
+              if accessToken:
+                  return accessToken
+              accessToken = getNewAccessToken(accessTokenName)
+      demisto.debug(f"Successfully get the access token:- {accessToken}")
+      return accessToken
+
+
+  def main():
+      severities = demisto.args().get("severities", "Critical")
+      pollInterval = demisto.args().get("poll_interval", 30)
+      accessTokenName = DEFENDER_ACTIVE_INSTANCE + "_token"
+      try:
+          accessToken = executeGetAccessTokenCmd(accessTokenName)
+          if accessToken:
+              statusMsg, count, macAddress, vulnerabilitiesCount = getAllVulnerabilitiesAndSendToPANIoT(accessToken, severities, pollInterval)
+              if "Successfully" in statusMsg:
+                  sendStatusToPanwIotCloud("success", statusMsg)
+              else:
+                  sendStatusToPanwIotCloud("error", statusMsg)
+              statusReportedClients = {
+                  "status": statusMsg,
+                  "reported-clients": macAddress
+              }
+              reportSummary = {"Asset Type": "Total Assets Reported"}
+              reportSummary.update({"Endpoints": count, "Vulnerabilities": vulnerabilitiesCount, "Severity": severities})
+              return_results(
+                  CommandResults(
+                      readable_output=tableToMarkdown("Asset Report Summary:", reportSummary, removeNull=True),
+                      outputs_prefix="ms_defender_xdr",
+                      outputs=statusReportedClients
+                  )
+              )
+          else:
+              return return_error("No access token")
+      except Exception as ex:
+          sendStatusToPanwIotCloud("error", str(ex))
+          demisto.error(traceback.format_exc())
+          return_error(str(ex))
+
+  if __name__ in ("__main__", "__builtin__", "builtins"):
+      main()
+
+
+  register_module_line('SendMSDefenderVulnerabilitiesToPANWIoT', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
