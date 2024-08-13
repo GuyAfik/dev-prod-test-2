@@ -1,0 +1,171 @@
+args:
+- name: instance_name
+- name: data_overwrite
+commonfields:
+  id: 358c1c93-3141-4f13-878d-7ffa27562df7
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.14.95956
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendSolarwindsIPAMdatatoPANWIoT
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendSolarwindsIPAMdatatoPANWIoT', 'start', __line__())
+
+
+
+
+
+  import json
+  import traceback
+  import time
+  import ipaddress
+
+  SOLARWINDS_INSTANCE = demisto.args().get('instance_name')
+  OVERRIDE_IPAM_DATA = demisto.args().get('data_overwrite')
+  if OVERRIDE_IPAM_DATA is None or OVERRIDE_IPAM_DATA == '':
+      OVERRIDE_IPAM_DATA='false'
+
+  def validate_ip_address(address):
+      try:
+          ip = ipaddress.ip_address(address)
+          return True
+      except ValueError:
+          return False
+
+  def send_status_to_panw_iot_cloud(status, msg, solarwinds_ipam_active_instance):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      resp = demisto.executeCommand(
+          "panw-iot-3rd-party-report-status-to-panw",{
+              "status": status,
+              "message": msg,
+              "integration_name": "solarwinds_ipam",
+              "playbook_name": "Import SolarWinds IPAM Data to PANW IoT cloud",
+              "asset_type": "device",
+              "custom_integration_name": solarwinds_ipam_active_instance,
+              "timestamp": int(round(time.time() * 1000)),
+          },
+      )
+      if isError(resp[0]):
+          err_msg = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+  def report_subnets_to_panw_iot(subnet_list):
+      response = demisto.executeCommand("panw-iot-3rd-party-report-subnets", {
+          "integration_name":"ipam_solarwinds",
+          "subnet_data":subnet_list,
+          "data_overwrite":str(OVERRIDE_IPAM_DATA),
+          "site_overwrite":"false",
+      })
+      if isError(response[0]):
+          err_msg = f'Error, couldn\'t report the subnet data info to panw iot cloud - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+      return response[0]['Contents']
+
+  def get_solarwinds_ipam_subnets(page_length=1000, offset=1):
+      res = demisto.executeCommand("swis_get_ipam_subnets", {
+          'offset' : offset,
+          'page_length' : page_length,
+          'using' : SOLARWINDS_INSTANCE
+      })
+      if isError(res[0]):
+          err_msg = f'Error, failed to get ipam data from SolarWinds  - {res[0].get("Contents")}'
+          demisto.error(err_msg)
+      subnets = res[0]['Contents']['results']
+      return subnets
+
+  def build_panw_iot_subnet_payload(subnets=None):
+      if not subnets or len(subnets) == 0:
+          return []
+      res = []
+      for subnet in subnets:
+          try:
+              subnet_payload = {
+                  "vlan" : str(subnet.get("VLAN")),
+                  "name": subnet.get("FriendlyName"),
+                  "description": subnet.get("Comments")
+              }
+              address = subnet.get("Address")
+              cidr = subnet.get("CIDR")
+
+              if cidr and int(cidr) > 0 and int(cidr) < 32 and validate_ip_address(address):
+                  subnet_payload["prefix"] = address + "/" + str(cidr)
+              else:
+                  continue
+              res.append(subnet_payload)
+          except:
+              demisto.info("failed to parse subnet = %s" % subnet)
+      return res
+
+
+  def send_solarwinds_ipam_data_to_panw_iot():
+      offset = 1
+      page_length = 100
+      endpoint_cache = []
+      updates = 0
+      res = {}
+      subnets = []
+      count = 0
+      while(True):
+          iot_subnet_list = []
+          subnets = get_solarwinds_ipam_subnets(page_length, offset)
+          iot_subnet_list = build_panw_iot_subnet_payload(subnets)
+          if iot_subnet_list and len(iot_subnet_list) > 0:
+              res = report_subnets_to_panw_iot(iot_subnet_list)
+              updates += res.get("numOfUpdatedSubnets")
+              count += len(subnets)
+          send_status_to_panw_iot_cloud("success", "Solarwind IPAM data import in progress", SOLARWINDS_INSTANCE)
+          offset += page_length
+          if len(subnets) == 0  or len(subnets) < page_length or subnets is None:
+              break
+
+      results = {
+          "Subnets Imported From Solarwinds IPAM": count,
+          "Subnets Updated on IoT": updates
+      }
+      return results
+
+  def main():
+      try:
+          send_status_to_panw_iot_cloud("success", "Starting Solarwind IPAM data import playboook", SOLARWINDS_INSTANCE)
+          res = send_solarwinds_ipam_data_to_panw_iot()
+          return_results(
+              CommandResults(
+                  readable_output=tableToMarkdown("IPAM Subnet Import Summary:", res, removeNull=True),
+              )
+          )
+      except Exception as ex:
+          send_status_to_panw_iot_cloud("error", str(ex), SOLARWINDS_INSTANCE)
+          demisto.error(traceback.format_exc())
+          return_error(str(ex))
+
+
+  if __name__ in ("__main__", "__builtin__", "builtins"):
+      main()
+
+
+
+  register_module_line('SendSolarwindsIPAMdatatoPANWIoT', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
