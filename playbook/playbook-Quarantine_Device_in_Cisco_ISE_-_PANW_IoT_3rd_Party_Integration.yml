@@ -37,11 +37,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: f3fbf732-ac2a-4325-8135-51df946e1342
+      id: b46516bd-a55a-454a-8579-349438ce164d
       iscommand: false
       name: ""
       version: -1
-    taskid: f3fbf732-ac2a-4325-8135-51df946e1342
+    taskid: b46516bd-a55a-454a-8579-349438ce164d
     timertriggers: []
     type: start
     view: |-
@@ -74,13 +74,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 1b6a4229-d576-417a-809e-ac32081c1203
+      id: 557f46e7-f52a-401c-8001-2e0deedee65d
       iscommand: false
       name: Check Cisco ISE instances. Are any available?
       script: 292ae09c-ada1-4d3c-840a-add10bfefa5a
       type: condition
       version: -1
-    taskid: 1b6a4229-d576-417a-809e-ac32081c1203
+    taskid: 557f46e7-f52a-401c-8001-2e0deedee65d
     timertriggers: []
     type: condition
     view: |-
@@ -118,13 +118,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IoT cloud.
-      id: dc76a84c-542a-4c7e-8bae-e055213c1fe5
+      id: 1c64b385-8096-4ffa-8284-dc046715ad39
       iscommand: true
       name: Send error status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: dc76a84c-542a-4c7e-8bae-e055213c1fe5
+    taskid: 1c64b385-8096-4ffa-8284-dc046715ad39
     timertriggers: []
     type: regular
     view: |-
@@ -161,13 +161,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: f36831eb-45e0-4d74-81c7-5bcb5fcb581a
+      id: 66d5310f-61cd-48fe-8872-27e947caccf0
       iscommand: false
       name: Quarantine Endpoint
       script: QuarantinePANWIoTDevice
       type: regular
       version: -1
-    taskid: f36831eb-45e0-4d74-81c7-5bcb5fcb581a
+    taskid: 66d5310f-61cd-48fe-8872-27e947caccf0
     timertriggers: []
     type: regular
     view: |-
@@ -201,13 +201,13 @@ tasks:
       description: Checks whether the given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If an array is provided, will return yes
         if one of the entries returned an error.
-      id: fc97991b-b9c8-4239-8b82-ba41ae024b56
+      id: 8d38954d-4304-4752-8fd1-6372a9743296
       iscommand: false
       name: Was there an error?
       script: isError
       type: condition
       version: -1
-    taskid: fc97991b-b9c8-4239-8b82-ba41ae024b56
+    taskid: 8d38954d-4304-4752-8fd1-6372a9743296
     timertriggers: []
     type: condition
     view: |-
@@ -245,13 +245,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 8a143309-d859-46eb-8d6c-a6dbae84b65f
+      id: b0d3fe92-98ec-4479-81ce-e50fd9a9e9c9
       iscommand: true
       name: Send error status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 8a143309-d859-46eb-8d6c-a6dbae84b65f
+    taskid: b0d3fe92-98ec-4479-81ce-e50fd9a9e9c9
     timertriggers: []
     type: regular
     view: |-
@@ -289,13 +289,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 1e7520f8-55c8-4cde-8fe7-b2a4c5151f05
+      id: b1e5b05d-e641-4ff0-84e5-b69d41b4f79c
       iscommand: true
       name: Send success status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 1e7520f8-55c8-4cde-8fe7-b2a4c5151f05
+    taskid: b1e5b05d-e641-4ff0-84e5-b69d41b4f79c
     timertriggers: []
     type: regular
     view: |-
@@ -318,13 +318,13 @@ tasks:
     task:
       brand: Builtin
       description: Closes the current incident.
-      id: 786cda79-253f-4c97-826e-45345a4c5589
+      id: 3b1e5231-6c7b-4c55-81fa-70b280422315
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 786cda79-253f-4c97-826e-45345a4c5589
+    taskid: 3b1e5231-6c7b-4c55-81fa-70b280422315
     timertriggers: []
     type: regular
     view: |-
