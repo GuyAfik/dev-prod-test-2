@@ -1,0 +1,428 @@
+{
+	"XDRBuiltInField": false,
+	"XsiamIncidentFieldExtraData": null,
+	"aliasTo": "",
+	"aliases": null,
+	"associatedToAll": true,
+	"associatedTypes": [],
+	"autoCompleteTags": null,
+	"breachScript": "",
+	"cacheVersn": 0,
+	"caseInsensitive": true,
+	"cliName": "panwiotdevicecustomattributes",
+	"closeForm": false,
+	"columns": [
+		{
+			"displayName": "Attribute Name",
+			"fieldCalcScript": "",
+			"isDefault": true,
+			"isReadOnly": true,
+			"key": "attributename",
+			"orgType": "",
+			"required": false,
+			"script": "",
+			"selectValues": null,
+			"type": "shortText",
+			"width": 150
+		},
+		{
+			"displayName": "PANW IoT Custom Attribute",
+			"fieldCalcScript": "",
+			"isDefault": true,
+			"isReadOnly": false,
+			"key": "panwiotcustomattribute",
+			"orgType": "",
+			"required": false,
+			"script": "",
+			"selectValues": null,
+			"type": "shortText",
+			"width": 257
+		},
+		{
+			"displayName": "Export Attribute",
+			"fieldCalcScript": "",
+			"isDefault": true,
+			"isReadOnly": false,
+			"key": "exportattribute",
+			"orgType": "",
+			"required": false,
+			"script": "",
+			"selectValues": null,
+			"type": "boolean",
+			"width": 137
+		}
+	],
+	"content": false,
+	"defaultRows": [
+		{
+			"attributename": "deviceid",
+			"columnheader3": false,
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTDeviceID"
+		},
+		{
+			"attributename": "hostname",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTHostname"
+		},
+		{
+			"attributename": "category",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTCategory"
+		},
+		{
+			"attributename": "profile",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTProfile"
+		},
+		{
+			"attributename": "ip_address",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTIP"
+		},
+		{
+			"attributename": "risk_score",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTRiskScore"
+		},
+		{
+			"attributename": "risk_level",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTRiskLevel"
+		},
+		{
+			"attributename": "profile_vertical",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTProfileVertical"
+		},
+		{
+			"attributename": "profile_type",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTProfileType"
+		},
+		{
+			"attributename": "mac_address",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTMacAddress"
+		},
+		{
+			"attributename": "confidence_score",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTConfidenceScore"
+		},
+		{
+			"attributename": "site_name",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTSiteName"
+		},
+		{
+			"attributename": "location",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTLocation"
+		},
+		{
+			"attributename": "in_use",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTInUse"
+		},
+		{
+			"attributename": "dnac_location",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTDnacLocation"
+		},
+		{
+			"attributename": "vendor",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTVendor"
+		},
+		{
+			"attributename": "model",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTModel"
+		},
+		{
+			"attributename": "description",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTDescription"
+		},
+		{
+			"attributename": "long_description",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTLongDescription"
+		},
+		{
+			"attributename": "asset_tag",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTTag"
+		},
+		{
+			"attributename": "os_group",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTOSGroud"
+		},
+		{
+			"attributename": "os/firmware_version",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTOSFirmwareVersion"
+		},
+		{
+			"attributename": "osCombined",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTOS"
+		},
+		{
+			"attributename": "Serial_Number",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTSerial"
+		},
+		{
+			"attributename": "endpoint_protection",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTEPP"
+		},
+		{
+			"attributename": "endpoint_protection_vendor",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTEPPVendor"
+		},
+		{
+			"attributename": "NetworkLocation",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTNetworkLocation"
+		},
+		{
+			"attributename": "AET",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTAET"
+		},
+		{
+			"attributename": "DHCP",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTDHCP"
+		},
+		{
+			"attributename": "wire_or_wireless",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTWireOrWireless"
+		},
+		{
+			"attributename": "department",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTDepartment"
+		},
+		{
+			"attributename": "SMB",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTSMB"
+		},
+		{
+			"attributename": "Switch_Port",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTSwitchPort"
+		},
+		{
+			"attributename": "Switch_Name",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTSwitchName"
+		},
+		{
+			"attributename": "Switch_IP",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTSwitchIP"
+		},
+		{
+			"attributename": "source",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTSource"
+		},
+		{
+			"attributename": "services",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTServices"
+		},
+		{
+			"attributename": "is_server",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTisServer"
+		},
+		{
+			"attributename": "parent_mac",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTParentMac"
+		},
+		{
+			"attributename": "NAC_profile",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTNACProfile"
+		},
+		{
+			"attributename": "NAC_profile_source",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTNACProfileSource"
+		},
+		{
+			"attributename": "NAC_Auth_State",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTNACAuthState"
+		},
+		{
+			"attributename": "NAC_Auth_Info",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTNACAuthInfo"
+		},
+		{
+			"attributename": "Access_Point_IP",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTAccessPointIP"
+		},
+		{
+			"attributename": "SSID",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTSSID"
+		},
+		{
+			"attributename": "Authentication_Method",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTAuthenticationMethod"
+		},
+		{
+			"attributename": "Encryption_Cipher",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTEncryptionCipher"
+		},
+		{
+			"attributename": "CMMS_Source",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTCMMSSource"
+		},
+		{
+			"attributename": "CMMS_Category",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTCMMSCategory"
+		},
+		{
+			"attributename": "CMMS_State",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTCMMSState"
+		},
+		{
+			"attributename": "AD_Username",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTADUserName"
+		},
+		{
+			"attributename": "AD_Domain",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTADDomain"
+		},
+		{
+			"attributename": "WIFI_Auth_Timestamp",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTWIFIAuthTimeStamp"
+		},
+		{
+			"attributename": "WIFI_Auth_Status",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTWIFIAuthStatus"
+		},
+		{
+			"attributename": "EAP_Method",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTEAPMethod"
+		},
+		{
+			"attributename": "MAC",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTMAC"
+		},
+		{
+			"attributename": "display_tags",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTDisplayTags"
+		},
+		{
+			"attributename": "vlan",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTVLAN"
+		},
+		{
+			"attributename": "subnet",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTSubnet"
+		},
+		{
+			"attributename": "number_of_critical_alerts",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTNumberOfCriticalAlerts"
+		},
+		{
+			"attributename": "number_of_warning_alerts",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTNumberOfWarningAlerts"
+		},
+		{
+			"attributename": "number_of_caution_alerts",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTNumberOfCautionAlerts"
+		},
+		{
+			"attributename": "number_of_info_alerts",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTNumberOfInfoAlerts"
+		},
+		{
+			"attributename": "first_seen_date",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTFirstSeenDate"
+		},
+		{
+			"attributename": "External Network",
+			"exportattribute": true,
+			"panwiotcustomattribute": "PanwIoTInternetAccess"
+		}
+	],
+	"definitionId": "",
+	"description": "",
+	"editForm": true,
+	"fieldCalcScript": "",
+	"fromServerVersion": "",
+	"group": 0,
+	"hidden": false,
+	"id": "incident_panwiotdevicecustomattributes",
+	"ipVersion": "",
+	"isReadOnly": true,
+	"itemVersion": "",
+	"locked": false,
+	"mergeStrategy": "",
+	"name": "PANW IoT Device Custom Attributes",
+	"neverSetAsRequired": false,
+	"openEnded": false,
+	"orgType": "",
+	"ownerOnly": false,
+	"packID": "",
+	"packName": "",
+	"placeholder": "",
+	"pretty_name": "",
+	"propagationLabels": [
+		"all"
+	],
+	"required": false,
+	"runScriptAfterUpdate": false,
+	"script": "",
+	"selectValues": [],
+	"selectValuesMap": null,
+	"sla": 0,
+	"system": false,
+	"systemAssociatedTypes": null,
+	"template": "",
+	"threshold": 72,
+	"toServerVersion": "",
+	"type": "grid",
+	"unmapped": false,
+	"unsearchable": false,
+	"useAsKpi": false,
+	"validatedError": "",
+	"validationRegex": "",
+	"version": -1,
+	"x2_fields": ""
+}
