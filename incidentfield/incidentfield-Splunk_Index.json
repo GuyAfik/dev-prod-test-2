@@ -30,7 +30,7 @@
 	"name": "Splunk Index",
 	"neverSetAsRequired": false,
 	"openEnded": false,
-	"orgType": "",
+	"orgType": "shortText",
 	"ownerOnly": false,
 	"packID": "",
 	"packName": "",
