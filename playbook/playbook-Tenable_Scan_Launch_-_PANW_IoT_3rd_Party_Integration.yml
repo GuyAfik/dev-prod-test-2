@@ -9,7 +9,6 @@ contentitemexportablefields:
     propagationLabels:
     - all
     toServerVersion: ""
-dirtyInputs: true
 id: 5fde057b-bb45-4a90-8db4-5873a3419115
 inputs: []
 name: Tenable Scan Launch - PANW IoT 3rd Party Integration
@@ -31,11 +30,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: eb9d63a1-26f0-4444-8921-bee7f7e6cbe9
+      id: f46ba439-ad4f-4866-854c-b79c27fb75f6
       iscommand: false
       name: ""
       version: -1
-    taskid: eb9d63a1-26f0-4444-8921-bee7f7e6cbe9
+    taskid: f46ba439-ad4f-4866-854c-b79c27fb75f6
     timertriggers: []
     type: start
     view: |-
@@ -70,13 +69,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: c2618c9c-e9be-46e0-8eb8-eb773266fd89
+      id: 85722706-01d4-477a-8313-7da042fc30b7
       iscommand: false
       name: Is Tenable Integration Enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: c2618c9c-e9be-46e0-8eb8-eb773266fd89
+    taskid: 85722706-01d4-477a-8313-7da042fc30b7
     timertriggers: []
     type: condition
     view: |-
@@ -107,13 +106,13 @@ tasks:
       brand: ""
       description: Launches a scan with existing or custom targets. You can specify
         custom targets in the command arguments.
-      id: 4b77988a-be91-4e7d-88ee-8f27cd0e5a3e
+      id: a536b1ab-2e0d-45d4-8655-c2399204a4fc
       iscommand: true
       name: Launch Tenable.io vulnerability Scan
       script: '|||tenable-io-launch-scan'
       type: regular
       version: -1
-    taskid: 4b77988a-be91-4e7d-88ee-8f27cd0e5a3e
+    taskid: a536b1ab-2e0d-45d4-8655-c2399204a4fc
     timertriggers: []
     type: regular
     view: |-
@@ -153,13 +152,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message to PANW IOT cloud.
-      id: 27475b4b-4dbc-4fd7-8255-22a399e0ec79
+      id: b5aa3c28-99ba-49be-834a-a8d537534597
       iscommand: true
       name: Report disabled status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 27475b4b-4dbc-4fd7-8255-22a399e0ec79
+    taskid: b5aa3c28-99ba-49be-834a-a8d537534597
     timertriggers: []
     type: regular
     view: |-
@@ -195,13 +194,13 @@ tasks:
       brand: ""
       description: Checks for errors in a given task. If found, write it to the path
         provided as an argument.
-      id: edc1d0b5-52ca-4a0b-8eab-915e7e4889be
+      id: b8688ce7-4fcf-4d20-867a-f8e55169ce28
       iscommand: false
       name: Did the Scan Launch Fail?
       script: GetPANWIoTTenableErrors
       type: condition
       version: -1
-    taskid: edc1d0b5-52ca-4a0b-8eab-915e7e4889be
+    taskid: b8688ce7-4fcf-4d20-867a-f8e55169ce28
     timertriggers: []
     type: condition
     view: |-
@@ -241,13 +240,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message to PANW IOT cloud.
-      id: 7c3ce3e5-5e7b-4381-8a67-60b454b06740
+      id: 4bbda9ae-6f40-4284-8396-b8fb9f8e1c58
       iscommand: true
       name: Report Scan Launch Error to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 7c3ce3e5-5e7b-4381-8a67-60b454b06740
+    taskid: 4bbda9ae-6f40-4284-8396-b8fb9f8e1c58
     timertriggers: []
     type: regular
     view: |-
@@ -281,13 +280,13 @@ tasks:
     task:
       brand: ""
       description: List operations, will create a new list if list does not exist
-      id: fbd5b695-7f7d-4ba7-8a6c-a8fd97a377a1
+      id: bf2ee15a-481c-4d84-8059-4205025012e1
       iscommand: false
       name: Update Tenable launched scan cache
       script: 546f3d11-a5cf-488e-8952-87e66e17e951
       type: regular
       version: -1
-    taskid: fbd5b695-7f7d-4ba7-8a6c-a8fd97a377a1
+    taskid: bf2ee15a-481c-4d84-8059-4205025012e1
     timertriggers: []
     type: regular
     view: |-
@@ -327,13 +326,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message to PANW IOT cloud.
-      id: 82dc0d3b-a49c-4181-83a6-969edbcf44a7
+      id: f8e11a9a-da53-44f7-8ee0-96dcfa2c9ceb
       iscommand: true
       name: Report Success Status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 82dc0d3b-a49c-4181-83a6-969edbcf44a7
+    taskid: f8e11a9a-da53-44f7-8ee0-96dcfa2c9ceb
     timertriggers: []
     type: regular
     view: |-
@@ -356,13 +355,13 @@ tasks:
     task:
       brand: Builtin
       description: commands.local.cmd.close.inv
-      id: b157c962-63a3-4ceb-88e3-965f95522c33
+      id: 9ece9fca-731c-4621-8f94-c11e36bb85fb
       iscommand: true
       name: Close Investigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: b157c962-63a3-4ceb-88e3-965f95522c33
+    taskid: 9ece9fca-731c-4621-8f94-c11e36bb85fb
     timertriggers: []
     type: regular
     view: |-
@@ -401,13 +400,13 @@ tasks:
     task:
       brand: ""
       description: 'Initiate scan '
-      id: fbb6d66e-d151-44a1-8a1e-98843849fffe
+      id: 50e7dbc1-b1f9-4da6-85fb-d633c869a73c
       iscommand: true
       name: Initiate Tenable.io vulnerability Scan
       script: '|||tenable-io-initiate-scan'
       type: regular
       version: -1
-    taskid: fbb6d66e-d151-44a1-8a1e-98843849fffe
+    taskid: 50e7dbc1-b1f9-4da6-85fb-d633c869a73c
     timertriggers: []
     type: regular
     view: |-
@@ -437,13 +436,13 @@ tasks:
     task:
       brand: ""
       description: Sleep for X seconds
-      id: ea716313-ae14-46a3-87d1-751997b93346
+      id: 19b4d21f-d933-4224-8b64-0c0aaabeb9eb
       iscommand: false
       name: Wait for 10 sec
       script: Sleep
       type: regular
       version: -1
-    taskid: ea716313-ae14-46a3-87d1-751997b93346
+    taskid: 19b4d21f-d933-4224-8b64-0c0aaabeb9eb
     timertriggers: []
     type: regular
     view: |-
@@ -477,13 +476,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: be536104-b93d-4870-8838-9a3bb7179da3
+      id: 406a17b0-7267-4c7a-8e3d-03d9fc6fff67
       iscommand: false
       name: Was there any error in updating the Tenable Launched scan cache?
       script: isError
       type: condition
       version: -1
-    taskid: be536104-b93d-4870-8838-9a3bb7179da3
+    taskid: 406a17b0-7267-4c7a-8e3d-03d9fc6fff67
     timertriggers: []
     type: condition
     view: |-
@@ -519,13 +518,13 @@ tasks:
     task:
       brand: ""
       description: Upload reports (PDF + XML) for specified scan to IoT Cloud
-      id: cd2c10ad-cc43-4e07-8da2-2369767ee1bd
+      id: 772556d9-0dc6-495f-8350-091f1e5d3bc3
       iscommand: true
       name: Report Scan Launch Error As Event
       script: '|||panw-iot-3rd-party-upload-vulnerability-scan-report'
       type: regular
       version: -1
-    taskid: cd2c10ad-cc43-4e07-8da2-2369767ee1bd
+    taskid: 772556d9-0dc6-495f-8350-091f1e5d3bc3
     timertriggers: []
     type: regular
     view: |-
@@ -558,13 +557,13 @@ tasks:
     task:
       brand: ""
       description: Set a value in context under the key you entered.
-      id: 3925250e-fe02-4c86-8397-5285fdf66c70
+      id: 13f416d7-12d6-48dc-8469-22f4d8b66e7b
       iscommand: false
       name: Format error message for launch cache update
       script: Set
       type: regular
       version: -1
-    taskid: 3925250e-fe02-4c86-8397-5285fdf66c70
+    taskid: 13f416d7-12d6-48dc-8469-22f4d8b66e7b
     timertriggers: []
     type: regular
     view: |-
@@ -599,13 +598,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: a9870bda-99f5-41d9-8a8e-26ad1b3b1570
+      id: fb34b8a0-1940-4de5-8a13-a0d66cce26f1
       iscommand: false
       name: Did the Scan Initiation fail?
       script: isError
       type: condition
       version: -1
-    taskid: a9870bda-99f5-41d9-8a8e-26ad1b3b1570
+    taskid: fb34b8a0-1940-4de5-8a13-a0d66cce26f1
     timertriggers: []
     type: condition
     view: |-
@@ -640,13 +639,13 @@ tasks:
         incident context, under a provided context key. \nFor accessing the last executed
         task's comments, provide ${lastCompletedTaskEntries.[0]} as the value for
         the entryId input parameter."
-      id: 647027e0-91da-4671-82d9-06c1fb157535
+      id: a6ca18b7-f43b-4c35-8581-5c571988ed73
       iscommand: false
       name: Add output to error message
       script: commentsToContext
       type: regular
       version: -1
-    taskid: 647027e0-91da-4671-82d9-06c1fb157535
+    taskid: a6ca18b7-f43b-4c35-8581-5c571988ed73
     timertriggers: []
     type: regular
     view: |-
