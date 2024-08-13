@@ -31,11 +31,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 934888ab-3984-4077-891a-760d68bfe244
+      id: 35db8bc6-02c6-49a1-83ad-b482e23dd5a9
       iscommand: false
       name: ""
       version: -1
-    taskid: 934888ab-3984-4077-891a-760d68bfe244
+    taskid: 35db8bc6-02c6-49a1-83ad-b482e23dd5a9
     timertriggers: []
     type: start
     view: |-
@@ -72,13 +72,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: 7bcad145-755b-496d-82cb-17e416727479
+      id: f3a9d6f9-29d0-4b11-8e34-d5bdbbff9cba
       iscommand: false
       name: Is Cortex XDR integration enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: 7bcad145-755b-496d-82cb-17e416727479
+    taskid: f3a9d6f9-29d0-4b11-8e34-d5bdbbff9cba
     timertriggers: []
     type: condition
     view: |-
@@ -124,13 +124,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 868f19ed-8544-46a2-872e-e077cd07bc2b
+      id: 2c4a31ba-7bb5-4068-87fc-adc37e46974d
       iscommand: true
       name: Send Disable Status to IOT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 868f19ed-8544-46a2-872e-e077cd07bc2b
+    taskid: 2c4a31ba-7bb5-4068-87fc-adc37e46974d
     timertriggers: []
     type: regular
     view: |-
@@ -167,13 +167,13 @@ tasks:
     skipunavailable: false
     task:
       brand: Palo Alto Networks IoT 3rd Party
-      id: fd5d3da0-715b-4afd-8c99-7eaf123d40dd
+      id: 4efaa36f-ac9f-4fa5-87f7-339a2776cf71
       iscommand: false
       name: Export Device Attributes from Cortex XDR to PANW
       script: ExportDeviceAttributesFromCortexXDRToPANWIoTCloud
       type: regular
       version: -1
-    taskid: fd5d3da0-715b-4afd-8c99-7eaf123d40dd
+    taskid: 4efaa36f-ac9f-4fa5-87f7-339a2776cf71
     timertriggers: []
     type: regular
     view: |-
@@ -197,13 +197,13 @@ tasks:
     task:
       brand: Builtin
       description: commands.local.cmd.close.inv
-      id: b6ee3b8b-66ed-414e-8b9c-1de9b192a442
+      id: 78c0c10f-2a88-4189-8038-bf435a19f1a5
       iscommand: true
       name: Close Investigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: b6ee3b8b-66ed-414e-8b9c-1de9b192a442
+    taskid: 78c0c10f-2a88-4189-8038-bf435a19f1a5
     timertriggers: []
     type: regular
     view: |-
@@ -238,13 +238,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 3beb212c-94a2-4125-8205-c25a3d2d84f4
+      id: a9c97196-f87a-43be-835f-93fa7247431f
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 3beb212c-94a2-4125-8205-c25a3d2d84f4
+    taskid: a9c97196-f87a-43be-835f-93fa7247431f
     timertriggers: []
     type: condition
     view: |-
@@ -286,13 +286,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: d1338fa4-e624-4584-86d3-e4539ce11382
+      id: 91a6dd99-af01-4ba8-8a8f-4573f10cfd5e
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: d1338fa4-e624-4584-86d3-e4539ce11382
+    taskid: 91a6dd99-af01-4ba8-8a8f-4573f10cfd5e
     timertriggers: []
     type: regular
     view: |-
@@ -332,13 +332,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 2d75b101-8dbc-440b-86b7-95d9658b2a7f
+      id: 9be71021-9bf3-4570-83bd-df217a4c8d4b
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 2d75b101-8dbc-440b-86b7-95d9658b2a7f
+    taskid: 9be71021-9bf3-4570-83bd-df217a4c8d4b
     timertriggers: []
     type: regular
     view: |-
@@ -362,13 +362,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 621ac1c6-4359-42d7-8a89-70b7946bf9bf
+      id: fbefbf0c-48aa-41e1-8287-2bb626153704
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 621ac1c6-4359-42d7-8a89-70b7946bf9bf
+    taskid: fbefbf0c-48aa-41e1-8287-2bb626153704
     timertriggers: []
     type: regular
     view: |-
@@ -401,13 +401,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: b0fca1cf-50c6-4ad6-8ece-ee28a5e13a79
+      id: 469c483a-db8a-4e46-8bab-0eff6fba994b
       iscommand: false
       name: Is Cortex XDR Integration Instance Available
       script: Exists
       type: condition
       version: -1
-    taskid: b0fca1cf-50c6-4ad6-8ece-ee28a5e13a79
+    taskid: 469c483a-db8a-4e46-8bab-0eff6fba994b
     timertriggers: []
     type: condition
     view: |-
@@ -447,13 +447,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 17bc73b2-6bbe-4aef-8c7f-190245159ab9
+      id: e5e20c2a-390d-4cb6-84ec-94316522b24a
       iscommand: true
       name: No Instance passed to this Playbook. Reporting Error
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 17bc73b2-6bbe-4aef-8c7f-190245159ab9
+    taskid: e5e20c2a-390d-4cb6-84ec-94316522b24a
     timertriggers: []
     type: regular
     view: |-
