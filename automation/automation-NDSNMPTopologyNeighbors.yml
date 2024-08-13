@@ -1,0 +1,862 @@
+args:
+- description: Network Discovery instance name
+  name: nd_instance
+  required: true
+- description: Neighbor discovery skip patterns.
+  isArray: true
+  name: skip_patterns_map
+commonfields:
+  id: NDSNMPTopologyNeighbors
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: NDSNMPTopologyNeighbors
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('NDSNMPTopologyNeighbors', 'start', __line__())
+
+
+
+
+
+
+  import json
+  # from pysnmp.hlapi import *
+  import socket
+  import re
+  import enum
+  import time
+
+  NETWORK_DISCOVERY_INSTANCE=demisto.args().get("nd_instance")
+
+  # Macros
+  NODE_MGMT_IP = "node_mgmt_ip"
+  NODE_MGMT_MAC = "node_mgmt_mac_addr"
+  NODE_MGMT_DESC = "node_description"
+  NODE_VERSION = "node_version"
+  NODE_DEVICE_ID = "node_device_id"
+  NODE_CONN_PORT_LOCAL = "node_port_local"
+  NODE_CONN_PORT_REMOTE = "node_port_remote"
+  NODE_PLATFORM = "node_platform"
+  NODE_CAPABILITIES_CDP = "node_capabilities_cdp"
+  NODE_CAPABILITIES_LLDP = "node_capabilities_lldp"
+  NODE_VLAN_NATIVE = "node_vlan_native"
+  NODE_PRI_MGMT_IP = "node_pri_mgmt_ip"
+  CDP_NEIGHBORS = "cdp_neighbors"
+  LLDP_NEIGHBORS = "lldp_neighbors"
+  NEIGHBORS = "neighbors"
+  ZERO_HOST = '0.0.0.0'
+  PALO_ALTO_NETWORKS='palo alto networks'
+
+  # CDP based Neighbor Discovery Functions
+  #CDP OIDs
+  CDP_TOP_LEVEL_OID = '1.3.6.1.4.1.9.9.23.1.2.1.1'
+  CDP_OID_MGMT_IP = '1.3.6.1.4.1.9.9.23.1.2.1.1.4'
+  CDP_OID_DEVICE_VERSION = '1.3.6.1.4.1.9.9.23.1.2.1.1.5'
+  CDP_OID_DEVICE_ID = '1.3.6.1.4.1.9.9.23.1.2.1.1.6'
+  CDP_OID_DEVICE_PORT_LOCAL = '1.3.6.1.4.1.9.9.23.1.2.1.1.1'
+  CDP_OID_DEVICE_PORT_REMOTE = '1.3.6.1.4.1.9.9.23.1.2.1.1.7'
+  CDP_OID_DEVICE_PLATFORM = '1.3.6.1.4.1.9.9.23.1.2.1.1.8'
+  CDP_OID_DEVICE_CAPABILITIES = '1.3.6.1.4.1.9.9.23.1.2.1.1.9'
+  CDP_OID_DEVICE_VLAN_NATIVE = '1.3.6.1.4.1.9.9.23.1.2.1.1.11'
+  CDP_OID_DEVICE_MGMT_ADDR_PRI = '1.3.6.1.4.1.9.9.23.1.2.1.1.20'
+
+  #LLDP based Neighbor Discovery Functions
+  #LLDP OIDs (Note: Platform is derived and VLAN is missing)
+  LLDP_TOP_LEVEL_OID            = '1.0.8802.1.1.2.1.4'
+  LLDP_OID_MGMT_IP              = '1.0.8802.1.1.2.1.4.2.1.4'
+  LLDP_OID_DEVICE_VERSION       = '1.0.8802.1.1.2.1.4.1.1.10'
+  LLDP_OID_DEVICE_ID            = '1.0.8802.1.1.2.1.4.1.1.9'
+  LLDP_OID_DEVICE_PORT_LOCAL    = '1.0.8802.1.1.2.1.4.1.1.2'
+  LLDP_OID_DEVICE_PORT_REMOTE   = '1.0.8802.1.1.2.1.4.1.1.8'
+  LLDP_OID_DEVICE_CAPABILITIES  = '1.0.8802.1.1.2.1.4.1.1.11'
+  LLDP_OID_DEVICE_MGMT_ADDR_PRI = '1.0.8802.1.1.2.1.4.2.1.2'
+
+  NODE_LIST_LEVELS = "node_list_levels"
+  NODE_DETAILS_MAP = "node_details_map"
+  NODE_GRAPH_RESULT   = "node_graph"
+  NODE_GRAPH_NAME     = "name"
+  NODE_GRAPH_PARENT   = "parent"
+  NODE_GRAPH_CHILDREN = "children"
+
+  IF_IDX_TO_IF_NAME_OID               = '1.3.6.1.2.1.31.1.1.1.1'
+  IF_IDX_TO_IF_DESC_OID               = '1.3.6.1.2.1.2.2.1.2'
+  IF_IDX_TO_IP_ADDR_OID               = '1.3.6.1.2.1.4.20.1.2'
+  IF_IDX_TO_MAC_ADDRESS_OID           = '1.3.6.1.2.1.2.2.1.6'
+  IF_IDX_TO_OPER_STATUS_OID           = '1.3.6.1.2.1.2.2.1.8'
+
+  IF_OPER_STATUS = "intf_operational_status"
+  IF_INDEX = "intf_index"
+  IF_NAME = "intf_name"
+  IF_IP4_ADDR = "intf_ipv4_addr"
+  IF_MAC_ADDR = "intf_mac_addr"
+
+  NODE_DESC_OID='1.3.6.1.2.1.1.1'
+
+  FIELD_NAME_VS_API_NAME = {"Device Version":"node_version", "Device Description":"node_description", "Device ID":"node_device_id", "Device Platform":"node_platform"}
+
+  SKIP_PATTERNS={}
+
+  ERRORS=[]
+
+  class NetworkDiscoveryAPI(enum.Enum):
+      NODE_GRAPH = 1
+      L2L3 = 2
+      ENDPOINTS = 3
+
+  def get_ip_interface_info(host):
+      if_info = {}
+      # SNMP Walk to get IF Names
+      raw_result = walk(host, IF_IDX_TO_IF_DESC_OID)
+      for k, v in raw_result.items():
+          if_idx = k.split('.')[-1]
+          if if_idx not in if_info:
+              if_info[if_idx] = {}
+          if_info[if_idx][IF_NAME] = v.strip()
+
+      # SNMP Walk to get IF IP address
+      raw_result = walk(host, IF_IDX_TO_IP_ADDR_OID)
+      for k, v in raw_result.items():
+          if_idx = v
+          ip = '.'.join(k.strip().split('.')[-4:])
+          if is_valid_ipv4_address(ip):
+              if if_idx in if_info:
+                  if_info[if_idx][IF_IP4_ADDR] = ip
+
+      # SNMP Walk to get IF MAC address
+      raw_result = walk(host, IF_IDX_TO_MAC_ADDRESS_OID)
+      for k, v in raw_result.items():
+          if(v!=''):
+              if_idx = k.strip().split('.')[-1]
+              mac = remove_prefix(v,"0x")
+              if(len(mac) == 12):
+                  mac_colon = ':'.join(mac[i:i + 2] for i in range(0, 12, 2))
+              if if_idx in if_info:
+                  if_info[if_idx][IF_MAC_ADDR]=mac_colon
+
+      # SNMP Walk to get IF operational status
+      raw_result = walk(host, IF_IDX_TO_OPER_STATUS_OID)
+      for k, v in raw_result.items():
+          if(v!=''):
+              if_idx = k.strip().split('.')[-1]
+              if if_idx in if_info:
+                  val=''
+                  if v == '1':
+                      val='up'
+                  elif v == '2':
+                      val='down'
+                  elif v == '3':
+                      val='testing'
+                  elif v == '4':
+                      val='unknown'
+                  elif v == '5':
+                      val='dormant'
+                  elif v == '6':
+                      val='notPresent'
+                  else:
+                      val='lowerLayerDown'
+                  if_info[if_idx][IF_OPER_STATUS]=val
+      # Return the IP Interface list
+      return if_info
+
+
+  def walk(ip,oid):
+
+      response = demisto.executeCommand("nd-snmp-v2-walk-command", {
+          "ip":ip,
+          "oid": oid,
+          "using": NETWORK_DISCOVERY_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = 'Error, couldn\'t snmp v2 walk - '+str(response[0]['Contents'])
+          demisto.error(err_msg)
+          raise Exception(err_msg)
+      entryContext = response[0]['EntryContext']
+      errors = entryContext['errors']
+      global ERRORS
+      ERRORS=[]
+      if errors and isinstance(errors, list) and len(errors)>0:
+          for error in errors:
+              ERRORS.append(error)
+      return response[0]['Contents']
+
+  def get_site():
+      response = demisto.executeCommand("get-network-discovery-site", {
+          "using": NETWORK_DISCOVERY_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = 'Error while executing get-network-discovery-site- '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+      return response[0]['Contents']
+
+  def get_entry_ip():
+      response = demisto.executeCommand("get-network-discovery-entry-ip", {
+          "using": NETWORK_DISCOVERY_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = 'Error while executing get-network-discovery-entry-ip- '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+      return response[0]['Contents']
+
+  def remove_prefix(text, oid_prefix):
+      if text.startswith(oid_prefix):
+          return text[len(oid_prefix):]
+      return text
+
+  def is_valid_ipv4_address(address):
+      try:
+          socket.inet_pton(socket.AF_INET, address)
+      except AttributeError:  # no inet_pton here, sorry
+          try:
+              socket.inet_aton(address)
+          except socket.error:
+              return False
+          return address.count('.') == 3
+      except socket.error:  # not a valid address
+          return False
+
+      return True
+
+  def get_ip_from_hex(val):
+      raw_ip = val[2:]
+      ip = '.'.join(str(int(a+b,16)) for a,b in zip(raw_ip[::2], raw_ip[1::2]))
+      return ip
+
+  def get_str_from_hex(val):
+      #Check if the string starts with 0x then convert it to utf-8
+      if val.startswith('0x'):
+          try:
+              ver = bytes.fromhex(remove_prefix(val, '0x')).decode('utf-8')
+          except:
+              ver = val
+      else:
+          ver = val
+      return ver
+
+  def get_cdp_neighbors(host, oid):
+      result_map = {}
+      cdp_neighbor_map = {}
+      # SNMP Walk
+      raw_result = walk(host, oid)
+      # Get various CDP attributes - Mgmt IP, Device Version, Platform, Port, VLAN and others
+      for k, v in raw_result.items():
+          # Management IP
+          if k.startswith(CDP_OID_MGMT_IP):
+              dev_idx = remove_prefix(k, CDP_OID_MGMT_IP)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+                  node_mgmt_ip = get_ip_from_hex(v)
+                  if is_match(NODE_MGMT_IP, node_mgmt_ip):
+                      demisto.info("Ther is neighbors skip match with key:"+ str(NODE_MGMT_IP)+ " value:"+ str(node_mgmt_ip))
+                      result_map={}
+                      break
+                  result_map[dev_idx][NODE_MGMT_IP] = node_mgmt_ip
+          # Device Version
+          if k.startswith(CDP_OID_DEVICE_VERSION):
+              dev_idx = remove_prefix(k, CDP_OID_DEVICE_VERSION)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+                  node_ver = get_str_from_hex(v)
+                  if is_match(NODE_VERSION, node_ver):
+                      demisto.info("There is neighbors skip match with key:"+ str(NODE_VERSION)+ " value:"+ str(node_ver))
+                      result_map={}
+                      break
+                  result_map[dev_idx][NODE_VERSION] = node_ver
+          # Device Identifier
+          if k.startswith(CDP_OID_DEVICE_ID):
+              dev_idx = remove_prefix(k, CDP_OID_DEVICE_ID)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+                  if is_match(NODE_DEVICE_ID, v):
+                      demisto.info("There is neighbors skip match with key:"+ str(NODE_DEVICE_ID)+ " value:"+ str(v))
+                      result_map={}
+                      break
+                  result_map[dev_idx][NODE_DEVICE_ID] = v
+          # Device connected port
+          if k.startswith(CDP_OID_DEVICE_PORT_REMOTE):
+              dev_idx = remove_prefix(k, CDP_OID_DEVICE_PORT_REMOTE)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+                  if is_match(NODE_CONN_PORT_REMOTE, v):
+                      demisto.info("There is neighbors skip match with key:"+ str(NODE_CONN_PORT_REMOTE)+ " value:"+ str(v))
+                      result_map={}
+                      break
+                  result_map[dev_idx][NODE_CONN_PORT_REMOTE] = v
+          # Device Platform
+          if k.startswith(CDP_OID_DEVICE_PLATFORM):
+              dev_idx = remove_prefix(k, CDP_OID_DEVICE_PLATFORM)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+                  if is_match(NODE_PLATFORM, v):
+                      demisto.info("There is neighbors skip match with key:"+ str(NODE_PLATFORM)+ " value:"+ str(v))
+                      result_map={}
+                      break
+                  result_map[dev_idx][NODE_PLATFORM] = v
+          # Device Capabilities
+          if k.startswith(CDP_OID_DEVICE_CAPABILITIES):
+              dev_idx = remove_prefix(k, CDP_OID_DEVICE_CAPABILITIES)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+                  if is_match(NODE_CAPABILITIES_CDP, v):
+                      demisto.info("There is neighbors skip match with key:"+ str(NODE_CAPABILITIES_CDP)+ " value:"+ str(v))
+                      result_map={}
+                      break
+                  result_map[dev_idx][NODE_CAPABILITIES_CDP] = v
+          # Device VLAN Native
+          if k.startswith(CDP_OID_DEVICE_VLAN_NATIVE):
+              dev_idx = remove_prefix(k, CDP_OID_DEVICE_VLAN_NATIVE)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+                  if is_match(NODE_VLAN_NATIVE, v):
+                      demisto.info("There is neighbors skip match with key:"+ str(NODE_VLAN_NATIVE)+ " value:"+ str(v))
+                      result_map={}
+                      break
+                  result_map[dev_idx][NODE_VLAN_NATIVE] = v
+          # Primary Management IP
+          if k.startswith(CDP_OID_DEVICE_MGMT_ADDR_PRI):
+              dev_idx = remove_prefix(k, CDP_OID_DEVICE_MGMT_ADDR_PRI)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+                  node_pri_mgmt_ip = get_ip_from_hex(v)
+                  if is_match(NODE_PRI_MGMT_IP, node_pri_mgmt_ip):
+                      demisto.info("There is neighbors skip match with key:"+ str(NODE_PRI_MGMT_IP)+ " value:"+ str(node_pri_mgmt_ip))
+                      result_map={}
+                      break
+                  result_map[dev_idx][NODE_PRI_MGMT_IP] = node_pri_mgmt_ip
+
+      # Replace the Neighbor index with Neighbor IP
+      for k, v in result_map.items():
+          if NODE_MGMT_IP in v:
+              cdp_neighbor_map[v[NODE_MGMT_IP]] = v
+              if NODE_DEVICE_ID in v:
+                  demisto.info("\tFound CDP neighbor %s %s " % (v[NODE_MGMT_IP], v[NODE_DEVICE_ID]))
+              else:
+                  demisto.info("\tFound CDP neighbor %s " % v[NODE_MGMT_IP])
+
+      return cdp_neighbor_map
+
+  def get_lldp_dev_idx(key, oid):
+      idx = remove_prefix(key, oid)
+      dev_idx = '.'.join(idx.strip().split('.')[1:4])
+      return dev_idx
+
+  def get_lldp_mgmt_ip(val):
+      ip = '.'.join(val.strip().split('.')[-4:])
+      if is_valid_ipv4_address(ip):
+          return ip
+      else:
+          return "NA"
+
+  def get_lldp_neighbors(host, oid):
+      result_map = {}
+      lldp_neighbor_map = {}
+      # SNMP Walk
+      raw_result = walk(host, oid)
+      # Get various LLP attributes - Mgmt IP, Device Version, capabilities, Port and others
+      for k, v in raw_result.items():
+          # Management IP
+          if k.startswith(LLDP_OID_MGMT_IP):
+              dev_idx = get_lldp_dev_idx(k, LLDP_OID_MGMT_IP)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+                  if NODE_MGMT_IP not in result_map[dev_idx]:
+                      result_map[dev_idx][NODE_MGMT_IP] = get_lldp_mgmt_ip(k)
+          # Device Version
+          if k.startswith(LLDP_OID_DEVICE_VERSION):
+              dev_idx = get_lldp_dev_idx(k, LLDP_OID_DEVICE_VERSION)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+
+                  node_ver = get_str_from_hex(v)
+                  if is_match(NODE_VERSION, node_ver):
+                      demisto.info("There is neighbors skip match with key:"+ str(NODE_VERSION)+ " value:"+ str(node_ver))
+                      result_map={}
+                      break
+                  result_map[dev_idx][NODE_VERSION] = node_ver
+          # Device Identifier
+          if k.startswith(LLDP_OID_DEVICE_ID):
+              dev_idx = get_lldp_dev_idx(k, LLDP_OID_DEVICE_ID)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+                  result_map[dev_idx][NODE_DEVICE_ID] = v
+          # Device connected port - Remote and Local
+          if k.startswith(LLDP_OID_DEVICE_PORT_REMOTE):
+              dev_idx = get_lldp_dev_idx(k, LLDP_OID_DEVICE_PORT_REMOTE)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+                  if is_match(NODE_CONN_PORT_REMOTE, v):
+                      demisto.info("There is neighbors skip match with key:"+ str(NODE_CONN_PORT_REMOTE)+ " value:"+ str(v))
+                      result_map={}
+                      break
+                  result_map[dev_idx][NODE_CONN_PORT_REMOTE] = v
+
+          if k.startswith(LLDP_OID_DEVICE_PORT_LOCAL):
+              dev_idx = get_lldp_dev_idx(k, LLDP_OID_DEVICE_PORT_LOCAL)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+                  if is_match(NODE_CONN_PORT_LOCAL, v):
+                      demisto.info("There is neighbors skip match with key:"+ str(NODE_CONN_PORT_LOCAL)+ " value:"+ str(v))
+                      result_map={}
+                      break
+                  result_map[dev_idx][NODE_CONN_PORT_LOCAL] = v
+          # Device Capabilities
+          if k.startswith(LLDP_OID_DEVICE_CAPABILITIES):
+              dev_idx = get_lldp_dev_idx(k, LLDP_OID_DEVICE_CAPABILITIES)
+              if dev_idx != " " and len(dev_idx) > 0:
+                  if dev_idx not in result_map:
+                      result_map[dev_idx] = {}
+                  if is_match(NODE_CAPABILITIES_LLDP, v):
+                      demisto.info("There is neighbors skip match with key:"+ str(NODE_CAPABILITIES_LLDP)+ " value:"+ str(v))
+                      result_map={}
+                      break
+                  result_map[dev_idx][NODE_CAPABILITIES_LLDP] = v
+
+      # Replace the Neighbor index with Neighbor IP
+      for k, v in result_map.items():
+          if NODE_MGMT_IP in v:
+              lldp_neighbor_map[v[NODE_MGMT_IP]] = v
+              if NODE_DEVICE_ID in v:
+                  demisto.info("\tFound LLDP neighbor %s %s " % (v[NODE_MGMT_IP], v[NODE_DEVICE_ID]))
+              else:
+                  demisto.info("\tFound LLDP neighbor %s " % v[NODE_MGMT_IP])
+
+      return lldp_neighbor_map
+
+  # Main Neighbor Discovery Functions
+  def get_switches(host):
+      """
+      find switches that can be reached from the entry switch.
+      """
+      visited = set()
+      current_neighbors = set()
+      current_queue = []
+      next_queue = []
+      result = {}
+      depth_level_idx = 1
+      node_details_result = {}
+      node_list_result = {}
+      node_parent_map = {}
+      # Populate Node Graph
+      node_graph_result = {}
+      node_graph_result[NODE_GRAPH_NAME] = "Root: " + host
+      node_graph_result[NODE_GRAPH_PARENT] = "null"
+      node_graph_result[NODE_GRAPH_CHILDREN] = []
+      node_parent_map[host] = node_graph_result
+
+      discovery_protocols = []
+      discovery_protocols = demisto.executeCommand("get-nd-discovery-protocols", {"using": NETWORK_DISCOVERY_INSTANCE})
+      discovery_protocols = discovery_protocols[0]["Contents"].get("protocols")
+      demisto.info("Discovery Protocols: %s" % discovery_protocols)
+
+
+      # Add the Root Node
+      # node_list_result[depth_level_idx] = []
+      current_queue.append(host)
+      # Find the neighbors starting with Root Node
+      depth_level_node_list=[]
+      while len(current_queue) > 0:
+          demisto.info("Queue Length = %s, BFS Depth = %s" % ( str(len(current_queue)), str(depth_level_idx)))
+          ip = current_queue.pop(0)
+          if is_valid_ipv4_address(ip) == False:
+              continue
+          if ip in visited:
+              continue
+          if ip == ZERO_HOST:
+              continue
+          # Get the parent node
+          node_parent_ip = ip
+          try:
+              # Add node to the node details list
+              if ip not in node_details_result:
+                  node_details_result[str(ip)] = {}
+                  node_details_result[str(ip)][NODE_MGMT_IP] = ip
+                  node_details_result[str(ip)][NODE_MGMT_MAC] = get_mac_address_from_interface_info(ip)
+                  node_details_result[str(ip)][NODE_MGMT_DESC] = get_node_description(ip)
+          except Exception as e:
+              visited.add(ip)
+              demisto.info("Skipping host %s, Error - %s" % (ip, str(e)))
+              continue
+
+          visited.add(ip)
+
+          depth_level_node_list.append(ip)
+          demisto.info("Start Neighbor Discovery for: "+ str(ip))
+          errors_to_append=[]
+
+          try:
+              # Get CDP Neighbors
+              cdp_neighbors = {}
+              if "CDP" in discovery_protocols:
+                  demisto.info("\tGetting SNMP Neighbors")
+                  cdp_neighbors = get_cdp_neighbors(ip, CDP_TOP_LEVEL_OID)
+                  errors_to_append.extend(ERRORS)
+                  for key in cdp_neighbors.keys():
+                      if NODE_MGMT_IP in cdp_neighbors[key]:
+                          n_ip = cdp_neighbors[key].get(NODE_MGMT_IP)
+                          # Add child to Parent's children array
+                          if n_ip != ZERO_HOST and n_ip not in visited:
+                              if node_parent_ip in node_parent_map:
+                                  node_child = {}
+                                  node_child[NODE_GRAPH_NAME] = n_ip
+                                  node_child[NODE_GRAPH_PARENT] = node_parent_ip
+                                  node_child[NODE_GRAPH_CHILDREN] = []
+                                  node_parent_map[node_parent_ip][NODE_GRAPH_CHILDREN].append(node_child)
+                                  node_parent_map[n_ip] = node_child
+                          # Add the child IP to current neighbors for BFS
+                          if n_ip not in visited:
+                              if n_ip not in current_neighbors:
+                                  current_neighbors.add(n_ip)
+                                  if n_ip != ZERO_HOST:
+                                      next_queue.append(n_ip)
+                  # Add child node details
+                  #node_details_result[str(ip)][CDP_NEIGHBORS] = cdp_neighbors
+
+              if "LLDP" in discovery_protocols:
+              # Get lldp neighbors
+                  demisto.info("\tGetting LLDP Neighbors")
+                  lldp_neighbors = get_lldp_neighbors(ip, LLDP_TOP_LEVEL_OID)
+                  errors_to_append.extend(ERRORS)
+                  for key in lldp_neighbors.keys():
+                      if NODE_MGMT_IP in lldp_neighbors[key]:
+                          n_ip = lldp_neighbors[key].get(NODE_MGMT_IP)
+                          # Add child to Parent's children array
+                          if n_ip != ZERO_HOST and n_ip not in current_neighbors:
+                              if node_parent_ip in node_parent_map and n_ip not in visited:
+                                  node_child = {}
+                                  node_child[NODE_GRAPH_NAME] = n_ip
+                                  node_child[NODE_GRAPH_PARENT] = node_parent_ip
+                                  node_child[NODE_GRAPH_CHILDREN] = []
+                                  node_parent_map[node_parent_ip][NODE_GRAPH_CHILDREN].append(node_child)
+                                  node_parent_map[n_ip] = node_child
+                          # Add the child IP to current neighbors for BFS
+                          if n_ip not in visited:
+                              if n_ip not in current_neighbors:
+                                  current_neighbors.add(n_ip)
+                                  if n_ip != ZERO_HOST:
+                                      next_queue.append(n_ip)
+                  # Add child node details
+                  lldp_neighbors.update(cdp_neighbors)
+                  node_details_result[str(ip)][NEIGHBORS] = lldp_neighbors
+              parent_ip_node_desc = walk(node_parent_ip, NODE_DESC_OID)
+              node_details_result[str(ip)]["last_attempt_timestamp"]=current_time_in_millis()
+              node_details_result[str(ip)]["integration_instance_name"]=NETWORK_DISCOVERY_INSTANCE
+              # node_details_result[str(ip)]["parent_ip_address"]=node_parent_ip
+              # node_details_result[str(ip)]["parent_node_description"]=parent_ip_node_desc
+              if ERRORS and len(ERRORS)>0:
+                  node_details_result[str(ip)]["error_message"]=str(errors_to_append)
+
+              # Remove the Parent node from node_parent_map
+              removed_parent = node_parent_map.pop(node_parent_ip)
+              parent_ip = removed_parent['parent']
+              #print(parent_ip)
+              if parent_ip !="null" :
+                  parent_node_desc = node_details_result[str(parent_ip)]['node_description']
+                  node_details_result[str(ip)]["parent_ip_address"]=parent_ip
+                  node_details_result[str(ip)]["parent_node_description"]=parent_node_desc
+
+              # Adjust the elemnets in the current level and if empty go to next level elements
+              if len(current_queue) == 0:
+
+                  current_queue = next_queue
+                  next_queue = []
+                  current_neighbors.clear()
+                  # Set next level in the Topology
+                  node_list_result[depth_level_idx]=depth_level_node_list
+                  depth_level_node_list=[]
+                  depth_level_idx += 1
+                  if len(current_queue) > 0:
+                      node_list_result[depth_level_idx] = []
+
+
+              if len(current_queue) == 0:
+                  demisto.info("BFS Traversal Finished")
+                  demisto.info("BFS Depth = %s" % str(depth_level_idx))
+
+          except Exception as e:
+              demisto.error(traceback.format_exc())
+              demisto.error('Error while getting LLDP/CDP neighbors: '+ str(e))
+              raise Exception('Error while getting LLDP/CDP neighbors: '+ str(e))
+
+
+      # Add Node details
+      result[NODE_DETAILS_MAP] = node_details_result
+
+      result[NODE_LIST_LEVELS] = node_list_result
+      # return_outputs(node_list_result)
+      return result
+
+  def current_time_in_millis():
+      return round(time.time() * 1000)
+
+  def getEndpoints(ip):
+      response = demisto.executeCommand("NDSNMPTopologyEndpoints", {
+          "local_entry_ip":ip,
+          "nd_instance": NETWORK_DISCOVERY_INSTANCE
+      })
+      #demisto.info(f'endpoint response: {response[0]}')
+      if isError(response[0]):
+          err_msg = 'Error while executing NDSNMPTopologyEndpoints- '+str(response[0]['Contents'])
+          demisto.info(err_msg)
+          raise Exception(err_msg)
+      return response[0]['Contents']
+
+  def getL2Topology(ip):
+      response = demisto.executeCommand("NDSNMPTopologyL2Net", {
+          "local_entry_ip":ip,
+          "nd_instance": NETWORK_DISCOVERY_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = 'Error while executing NDSNMPTopologyL2Net- '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+      return response[0]['Contents']
+
+  def getL3Topology(ip):
+      response = demisto.executeCommand("NDSNMPTopologyL3Net", {
+          "local_entry_ip":ip,
+          "nd_instance": NETWORK_DISCOVERY_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = 'Error while executing NDSNMPTopologyL3Net- '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+      return response[0]['Contents']
+
+  def get_endpoints_l2_and_l3_networks(node_list_levels, site_name, node_details_map):
+      demisto.info(f'node_list_levels:{node_list_levels}')
+      demisto.info("Starting L2L3 Data Discovery")
+      #demisto.info(f'node_details_map:{node_details_map}')
+      ipVsTopology={}
+      l2_topology_list=[]
+      l2_topology_subset_list=[]
+      endpoint_list=[]
+      endpoint_subset_list=[]
+      count=0
+      for key in node_list_levels.keys():
+          eachlevelIPs = node_list_levels[key]
+          for eachIP in eachlevelIPs:
+              count=count+1
+              topology={}
+              #demisto.info(f'eachIP:{eachIP}')
+              demisto.info("Getting L2L3 Data for %s" % eachIP)
+              endpoints_obj = getEndpoints(eachIP)
+              endpoints = endpoints_obj['endpoints']
+              demisto.info("\t%d endpoints found on %s" % (len(endpoints), eachIP))
+              #demisto.info('Endpoints:'+str(endpoints))
+              mac_address = get_mac_address_from_interface_info(eachIP)
+              if len(endpoints) != 0:
+                  if len(endpoints) != 0:
+                      if isinstance(endpoints,list):
+                          for each_endpoint in endpoints:
+                              each_endpoint['node_ip'] = eachIP
+                              each_endpoint['node_mac'] = mac_address
+                          endpoint_subset_list.append(endpoints)
+                      else:
+                          endpoints['node_ip'] = eachIP
+                          endpoints['node_mac'] = mac_address
+                          endpoint_subset_list.append(endpoints)
+              l2_net_topology = getL2Topology(eachIP)
+              #demisto.info("Getting configuration data for %s" % eachIP)
+              if len(l2_net_topology) != 0:
+                  l2_net_topology['node_ip'] = eachIP
+                  l2_net_topology['node_mac_address'] = mac_address
+                  node_description = node_details_map[eachIP]['node_description']
+                  is_panw_firewall=False
+                  result = re.match(PALO_ALTO_NETWORKS,node_description, re.IGNORECASE)
+                  if result:
+                      is_panw_firewall=True
+                  l2_net_topology['is_panw_firewall'] = is_panw_firewall
+                  l2_net_topology_with_site = {}
+                  l2_net_topology_with_site['l2l3']=l2_net_topology
+                  l2_net_topology_with_site['site']=site_name
+                  l2_topology_subset_list.append(l2_net_topology_with_site)
+                  if l2_net_topology.get("ip_subnet_list"):
+                      demisto.info("\t%d subnets found on %s" % (len(l2_net_topology["ip_subnet_list"]), eachIP))
+                  if l2_net_topology.get("vlan_list"):
+                      demisto.info("\t%d vlans found on %s" % (len(l2_net_topology["vlan_list"]), eachIP))
+                  if l2_net_topology.get("interface_list"):
+                      demisto.info("\t%d interfaces found on %s" % (len(l2_net_topology["interface_list"]), eachIP))
+              if count%100 == 0:
+                  endpoint_list.append(endpoint_subset_list)
+                  endpoint_subset_list=[]
+                  l2_topology_list.append(l2_topology_subset_list)
+                  l2_topology_subset_list=[]
+      if len(endpoint_subset_list) > 0:
+          endpoint_list.append(endpoint_subset_list)
+      if len(l2_topology_subset_list) > 0:
+          l2_topology_list.append(l2_topology_subset_list)
+      site_name = get_site()
+      demisto.info("Finished L2L3 Discovery. Writing output files.\n\n")
+      endpoint_file_entries = getFileInfoListForEndpoints(endpoint_list,site_name)
+      l2l3_file_entries = getFileInfoListForL2L3(l2_topology_list,site_name)
+      endpoint_file_entries.extend(l2l3_file_entries)
+      return endpoint_file_entries
+
+  def getFileInfoListForEndpoints(endpoint_list,site_name):
+      endpoint_file_entries=[]
+      count=0
+      for each_subnet_endpoints in endpoint_list:
+          count=count+1
+          endpoints={}
+          endpoints['endpoints']=each_subnet_endpoints
+          endpoints['site']=site_name
+          endpoint_list_file_entry = getFileInfo(count, NetworkDiscoveryAPI.ENDPOINTS, endpoints)
+          endpoint_file_entries.append(endpoint_list_file_entry)
+      return endpoint_file_entries
+
+  def getFileInfoListForL2L3(l2_topology_list,site_name):
+      l2_topology_file_entries=[]
+      count=0
+      for each_l2_topology_subnet in l2_topology_list:
+          count=count+1
+          l2_topology_list_file_entry = getFileInfo(count, NetworkDiscoveryAPI.L2L3, each_l2_topology_subnet)
+          l2_topology_file_entries.append(l2_topology_list_file_entry)
+      return l2_topology_file_entries
+
+
+  def get_mac_address_from_interface_info(ip):
+      ip_interface_info = get_ip_interface_info(ip)
+      #demisto.info(f'ip_interface_info for ip {ip} : {ip_interface_info}')
+      for ip_interface_key in ip_interface_info.keys():
+          ip_interface_values = ip_interface_info[ip_interface_key]
+          if IF_IP4_ADDR in ip_interface_values.keys() and IF_MAC_ADDR in ip_interface_values.keys():
+              ip_address = ip_interface_values[IF_IP4_ADDR]
+              if ip_address == ip:
+                  intf_mac_addr = ip_interface_values[IF_MAC_ADDR]
+                  if(len(intf_mac_addr) == 12):
+                      return ':'.join(intf_mac_addr[i:i+2] for i in range(0,12,2))
+                  return intf_mac_addr
+      return get_mac_address(ip)
+
+  def get_mac_address(host):
+      #demisto.info('since mac_address is not matched with ip address, we are returning the first interface mac address')
+      try:
+          raw_result = walk(host, IF_IDX_TO_MAC_ADDRESS_OID)
+          for k, v in raw_result.items():
+              if(v!=''):
+                  mac = remove_prefix(v,"0x")
+                  if(len(mac) == 12):
+                      mac_colon = ':'.join(mac[i:i + 2] for i in range(0, 12, 2))
+                      return mac_colon
+          return ""
+      except Exception as e:
+          demisto.error(f'Error while getting mac address for host: {host} and the error is {e}')
+          return ""
+
+  def get_node_description(ip):
+      raw_result = walk(ip,NODE_DESC_OID)
+      if raw_result:
+          for k, v in raw_result.items():
+              desc = get_str_from_hex(v)
+              return desc
+      return ""
+
+  def getFileInfo(count, api, api_data):
+      site_name = get_site()
+      timestr = time.strftime("%Y%m%d%H%M%S")
+      time.sleep(0.5)
+      file_name=''
+      if api == NetworkDiscoveryAPI.NODE_GRAPH:
+          file_name="nd_nodegraph_"+site_name+"_"+timestr+".txt"
+      elif api == NetworkDiscoveryAPI.L2L3:
+          file_name="nd_l2l3_"+site_name+"_"+timestr+".txt"
+      else:
+          file_name="nd_endpoints_"+site_name+"_"+str(count)+"_"+timestr+".txt"
+      file_entry = fileResult(filename=file_name, data=json.dumps(api_data), file_type=EntryType.ENTRY_INFO_FILE)
+      return file_entry
+
+  def is_match(key, val):
+      nd_skip_patterns_json = SKIP_PATTERNS
+      #demisto.info('SKIP_PATTERNS are '+ str(nd_skip_patterns_json))
+      if nd_skip_patterns_json != "" and len(nd_skip_patterns_json) > 0:
+          # nd_json = json.loads(nd_skip_patterns_json)
+          for k,v in nd_skip_patterns_json.items():
+              api_key = FIELD_NAME_VS_API_NAME[k]
+              if api_key == key:
+                  for each_pattern in v:
+                      result = re.search(each_pattern, val, re.IGNORECASE)
+                      if result:
+                          return True
+      return False
+
+  def populate_nd_skip_patterns():
+      global SKIP_PATTERNS
+      skip_patterns_map = demisto.args()['skip_patterns_map']
+      #demisto.info('populating skip patterns: '+ str(skip_patterns_map))
+
+      if skip_patterns_map != '' or len(skip_patterns_map) > 0:
+          for attr in skip_patterns_map:
+              if "fieldname" in attr and attr['fieldname'] and "fieldvalues" in attr and attr['fieldvalues']:
+                  fieldname = attr['fieldname']
+                  fieldvalues = attr['fieldvalues']
+                  field_value_list = fieldvalues.split(',')
+                  SKIP_PATTERNS[fieldname]=field_value_list
+
+  ''' MAIN FUNCTION '''
+  def main():
+      try:
+
+          ENTRY_IP = get_entry_ip()
+          populate_nd_skip_patterns()
+          demisto.info("Starting Network Discovery with root IP: "+ str(ENTRY_IP))
+          site_name = get_site()
+          switches = get_switches(ENTRY_IP)
+          node_graph_data = {}
+          node_details_map = switches[NODE_DETAILS_MAP]
+          node_graph_data[NODE_DETAILS_MAP] = node_details_map
+          node_graph_data['site']=site_name
+          count=1
+          node_details_file_entry = getFileInfo(count, NetworkDiscoveryAPI.NODE_GRAPH, node_graph_data)
+          node_list_levels = switches[NODE_LIST_LEVELS]
+
+          l2l3_endpoint_file_entries=get_endpoints_l2_and_l3_networks(node_list_levels, site_name, node_details_map)
+          l2l3_endpoint_file_entries.append(node_details_file_entry)
+          return_results(l2l3_endpoint_file_entries)
+
+      except Exception as e:
+          demisto.error('Failed to get Topology neighbors: '+ str(e))
+          demisto.error(traceback.format_exc())
+          raise Exception("Failed to get Topology neighbors: %s" % str(e))
+
+  ''' ENTRY POINT '''
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+
+
+
+  register_module_line('NDSNMPTopologyNeighbors', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
