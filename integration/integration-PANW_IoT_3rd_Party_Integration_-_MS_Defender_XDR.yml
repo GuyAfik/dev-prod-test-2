@@ -1,0 +1,529 @@
+category: Network Security
+commonfields:
+  id: PANW IoT 3rd Party Integration - MS Defender XDR
+  version: -1
+configuration:
+- additionalinfo: MS Defender XDR domain url to access it from integration
+  display: Domain URL
+  name: domain_url
+  required: true
+  type: 0
+- display: Tenant ID
+  name: tenant_id
+  required: true
+  type: 4
+- display: Client ID
+  name: client_id
+  required: true
+  type: 4
+- display: Client Secret
+  name: client_secret
+  required: true
+  type: 4
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: Microsoft Defender XDR is an eXtended detection and response (XDR) solution
+  that automatically collects, correlates, and analyzes signal, threat, and alert
+  data from across your Microsoft 365 environment, including endpoint, email, applications,
+  and identities.
+detaileddescription: |-
+  ## Microsoft Defender XDR
+
+  ##### Details for Microsoft Defender XDR Rest API workflow
+
+  Please configure the instance by providing following mandatory details:
+
+  - Name of the instance
+  - Domain base URL(Refer section below for more information)
+  - Client ID
+  - Client Secret
+  - Tenant ID
+
+  Details on how to choose domain base URL
+    - For Microsoft Defender XDR
+      - Choose Microsoft Defender XDR API Gateway URL from table below based on the geographical cluster where your account is registered.
+        - api-us.securitycenter.microsoft.com
+        - api-eu.securitycenter.microsoft.com
+        - api-uk.securitycenter.microsoft.com
+        - api-au.securitycenter.microsoft.com
+    - Steps that need to be taken to access Defender for Cloud Apps API with application context:
+       - Log on to Azure with a user account that has the Global Administrator role.
+       - Create a Microsoft Entra Web-Application.
+       - Assign the desired API permissions to the application.
+       - To get devices user should have the following permissions:
+         - Machine.Read.All
+         - Machine.ReadWrite.All
+       - To get device vulnerabilities user should have the following permissions:
+         - Vulnerability.Read.All
+       - Create a key for this application.
+       - Get the token using the application with its key.
+       - Use the token to access the Defender for Cloud Apps API.
+       -  For more information please click [here](https://learn.microsoft.com/en-us/microsoft-365/security/defender/api-create-app-web?view=o365-worldwide).
+
+  ## Test Configuration
+
+  After providing the mandatory details, please test the configuration using the Test button.
+
+  ---
+display: PANW IoT 3rd Party Integration - MS Defender XDR
+image: data:image/png;base64,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
+name: PANW IoT 3rd Party Integration - MS Defender XDR
+script:
+  commands:
+  - arguments: []
+    description: Generate API token to access MS Defender APIs
+    name: ms-defender-generate-token
+  - arguments:
+    - description: Token to access API
+      name: token
+      required: true
+    - defaultValue: "1000"
+      description: Number of devices we are going to fetch at a time.
+      name: limit
+    - defaultValue: "0"
+      description: Number of items that we need to skip
+      name: offset
+    description: Get list of the devices connected to MS Defender.
+    name: ms-defender-get-all-devices
+  - arguments:
+    - description: Token to access API
+      name: token
+      required: true
+    - defaultValue: "1000"
+      description: Number of vulnerabilties we are going to fetch at a time.
+      name: limit
+    - defaultValue: "0"
+      description: Number of items that we need to skip
+      name: offset
+    - defaultValue: Critical
+      description: Get severities to filter defender data.
+      name: severity
+    - defaultValue: "30"
+      description: Poll data from given number of days
+      name: poll_interval
+    description: Get list of the vulnerabilities connected to MS Defender.
+    name: ms-defender-get-all-vulnerabilities
+  dockerimage: demisto/panw-iot:1.0.0.79918
+  runonce: false
+  script: |
+    register_module_line('PANW IoT 3rd Party Integration - MS Defender XDR', 'start', __line__())
+
+
+
+
+    #
+    import requests
+    import time
+    from datetime import datetime, timedelta
+    import json
+    import re
+
+    class MSDefenderXDR:
+        """
+        Class to use MS Defender API
+        """
+
+        def __init__(self):
+            self.ms_domain_url = self.check_ms_defender_host()
+            self.tenant_id = demisto.params().get("tenant_id")
+            self.client_id = demisto.params().get("client_id")
+            self.client_secret = demisto.params().get("client_secret")
+
+        def check_ms_defender_host(self):
+            """
+            Function will check whether hostname/ip-address is valid or not.
+            """
+            ms_defender_domain_url = demisto.params().get("domain_url")
+            try:
+                if not ms_defender_domain_url.startswith('https://'):
+                    ms_defender_domain_url = 'https://'+ms_defender_domain_url
+            except Exception as ex:
+                demisto.error('Error while validating MS Defender Domain url' + str(ex))
+            return ms_defender_domain_url
+
+        def get_error_message(self, error_description, response):
+            """
+                This function will check the error description and return user friendly error message
+            """
+            if "Check to make sure you have the correct tenant ID" in error_description or "Specified tenant identifier" in error_description:
+                description = "Tenant ID is incorrect"
+            elif "Invalid client secret provided" in error_description:
+                description = "Invalid client secret"
+            elif "The resource principal named" in error_description:
+                description = "Domain url is incorrect"
+            elif "Application with identifier" in error_description:
+                description = "Client ID is incorrect"
+            else:
+                description = error_description
+            error_msg = {
+                "Error Code": response.status_code,
+                "Error Descriprion": description
+            }
+            return error_msg
+
+        def generate_token(self):
+            """
+                Function to generate access token.
+            """
+            demisto.debug(f"The generate token function has been initiated")
+            access_token = ""
+            tenant_id = self.tenant_id
+            client_id = self.client_id
+            client_secret = self.client_secret
+            ms_domain_url = self.ms_domain_url
+            try:
+                # Login URL to generate token
+                url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/token"
+                body = {
+                    'resource': ms_domain_url,
+                    'client_id': client_id,
+                    'client_secret': client_secret,
+                    'grant_type': 'client_credentials'
+                }
+                response = requests.post(url, data=body)
+                jsonResponse = response.json()
+                if isinstance(jsonResponse, dict):
+                    if response.status_code == 200:
+                        access_token = jsonResponse.get("access_token")
+                        if demisto.command() == "ms-defender-generate-token":
+                            return jsonResponse
+                        validate_api = self.get_all_vulnerabilities(access_token, 1000, 0, "Critical", 1, True)
+                        if access_token and validate_api:
+                            return access_token
+                    else:
+                        error_msg = self.get_error_message(jsonResponse.get("error_description"), response)
+                        demisto.error(error_msg)
+                        return_error(error_msg)
+            except Exception as e:
+                error_msg = f"Error while generating access token :- {e}"
+                demisto.error(f'Exception while generating access token: {str(ex)}')
+                demisto.error(traceback.format_exc())
+                raise Exception(error_msg)
+            return access_token
+
+        def format_vulnerability_list(self, vulnerability_list):
+            """
+            Function will map the vulnerability fields according to PAN IoT.
+            """
+            demisto.debug(f"Format vulnerability list function has been initiated")
+            vulnerability_data = []
+            if vulnerability_list:
+                for vulnerability in vulnerability_list:
+                    data = {}
+                    cveId = vulnerability.get("id")
+                    if cveId:
+                        data['cveId'] = cveId
+                    cvssScore = vulnerability.get("cvssV3")
+                    if cvssScore:
+                        data['cvssScore'] = cvssScore
+                    vulnerability_data.append(data)
+            return vulnerability_data
+
+
+        def get_last_updated_time(self, day):
+            """
+            Function will convert x number of days into '%Y-%m-%dT%H:%M:%S.%fZ' format
+            """
+            # Convert x days into timestamp
+            x_days = day
+            timestamp = datetime.now() - timedelta(days=x_days)
+            # Convert timestamp to the desired format
+            formatted_timestamp = timestamp.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+            return formatted_timestamp
+
+        def get_all_vulnerabilities(self, token, limit=1000, offset=1, severities="Critical", day=0, validate_api=False):
+            """
+            Function will fetch all the vulnerabilities from MS Defender
+            """
+            demisto.debug("Get all vulnerability function has been initiated")
+            vulnerability = {}
+            vulnerabilities = []
+            try:
+                device_list = self.get_all_devices(token, limit, offset)
+                for device in device_list.get("data"):
+                    count, cves, vulnerability_data = 0, [], {}
+                    while True:
+                        endpoint_url = f"/api/machines/{device['id']}/vulnerabilities"
+                        url = self.ms_domain_url + endpoint_url
+                        headers = {
+                            'authorization' : "Bearer " + token
+                        }
+                        lastUpdated = self.get_last_updated_time(day)
+                        query_params = {
+                            "$top": limit,
+                            "$skip": count,
+                            "$filter": f"severity eq '{severities}' and updatedOn gt {lastUpdated}"
+                        }
+                        response = requests.request("GET", url, params=query_params, headers=headers)
+                        jsonResponse = response.json()
+                        if isinstance(jsonResponse, dict):
+                            if response.status_code == 200:
+                                if validate_api:
+                                    return True
+                                vulnerability_list = jsonResponse.get("value")
+                            else:
+                                description = jsonResponse.get("error").get("message")
+                                error_msg = {
+                                    "Error Code": response.status_code,
+                                    "Error Descriprion": description
+                                }
+                                demisto.error(error_msg)
+                                return_error(error_msg)
+                        if vulnerability_list:
+                            vulnerability_list = self.format_vulnerability_list(vulnerability_list)
+                            cves.extend(vulnerability_list)
+                        else:
+                            break
+                        count += limit
+                        time.sleep(5)
+                    vulnerability_data.update({"deviceid": device['deviceid'],"cve": cves})
+                    vulnerabilities.append(vulnerability_data)
+            except Exception as ex:
+                demisto.error("Error while getting vulnerabilities " + str(ex))
+                demisto.error(traceback.format_exc())
+                raise Exception("Error while getting vulnerabilities " + str(ex))
+            vulnerability.update({"data": vulnerabilities})
+            demisto.debug(f"Successfully get all the vulnerabilities from MS Defender.")
+            return vulnerability
+
+        def get_mac_address(self, mac_data):
+            """
+            Function will extract the mac address from the list of dictonary
+            """
+            demisto.debug("Get mac address function has been initiated")
+            formatted_mac_address = ""
+            mac = ""
+            try:
+                if mac_data:
+                    mac_address = [entry.get("macAddress") for entry in mac_data if entry.get("type") == "Ethernet" and entry.get("operationalStatus") == "Up"]
+                    if not mac_address:
+                        mac_address = [entry.get("macAddress") for entry in mac_data if entry.get("operationalStatus") == "Up"]
+                    if len(mac_address) > 0:
+                        mac = mac_address[0]
+                    formatted_mac_address = ':'.join(re.findall('..', mac))
+                    if formatted_mac_address:
+                        check_mac_address = self.is_mac_address(formatted_mac_address)
+                        if check_mac_address:
+                            demisto.debug(f"Successfully extracted and validated the mac address")
+                            return formatted_mac_address
+            except Exception as ex:
+                demisto.error("Error while getting mac address" + str(ex))
+            return formatted_mac_address
+
+        def is_mac_address(self, mac):
+            """
+            Test for valid mac address
+
+            :type mac: ``str``
+            :param mac: MAC address in the form of AA:BB:CC:00:11:22
+
+            :return: True/False
+            :rtype: ``bool``
+            """
+
+            if re.search(r'([0-9A-F]{2}[:]){5}([0-9A-F]){2}', mac.upper()) is not None:
+                return True
+            else:
+                return False
+
+        def is_ip_address(self, ip):
+            """
+            Test for valid ip address
+
+            :type ip: ``str``
+            :param ip: IP address in the form of 192.168.0.1
+
+            :return: True/False
+            :rtype: ``bool``
+            """
+            ip_regex = "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$"
+            if(re.search(ip_regex, ip)):
+                return True
+            else:
+                return False
+
+        def get_Os_Group(self, display_osGroup):
+            """
+            Function will map the display_osGroup value accroding to the PAN IoT database
+            """
+            OS_GROUP_MAPPING = {
+                "Ubuntu": "Linux",
+                "windows": "Windows"
+            }
+            for key, value in OS_GROUP_MAPPING.items():
+                if display_osGroup == key:
+                    display_osGroup = value
+            return display_osGroup
+
+
+        def get_os_info(self, os_info):
+            """
+            Function will manipulate the string to fetch display_osGroup and display_osVer
+            """
+            display_osGroup, display_osVer= "", ""
+            if os_info:
+                display_osGroup = re.findall('[A-Za-z]+', os_info)
+                if display_osGroup and isinstance(display_osGroup, list):
+                    display_osGroup = display_osGroup[0]
+                    display_osGroup = self.get_Os_Group(display_osGroup)
+                display_osVer = re.findall('\d+', os_info)
+                if display_osVer and isinstance(display_osVer, list):
+                    display_osVer = display_osVer[0]
+            return display_osGroup, display_osVer
+
+
+        def format_device_list(self, device_list):
+            """
+                Function will map the device fields according to PAN IoT.
+            """
+            demisto.debug("Format device list function has been initiated")
+            device_data = []
+            try:
+                if device_list:
+                    for device in device_list:
+                        data = {}
+                        display_osVer = ""
+                        mac_address = self.get_mac_address(device.get("ipAddresses", None))
+                        if mac_address:
+                            data["deviceid"] = mac_address.lower()
+                            data["MAC"] = data["deviceid"]
+                            ip_address = device.get("lastIpAddress", "")
+                            if ip_address:
+                                check_ip_address = self.is_ip_address(ip_address)
+                                if check_ip_address:
+                                    data["connect_evtContent.ip"] = ip_address
+                            hostname = device.get("computerDnsName", "")
+                            if hostname:
+                                data["display_hostname"] = hostname
+                            os_info = device.get("osPlatform", "")
+                            if os_info:
+                                display_osGroup, display_osVer = self.get_os_info(os_info)
+                                data["display_osGroup"] = display_osGroup
+                            os_version = device.get("osVersion", "")
+                            if display_osVer:
+                                data["display_osVer"] = display_osVer
+                            else:
+                                data["display_osVer"] = os_version
+                            os_build = device.get("osBuild", "")
+                            if os_build:
+                                data["os_build"] = str(os_build)
+                            asset_criticality = device.get("deviceValue", "")
+                            if asset_criticality:
+                                data["asset_criticality"] = asset_criticality
+                            display_operational_status = device.get("healthStatus", "")
+                            if display_operational_status:
+                                data["display_operational_status"] = display_operational_status
+                            endpoint_protection_status = device.get("defenderAvStatus", "")
+                            if endpoint_protection_status:
+                                data["endpoint_protection_status"] = endpoint_protection_status
+                            ad_join_status = device.get("isAadJoined", "")
+                            if ad_join_status:
+                                data["display_ad_join_status"] = ad_join_status
+                            else:
+                                data["display_ad_join_status"] = False
+                            data["epp_vendor"] = "Windows Defender"
+                            device_id = device.get("id", "")
+                            if device_id:
+                                data["id"] = device_id
+                            device_data.append(data)
+            except Exception as ex:
+                demisto.error("Error while formatting device data" + str(ex))
+            demisto.debug(f"Successfully mapped all the device attributes as per the PAN IoT.")
+            return device_data
+
+        def get_all_devices(self, token, limit, offset):
+            """
+                Function will get fetch all device data from MS Defender.
+            """
+            demisto.debug(f"Get all devices function has been initiated")
+            device_data = {}
+            url = self.ms_domain_url + "/api/machines"
+            headers = {
+                'authorization' : "Bearer " + token
+            }
+            query_params = {
+                "$top": limit,
+                "$skip": offset
+            }
+            try:
+                response = requests.request("GET", url, params=query_params, headers=headers)
+                jsonResponse = response.json()
+                if isinstance(jsonResponse, dict):
+                    if response.status_code == 200:
+                        device_list = jsonResponse.get("value")
+                    else:
+                        description = jsonResponse.get("error").get("message")
+                        error_msg = {
+                            "Error Code": response.status_code,
+                            "Error Descriprion": description
+                        }
+                        demisto.error(error_msg)
+                        return_error(error_msg)
+                device_list = self.format_device_list(device_list)
+                device_data.update({"data": device_list})
+            except Exception as ex:
+                error_msg = f"Error while getting all devices:- {ex}"
+                demisto.error(f'Exception while getting all devices: {str(ex)}')
+                demisto.error(traceback.format_exc())
+                raise Exception(error_msg)
+            demisto.debug(f"Successfully get all the devices from MS Defender.")
+            return device_data
+
+    def main():
+        demisto.debug(f"Command being called is {demisto.command()}")
+        try:
+            if demisto.command() == "test-module":
+                test_res = ""
+                try:
+                    api_login = MSDefenderXDR()
+                    test_res = api_login.generate_token()
+                    if isinstance(test_res, str):
+                        return_results('ok')
+                    else:
+                        return_results(test_res)
+                except Exception as e:
+                    return_error("MS Defender got exception: %s" % str(e))
+            elif demisto.command() == "ms-defender-generate-token":
+                test_res = ""
+                api_login = MSDefenderXDR()
+                test_res = api_login.generate_token()
+                return_results(test_res)
+            elif demisto.command() == "ms-defender-get-all-devices":
+                token = demisto.args().get("token")
+                limit = int(demisto.args().get("limit"))
+                offset = int(demisto.args().get("offset"))
+                api_login = MSDefenderXDR()
+                res = api_login.get_all_devices(token, limit, offset)
+                return_results(res)
+            elif demisto.command() == "ms-defender-get-all-vulnerabilities":
+                token = demisto.args().get("token")
+                limit = int(demisto.args().get("limit"))
+                offset = int(demisto.args().get("offset"))
+                severity = demisto.args().get("severity")
+                day = int(demisto.args().get("poll_interval", 30))
+                api_login = MSDefenderXDR()
+                test_res = api_login.get_all_vulnerabilities(token, limit, offset, severity, day)
+                return_results(test_res)
+        except Exception as e:
+            return_error(f"Failed to execute {demisto.command()} command.\nError:\n{str(e)}")
+
+
+    if __name__ in ("__main__", "__builtin__", "builtins"):
+        main()
+
+    #
+
+
+    register_module_line('PANW IoT 3rd Party Integration - MS Defender XDR', 'end', __line__())
+  subtype: python3
+  type: python
+sourcemoduleid: MS Defender XDR
