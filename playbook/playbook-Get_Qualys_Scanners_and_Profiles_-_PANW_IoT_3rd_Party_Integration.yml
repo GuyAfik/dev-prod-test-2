@@ -1,0 +1,596 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 2.0.15
+    packID: ""
+    packName: Palo Alto Networks IoT 3rd Party Integrations
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: This playbook retrieves a list of Qualys scanner appliances and scan
+  profile options and report them to PANW IoT Cloud.
+dirtyInputs: true
+id: 9f880b08-3b12-4a80-86ea-29c7511a40b2
+inputs: []
+name: Get Qualys Scanners and Profiles - PANW IoT 3rd Party Integration
+outputs: []
+sourceplaybookid: 9f880b08-3b12-4a80-86ea-29c7511a40b2
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 8e9593c0-f567-477d-8f20-5bd9ff13fab0
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 8e9593c0-f567-477d-8f20-5bd9ff13fab0
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": -370
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "13"
+      "yes":
+      - "24"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Qualys
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available. Otherwise returns
+        'no'
+      id: 5ab0cdc6-3af8-4bc3-8fb2-abb4c6555e19
+      iscommand: false
+      name: Is Qualys Enabled?
+      script: IsIntegrationAvailable
+      type: condition
+      version: -1
+    taskid: 5ab0cdc6-3af8-4bc3-8fb2-abb4c6555e19
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": -225
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "11"
+      "yes":
+      - "14"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: e773a94b-9d23-404f-8380-61f72846e981
+      iscommand: false
+      name: Was There an Error Getting Scanner and Profile Lists?
+      script: isError
+      type: condition
+      version: -1
+    taskid: e773a94b-9d23-404f-8380-61f72846e981
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 485
+        }
+      }
+  "10":
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 651b3e80-bc55-47d9-8a40-0a35c2c1364e
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 651b3e80-bc55-47d9-8a40-0a35c2c1364e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 440,
+          "y": 845
+        }
+      }
+  "11":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: qualys
+      message:
+        simple: Successfully sent scanner and appliance list to PANW IoT Cloud
+      playbook_name:
+        simple: Get Qualys Scanners and Profiles - PANW IoT 3rd Party Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: f7f6157b-1c58-463a-811c-3a3587ea00c3
+      iscommand: true
+      name: Report Success Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: f7f6157b-1c58-463a-811c-3a3587ea00c3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 440,
+          "y": 670
+        }
+      }
+  "13":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      integration_name:
+        simple: qualys
+      message:
+        simple: Qualys Integration is not enabled
+      playbook_name:
+        simple: Get Qualys Scanners and Profiles - PANW IoT 3rd Party Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: f90a9bf4-15f1-48a5-8a80-82f0fb1ccc50
+      iscommand: true
+      name: Report Disabled Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: f90a9bf4-15f1-48a5-8a80-82f0fb1ccc50
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 230,
+          "y": -50
+        }
+      }
+  "14":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: qualys
+      message:
+        simple: Failed to send scanner and appliance list to PANW IoT Cloud
+      playbook_name:
+        simple: Get Qualys Scanners and Profiles - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: c7c2c8bb-9ad8-4a57-866f-32a37d77e04c
+      iscommand: true
+      name: Report Error Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: c7c2c8bb-9ad8-4a57-866f-32a37d77e04c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 870,
+          "y": 670
+        }
+      }
+  "15":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      qualys_instance_name:
+        simple: ${incident.integrationinstancename}
+      scanner_sync:
+        simple: ${incident.automaticallysynchronizescannerswithiotsecuritytoavoidfalsesecurityalerts}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |
+        Get list of Qualys Scanners and Profiles and write to context
+      id: 8d111e1a-6d29-4ba8-8956-7ba43517b8c0
+      iscommand: false
+      name: Get A list of Qualys Scanners and Scan Profile Options
+      script: GetQualysScannersAndProfiles
+      type: regular
+      version: -1
+    taskid: 8d111e1a-6d29-4ba8-8956-7ba43517b8c0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 310
+        }
+      }
+  "18":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "19"
+      "no":
+      - "20"
+      "yes":
+      - "15"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - Qualys
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: d9da453a-62d8-4f0b-8934-5f8b54893741
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: d9da453a-62d8-4f0b-8934-5f8b54893741
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 880,
+          "y": 130
+        }
+      }
+  "19":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "19"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "21"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: qualys
+      message:
+        simple: 'Error: Failed to get License'
+      playbook_name:
+        simple: Get Qualys Scanners and Profiles - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: b9c965ac-08de-4c40-8ad5-f02ea08c6071
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: b9c965ac-08de-4c40-8ad5-f02ea08c6071
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 850,
+          "y": 310
+        }
+      }
+  "20":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "20"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "21"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: qualys
+      message:
+        simple: License Limit Exceeded.
+      playbook_name:
+        simple: Get Qualys Scanners and Profiles - PANW IoT 3rd Party Integration
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: f0281314-0f50-40e2-8cb4-142504d56efa
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: f0281314-0f50-40e2-8cb4-142504d56efa
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1250,
+          "y": 310
+        }
+      }
+  "21":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 028be2b3-806f-46ff-84e3-6fb0c6daae51
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 028be2b3-806f-46ff-84e3-6fb0c6daae51
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1060,
+          "y": 500
+        }
+      }
+  "24":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "27"
+      "yes":
+      - "18"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Qualys
+      instancename:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available and provided instance
+        is Active. Otherwise returns 'no'.
+      id: cfc287da-fa5a-4b79-8140-b4f7492543d5
+      iscommand: false
+      name: Is Qualys  Integration Instance Enabled?
+      script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+      type: condition
+      version: -1
+    taskid: cfc287da-fa5a-4b79-8140-b4f7492543d5
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 880,
+          "y": -50
+        }
+      }
+  "27":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "27"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "21"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      integration_name:
+        simple: qualys
+      message:
+        simple: Qualys Integration is not enabled
+      playbook_name:
+        simple: Get Qualys Scanners and Profiles - PANW IoT 3rd Party Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: fcc91224-9c11-4724-82ed-6314ae782012
+      iscommand: true
+      name: Report Disabled Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: fcc91224-9c11-4724-82ed-6314ae782012
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1670,
+          "y": 150
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1310,
+        "width": 1820,
+        "x": 230,
+        "y": -370
+      }
+    }
+  }
