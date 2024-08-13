@@ -1,0 +1,256 @@
+args:
+- description: Specify integration instance name
+  name: asset_attribute_polling_instance_name
+  required: true
+- defaultValue: 'Comma separated list of ip/subnet  e.g: 10.6.72.221,10.6.72.222,10.6.72.2   e.g:
+    10.6.72.221'
+  name: ip
+  required: true
+commonfields:
+  id: AssetAttributePollingFetchDeviceInfoAndSendToPANWIoTCloud
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: AssetAttributePollingFetchDeviceInfoAndSendToPANWIoTCloud
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('AssetAttributePollingFetchDeviceInfoAndSendToPANWIoTCloud', 'start', __line__())
+
+
+  """ Automation script for Asset Attribute Polling
+  """
+
+  from typing import Dict, Any
+  import ast
+  import traceback
+  import ipaddress
+
+
+  OTPROBING_INSTANCE_NAME = demisto.args().get('asset_attribute_polling_instance_name')
+  PAGE_SIZE = 100
+  FINAL_IP_LIST = []
+
+  def execute_fetch_device_info(proto, ip, port):
+      demisto.info("proto, ip, port: " + str(proto)+ ":"+str(ip)+":"+ str(port))
+      response = demisto.executeCommand("fetch-device-info-command", {
+            "proto": proto,
+            "ip": ip,
+            "port": port,
+            "using":OTPROBING_INSTANCE_NAME
+        })
+
+      if isError(response[0]):
+          err_msg = 'Error, failed to complete fetch device info - '+str(response[0]['Contents'])
+          demisto.error('[%s] %s' % (OTPROBING_INSTANCE_NAME, err_msg))
+          raise Exception(err_msg)
+
+      demisto.info('[%s] Fetch Device info: %s' % (OTPROBING_INSTANCE_NAME, response[0]['Contents']))
+      resp = response[0]['Contents']
+      return resp
+
+
+  def get_instance_port():
+      response = demisto.executeCommand("get-instance-port", {"using": OTPROBING_INSTANCE_NAME})
+      if isError(response[0]):
+          err_msg = 'Error, failed to get instance port - '+str(response[0]['Contents'])
+          # print("response: {}".format(response[0]))
+          raise Exception(err_msg)
+
+      demisto.info('[%s] Port: %s' % (OTPROBING_INSTANCE_NAME, response[0]['Contents']))
+      resp = response[0]['Contents']
+      return resp["port"]
+
+
+  def get_instance_protocol():
+      response = demisto.executeCommand("get-instance-protocol", {"using":OTPROBING_INSTANCE_NAME})
+
+      if isError(response[0]):
+          err_msg = 'Error, failed to get instance protocol - '+str(response[0]['Contents'])
+          demisto.inf("response: {}".format(response[0]))
+          raise Exception(err_msg)
+
+      demisto.info('[%s] Mode: %s' % (OTPROBING_INSTANCE_NAME, response[0]['Contents']))
+
+      resp = response[0]['Contents']
+      return resp["mode"]
+
+  def validate_ip_list(ip_list):
+      validated_ips = []
+      for ip in ip_list:
+          ip = ip.strip()
+          if '/' in ip:
+              validated_ips.extend(validate_ip_subnet_and_return_ip_list(ip))
+          else:
+              validated_ips.append(validate_ip_address(ip))
+      return validated_ips
+
+  def get_ip_list(ipstr):
+
+      if not ipstr:
+          return None
+
+      iplist = ipstr.split(",")
+      final_ips = list(set(validate_ip_list(iplist)))
+      if len(final_ips) > 1500:
+          raise Exception("Total endpoint IPs entered should not be more than 1500")
+      return final_ips
+
+  def validate_ip_address(address):
+      try:
+          ip = ipaddress.ip_address(address)
+          if (ip.compressed.endswith(".0") or ip.compressed.endswith(".255")):
+              raise Exception(f'IP : {address} is either a gateway or broadcast ip address. Please enter valid ip address')
+          return ip.compressed
+      except ValueError:
+          raise Exception(f'Please enter a valid ip address . Entered address: {address} is not valid')
+
+  def validate_ip_subnet_and_return_ip_list(address):
+      try:
+          subnet = ipaddress.ip_network(address)
+          # print("IP subnet {} is valid. The object returned is {}".format(address, subnet))
+          if subnet.prefixlen < 24:
+              raise Exception('prefix shouldn\'t be less than 24')
+          ips= []
+          for ip in subnet:
+              if (ip.compressed.endswith(".0") or ip.compressed.endswith(".255")):
+                  continue
+              ips.append(ip.compressed)
+          return ips
+      except ValueError:
+          raise Exception(f'Please enter a valid subnet . Entered address: {address} is not valid')
+
+  def input_probes(iplist, mode, port) -> dict[str, any]:
+
+      device_info = []
+
+      for ip in iplist:
+          ip = ip.strip()
+          demisto.info("{}: proto {} port {} ip/subnet {} ".format(OTPROBING_INSTANCE_NAME, mode, port, ip))
+          resp = execute_fetch_device_info(mode, ip, port)
+          demisto.info(f"response of ip: {ip} - {resp} ")
+          if resp and len(resp):
+              device_info.extend(resp)
+
+      demisto.info('[%s] Device info: %s' % (OTPROBING_INSTANCE_NAME, str(device_info)))
+
+      return {"device_info": device_info}
+
+
+  def input_probes_command(args: dict[str, any]) -> CommandResults:
+      global FINAL_IP_LIST
+      mode = get_instance_protocol()
+      port = get_instance_port()
+      iplist = get_ip_list(args.get('ip'))
+      FINAL_IP_LIST = iplist
+
+      if not iplist:
+          demisto.error('[%s] ip not specified' % (OTPROBING_INSTANCE_NAME))
+          raise ValueError('ip not specified ')
+
+
+      demisto.debug('[%s] ip/subnet : %s' % (OTPROBING_INSTANCE_NAME, str(iplist)))
+      result: dict [str, any] = input_probes(iplist, mode, port)
+      return send_device_info(result)
+
+
+  def send_devices_to_panw_iot_cloud(devices_list):
+      """
+      Sends devices to PANW IoT Cloud.
+      :type devices_list: ``array``
+      :param devices_list: List of devices to be sent to PANW IoT cloud
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-devices", {
+          "DeviceData": devices_list,
+          "pageLength": PAGE_SIZE,
+          "IntegrationName": 'device_polling'
+      })
+      demisto.info("sending devices"+ str(devices_list))
+      if isError(resp[0]):
+          err_msg = f'Error, could not send devices to PANW IoT Cloud - {resp[0].get("Contents")}'
+          demisto.debug('[%s] ip/subnet : %s' % (OTPROBING_INSTANCE_NAME, err_msg))
+          raise Exception(err_msg)
+
+      return resp[0]['Contents']
+
+
+  def send_device_info(deviceinfo):
+      op_msg = {}
+
+      try:
+          # print("{}: deviceinfo: {} ".format(OTPROBING_INSTANCE_NAME, str(deviceinfo)))
+          demisto.info('[%s] deviceinfo: %s' % (OTPROBING_INSTANCE_NAME, str(deviceinfo)))
+
+          ot_device_info = deviceinfo["device_info"]
+
+          if not isinstance(ot_device_info, list):
+              err_msg = f'Failed to get input endpoint info, deviceinfo: {str(deviceinfo)}'
+              raise Exception(err_msg)
+          else:
+              demisto.info('[%s] Total items in endpoint info: %d' % (OTPROBING_INSTANCE_NAME, len(ot_device_info)))
+
+          heading = "Asset Attribute Polling Summary"
+          name = "Total endpoint discovered : %d" % len(ot_device_info)
+
+          total = 0
+          count = len(ot_device_info)
+          device_sent = 0
+          devices_updated=0
+          while device_sent != count:
+              end_index = (device_sent + PAGE_SIZE) if (count - device_sent) > PAGE_SIZE else count
+              sub_device_list = ot_device_info[device_sent:end_index]
+              resp = send_devices_to_panw_iot_cloud(sub_device_list)
+              devices_updated = devices_updated + int(resp.split()[0])
+              device_sent = end_index
+              time.sleep(1)
+              total += count
+          op_msg["IP addresses polled"] = len(FINAL_IP_LIST)
+          op_msg["IP addresses with attributes retrieved to XSOAR"] = len(ot_device_info)
+          op_msg["IP addresses updated in IoT Security"] = devices_updated
+          demisto.info('[%s] Total Asset Attribute Polling endpoints info exported to PANW IoT Cloud: %d' % (OTPROBING_INSTANCE_NAME, len(ot_device_info)))
+
+          commandResults = CommandResults(
+                  readable_output=tableToMarkdown(heading, op_msg, removeNull=True))
+          return commandResults
+
+      except Exception as ex:
+          return_error(f'Failed to execute send AssetAttributePolling endpoints info. Error: {str(ex)}')
+
+
+  ''' MAIN FUNCTION '''
+
+
+  def main():
+      try:
+          return_results(input_probes_command(demisto.args()))
+      except Exception as ex:
+          demisto.error(traceback.format_exc())
+          return_error(f'Failed to execute AssetAttributePollingFetchDeviceInfoAndSendToPANWIoTCloud. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('AssetAttributePollingFetchDeviceInfoAndSendToPANWIoTCloud', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
