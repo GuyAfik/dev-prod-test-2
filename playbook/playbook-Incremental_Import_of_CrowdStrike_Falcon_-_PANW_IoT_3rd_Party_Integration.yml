@@ -1,0 +1,480 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: This playbook will import device attributes from CrowdStrike Falcon To
+  PANW IoT Cloud
+dirtyInputs: true
+id: dbfa64f9-fb41-4958-858a-10175d118c58
+inputs: []
+name: Incremental Import of CrowdStrike Falcon - PANW IoT 3rd Party Integration
+outputs: []
+sourceplaybookid: af2c1125-ca1e-4f4d-8a8b-aea23b5f044a
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "24"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: acc521f9-ddfb-4c81-8ab6-0eb821845351
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: acc521f9-ddfb-4c81-8ab6-0eb821845351
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "2"
+      "yes":
+      - "20"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - CrowdstrikeFalcon
+      instancename:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available and provided instance
+        is Active. Otherwise returns 'no'.
+      id: 0309ac8a-76c6-4526-8522-30e2a1c5264a
+      iscommand: false
+      name: Is CrowdStrike Falcon integration enabled?
+      script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+      type: condition
+      version: -1
+    taskid: 0309ac8a-76c6-4526-8522-30e2a1c5264a
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 370
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "14"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: crowdstrike_falcon
+      message:
+        simple: CrowdStrike Instance is not available
+      playbook_name:
+        simple: Incremental Import of CrowdStrike Falcon - PANW IoT 3rd Party Integration
+      playbookName:
+        simple: Cisco Prime Clients
+      status:
+        simple: disabled
+      type:
+        simple: device
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 69d624e7-6233-4f14-87f2-d3557d4425ae
+      iscommand: true
+      name: Send Disable Status to IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 69d624e7-6233-4f14-87f2-d3557d4425ae
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 545
+        }
+      }
+  "14":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.close.inv
+      id: ac6b60d2-7125-4d54-8225-7924961dd2ac
+      iscommand: true
+      name: Close Investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: ac6b60d2-7125-4d54-8225-7924961dd2ac
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 720
+        }
+      }
+  "20":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "20"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "21"
+      "no":
+      - "22"
+      "yes":
+      - "26"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_instance_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - CrowdstrikeFalcon
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 91d935ce-f477-4f73-8839-8145d95c21e1
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: 91d935ce-f477-4f73-8839-8145d95c21e1
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 545
+        }
+      }
+  "21":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "23"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: crowdstrike_falcon
+      message:
+        simple: 'Error: Failed to get License'
+      playbook_name:
+        simple: Incremental Import of CrowdStrike Falcon - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 9036e4a2-3492-448a-87cb-c6da00aef981
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 9036e4a2-3492-448a-87cb-c6da00aef981
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 720
+        }
+      }
+  "22":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "22"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "23"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: crowdstrike_falcon
+      message:
+        simple: License Limit Exceeded.
+      playbook_name:
+        simple: Incremental Import of CrowdStrike Falcon - PANW IoT 3rd Party Integration
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 66cc2560-5d5f-4e16-872e-7c8cffae13ca
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 66cc2560-5d5f-4e16-872e-7c8cffae13ca
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 720
+        }
+      }
+  "23":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "23"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: b5d2df45-69dc-487f-8aa5-2b1f89193a2c
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: b5d2df45-69dc-487f-8aa5-2b1f89193a2c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 895
+        }
+      }
+  "24":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "25"
+      "yes":
+      - "1"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: f79b770b-a8bd-4761-8989-3a63a31b40d3
+      iscommand: false
+      name: Is CrowdStrike Falcon Integration Instance Available
+      script: Exists
+      type: condition
+      version: -1
+    taskid: f79b770b-a8bd-4761-8989-3a63a31b40d3
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 195
+        }
+      }
+  "25":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "23"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: crowdstrike_falcon
+      message:
+        simple: No CrowdStrike Falcon integration instance passed
+      playbook_name:
+        simple: Incremental Import of CrowdStrike Falcon - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 5a6dfff6-9f4a-4d0c-8206-ea9ab3d75e44
+      iscommand: true
+      name: No Instance passed to this Playbook. Reporting Error
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 5a6dfff6-9f4a-4d0c-8206-ea9ab3d75e44
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 720
+        }
+      }
+  "26":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "26"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "23"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      active_range:
+        simple: ${incident.playbookpollinterval}
+      crowdstrike_instance_name:
+        simple: ${incident.integrationinstancename}
+      pageLength:
+        simple: "1000"
+      siteids:
+        simple: ${incident.sitenames}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Importing CrowdStrike Falcon devices to Palo Alto IoT Cloud
+      id: 4c86e5f7-32d0-4311-8431-4ed78edc3c3f
+      iscommand: false
+      name: Import Device Attributes From CrowdStrike Falcon To PANW IoT Cloud
+      script: b460678e-ab1e-476e-8670-734c87888832
+      type: regular
+      version: -1
+    taskid: 4c86e5f7-32d0-4311-8431-4ed78edc3c3f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1770,
+          "y": 720
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 940,
+        "width": 2100,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
