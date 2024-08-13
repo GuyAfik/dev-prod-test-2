@@ -33,11 +33,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 1e5b5d7a-71d6-477e-8ea4-09ba18f2e061
+      id: 987aaa4c-3f61-4cc4-8787-bd77bf77a2d6
       iscommand: false
       name: ""
       version: -1
-    taskid: 1e5b5d7a-71d6-477e-8ea4-09ba18f2e061
+    taskid: 987aaa4c-3f61-4cc4-8787-bd77bf77a2d6
     timertriggers: []
     type: start
     view: |-
@@ -72,13 +72,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 36bb7967-f6ad-454b-874d-66833eadf1b4
+      id: f63bd45d-a4d8-4f0b-8434-7da70a25477a
       iscommand: false
       name: Is ServiceNow enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 36bb7967-f6ad-454b-874d-66833eadf1b4
+    taskid: f63bd45d-a4d8-4f0b-8434-7da70a25477a
     timertriggers: []
     type: condition
     view: |-
@@ -111,13 +111,13 @@ tasks:
       brand: ""
       description: Gets all available devices from the IoT cloud and sends it to the
         ServiceNow.
-      id: 06986acf-81ab-423d-87c3-5a6933da4017
+      id: 26dc16d0-41ad-42be-8353-9466267c1e12
       iscommand: false
       name: Send all PANW IoT devices to ServiceNow
       script: SendAllPANWIoTDevicesToServiceNow
       type: regular
       version: -1
-    taskid: 06986acf-81ab-423d-87c3-5a6933da4017
+    taskid: 26dc16d0-41ad-42be-8353-9466267c1e12
     timertriggers: []
     type: regular
     view: |-
@@ -141,13 +141,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: e38cfb9e-4122-41b6-865a-056a6ba3a6a3
+      id: 707bf663-f67a-4a01-8df9-13b0e45a351e
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: e38cfb9e-4122-41b6-865a-056a6ba3a6a3
+    taskid: 707bf663-f67a-4a01-8df9-13b0e45a351e
     timertriggers: []
     type: regular
     view: |-
@@ -187,13 +187,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 9c9e80ef-540d-4ae7-8dd3-242d8ca77b46
+      id: f9612ed3-d983-4e7a-83be-c3334959e62f
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 9c9e80ef-540d-4ae7-8dd3-242d8ca77b46
+    taskid: f9612ed3-d983-4e7a-83be-c3334959e62f
     timertriggers: []
     type: regular
     view: |-
@@ -217,13 +217,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: d88ee0fe-4cba-4be1-8dee-bbcb3f783411
+      id: 91bdd55a-fecb-4738-8a5c-d182d769344a
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: d88ee0fe-4cba-4be1-8dee-bbcb3f783411
+    taskid: 91bdd55a-fecb-4738-8a5c-d182d769344a
     timertriggers: []
     type: regular
     view: |-
@@ -257,13 +257,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: 00a11578-75a8-4d1a-8d66-b7000452b303
+      id: a915b0ca-c657-4dfa-8005-409bec04ead0
       iscommand: false
       name: Was there an error when sending devices to servicenow?
       script: isError
       type: condition
       version: -1
-    taskid: 00a11578-75a8-4d1a-8d66-b7000452b303
+    taskid: a915b0ca-c657-4dfa-8005-409bec04ead0
     timertriggers: []
     type: condition
     view: |-
@@ -304,13 +304,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 87a2df47-4268-4873-83bf-dcdda5d7136e
+      id: a0f4a97e-e3c2-4759-87ef-88f1a2444c48
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 87a2df47-4268-4873-83bf-dcdda5d7136e
+    taskid: a0f4a97e-e3c2-4759-87ef-88f1a2444c48
     timertriggers: []
     type: regular
     view: |-
@@ -334,13 +334,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: f43c2729-5052-4e0e-8335-f24b5c1a4e4f
+      id: 4c31d314-5e2e-4838-821d-aea9272bcd6d
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: f43c2729-5052-4e0e-8335-f24b5c1a4e4f
+    taskid: 4c31d314-5e2e-4838-821d-aea9272bcd6d
     timertriggers: []
     type: regular
     view: |-
@@ -380,13 +380,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 8463ee71-f67f-4600-8769-45cf2374b031
+      id: 2e2f4448-4f7c-4d61-8055-cf08d71736f7
       iscommand: true
       name: Send success status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 8463ee71-f67f-4600-8769-45cf2374b031
+    taskid: 2e2f4448-4f7c-4d61-8055-cf08d71736f7
     timertriggers: []
     type: regular
     view: |-
@@ -416,13 +416,13 @@ tasks:
     task:
       brand: ""
       description: Get all customized table and column names in the customers' ServiceNow.
-      id: b45422fb-11a6-4b24-871d-8eddaa3c13d3
+      id: 7a0e3042-0963-4d7a-8ff2-f00737da4283
       iscommand: false
       name: Get ServiceNow Customized Configuration
       script: GetServiceNowCustomizedConfiguration
       type: regular
       version: -1
-    taskid: b45422fb-11a6-4b24-871d-8eddaa3c13d3
+    taskid: 7a0e3042-0963-4d7a-8ff2-f00737da4283
     timertriggers: []
     type: regular
     view: |-
@@ -452,13 +452,13 @@ tasks:
     task:
       brand: ""
       description: Get PANW IoT and ServiceNow category mapping
-      id: 0e973553-8d42-4ae9-8ac8-a0bd84aaaa37
+      id: 42d5740e-0e80-445a-806e-13424c990604
       iscommand: false
       name: Get PANW IoT ServiceNow Category Mapping
       script: GetPANWIoTServiceNowCategoryMapping
       type: regular
       version: -1
-    taskid: 0e973553-8d42-4ae9-8ac8-a0bd84aaaa37
+    taskid: 42d5740e-0e80-445a-806e-13424c990604
     timertriggers: []
     type: regular
     view: |-
@@ -491,13 +491,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 54324412-7f46-4204-8744-7896b95aeeff
+      id: 7ceab854-b760-4cb5-88c4-b617de4d63cc
       iscommand: false
       name: is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 54324412-7f46-4204-8744-7896b95aeeff
+    taskid: 7ceab854-b760-4cb5-88c4-b617de4d63cc
     timertriggers: []
     type: condition
     view: |-
@@ -535,13 +535,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: d566a211-213f-49a8-8aa7-1bfa02a9b1cc
+      id: 35e9df14-2b21-43d8-8827-0f0c1b5024d0
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: d566a211-213f-49a8-8aa7-1bfa02a9b1cc
+    taskid: 35e9df14-2b21-43d8-8827-0f0c1b5024d0
     timertriggers: []
     type: regular
     view: |-
@@ -581,13 +581,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: ea2ba3e2-8d7b-48c0-8f3d-22fd0c745bd8
+      id: c42a9170-13fe-49fc-8f52-37e51a16400c
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: ea2ba3e2-8d7b-48c0-8f3d-22fd0c745bd8
+    taskid: c42a9170-13fe-49fc-8f52-37e51a16400c
     timertriggers: []
     type: regular
     view: |-
@@ -610,13 +610,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: b046f049-85df-4b14-8616-36a2c333ae7e
+      id: d2c1b659-639a-466a-80d5-e801a0bbe1e2
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: b046f049-85df-4b14-8616-36a2c333ae7e
+    taskid: d2c1b659-639a-466a-80d5-e801a0bbe1e2
     timertriggers: []
     type: regular
     view: |-
@@ -642,13 +642,13 @@ tasks:
     task:
       brand: ""
       description: Get ServiceNow Table Mapping Method
-      id: 8bc01a0f-5e79-450a-8b11-1ea6f631b7ac
+      id: 41a11ad3-6694-4432-82b2-e44bf5a49f17
       iscommand: true
       name: Get ServiceNow Mapping Method
       script: '|||get-mapping-method'
       type: regular
       version: -1
-    taskid: 8bc01a0f-5e79-450a-8b11-1ea6f631b7ac
+    taskid: 41a11ad3-6694-4432-82b2-e44bf5a49f17
     timertriggers: []
     type: regular
     view: |-
@@ -684,13 +684,13 @@ tasks:
       brand: ""
       description: Check whether the values provided in arguments are equal. If either
         of the arguments are missing, no is returned.
-      id: e2a24ce2-6f72-4410-82f9-8906643989fc
+      id: d20da040-67af-4501-88f1-ce26f8463dc3
       iscommand: false
       name: Is ServiceNow OT Mapping?
       script: AreValuesEqual
       type: condition
       version: -1
-    taskid: e2a24ce2-6f72-4410-82f9-8906643989fc
+    taskid: d20da040-67af-4501-88f1-ce26f8463dc3
     timertriggers: []
     type: condition
     view: |-
@@ -723,13 +723,13 @@ tasks:
       brand: ""
       description: Gets all available devices from the IoT cloud and sends it to the
         ServiceNow OT Classes
-      id: efe59b83-692d-46e1-861a-6f454a6d1a8e
+      id: 18090a21-b6db-46f6-8cda-af96cfa48664
       iscommand: false
       name: SendAllPANWIoTDevicesToServiceNowOTClasses
       script: 9103572f-1d45-4ff6-8f2c-9ecc32bb2fd1
       type: regular
       version: -1
-    taskid: efe59b83-692d-46e1-861a-6f454a6d1a8e
+    taskid: 18090a21-b6db-46f6-8cda-af96cfa48664
     timertriggers: []
     type: regular
     view: |-
