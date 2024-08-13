@@ -1,0 +1,200 @@
+args:
+- description: 'specify minutes of active device. Default is: ''15'''
+  name: active_range
+  required: true
+- description: '(Optional)Offset for paging: Null value will accumulate all results
+    by default.'
+  name: offset
+- description: '(Optional)Page size for paging: Null value will accumulate all results
+    by default.'
+  name: pageLength
+- description: specify comma seperated site ids
+  name: siteids
+- description: Cisco Prime Instance
+  name: prime_instance_name
+  required: true
+commonfields:
+  id: ExportDeviceAttributesFromPrimeToPANWIoTCloud
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: ExportDeviceAttributesFromPrimeToPANWIoTCloud
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('ExportDeviceAttributesFromPrimeToPANWIoTCloud', 'start', __line__())
+
+
+  PANW_IOT_INSTANCE = "PANW IoT 3rd Party Integration Instance"
+  PRIME_INSTANCE = demisto.args().get('prime_instance_name')
+  LOG_PREFIX = 'PaloAltoNetworks3rdPartyIntegration_Cisco_Prime_'+PRIME_INSTANCE
+
+  def get_active_devices_from_panw_iot_cloud(retry=0):
+      active_range=demisto.args().get('active_range')
+      pageLength=demisto.args().get('pageLength')
+      offset=demisto.args().get('offset')
+      siteids=demisto.args().get('siteids')
+      response = demisto.executeCommand("panw-iot-3rd-party-get-active-list", {
+          "active_range":active_range,
+          "pageLength": pageLength,
+          "offset": offset,
+          "siteids": siteids
+      })
+      if isError(response[0]):
+          if retry == 0:
+              time.sleep(1)
+              return get_active_devices_from_panw_iot_cloud(retry=1)
+          err_msg = f'Error, could not get active device list from PANW IoT Cloud - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def extract_mac_addresses(devices):
+      response = demisto.executeCommand("panw-iot-3rd-party-extract-mac-address", {
+          "Devices":devices
+      })
+      if isError(response[0]):
+          err_msg = f'Error, could not extract mac addresses from active device list - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def get_prime_client_details(mac_addresses):
+      response = demisto.executeCommand("prime-client-detail", {
+          "client":mac_addresses,
+          "execution-timeout":864000,
+          "using": PRIME_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = f'Error while extracting client details for mac: '+str(mac_addresses)+' from cisco prime - '+str(response[0]['Contents'])
+          demisto.info(err_msg)
+          #raise Exception(err_msg)
+          return None
+
+      return response[0]['Contents']
+
+  def convert_prime_attributes_to_panw_iot_attributes(prime_clients):
+      response = demisto.executeCommand("panw-iot-3rd-party-extract-device-data", {
+          "client":"prime",
+          "clientData":prime_clients
+      })
+      if isError(response[0]):
+          err_msg = f'Error while converting the cisco prime attributes to PANW IoT attributes - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def report_devices_panw_iot_cloud(devices):
+      total = len(devices)
+      offset = 0
+      page_length = 1000
+      total_devices_updated=0
+      while total >= offset:
+          new_offset = offset+page_length
+          sub_devices = devices[offset:new_offset]
+          offset = new_offset
+          response = demisto.executeCommand("panw-iot-3rd-party-report-devices", {
+              "DeviceData":sub_devices,
+              "pageLength":"1000"
+          })
+          if isError(response[0]):
+              err_msg = f'Error while reporting the device data to the PANW IoT Cloud - '+str(response[0]['Contents'])
+              # raise Exception(err_msg)
+              # return_outputs(f'error payload: {sub_devices}')
+              demisto.error(err_msg)
+          else:
+              panw_response=response[0]['Contents']
+              devices_updated = panw_response.split()[0]
+              if devices_updated.isdigit() == True:
+                  total_devices_updated = total_devices_updated+int(devices_updated)
+      return total_devices_updated
+
+  def send_status_to_panw_iot_cloud(status, msg):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+          "status": status,
+          "message": msg,
+          "integration_name": "cisco_prime",
+          "playbook_name": "Cisco Prime Clients",
+          "asset_type": 'device',
+          "custom_integration_name":PRIME_INSTANCE,
+          "timestamp": int(round(time.time() * 1000))
+      })
+
+      if isError(resp[0]):
+          pass
+
+  def main():
+      try:
+          send_status_to_panw_iot_cloud("success", "Starting export of Cisco Prime devices")
+          device_list = get_active_devices_from_panw_iot_cloud()
+          if device_list is not None and isinstance(device_list, list) and device_list[0]['active_list'] is not None and len(device_list[0]['active_list']) > 0:
+              active_device_list_length = len(device_list[0]['active_list'])
+              # return_outputs('total number of devices extracted :'+ str(active_device_list_length))
+              demisto.debug('total number of devices extracted :'+ str(active_device_list_length))
+              devices_with_mac_addresses = extract_mac_addresses(device_list)
+              if devices_with_mac_addresses is not None and isinstance(devices_with_mac_addresses, list) and devices_with_mac_addresses[0]['mac_list'] is not None and len(devices_with_mac_addresses[0]['mac_list']) > 0:
+                  # return_outputs('total number of macs extracted :'+ str(len(devices_with_mac_addresses[0]['mac_list'])))
+                  demisto.debug('total number of macs extracted :'+ str(len(devices_with_mac_addresses[0]['mac_list'])))
+                  # return_outputs("prime.clients-"+ str(devices_with_mac_addresses))
+                  #devices_with_mac_addresses=[{'mac_list': ['00:23:68:a8:1d:21','30:10:b3:1f:e6:05'], 'sites': 'None'}]
+                  prime_client_details = get_prime_client_details(devices_with_mac_addresses)
+                  demisto.debug("cisco prime clients are"+ str(prime_client_details))
+                  if prime_client_details is not None and isinstance(prime_client_details, list):
+                      iot_attribute_device_list = convert_prime_attributes_to_panw_iot_attributes(prime_client_details)
+                      demisto.debug('iot_attribute_device_list:'+str(iot_attribute_device_list))
+                      if iot_attribute_device_list is not None:
+                          devices_updated=report_devices_panw_iot_cloud(iot_attribute_device_list)
+                          message = str(devices_updated) + ' device data updated'
+                          if message:
+                              send_status_to_panw_iot_cloud("success", message)
+                              return_results(message)
+                      else:
+                          return_results('IoT device attributes are empty')
+                          demisto.info(f'{LOG_PREFIX} - IoT device attributes are empty : {iot_attribute_device_list}')
+                          send_status_to_panw_iot_cloud("error", "IoT device attributes are empty")
+                  else:
+                      demisto.info(f'{LOG_PREFIX} - cisco prime clients are : {prime_client_details}')
+                      return_results('Extracted Cisco Prime client details are empty or object is not list')
+                      send_status_to_panw_iot_cloud("error", "Extracted Cisco Prime client details are empty or object is not list")
+              else:
+                  demisto.info(f'{LOG_PREFIX} - Devices with mac address list is empty or object is not list={devices_with_mac_addresses}')
+                  return_results('Devices with mac address list is empty or object is not list')
+                  send_status_to_panw_iot_cloud("error", "Devices with mac address list is empty")
+          else:
+              demisto.info(f'{LOG_PREFIX} - Active device list is empty or object is not list={device_list}')
+              return_results('Active device list is empty or object is not list')
+              send_status_to_panw_iot_cloud("error", "Get Active List does not exists")
+      except Exception as ex:
+          send_status_to_panw_iot_cloud("error", "Failed to export devices to Cisco Prime %s" % str(ex))
+          return_error(str(ex))
+
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('ExportDeviceAttributesFromPrimeToPANWIoTCloud', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 240h0m0s
+type: python
