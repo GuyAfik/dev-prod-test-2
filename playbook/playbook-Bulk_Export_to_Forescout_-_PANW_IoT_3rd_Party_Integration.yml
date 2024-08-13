@@ -1,0 +1,588 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: 3bd64141-9975-4bcf-8ee6-8d1f666ec07a
+inputs: []
+name: Bulk Export to Forescout - PANW IoT 3rd Party Integration
+outputs: []
+sourceplaybookid: 7f908ed7-e7f3-4399-879f-cfcb6d9934a8
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "29"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: c2287205-6d07-41de-8187-f88d9368c910
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: c2287205-6d07-41de-8187-f88d9368c910
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": -320
+        }
+      }
+  "4":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "10"
+      "yes":
+      - "24"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Forescout
+      instancename:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available and provided instance
+        is Active. Otherwise returns 'no'.
+      id: a468c8d1-d9f6-46a4-8f95-a4d09627dc1f
+      iscommand: false
+      name: Is Integration Instance available?
+      script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+      type: condition
+      version: -1
+    taskid: a468c8d1-d9f6-46a4-8f95-a4d09627dc1f
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 175
+        }
+      }
+  "10":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "18"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: forescout
+      message:
+        simple: 'No Forescout instance available. '
+      playbook_name:
+        simple: Bulk Export to Forescout - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 16a33a73-1321-47aa-8cc4-6f2cdc8f88b5
+      iscommand: true
+      name: Report Error Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 16a33a73-1321-47aa-8cc4-6f2cdc8f88b5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      active_forescout_instance:
+        simple: ${incident.integrationinstancename}
+      custom_attributes_list:
+        simple: ${incident.panwiotdevicecustomattributes}
+      execution-timeout:
+        simple: "432000"
+      sites:
+        simple: ${incident.sitenames}
+      tags:
+        simple: ${incident.panwiotinscopetagenforcement}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: For Bulk Export
+      id: 9674ba7c-96b8-4a9d-84a8-0ac120e4575b
+      iscommand: false
+      name: Send Devices to Forescout
+      script: SendAllPANWIoTDevicesToForescout
+      type: regular
+      version: -1
+    taskid: 9674ba7c-96b8-4a9d-84a8-0ac120e4575b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 545
+        }
+      }
+  "13":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "19"
+      "yes":
+      - "20"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: fa88c186-4d1f-4dc3-8c66-f25845b8f4a7
+      iscommand: false
+      name: Was there an error while exporting devices?
+      script: isError
+      type: condition
+      version: -1
+    taskid: fa88c186-4d1f-4dc3-8c66-f25845b8f4a7
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 720
+        }
+      }
+  "17":
+    continueonerrortype: ""
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 92e9da1b-f222-4186-8e47-5467c2f9e3a0
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 92e9da1b-f222-4186-8e47-5467c2f9e3a0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 1070
+        }
+      }
+  "18":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: d0c88fdd-acb6-4e54-8bae-49ddc9ce620b
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: d0c88fdd-acb6-4e54-8bae-49ddc9ce620b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+  "19":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "19"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: forescout
+      message:
+        simple: Successfully exported devices to Forescout
+      playbook_name:
+        simple: Bulk Export to Forescout - PANW IoT 3rd Party Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: dd415fad-4e1a-4842-8a8d-bc5500d72f5d
+      iscommand: true
+      name: Send Success Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: dd415fad-4e1a-4842-8a8d-bc5500d72f5d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 895
+        }
+      }
+  "20":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "20"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: forescout
+      message:
+        simple: Failed to export PANW IoT devices to Forescout
+      playbook_name:
+        simple: Bulk Export to Forescout - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 45432a77-f91e-4c6f-8bf6-d080d8483eb9
+      iscommand: true
+      name: Report Error Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 45432a77-f91e-4c6f-8bf6-d080d8483eb9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1555,
+          "y": 895
+        }
+      }
+  "24":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "28"
+      "no":
+      - "26"
+      "yes":
+      - "12"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_instance_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - Forescout
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 0aed5bc8-451c-406f-8ea0-477ca033543f
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: 0aed5bc8-451c-406f-8ea0-477ca033543f
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 370
+        }
+      }
+  "26":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "26"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "27"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: forescout
+      message:
+        simple: License Limit Exceeded.
+      playbook_name:
+        simple: Bulk Export to Forescout - PANW IoT 3rd Party Integration
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 01bdc1da-8286-4289-8085-e03a05d5ba6b
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 01bdc1da-8286-4289-8085-e03a05d5ba6b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 545
+        }
+      }
+  "27":
+    continueonerrortype: ""
+    id: "27"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: c633564c-36c1-476c-8086-1d55ef1793d6
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: c633564c-36c1-476c-8086-1d55ef1793d6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 720
+        }
+      }
+  "28":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "28"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "27"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: forescout
+      message:
+        simple: 'Error: Failed to get License'
+      playbook_name:
+        simple: Bulk Export to Forescout - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 905cedfe-ec1d-4a78-807a-64e733954e75
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 905cedfe-ec1d-4a78-807a-64e733954e75
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 510
+        }
+      }
+  "29":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "29"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "10"
+      "yes":
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: 1dcc9ba9-76be-495f-8df6-3cd202666162
+      iscommand: false
+      name: Is Forescout Integration Instance Availiable
+      script: Exists
+      type: condition
+      version: -1
+    taskid: 1dcc9ba9-76be-495f-8df6-3cd202666162
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": -145
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "24_26_no": 0.72
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1485,
+        "width": 1885,
+        "x": 50,
+        "y": -320
+      }
+    }
+  }
