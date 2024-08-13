@@ -1,0 +1,168 @@
+args:
+- name: rapid7_instance
+commonfields:
+  id: DownloadFinishedRapid7ScanReportsforPANWIoTCloud
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: DownloadFinishedRapid7ScanReportsforPANWIoTCloud
+outputs:
+- contextPath: PANWIoTCloud.finishedReports
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('DownloadFinishedRapid7ScanReportsforPANWIoTCloud', 'start', __line__())
+
+
+  from typing import Dict, Any
+  import traceback
+  USING_RAPID7_INSTANCE = demisto.args().get("rapid7_instance")
+  if USING_RAPID7_INSTANCE is None or USING_RAPID7_INSTANCE == '':
+      USING_RAPID7_INSTANCE='PANW IoT 3rd Party Rapid7 Nexpose Integration Instance'
+  LIST_NAME='Rapid7LaunchedReports'
+  def get_cache_report_list():
+      list_name = 'Rapid7LaunchedReports'
+      res = demisto.executeCommand('getList', {'listName': list_name})
+      if (
+          not isinstance(res, list)
+          or 'Contents' not in res[0]
+          or not isinstance(res[0]['Contents'], str)
+          or res[0]['Contents'] in ['Item not found (8)','']
+      ):
+          return 'No launched Reports - Report Cache Rapid7LaunchedReports is Empty'
+
+      report_ids = res[0]['Contents']
+      report_id_list = [line.split(',') for line in report_ids.split('\n')]
+      return get_finished_report_list(report_id_list[0])
+
+  def get_finished_report_list(launched_report_list):
+      finished_report_list = []
+      report_map = {}
+      report_job_map={}
+      for entry in launched_report_list:
+          csv_report_value, pdf_report_value = entry.split('|')
+          if '_' in csv_report_value:
+              csv_report_id, csv_report_instance_id, csv_report_format, csv_report_ip, csv_report_job = csv_report_value.split('_')
+              report_map[csv_report_id] = {'ip': csv_report_ip, 'job': csv_report_job, 'instanceID': csv_report_instance_id,'format':csv_report_format}
+
+              pdf_report_id, pdf_report_instance_id, pdf_report_format, pdf_report_ip, pdf_report_job = pdf_report_value.split('_')
+              report_map[pdf_report_id] = {'ip': pdf_report_ip, 'job': pdf_report_job, 'instanceID': pdf_report_instance_id,'format':pdf_report_format}
+
+              csv_status=None
+              pdf_status=None
+              try:
+                  csv_res = demisto.executeCommand("nexpose-get-report-status",{'report_id':csv_report_id,'instance_id':csv_report_instance_id,'using':USING_RAPID7_INSTANCE})
+                  csv_report_status = csv_res[0]['Contents']
+
+                  if isError(csv_res[0]):
+                      raise Exception(csv_res[0]['Contents'])
+
+                  csv_status = csv_report_status['status']
+              except Exception as e:
+                  return_error('Exception when getting csv report status for report ip' + csv_report_ip +  ' and the report id: '+ csv_report_id +':'+ str(e))
+
+              try:
+                  pdf_res = demisto.executeCommand("nexpose-get-report-status",{'report_id':pdf_report_id,'instance_id':pdf_report_instance_id,'using':USING_RAPID7_INSTANCE})
+                  pdf_report_status = pdf_res[0]['Contents']
+
+                  if isError(pdf_res[0]):
+                      raise Exception(pdf_res[0]['Contents'])
+
+                  pdf_status = pdf_report_status['status']
+              except Exception as e:
+                  return_error('Exception when getting pdf report status for report ip' + pdf_report_ip +  ' and the report id: '+ pdf_report_id +':'+ str(e))
+
+              try:
+                  if csv_status == 'complete' and pdf_status == 'complete':
+                      if csv_report_job in report_job_map:
+                          report_job_map[csv_report_job].append({'ip': csv_report_ip, 'id': csv_report_id, 'instance_id': csv_report_instance_id,'format':csv_report_format, 'reportstatus': csv_status})
+                      else:
+                          report_job_map[csv_report_job] = [{'ip': csv_report_ip, 'id': csv_report_id,'instance_id':csv_report_instance_id,'format':csv_report_format, 'reportstatus': csv_status}]
+
+                      if pdf_report_job in report_job_map:
+                          report_job_map[pdf_report_job].append({'ip': pdf_report_ip, 'id': pdf_report_id, 'instance_id': pdf_report_instance_id,'format':pdf_report_format, 'reportstatus': pdf_status})
+                      else:
+                          report_job_map[pdf_report_job] = [{'ip': pdf_report_ip, 'id': pdf_report_id,'instance_id':pdf_report_instance_id,'format':pdf_report_format, 'reportstatus': pdf_status}]
+                  else:
+                      if csv_status != 'complete':
+                          return_outputs(f'csv report status for the report_id:{csv_report_id} and report_ip: {csv_report_ip} is incomplete, hence skipping the downloading for both csv and pdf')
+                      if pdf_status != 'complete':
+                          return_outputs(f'pdf report status for the report_id:{pdf_report_id} and report_ip: {pdf_report_ip} is incomplete, hence skipping the downloading for both csv and pdf')
+                      # incomplete_job.append(csv_report_job)
+                      continue
+              except Exception as e:
+                  return_error('Exception while processing the csv and pdf report data: '+ str(e))
+
+
+      if len(report_map) == 0:
+          return 'No launched Reports - Report Cache Rapid7LaunchedReports is Empty'
+
+      for job_id in report_job_map:
+          scan_data = report_job_map[job_id]
+          pdf_csv_entry = []
+          status=True
+          for data in scan_data:
+              if data['reportstatus'] == 'complete':
+                  report_cache_entry = data['id'] + "_" + data['instance_id'] + "_" + data['format'] + "_" + data['ip']+ "_"+job_id
+                  pdf_csv_entry.append(report_cache_entry)
+              else:
+                  status=False
+          if status == True and len(pdf_csv_entry) == 2:
+              demisto.executeCommand("PANWIoTLaunchedVulnerabilityScanCacheOperations",
+                  {"name":LIST_NAME,"operation":"delete","value":pdf_csv_entry[0]+"|"+pdf_csv_entry[1]})
+              demisto.executeCommand("PANWIoTLaunchedVulnerabilityScanCacheOperations",
+                  {"name":LIST_NAME,"operation":"delete","value":pdf_csv_entry[1]+"|"+pdf_csv_entry[0]})
+
+      return download_finished_reports_to_context(report_job_map)
+
+  def download_finished_reports_to_context(report_job_map):
+      op_list = []
+      index = 0
+      result = {}
+      report_list=[]
+      for job, job_data in report_job_map.items():
+          for entry in job_data:
+              ip = entry['ip']
+              _id = entry['id']
+              instance_id=entry['instance_id']
+              report_format=entry['format']
+              result[_id] = ip
+              name='report_'+str(ip)+'_'+str(_id)
+              report_list.append({'report_id':_id,'instance_id':instance_id,'format':report_format,'name':name})
+              time.sleep(1)
+      appendContext('Nexpose.reportInfoList', report_list)
+      appendContext('PANWIoTCloud.finishedReports', report_job_map)
+      return report_list
+
+  def main():
+      try:
+          return_results(get_cache_report_list())
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute DownloadFinishedRapid7ScanReportsforPANWIoTCloud. Error: {str(ex)}')
+
+  ''' ENTRY POINT '''
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('DownloadFinishedRapid7ScanReportsforPANWIoTCloud', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- nexpose
+timeout: 100800h0m0s
+type: python
