@@ -1,0 +1,216 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: 51b91d3d-6af3-40d3-8ba2-ae257b80dd72
+inputs: []
+name: Quarantine Device in Aruba ClearPass - PANW IoT 3rd Party Integration
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: a7741d32-1cda-4293-8d50-041b5b877413
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: a7741d32-1cda-4293-8d50-041b5b877413
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "4"
+      "yes":
+      - "3"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Aruba ClearPass
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available. Otherwise returns
+        'no'
+      id: f9f38d43-41dc-435e-87c4-555f0f1a1573
+      iscommand: false
+      name: Is Aruba ClearPass Enabled?
+      script: IsIntegrationAvailable
+      type: condition
+      version: -1
+    taskid: f9f38d43-41dc-435e-87c4-555f0f1a1573
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 195
+        }
+      }
+  "3":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      action:
+        simple: Quarantine
+      alert_severity:
+        simple: ${incident.alertSeverity}
+      alert_type:
+        simple: ${incident.alertType}
+      integration:
+        simple: clearpass
+      mac_address:
+        simple: ${incident.macAddress}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 91618c55-716e-48c4-86a1-ea7287a9ff96
+      iscommand: false
+      name: Create AlertType and AlertSeverity Custom Attributes for endpoint
+      script: QuarantinePANWIoTDevice
+      type: regular
+      version: -1
+    taskid: 91618c55-716e-48c4-86a1-ea7287a9ff96
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 370
+        }
+      }
+  "4":
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: clearpass
+      message:
+        simple: Aruba ClearPass  instance is not configured
+      playbook_name:
+        simple: Quarantine Device in Aruba ClearPass - PANW IoT 3rd Party Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 2dddf86e-87cb-4942-8ebe-36b744bc785f
+      iscommand: true
+      name: Send disable status to IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 2dddf86e-87cb-4942-8ebe-36b744bc785f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "5":
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.close.inv
+      id: 86b67849-1175-4a08-8faa-9dc6cd69bf07
+      iscommand: true
+      name: Close Investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 86b67849-1175-4a08-8faa-9dc6cd69bf07
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 545
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 590,
+        "width": 810,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
