@@ -1,0 +1,39 @@
+{
+	"autorun": true,
+	"cacheVersn": 0,
+	"closureScript": "",
+	"color": "#8E24AA",
+	"days": 0,
+	"daysR": 0,
+	"default": false,
+	"definitionId": "",
+	"detached": false,
+	"disabled": false,
+	"extractSettings": {
+		"fieldCliNameToExtractSettings": {},
+		"mode": "Specific"
+	},
+	"fromServerVersion": "",
+	"hours": 0,
+	"hoursR": 0,
+	"id": "PANW IoT 3rd Party Cisco WLC ACL",
+	"itemVersion": "",
+	"layout": "",
+	"locked": false,
+	"name": "PANW IoT 3rd Party Cisco WLC ACL",
+	"onChangeRepAlg": 0,
+	"packID": "",
+	"packName": "",
+	"playbookId": "8653cf84-e4d5-4493-8a63-16bac3efb2f9",
+	"preProcessingScript": "",
+	"propagationLabels": [
+		"all"
+	],
+	"readonly": false,
+	"reputationCalc": 0,
+	"system": false,
+	"toServerVersion": "",
+	"version": -1,
+	"weeks": 0,
+	"weeksR": 0
+}
