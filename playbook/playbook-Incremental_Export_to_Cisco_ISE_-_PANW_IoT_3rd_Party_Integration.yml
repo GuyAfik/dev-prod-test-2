@@ -1,0 +1,998 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: 11fb964b-cf69-4e5c-8ab2-5b024eeaf2d7
+inputs: []
+name: Incremental Export to Cisco ISE - PANW IoT 3rd Party Integration
+outputs: []
+sourceplaybookid: 7f908ed7-e7f3-4399-879f-cfcb6d9934a8
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 6c688283-0d5d-4edb-853d-3b6949e3b881
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 6c688283-0d5d-4edb-853d-3b6949e3b881
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 890,
+          "y": -1340
+        }
+      }
+  "4":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "10"
+      "yes":
+      - "24"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      primary_instances:
+        simple: ${incident.primaryinstancenames}
+      secondary_instances:
+        simple: ${incident.secondaryinstancenames}
+      single_instance:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: de05496a-3257-4ac3-81dc-0035c55f6a73
+      iscommand: false
+      name: Are instances available?
+      script: e6c4b775-d4eb-443e-876e-4526ff22aa95
+      type: condition
+      version: -1
+    taskid: de05496a-3257-4ac3-81dc-0035c55f6a73
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 890,
+          "y": -1160
+        }
+      }
+  "5":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      active_instance:
+        simple: ${incident.primaryactiveinstancename}
+      role:
+        simple: Primary
+      standby_instance:
+        simple: ${incident.primarystandbyinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Determines which configured Cisco ISE instance is in active/primary
+        state. state and returns the name of this instance.
+      id: 7fc79b60-de85-4810-876a-3002f8d41fda
+      iscommand: false
+      name: Get Primary Active Instance
+      script: GetCiscoISEActiveInstance_
+      type: regular
+      version: -1
+    taskid: 7fc79b60-de85-4810-876a-3002f8d41fda
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1190,
+          "y": -250
+        }
+      }
+  "6":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      active_instance:
+        simple: ${incident.secondaryactiveinstancename}
+      role:
+        simple: Secondary
+      standby_instance:
+        simple: ${incident.secondarystandbyinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Determines which configured Cisco ISE instance is in active/primary
+        state. state and returns the name of this instance.
+      id: dbd05469-ddc6-4ffe-8274-7eb116e08cd2
+      iscommand: false
+      name: Get Secondary Active Instance
+      script: GetCiscoISEActiveInstance_
+      type: regular
+      version: -1
+    taskid: dbd05469-ddc6-4ffe-8274-7eb116e08cd2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 590,
+          "y": -250
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "21"
+      "yes":
+      - "12"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${incident.secondaryactiveinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: ac9241cc-b07d-4a9f-8663-ba542ea6ee4a
+      iscommand: false
+      name: Is Secondary Active Available?
+      script: Exists
+      type: condition
+      version: -1
+    taskid: ac9241cc-b07d-4a9f-8663-ba542ea6ee4a
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 210,
+          "y": 50
+        }
+      }
+  "8":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "21"
+      "yes":
+      - "11"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${incident.primaryactiveinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: 62053256-9563-4049-8d30-356720cee110
+      iscommand: false
+      name: Is Primary Active Available?
+      script: Exists
+      type: condition
+      version: -1
+    taskid: 62053256-9563-4049-8d30-356720cee110
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1570,
+          "y": 40
+        }
+      }
+  "10":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "18"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: ise
+      message:
+        simple: 'No Cisco ISE instance available. '
+      playbook_name:
+        simple: Incremental Export to Cisco ISE - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 675a6b6a-928a-43a5-89b3-ff0fd8f9fd6e
+      iscommand: true
+      name: Report Error Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 675a6b6a-928a-43a5-89b3-ff0fd8f9fd6e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 230,
+          "y": -960
+        }
+      }
+  "11":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "14"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      active_ise:
+        simple: ${incident.primaryactiveinstancename}
+      custom_attributes:
+        simple: ${incident.panwiotdevicecustomattributes}
+      execution-timeout:
+        simple: "432000"
+      increment_time:
+        simple: ${incident.playbookpollinterval}
+      sites:
+        simple: ${incident.sitenames}
+      tags:
+        simple: ${incident.panwiotinscopetagenforcement}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: This script takes in custom attributes from PANW IoT cloud as an
+        argument and creates or updates endpoints in ISE with the  input custom attributes.
+      id: b0e8cdd1-215d-42aa-8d49-d0a9246f376b
+      iscommand: false
+      name: Send Devices to Primary Cisco ISE
+      script: 2b4bf245-b0bc-4f96-89c7-97f5c0277cc5
+      type: regular
+      version: -1
+    taskid: b0e8cdd1-215d-42aa-8d49-d0a9246f376b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1580,
+          "y": 275
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      active_ise:
+        simple: ${incident.secondaryactiveinstancename}
+      custom_attributes:
+        simple: ${incident.panwiotdevicecustomattributes}
+      execution-timeout:
+        simple: "432000"
+      increment_time:
+        simple: ${incident.playbookpollinterval}
+      sites:
+        simple: ${incident.sitenames}
+      tags:
+        simple: ${incident.panwiotinscopetagenforcement}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: This script takes in custom attributes from PANW IoT cloud as an
+        argument and creates or updates endpoints in ISE with the  input custom attributes.
+      id: 4e6ed29a-c96a-4d86-8d35-65d681dbbd42
+      iscommand: false
+      name: Send Devices to Secondary Cisco ISE
+      script: 2b4bf245-b0bc-4f96-89c7-97f5c0277cc5
+      type: regular
+      version: -1
+    taskid: 4e6ed29a-c96a-4d86-8d35-65d681dbbd42
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 210,
+          "y": 275
+        }
+      }
+  "13":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "19"
+      "yes":
+      - "20"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: d6ff702f-6766-48c0-8a2b-fa47ac26ac52
+      iscommand: false
+      name: Was there an error while exporting devices?
+      script: isError
+      type: condition
+      version: -1
+    taskid: d6ff702f-6766-48c0-8a2b-fa47ac26ac52
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 210,
+          "y": 560
+        }
+      }
+  "14":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "16"
+      "yes":
+      - "15"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: 57e2bf9e-c86e-4c51-84cb-d98555278cf0
+      iscommand: false
+      name: Was there an error while exporting devices?
+      script: isError
+      type: condition
+      version: -1
+    taskid: 57e2bf9e-c86e-4c51-84cb-d98555278cf0
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1580,
+          "y": 540
+        }
+      }
+  "15":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.primaryactiveinstancename}
+      integration_name:
+        simple: ise
+      message:
+        simple: Failed to export PANW IoT devices to Cisco ISE
+      playbook_name:
+        simple: Incremental Export to Cisco ISE - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 432268d7-95aa-4f7d-8a33-72de4c9969b2
+      iscommand: true
+      name: Report Error Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 432268d7-95aa-4f7d-8a33-72de4c9969b2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1110,
+          "y": 800
+        }
+      }
+  "16":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.primaryactiveinstancename}
+      integration_name:
+        simple: ise
+      message:
+        simple: Successfully exported devices to Cisco ISE
+      playbook_name:
+        simple: Incremental Export to Cisco ISE - PANW IoT 3rd Party Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: e6922054-5726-4632-8dc3-8934e190c2e1
+      iscommand: true
+      name: Send Success Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: e6922054-5726-4632-8dc3-8934e190c2e1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1580,
+          "y": 800
+        }
+      }
+  "17":
+    continueonerrortype: ""
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: cb7fcee4-357c-4b91-8402-3b24a4636ce3
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: cb7fcee4-357c-4b91-8402-3b24a4636ce3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 890,
+          "y": 1150
+        }
+      }
+  "18":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 2d670451-f5dd-4003-8634-31a5ce9f6ab0
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 2d670451-f5dd-4003-8634-31a5ce9f6ab0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 230,
+          "y": -770
+        }
+      }
+  "19":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "19"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.secondaryactiveinstancename}
+      integration_name:
+        simple: ise
+      message:
+        simple: Successfully exported devices to Cisco ISE
+      playbook_name:
+        simple: Incremental Export to Cisco ISE - PANW IoT 3rd Party Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 74d8da8e-9477-4fd5-87eb-0c0101dbaa7f
+      iscommand: true
+      name: Send Success Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 74d8da8e-9477-4fd5-87eb-0c0101dbaa7f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 670,
+          "y": 800
+        }
+      }
+  "20":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "20"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.secondaryactiveinstancename}
+      integration_name:
+        simple: ise
+      message:
+        simple: Failed to export PANW IoT devices to Cisco ISE
+      playbook_name:
+        simple: Incremental Export to Cisco ISE - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 2fdffd21-cbda-46a4-8020-3b47c219a798
+      iscommand: true
+      name: Report Error Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 2fdffd21-cbda-46a4-8020-3b47c219a798
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 210,
+          "y": 800
+        }
+      }
+  "21":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.secondaryactiveinstancename
+          operator: isEmpty
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.primaryactiveinstancename
+          operator: isEmpty
+      label: "YES"
+    continueonerrortype: ""
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "23"
+      "YES":
+      - "22"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Check whether the values provided in arguments are equal. If either
+        of the arguments are missing, no is returned.
+      id: 30b69a45-b2dd-48b9-87a7-bcee94d8588c
+      iscommand: false
+      name: Are Both Primary and Secondary Not Available?
+      type: condition
+      version: -1
+    taskid: 30b69a45-b2dd-48b9-87a7-bcee94d8588c
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 890,
+          "y": 255
+        }
+      }
+  "22":
+    continueonerrortype: ""
+    id: "22"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: cd9415e0-a197-4903-8fed-714077944dca
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: cd9415e0-a197-4903-8fed-714077944dca
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 680,
+          "y": 465
+        }
+      }
+  "23":
+    continueonerrortype: ""
+    id: "23"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: At Least One is Available
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Prints text to war room (Markdown supported)
+      id: 45ae7fa4-89cd-41fd-85ca-ba9aa1462811
+      iscommand: false
+      name: At Least One is Available
+      script: Print
+      type: regular
+      version: -1
+    taskid: 45ae7fa4-89cd-41fd-85ca-ba9aa1462811
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1110,
+          "y": 465
+        }
+      }
+  "24":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "25"
+      "no":
+      - "26"
+      "yes":
+      - "6"
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_instance_name:
+        simple: ${incident.integrationinstancename},${incident.primaryactiveinstancename},${incident.primarystandbyinstancename},${incident.secondaryactiveinstancename},${incident.secondarystandbyinstancename}
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - Cisco ISE pxGrid
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: cb66b0fa-7869-40a9-8b1f-5806959ecdf7
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: cb66b0fa-7869-40a9-8b1f-5806959ecdf7
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 890,
+          "y": -830
+        }
+      }
+  "25":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "27"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: ise
+      message:
+        simple: Cisco ISE is disabled
+      playbook_name:
+        simple: Incremental Export to Cisco ISE - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 9a2c6c65-45ef-4910-80cc-385c13cbb3b7
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 9a2c6c65-45ef-4910-80cc-385c13cbb3b7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1410,
+          "y": -640
+        }
+      }
+  "26":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "26"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "27"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: ise
+      message:
+        simple: Cisco ISE is disabled
+      playbook_name:
+        simple: Incremental Export to Cisco ISE - PANW IoT 3rd Party Integration
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: d1aac441-c722-424b-82b7-3b5163551506
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: d1aac441-c722-424b-82b7-3b5163551506
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1820,
+          "y": -640
+        }
+      }
+  "27":
+    continueonerrortype: ""
+    id: "27"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 452b2ebb-98ec-4a48-8321-5c0affaf5346
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 452b2ebb-98ec-4a48-8321-5c0affaf5346
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1620,
+          "y": -470
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "21_22_YES": 0.79,
+      "21_23_#default#": 0.74,
+      "24_5_yes": 0.57,
+      "24_6_yes": 0.54,
+      "4_10_no": 0.5,
+      "7_21_no": 0.44,
+      "8_21_no": 0.52
+    },
+    "paper": {
+      "dimensions": {
+        "height": 2585,
+        "width": 1990,
+        "x": 210,
+        "y": -1340
+      }
+    }
+  }
