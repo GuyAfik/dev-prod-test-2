@@ -1,0 +1,589 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: 985135c8-3cc9-43b1-8783-926b487a076d
+inputs: []
+name: Bulk Export Devices to Nuvolo - PANW IoT 3rd Party Integration
+outputs: []
+sourceplaybookid: 985135c8-3cc9-43b1-8783-926b487a076d
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: ae52246b-3858-4b3c-8429-c035a6bea135
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: ae52246b-3858-4b3c-8429-c035a6bea135
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 160,
+          "y": -520
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "2"
+      "yes":
+      - "11"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Nuvolo
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available. Otherwise returns
+        'no'
+      id: 708d5808-581c-4e9a-8ea3-099c0f9aeee8
+      iscommand: false
+      name: Is Nuvolo enabled?
+      script: IsIntegrationAvailable
+      type: condition
+      version: -1
+    taskid: 708d5808-581c-4e9a-8ea3-099c0f9aeee8
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 160,
+          "y": -260
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: nuvolo
+      message:
+        simple: Nuvolo integration is not enabled
+      playbook_name:
+        simple: Bulk Export Devices to Nuvolo - PANW IoT 3rd Party Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: e6188cc3-4a3d-4c5e-80a0-049bb95dc93a
+      iscommand: true
+      name: Send disabled status back to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: e6188cc3-4a3d-4c5e-80a0-049bb95dc93a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -140,
+          "y": -30
+        }
+      }
+  "3":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: c3ba280d-a5b4-42c9-800a-4020e97f8d3c
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: c3ba280d-a5b4-42c9-800a-4020e97f8d3c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -140,
+          "y": 170
+        }
+      }
+  "4":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Return the PANW IoT customer id.
+      id: 44b2f9ca-9fc9-4cf7-86b3-8a744fba318c
+      iscommand: true
+      name: Get PANW IoT customer id
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-get-customerid
+      type: regular
+      version: -1
+    taskid: 44b2f9ca-9fc9-4cf7-86b3-8a744fba318c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 370
+        }
+      }
+  "5":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      customer_id:
+        simple: ${PanwIot3rdParty.customerid}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 60e1e70a-991c-464e-866b-7052c0c6f2a3
+      iscommand: false
+      name: Send all PANW IoT devices to Nuvolo
+      script: 0a484f76-3ae9-4db1-8fc9-036ffbb9e77a
+      type: regular
+      version: -1
+    taskid: 60e1e70a-991c-464e-866b-7052c0c6f2a3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 545
+        }
+      }
+  "6":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "10"
+      "yes":
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: 5e7b7a41-ae51-4a6d-880e-076c6772a59b
+      iscommand: false
+      name: Was there an error when sending devices to Nuvolo?
+      script: isError
+      type: condition
+      version: -1
+    taskid: 5e7b7a41-ae51-4a6d-880e-076c6772a59b
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 720
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: nuvolo
+      message:
+        simple: 'Error: Failed to do a bulk device sync to Nuvolo'
+      playbook_name:
+        simple: Bulk Export Devices to Nuvolo - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 601eff8f-2c51-41b2-8997-506da428e045
+      iscommand: true
+      name: Send error status back to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 601eff8f-2c51-41b2-8997-506da428e045
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 895
+        }
+      }
+  "8":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 1d9d8ed7-2bf6-4cf8-8e6f-35ac6767b0d5
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 1d9d8ed7-2bf6-4cf8-8e6f-35ac6767b0d5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 1070
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 028da488-5440-4b15-85ef-3fd68644765c
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 028da488-5440-4b15-85ef-3fd68644765c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 1070
+        }
+      }
+  "10":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: nuvolo
+      message:
+        simple: Successfully send ${Nuvolo-IoT.bulkResult} devices to Nuvolo
+      playbook_name:
+        simple: Bulk Export Devices to Nuvolo - PANW IoT 3rd Party Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: c14c6ab5-3bc2-40e4-886b-8c520f9b41a9
+      iscommand: true
+      name: Send success status back to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: c14c6ab5-3bc2-40e4-886b-8c520f9b41a9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 895
+        }
+      }
+  "11":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "14"
+      "no":
+      - "12"
+      "yes":
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - Nuvolo
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: b6ae5864-6dbb-456c-8dbb-85c1a1d3602c
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: b6ae5864-6dbb-456c-8dbb-85c1a1d3602c
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": -30
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: nuvolo
+      message:
+        simple: License Limit Exceeded.
+      playbook_name:
+        simple: Bulk Export Devices to Nuvolo - PANW IoT 3rd Party Integration
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 616ff09d-908b-4894-841b-2f5344c2374c
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 616ff09d-908b-4894-841b-2f5344c2374c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1240,
+          "y": 235
+        }
+      }
+  "13":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: ae8e47bd-3cab-48e7-8701-b2182a3c36bb
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: ae8e47bd-3cab-48e7-8701-b2182a3c36bb
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1050,
+          "y": 450
+        }
+      }
+  "14":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: nuvolo
+      message:
+        simple: 'Error: Failed to get License'
+      playbook_name:
+        simple: Bulk Export Devices to Nuvolo - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 25fd7129-c8c4-4dba-8fa0-950885c78d6f
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 25fd7129-c8c4-4dba-8fa0-950885c78d6f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 800,
+          "y": 235
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1685,
+        "width": 1760,
+        "x": -140,
+        "y": -520
+      }
+    }
+  }
