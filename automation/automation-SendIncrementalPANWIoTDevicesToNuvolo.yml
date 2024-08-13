@@ -1,0 +1,213 @@
+args:
+- description: List of device inventory
+  isArray: true
+  name: device_list
+  required: true
+- description: PANW IoT customer id.
+  name: customer_id
+  required: true
+comment: Sending all the pulled devices from PANW IoT to Nuvolo.
+commonfields:
+  id: cd49735a-a76c-4fbe-823b-810394c5296d
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendIncrementalPANWIoTDevicesToNuvolo
+outputs:
+- contextPath: Nuvolo-IoT.numOfExportDevices
+  description: The number of exporting devices to Nuvolo
+pswd: ""
+runas: DBotWeakRole
+runonce: true
+script: |
+  register_module_line('SendIncrementalPANWIoTDevicesToNuvolo', 'start', __line__())
+
+
+  import uuid
+  DOMAIN = 'iot.paloaltonetworks.com'
+  NUVOLO_INSTANCE = 'PANW IoT 3rd Party Nuvolo Integration Instance'
+  FACILITY_SET = {
+      'Automation',
+      'Camera',
+      'Energy Management',
+      'Industrial Automation',
+      'Industrial PC',
+      'Intercom System',
+      'IP Phone',
+      'Physical Security',
+      'Smart Building',
+      'Synchronized Clock',
+      'Temperature Monitoring',
+      'Workforce Management'
+  }
+
+  def create_nuvolo_record(insert_list, externaltenantid):
+      """
+      To create Servicenow record
+      :param insert_list: device list that needs to insert into Servicenow table
+      """
+      if len(insert_list) == 0:
+          msg = f'failed to get device list from PANW IoT cloud'
+          raise Exception(msg)
+      medical_count = 0
+      facility_count = 0
+      unmatch_count = 0
+      skip_count = 0
+      for x in range(len(insert_list)):
+          device = insert_list[x]
+          if device:
+              if (device.get('profile_type', '') != "IoT" or device.get("profile_vertical", "") != "Medical"):
+                  skip_count += 1
+                  continue
+              device_id = device['deviceid']
+              parameters = get_device_parameters(device, externaltenantid)
+              table_name = ''
+              if (device['profile_vertical'] == 'Medical'):
+                  medical_count += 1
+                  table_name = 'x_nuvo_eam_clinical_devices'
+              elif (device['profile_vertical'] == 'Office') and device.get('display_profile_category', '') in FACILITY_SET:
+                  facility_count += 1
+                  table_name = 'x_nuvo_eam_facilities_devices'
+              else:
+                  unmatch_count += 1
+                  table_name = 'x_nuvo_eam_unmatched_devices'
+              demisto.executeCommand("nuvolo-create-record", {
+                  'asset_id': device_id,
+                  'table_name': table_name,
+                  'payload': 'Discovery Event',
+                  'parameters': parameters,
+                  'asset_type': 'device'
+                  #'using': NUVOLO_INSTANCE
+              })
+      res = {
+          "medical_count": medical_count,
+          "facility_count": facility_count,
+          "unmatch_count": unmatch_count,
+          "skip_count": skip_count
+      }
+      return res
+
+  def get_device_parameters(device, externaltenantid):
+      """
+      Get device parameters
+      """
+      device_details_link = 'https://' + externaltenantid + '.' + DOMAIN + '/detail/device/' + device.get('deviceid', '')
+      parameters = [
+          {"mac_address": device.get('deviceid', '')},
+          {"third_party_id": str(uuid.uuid4())},
+          {'ip': device.get('connect_evtContent', {'ip': ''}).get('ip', '')},
+          {'ip_address': device.get('connect_evtContent', {'ip': ''}).get('ip')},
+          {'mac': device.get('deviceid', '')},
+          {'u_mac_address': device.get('deviceid', '')},
+          {'hostname': device.get('display_hostname', '')},
+          {"uid": device.get('deviceid', '')},
+          {'event_type': 'Asset Identification'},
+          {'IP': device.get('connect_evtContent', {'ip': ''}).get('ip')},
+          {'Mac Address': device.get('deviceid', '')},
+          {'Hostname': device.get('display_hostname', '')},
+          {'Profile': device.get('display_profileid', '')},
+          {'Category': device.get('display_profile_category', '')},
+          {'Last Activity': str(device.get('date', ''))},
+          {'Vlan': device.get('display_vlan', '')},
+          {'Site Name': device.get('site_name', "None")},
+          {'Risk Score': device.get('ml_risk_score', '')},
+          {'Risk Level': device.get('ml_risk_level', '')},
+          {'Confidence Score': device.get('profile_confidence', '')},
+          {'Subnet': device.get('subnets', '')},
+          {'Make': device.get('display_vendor', '')},
+          {'Model': device.get('display_model', '')},
+          {'OS Group': device.get('display_osGroup', '')},
+          {'Firmware Version': device.get('display_osVerFirmwareVer', '')},
+          {'OS Support': device.get('os_support', '')},
+          {'OS End of Support': str(device.get('os_end_of_support', ''))},
+          {'Serial Number': device.get('display_sn', '')},
+          {'Endpoint Protection': device.get('display_EPP', '')},
+          {'EPP Last Activity': str(device.get('mostRecentEPP', ''))},
+          {'AET': device.get('display_AET', '')},
+          {'DHCP': device.get('display_DHCP', '')},
+          {'Wire/Wireless': device.get('display_WireWireless', '')},
+          {'SMB': device.get('display_SMB', '')},
+          {'Switch Port': device.get('display_phyPort', '')},
+          {'Switch Name': device.get('display_switchName', '')},
+          {'Switch IP': device.get('display_switchIP', '')},
+          {'Services': device.get('server_services', '')},
+          {'Is Server': device.get('is_server', '')},
+          {'NAC profile': device.get('display_nac_profile', '')},
+          {'NAC profile source': device.get('nac_profile_source', '')},
+          {'Access Point Name': device.get('display_ap_name', '')},
+          {'Access Point IP': device.get('display_ap_ip', '')},
+          {'SSID': device.get('SSID', '')},
+          {'Authentication Method': device.get('authMethod', '')},
+          {'Encryption Cipher': device.get('encryptionCipher', '')},
+          {'rssi': device.get('rssi', '')},
+          {'AD Username': device.get('last_ad_cname', '')},
+          {'AD Domain': device.get('last_ad_realm', '')},
+          {'OS is obsoleted': device.get('obsoleted_os', '')},
+          {'OS obsoleted reason': device.get('obsoleted_os_reason', '')},
+          {'Applications': device.get('display_apps', '')},
+          {'Tags': device.get('display_tags', '')},
+          {'Location': device.get('display_location', '')},
+          {'Asset Tag': device.get('display_asset_tag', '')},
+          {'Device Details Link': device_details_link},
+          {'First Seen': device.get('last_activity', '')},
+          {'Tags': device.get('tags', {})}
+      ]
+      return parameters
+
+
+  def main():
+      """
+      Main entry
+      """
+      device_list = demisto.args().get('device_list')
+      externaltenantid = demisto.args().get('customer_id')
+      try:
+          device_distribution = create_nuvolo_record(device_list, externaltenantid)
+          op_data = {
+              'Device Exported': len(device_list),
+              'Export Medical Devices': device_distribution.get("medical_count"),
+              'Export Facility Devices': device_distribution.get("facility_count"),
+              'Export Unmatched Devices': device_distribution.get("unmatch_count"),
+              'Skipped Devices': device_distribution.get('skip_count')
+          }
+          total_export_devices = device_distribution.get("medical_count")
+          total_export_devices += device_distribution.get("facility_count")
+          total_export_devices += device_distribution.get("unmatch_count")
+          res = (
+              f'Successfully pulled {len(device_list)} devices from PANW cloud side and '
+              f'upserted {total_export_devices} devices to Nuvolo side.'
+          )
+      except Exception as e:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute upsert_to_nuvolo function.\nError:\n{str(e)}')
+
+      return CommandResults(
+          readable_output=tableToMarkdown("Asset import summary:", op_data, removeNull=True),
+          outputs_prefix = "Nuvolo-IoT.numOfExportDevices",
+          outputs = device_distribution
+      )
+
+
+  if __name__ in ['__main__', 'builtin', 'builtins']:
+      res = main()
+      return_results(res)
+
+  register_module_line('SendIncrementalPANWIoTDevicesToNuvolo', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
