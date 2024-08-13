@@ -10,7 +10,6 @@ contentitemexportablefields:
     - all
     toServerVersion: ""
 description: This Playbook pushes dacl/sgacls from IoT cloud to Cisco ISE integration
-dirtyInputs: true
 id: 97b30c69-0797-453b-80c3-6b2ffdaee432
 inputs: []
 name: ACL Push to Cisco ISE-PANW IoT 3rd Party Integration
@@ -32,11 +31,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: b46d4c26-839d-4931-81c6-289fe05baf26
+      id: 527825c6-e714-4315-8b68-e78621934be6
       iscommand: false
       name: ""
       version: -1
-    taskid: b46d4c26-839d-4931-81c6-289fe05baf26
+    taskid: 527825c6-e714-4315-8b68-e78621934be6
     timertriggers: []
     type: start
     view: |-
@@ -74,13 +73,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Creates or Updates ACLs in Cisco ISE.
-      id: d5169ec2-80f0-43bd-87df-c0aec9ad6775
+      id: 45aed6b6-986f-43ab-8828-2dbd7caac32b
       iscommand: false
       name: CreateOrUpdateACLs
       script: CreateOrUpdatePANWIoTACLsToCiscoISE
       type: regular
       version: -1
-    taskid: d5169ec2-80f0-43bd-87df-c0aec9ad6775
+    taskid: 45aed6b6-986f-43ab-8828-2dbd7caac32b
     timertriggers: []
     type: regular
     view: |-
@@ -103,13 +102,13 @@ tasks:
     task:
       brand: Builtin
       description: commands.local.cmd.close.inv
-      id: 67984f48-b304-4a4e-838b-a2bb527db7b9
+      id: f92cdfe4-def3-4276-8dbf-c91dd7e13180
       iscommand: true
       name: Close
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 67984f48-b304-4a4e-838b-a2bb527db7b9
+    taskid: f92cdfe4-def3-4276-8dbf-c91dd7e13180
     timertriggers: []
     type: regular
     view: |-
@@ -143,13 +142,13 @@ tasks:
     task:
       brand: ""
       description: Reports ACLs sync status
-      id: 45030539-b417-44a9-8636-b4cccf44da84
+      id: fb70ccbd-0074-4b58-8b57-d87e16ed25b3
       iscommand: true
       name: Report ACL sync status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-aclsync-status'
       type: regular
       version: -1
-    taskid: 45030539-b417-44a9-8636-b4cccf44da84
+    taskid: fb70ccbd-0074-4b58-8b57-d87e16ed25b3
     timertriggers: []
     type: regular
     view: |-
@@ -183,13 +182,13 @@ tasks:
     task:
       brand: ""
       description: Reports ACLs sync status
-      id: 4b36aac1-24a3-43be-8736-21bbb1567dab
+      id: 425d918a-a684-4dcc-8203-04c8cde3705c
       iscommand: true
       name: Report failed ACL sync status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-aclsync-status'
       type: regular
       version: -1
-    taskid: 4b36aac1-24a3-43be-8736-21bbb1567dab
+    taskid: 425d918a-a684-4dcc-8203-04c8cde3705c
     timertriggers: []
     type: regular
     view: |-
@@ -224,13 +223,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: 25d27be9-980e-43a9-82be-136b64a12fd4
+      id: c8e52cdc-831a-426a-86c4-165b34f90e16
       iscommand: false
       name: Is there any error?
       script: isError
       type: condition
       version: -1
-    taskid: 25d27be9-980e-43a9-82be-136b64a12fd4
+    taskid: c8e52cdc-831a-426a-86c4-165b34f90e16
     timertriggers: []
     type: condition
     view: |-
@@ -266,13 +265,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 201741c9-ab7a-4736-8193-e70a3640134c
+      id: 45cf9395-53dd-4c07-8d75-97de855341f3
       iscommand: false
       name: Is Cisco ISE enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 201741c9-ab7a-4736-8193-e70a3640134c
+    taskid: 45cf9395-53dd-4c07-8d75-97de855341f3
     timertriggers: []
     type: condition
     view: |-
@@ -312,13 +311,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 6f614f76-c523-4286-8d50-fae0697c3989
+      id: 75469b70-60e7-4dc4-8bf3-d651b1341ff3
       iscommand: true
       name: Send disabled status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 6f614f76-c523-4286-8d50-fae0697c3989
+    taskid: 75469b70-60e7-4dc4-8bf3-d651b1341ff3
     timertriggers: []
     type: regular
     view: |-
@@ -358,13 +357,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 527a5b62-89e7-4d3c-8246-0cf93d67e8df
+      id: e84864bc-a321-44b7-81e0-2fa6e2b9b55f
       iscommand: true
       name: Send success status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 527a5b62-89e7-4d3c-8246-0cf93d67e8df
+    taskid: e84864bc-a321-44b7-81e0-2fa6e2b9b55f
     timertriggers: []
     type: regular
     view: |-
@@ -404,13 +403,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 9ef22ea0-1055-41c2-8aae-afb760091a7a
+      id: 600c7ca8-7c01-49e9-88fd-4a7958bb359b
       iscommand: true
       name: Send error status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 9ef22ea0-1055-41c2-8aae-afb760091a7a
+    taskid: 600c7ca8-7c01-49e9-88fd-4a7958bb359b
     timertriggers: []
     type: regular
     view: |-
@@ -444,13 +443,13 @@ tasks:
     task:
       brand: ""
       description: Reports ACLs sync status
-      id: fac47ef8-1bf8-4272-898c-6af9ee0a20c1
+      id: 14e664e8-e49f-4ee4-8199-13f4c71c22f8
       iscommand: true
       name: Report failed ACL sync status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-aclsync-status'
       type: regular
       version: -1
-    taskid: fac47ef8-1bf8-4272-898c-6af9ee0a20c1
+    taskid: 14e664e8-e49f-4ee4-8199-13f4c71c22f8
     timertriggers: []
     type: regular
     view: |-
