@@ -1,0 +1,97 @@
+args:
+- description: Alert or Vulnerability payload
+  name: asset
+  required: true
+- description: Alert or Vulnerability type
+  name: asset_type
+  required: true
+- name: integration_name
+  required: true
+commonfields:
+  id: 2ef6f81e-1456-41a9-8ce5-3b6ebf04ea9d
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: CheckPANWSeverityLevel
+outputs:
+- contextPath: "yes"
+  description: Alert/Vulnerability matches configured severity level
+- contextPath: "no"
+  description: Alert/Vulnerability does not match configured severity level
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('CheckPANWSeverityLevel', 'start', __line__())
+
+
+  PANW_ALERT_SEVERITY_MAP = {
+      'info' : "low",
+      'low': "medium",
+      'medium' : 'high',
+      'high' : 'critical',
+  }
+
+  INTEGRATION_SEVERITY_CMD_MAP = {
+      "Syslog Sender": "get-panw-iot-syslog-severity"
+  }
+
+  def check_severity_levels(asset, asset_type, integration_name):
+      res = demisto.executeCommand(INTEGRATION_SEVERITY_CMD_MAP[integration_name], {})
+      if isError(res[0]):
+          err_msg = f'Failed to get configured severity sevel - {res[0].get("Contents")}'
+          raise Exception(err_msg)
+      severity_level = json.loads(res[0]['Contents'])
+      alert_severity = severity_level['alert_severity']
+      vulnerability_severity = severity_level['vulnerability_severity']
+
+      asset_severity = None
+      if asset_type == "alert":
+          asset_severity = asset['severity'].lower()
+          asset_severity = PANW_ALERT_SEVERITY_MAP[asset['severity']]
+          if asset_severity in alert_severity:
+              return 'yes'
+
+      elif asset_type == 'vulnerability':
+          asset_severity = asset['severity'].lower()
+          if asset_severity in vulnerability_severity:
+              return 'yes'
+
+      asset_id = asset['zb_ticketid']
+      demisto.results("Not sending %s with ID - %s to SIEM. Severity level \"%s\" did not match configured filter - %s" % (asset_type,asset_id, asset_severity, severity_level))
+
+      return 'no'
+
+  def main():
+      asset = demisto.args().get('asset')
+      asset_type = demisto.args().get('asset_type')
+      integration_name = demisto.args().get('integration_name')
+      try:
+          demisto.results(check_severity_levels(asset, asset_type, integration_name))
+      except Exception as ex:
+          return_error(str(ex))
+
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('CheckPANWSeverityLevel', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- Condition
+type: python
