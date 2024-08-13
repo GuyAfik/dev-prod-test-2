@@ -9,7 +9,6 @@ contentitemexportablefields:
     propagationLabels:
     - all
     toServerVersion: ""
-dirtyInputs: true
 id: f08c2d71-7a4b-4b7f-82eb-be9c8f948310
 inputs: []
 name: Purge Panorama Security Rules to PANW IoT Cloud - PANW IoT 3rd Party Integration
@@ -32,11 +31,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 5cff8fd0-7238-4d8d-85ed-d8071a91b16d
+      id: 51611bd0-4e55-4464-82e0-af1421355cf6
       iscommand: false
       name: ""
       version: -1
-    taskid: 5cff8fd0-7238-4d8d-85ed-d8071a91b16d
+    taskid: 51611bd0-4e55-4464-82e0-af1421355cf6
     timertriggers: []
     type: start
     view: |-
@@ -71,13 +70,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 59a2debd-faee-4945-8d5b-7aa45088c75d
+      id: a2671d07-102f-43c3-859d-19cef79feb1f
       iscommand: false
       name: Is Panorama enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 59a2debd-faee-4945-8d5b-7aa45088c75d
+    taskid: a2671d07-102f-43c3-859d-19cef79feb1f
     timertriggers: []
     type: condition
     view: |-
@@ -118,13 +117,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 6722718f-5adc-4225-89d7-144f8be9f052
+      id: ecdecebf-0758-4326-81b0-0cddd7de5837
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 6722718f-5adc-4225-89d7-144f8be9f052
+    taskid: ecdecebf-0758-4326-81b0-0cddd7de5837
     timertriggers: []
     type: regular
     view: |-
@@ -148,13 +147,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: b7d16585-992a-4d3b-8026-5927a176b6fb
+      id: e8fbf129-976d-4583-85c7-21784ef02a56
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: b7d16585-992a-4d3b-8026-5927a176b6fb
+    taskid: e8fbf129-976d-4583-85c7-21784ef02a56
     timertriggers: []
     type: regular
     view: |-
@@ -183,13 +182,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: e21bf774-0508-4b1f-8925-e33a541e9160
+      id: 793f343a-6105-4ece-8ab0-e4613535c676
       iscommand: false
       name: Purge Panorama security rules and Update PANW IoT cloud
       script: baecc898-27e6-4687-84c5-3828237902e6
       type: regular
       version: -1
-    taskid: e21bf774-0508-4b1f-8925-e33a541e9160
+    taskid: 793f343a-6105-4ece-8ab0-e4613535c676
     timertriggers: []
     type: regular
     view: |-
@@ -223,13 +222,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: 03979dee-550f-4604-8575-be83997b8a49
+      id: 2a79b4e6-5d77-4ef5-8812-779930d6f6f7
       iscommand: false
       name: Was there an error when sending devices to PANW IoT Cloud?
       script: isError
       type: condition
       version: -1
-    taskid: 03979dee-550f-4604-8575-be83997b8a49
+    taskid: 2a79b4e6-5d77-4ef5-8812-779930d6f6f7
     timertriggers: []
     type: condition
     view: |-
@@ -270,13 +269,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 750303fe-8203-4559-8791-698c39aabdba
+      id: 48864076-32b5-44a7-87df-644abdc319b0
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 750303fe-8203-4559-8791-698c39aabdba
+    taskid: 48864076-32b5-44a7-87df-644abdc319b0
     timertriggers: []
     type: regular
     view: |-
@@ -300,13 +299,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: ac8b6f67-929e-40b7-8787-4b5728bb8212
+      id: 4f36fc16-0eb5-41a8-8d95-3fdf3f648222
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: ac8b6f67-929e-40b7-8787-4b5728bb8212
+    taskid: 4f36fc16-0eb5-41a8-8d95-3fdf3f648222
     timertriggers: []
     type: regular
     view: |-
@@ -347,13 +346,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 9c40f5e0-ee49-4393-8e30-78348a93813c
+      id: c4521956-eae3-4095-81b9-703167dd32a2
       iscommand: true
       name: Send success status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 9c40f5e0-ee49-4393-8e30-78348a93813c
+    taskid: c4521956-eae3-4095-81b9-703167dd32a2
     timertriggers: []
     type: regular
     view: |-
@@ -386,13 +385,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 60624785-92f9-451a-8e44-11cb77fd6320
+      id: 005af399-90d0-41e7-855f-b1d3b014023c
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 60624785-92f9-451a-8e44-11cb77fd6320
+    taskid: 005af399-90d0-41e7-855f-b1d3b014023c
     timertriggers: []
     type: condition
     view: |-
@@ -433,13 +432,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: e8f43033-0615-4345-86b2-a1602a783668
+      id: ec31da76-b498-48d8-8c6a-fc0c08162b18
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: e8f43033-0615-4345-86b2-a1602a783668
+    taskid: ec31da76-b498-48d8-8c6a-fc0c08162b18
     timertriggers: []
     type: regular
     view: |-
@@ -463,13 +462,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 24a1ad67-e429-4cfb-8127-160f60386652
+      id: aaad2e80-586c-4952-86de-2d77275cf99e
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 24a1ad67-e429-4cfb-8127-160f60386652
+    taskid: aaad2e80-586c-4952-86de-2d77275cf99e
     timertriggers: []
     type: regular
     view: |-
@@ -510,13 +509,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: ac843339-4e84-4348-801e-70b30f3e005c
+      id: 0ccd0cd8-6193-48e6-8dde-2e5debb8685c
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: ac843339-4e84-4348-801e-70b30f3e005c
+    taskid: 0ccd0cd8-6193-48e6-8dde-2e5debb8685c
     timertriggers: []
     type: regular
     view: |-
@@ -549,13 +548,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 6c409ac8-f549-4bec-8d79-3702d6628b27
+      id: 2afe7ff1-4a3d-4411-8cec-cb9b51b57cb8
       iscommand: false
       name: Is Panorama Integration Instance Available
       script: Exists
       type: condition
       version: -1
-    taskid: 6c409ac8-f549-4bec-8d79-3702d6628b27
+    taskid: 2afe7ff1-4a3d-4411-8cec-cb9b51b57cb8
     timertriggers: []
     type: condition
     view: |-
@@ -596,13 +595,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: d624711c-16d7-4dfc-887b-f04f64ca53ed
+      id: 8364539c-865b-4815-8b79-9ad600ecbc52
       iscommand: true
       name: No Instance passed to this Playbook. Reporting Error
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: d624711c-16d7-4dfc-887b-f04f64ca53ed
+    taskid: 8364539c-865b-4815-8b79-9ad600ecbc52
     timertriggers: []
     type: regular
     view: |-
