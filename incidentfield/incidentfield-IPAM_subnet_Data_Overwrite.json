@@ -30,7 +30,7 @@
 	"name": "IPAM subnet Data Overwrite",
 	"neverSetAsRequired": false,
 	"openEnded": false,
-	"orgType": "",
+	"orgType": "boolean",
 	"ownerOnly": false,
 	"packID": "",
 	"packName": "",
