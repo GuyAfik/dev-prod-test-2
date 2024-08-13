@@ -1,0 +1,1336 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 1.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: This playbook  gets  scans initiated within in last 30 days and check
+  for finished  scans, generates reports, downloads reports and finally uploads reports
+  to PANW IoT Cloud from Tanable.io
+dirtyInputs: true
+id: 48011825-4100-4b6c-816d-63185233895e
+inputs: []
+name: Bulk Tenable Get Scans and Report Handling V2- PANW IoT 3rd Party Integration
+outputs: []
+sourceplaybookid: 39ba7f39-a1da-44c0-863f-38ea540f24ea
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "32"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: de9fb4eb-e141-40dd-8909-b8247a491377
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: de9fb4eb-e141-40dd-8909-b8247a491377
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 50
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      integration_name:
+        simple: tenable
+      message:
+        simple: Tenable integration is not enabled
+      playbook_name:
+        simple: Bulk Tenable Get Scans and Report Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: disabled
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 1ea15c49-ec58-4ff9-8625-132f5c5fd9c1
+      iscommand: true
+      name: Report disabled status to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 1ea15c49-ec58-4ff9-8625-132f5c5fd9c1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 2295
+        }
+      }
+  "5":
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 640317ae-c47e-42a3-8e31-7a6f8304f8a4
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 640317ae-c47e-42a3-8e31-7a6f8304f8a4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1882.5,
+          "y": 2470
+        }
+      }
+  "6":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "19"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      active_tenable_io_instance:
+        simple: ${incident.integrationinstancename}
+      panw_iot_3rd_party_instance:
+        simple: PANW IoT 3rd Party Integration Instance
+      time:
+        simple: ${PANWIoTCloud.DateTimeDelta}
+      type:
+        simple: BULK
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 3c8ecfd6-0ff9-4d96-8ccc-b75f479abda5
+      iscommand: false
+      name: Launch Tenable reports for finished scans
+      script: GetTenableFinishedScansAndGenerateReportforPANWIoTCloudV2
+      type: regular
+      version: -1
+    taskid: 3c8ecfd6-0ff9-4d96-8ccc-b75f479abda5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1135,
+          "y": 720
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      active_tenable_io_instance:
+        simple: ${incident.integrationinstancename}
+      panw_iot_3rd_party_instance:
+        simple: PANW IoT 3rd Party Integration Instance
+      type:
+        simple: BULK
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 06ce05f5-3eaf-4c5c-8601-4a998205ab46
+      iscommand: false
+      name: Download Finished Tenable Scan reports
+      script: DownloadFinishedTenableScanReportsforPANWIoTCloudV2
+      type: regular
+      version: -1
+    taskid: 06ce05f5-3eaf-4c5c-8601-4a998205ab46
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2005,
+          "y": 1420
+        }
+      }
+  "8":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      seconds:
+        simple: "300"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sleep for X seconds
+      id: f8114334-3f42-4e3c-8bf4-5adb5adcdb85
+      iscommand: false
+      name: Wait 5 minutes for the reports to finish
+      script: Sleep
+      type: regular
+      version: -1
+    taskid: f8114334-3f42-4e3c-8bf4-5adb5adcdb85
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2005,
+          "y": 1245
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "12"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      file_data:
+        simple: ${File}
+      job_data:
+        simple: ${PANWIoTCloud.finishedReports}
+      panw_iot_3rd_party_instance:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: cf18b812-d217-42a3-808e-997e612f2272
+      iscommand: false
+      name: Upload Files to PANW IoT Cloud
+      script: UploadFinishedTenableScanReportstoPANWIoTCloudV2
+      type: regular
+      version: -1
+    taskid: cf18b812-d217-42a3-808e-997e612f2272
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1892.5,
+          "y": 1945
+        }
+      }
+  "10":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "23"
+      "yes":
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${PANWIoTCloud.finishedReports}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: 18672134-24ac-48c6-896c-23eebfcdbbb2
+      iscommand: false
+      name: Check if there are any available reports to upload
+      script: Exists
+      type: condition
+      version: -1
+    taskid: 18672134-24ac-48c6-896c-23eebfcdbbb2
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 2220,
+          "y": 1770
+        }
+      }
+  "11":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: 'Successfully uploaded reports '
+      playbook_name:
+        simple: Bulk Tenable Get Scans and Report Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 7201e940-3e02-4a4e-8793-6a46dfc3e6c6
+      iscommand: true
+      name: Report Upload Success to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 7201e940-3e02-4a4e-8793-6a46dfc3e6c6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1247.5,
+          "y": 2295
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "11"
+      "yes":
+      - "13"
+      - "14"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+      path:
+        simple: Tenable.uploadReportfailStatus
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks for errors in a given task. If found, write it to the path
+        provided as an argument.
+      id: e66dccd2-29fa-483f-85d6-9c25700df85e
+      iscommand: false
+      name: Did the Report Uploads Fail?
+      script: GetPANWIoTTenableErrors
+      type: condition
+      version: -1
+    taskid: e66dccd2-29fa-483f-85d6-9c25700df85e
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1892.5,
+          "y": 2120
+        }
+      }
+  "13":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: ${Tenable.uploadReportfailStatus}
+      playbook_name:
+        simple: Bulk Tenable Get Scans and Report Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 27e6536a-03aa-43ba-802a-a027008fb500
+      iscommand: true
+      name: Report Upload Errors to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 27e6536a-03aa-43ba-802a-a027008fb500
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1790,
+          "y": 2295
+        }
+      }
+  "14":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: ${Tenable.uploadReportfailStatus}
+      playbook_name:
+        simple: Bulk Tenable Get Scans and Report Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 67de35c8-c1ee-42c0-836e-a2b88a7a9252
+      iscommand: true
+      name: Report Upload Error as Event
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 67de35c8-c1ee-42c0-836e-a2b88a7a9252
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2220,
+          "y": 2295
+        }
+      }
+  "15":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "10"
+      "yes":
+      - "16"
+      - "17"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+      path:
+        simple: Tenable.DownloadReportfailStatus
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks for errors in a given task. If found, write it to the path
+        provided as an argument.
+      id: aaaccad0-7717-4ce7-8d47-2fe39d8d8791
+      iscommand: false
+      name: Did the Report Download Fail?
+      script: GetPANWIoTTenableErrors
+      type: condition
+      version: -1
+    taskid: aaaccad0-7717-4ce7-8d47-2fe39d8d8791
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 2005,
+          "y": 1595
+        }
+      }
+  "16":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "18"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      message:
+        simple: ${Tenable.DownloadReportfailStatus}
+      scan_type:
+        simple: tenable
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Upload reports (PDF + XML) for specified scan to IoT Cloud
+      id: fa46154a-bd9f-4170-88f3-8b6069333db6
+      iscommand: true
+      name: Report Download Error as Event
+      script: '|||panw-iot-3rd-party-upload-vulnerability-scan-report'
+      type: regular
+      version: -1
+    taskid: fa46154a-bd9f-4170-88f3-8b6069333db6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 930,
+          "y": 1770
+        }
+      }
+  "17":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "18"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: ${Tenable.DownloadReportfailStatus}
+      playbook_name:
+        simple: Bulk Tenable Get Scans and Report Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 38b50ea0-9886-43a7-8596-402fe49c240c
+      iscommand: true
+      name: Report Download Errors to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 38b50ea0-9886-43a7-8596-402fe49c240c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1360,
+          "y": 1770
+        }
+      }
+  "18":
+    continueonerrortype: ""
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: c8eb38a6-f87d-4507-8fd5-bcaf951bd344
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: c8eb38a6-f87d-4507-8fd5-bcaf951bd344
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1145,
+          "y": 1945
+        }
+      }
+  "19":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "19"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "30"
+      "yes":
+      - "20"
+      - "21"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+      path:
+        simple: Tenable.LaunchReportfailStatus
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks for errors in a given task. If found, write it to the path
+        provided as an argument.
+      id: 34c643ad-2bfa-4aab-85f5-03c24472fb96
+      iscommand: false
+      name: Did the Report Launch Fail?
+      script: GetPANWIoTTenableErrors
+      type: condition
+      version: -1
+    taskid: 34c643ad-2bfa-4aab-85f5-03c24472fb96
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1135,
+          "y": 895
+        }
+      }
+  "20":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "20"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      message:
+        simple: ${Tenable.LaunchReportfailStatus}
+      scan_type:
+        simple: tenable
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Upload reports (PDF + XML) for specified scan to IoT Cloud
+      id: 654e1091-b65a-4bba-8a43-204cbdacc9d3
+      iscommand: true
+      name: Report Launch Error as Event
+      script: '|||panw-iot-3rd-party-upload-vulnerability-scan-report'
+      type: regular
+      version: -1
+    taskid: 654e1091-b65a-4bba-8a43-204cbdacc9d3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 490,
+          "y": 1070
+        }
+      }
+  "21":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: ${Tenable.LaunchReportfailStatus}
+      playbook_name:
+        simple: Bulk Tenable Get Scans and Report Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: e75f97db-e491-47ab-82b1-6ae9e6f5531f
+      iscommand: true
+      name: Report Launch Errors to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: e75f97db-e491-47ab-82b1-6ae9e6f5531f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 920,
+          "y": 1070
+        }
+      }
+  "22":
+    continueonerrortype: ""
+    id: "22"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 6c3b6ea3-d3b0-4a76-89f5-a4a974e0c96e
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 6c3b6ea3-d3b0-4a76-89f5-a4a974e0c96e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 705,
+          "y": 1245
+        }
+      }
+  "23":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "23"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: No scans available for reporting
+      playbook_name:
+        simple: Bulk Tenable Get Scans and Report Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 014a3df2-9c08-4d17-87e2-dcf3753ecf54
+      iscommand: true
+      name: Report status to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 014a3df2-9c08-4d17-87e2-dcf3753ecf54
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2650,
+          "y": 2295
+        }
+      }
+  "24":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      number:
+        simple: "30"
+      unit:
+        simple: DAYS
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: a46fa58c-4c4a-4f8c-833a-7a49042396b0
+      iscommand: false
+      name: Get Last 30 Days DateTime
+      script: GetLastDateTimeTenable
+      type: regular
+      version: -1
+    taskid: a46fa58c-4c4a-4f8c-833a-7a49042396b0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1135,
+          "y": 545
+        }
+      }
+  "25":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "28"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: 'Error: Failed to get License'
+      playbook_name:
+        simple: Bulk Tenable Get Scans and Report Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: c9172d6a-5b66-4522-8c74-1a665ed7e1fa
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: c9172d6a-5b66-4522-8c74-1a665ed7e1fa
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 275,
+          "y": 545
+        }
+      }
+  "26":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "26"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "25"
+      "NO":
+      - "27"
+      "YES":
+      - "24"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - Tenable.io
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 47b7eb3a-862d-464f-8b4b-20d674b542f8
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: 47b7eb3a-862d-464f-8b4b-20d674b542f8
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 490,
+          "y": 370
+        }
+      }
+  "27":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "27"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "28"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: License Limit Exceeded.
+      playbook_name:
+        simple: Bulk Tenable Get Scans and Report Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: f1772266-d320-486b-88e1-7fe6dc5d86a2
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: f1772266-d320-486b-88e1-7fe6dc5d86a2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 705,
+          "y": 545
+        }
+      }
+  "28":
+    continueonerrortype: ""
+    id: "28"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 3b20bc69-3d2d-4070-8468-5d2d358fa5f4
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 3b20bc69-3d2d-4070-8468-5d2d358fa5f4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 275,
+          "y": 720
+        }
+      }
+  "29":
+    continueonerrortype: ""
+    id: "29"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 628b44ea-7a9f-4a63-849a-cb58846b7878
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 628b44ea-7a9f-4a63-849a-cb58846b7878
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1360,
+          "y": 1420
+        }
+      }
+  "30":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "30"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "34"
+      "no":
+      - "31"
+      "yes":
+      - "8"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      scanResultFromTenable:
+        simple: ${PANWIoTCloud.scansPresentOnTenable}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Condition to check whether Tenable returned any Scans.
+      id: 5fa4c460-3530-43e4-85f0-99e48c954c8c
+      iscommand: false
+      name: Check if Tenable returned scans or not?
+      script: e2a681bf-ae4f-4da4-8f91-3ec1e5c9c08b
+      type: condition
+      version: -1
+    taskid: 5fa4c460-3530-43e4-85f0-99e48c954c8c
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1790,
+          "y": 1070
+        }
+      }
+  "31":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "31"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "29"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: No scans available for reporting from Tenable
+      playbook_name:
+        simple: Bulk Tenable Get Scans and Report Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 3c705a09-70c0-4bb2-8725-9e653f91d8d4
+      iscommand: true
+      name: Report status to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 3c705a09-70c0-4bb2-8725-9e653f91d8d4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1145,
+          "y": 1245
+        }
+      }
+  "32":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "32"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "33"
+      "no":
+      - "2"
+      "yes":
+      - "26"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Tenable.io
+      instancename:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available and provided instance
+        is Active. Otherwise returns 'no'.
+      id: d6c36477-c347-4fb3-8fbe-daaf29068a6e
+      iscommand: false
+      name: Is Tenable integration available?
+      script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+      type: condition
+      version: -1
+    taskid: d6c36477-c347-4fb3-8fbe-daaf29068a6e
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 195
+        }
+      }
+  "33":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "33"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: Attributes missing for either Integration brand name or instance name
+      playbook_name:
+        simple: Bulk Tenable Get Scans and Report Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: d9acc6bd-cd07-44e7-84e5-3ffd4ebb0d85
+      iscommand: true
+      name: Report Error status to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: d9acc6bd-cd07-44e7-84e5-3ffd4ebb0d85
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 3080,
+          "y": 2295
+        }
+      }
+  "34":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "34"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "29"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: tenable
+      message:
+        simple: No scans available for reporting from Tenable.io
+      playbook_name:
+        simple: Bulk Tenable Get Scans and Report Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: d362f9a5-cf3c-42cd-8f27-6289ba464e58
+      iscommand: true
+      name: Report status to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: d362f9a5-cf3c-42cd-8f27-6289ba464e58
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1575,
+          "y": 1245
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "15_17_yes": 0.79
+    },
+    "paper": {
+      "dimensions": {
+        "height": 2515,
+        "width": 3410,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
