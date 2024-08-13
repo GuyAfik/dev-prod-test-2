@@ -1,0 +1,262 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.9
+    packID: ""
+    packName: Palo Alto Networks IoT 3rd Party Integrations
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: Bulk Import of custom IPAM to PANW IoT Cloud
+inputs: []
+name: Bulk Import of  custom IPAM to PANW IoT Cloud
+outputs: []
+sourceplaybookid: 985135c8-3cc9-43b1-8783-926b487a076d
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: f7d76fe4-bf65-484c-8b7e-7b04de8bd02a
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: f7d76fe4-bf65-484c-8b7e-7b04de8bd02a
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 50
+        }
+      }
+  "5":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      data_overwrite:
+        simple: ${incident.useipamnonsitedataifthesameblockorsubnetisiniotsecurity}
+      list_name:
+        simple: ${incident.customipamdatalistname}
+      site_overwrite:
+        simple: ${incident.useipamsitedataifthesamerootblockisiniotsecurity}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7da0b4d4-c015-41cf-82fa-5f3dd4930aeb
+      iscommand: false
+      name: Import Custom IPAM Subnet Info and Update PANW IoT cloud
+      script: SendAllGenericIPAMDataToPANWIoTCloud
+      type: regular
+      version: -1
+    taskid: 7da0b4d4-c015-41cf-82fa-5f3dd4930aeb
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 195
+        }
+      }
+  "6":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "10"
+      "yes":
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: 730c2845-6f41-4180-8795-324e767e568d
+      iscommand: false
+      name: Was there an error when sending devices to PANW IoT Cloud?
+      script: isError
+      type: condition
+      version: -1
+    taskid: 730c2845-6f41-4180-8795-324e767e568d
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 370
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: ipam_generic
+      message:
+        simple: 'Error: Failed to do a bulk export Infoblox IPAM Data'
+      playbook_name:
+        simple: Bulk Import of  custom IPAM to PANW IoT Cloud
+      status:
+        simple: error
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 3e1da2c3-bff3-48b8-8518-d1332a4fff59
+      iscommand: true
+      name: Send error status back to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 3e1da2c3-bff3-48b8-8518-d1332a4fff59
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 545
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 4c6ad70c-a3d8-4c4d-8159-0d22b72752d7
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 4c6ad70c-a3d8-4c4d-8159-0d22b72752d7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 720
+        }
+      }
+  "10":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: ipam_generic
+      message:
+        simple: Successfully imported custom IPAM Data
+      playbook_name:
+        simple: Bulk Import of  custom IPAM to PANW IoT Cloud
+      status:
+        simple: success
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 7509241e-bb17-47d1-8a79-d7aafa906518
+      iscommand: true
+      name: Send success status back to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 7509241e-bb17-47d1-8a79-d7aafa906518
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 765,
+        "width": 810,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
