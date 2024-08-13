@@ -9,7 +9,6 @@ contentitemexportablefields:
     propagationLabels:
     - all
     toServerVersion: ""
-dirtyInputs: true
 id: 3a84b2fa-dcd9-43c5-8d8a-f57de5677d0c
 inputs: []
 name: Un-quarantine Device in Aruba ClearPass - PANW IoT 3rd Party Integration
@@ -31,11 +30,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 999e3eb6-79dc-4887-879b-36e7690024d3
+      id: dbfd9cff-268d-4fae-87af-e13278bf2164
       iscommand: false
       name: ""
       version: -1
-    taskid: 999e3eb6-79dc-4887-879b-36e7690024d3
+    taskid: dbfd9cff-268d-4fae-87af-e13278bf2164
     timertriggers: []
     type: start
     view: |-
@@ -70,13 +69,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 4e25a4c3-8e07-45f6-8857-8013a44e18c7
+      id: d75eab05-c030-401e-8514-7213553dac32
       iscommand: false
       name: Is Aruba ClearPass Enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 4e25a4c3-8e07-45f6-8857-8013a44e18c7
+    taskid: d75eab05-c030-401e-8514-7213553dac32
     timertriggers: []
     type: condition
     view: |-
@@ -109,13 +108,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: a2f16c0f-83f0-43e1-8f9d-5360f9f09b87
+      id: 2b0288fd-41bf-4268-87dc-74972f340042
       iscommand: false
       name: Create AlertType and AlertSeverity Custom Attributes for endpoint
       script: QuarantinePANWIoTDevice
       type: regular
       version: -1
-    taskid: a2f16c0f-83f0-43e1-8f9d-5360f9f09b87
+    taskid: 2b0288fd-41bf-4268-87dc-74972f340042
     timertriggers: []
     type: regular
     view: |-
@@ -152,13 +151,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 361c4a4a-51e3-4754-87c8-7ed4a812f77c
+      id: 94031375-3b68-4fd1-8d15-684abde27a56
       iscommand: true
       name: Send disable status to IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 361c4a4a-51e3-4754-87c8-7ed4a812f77c
+    taskid: 94031375-3b68-4fd1-8d15-684abde27a56
     timertriggers: []
     type: regular
     view: |-
@@ -181,13 +180,13 @@ tasks:
     task:
       brand: Builtin
       description: commands.local.cmd.close.inv
-      id: 408fe6d1-f9f4-4a45-82bc-3837759c62e5
+      id: 288b5671-eb63-43d6-81cb-8c2af7d7a10e
       iscommand: true
       name: Close Investigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 408fe6d1-f9f4-4a45-82bc-3837759c62e5
+    taskid: 288b5671-eb63-43d6-81cb-8c2af7d7a10e
     timertriggers: []
     type: regular
     view: |-
