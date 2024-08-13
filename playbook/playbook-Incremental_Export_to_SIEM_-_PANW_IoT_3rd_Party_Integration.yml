@@ -11,7 +11,6 @@ contentitemexportablefields:
     toServerVersion: ""
 description: This playbook gets all available assets ( alerts, vulnerabilities and
   devices) and send then to configured PANW third-party integration SIEM server.
-dirtyInputs: true
 id: 7Incremental Export to SIEM - PANW IoT 3rd Party Integration
 inputs: []
 name: Incremental Export to SIEM - PANW IoT 3rd Party Integration
@@ -34,11 +33,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: be7adf5f-c29a-4a73-8fc9-125fa9e7d7ef
+      id: 7e5a35a6-8e1e-4cd9-8ea5-688acac165e8
       iscommand: false
       name: ""
       version: -1
-    taskid: be7adf5f-c29a-4a73-8fc9-125fa9e7d7ef
+    taskid: 7e5a35a6-8e1e-4cd9-8ea5-688acac165e8
     timertriggers: []
     type: start
     view: |-
@@ -76,13 +75,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: ab920d4e-6f5f-4ffd-8f5b-b6fd4629a2dc
+      id: 1892e3ef-771e-46ac-8a60-63dde87a4a35
       iscommand: true
       name: Send disabled status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: ab920d4e-6f5f-4ffd-8f5b-b6fd4629a2dc
+    taskid: 1892e3ef-771e-46ac-8a60-63dde87a4a35
     timertriggers: []
     type: regular
     view: |-
@@ -121,13 +120,13 @@ tasks:
       brand: ""
       description: This automation retrieves all specified assets from the PANW IoT
         cloud and send them to the SIEM server.
-      id: b1efaeee-c2bd-4bc1-8c67-14fd8aebf0b9
+      id: 151b2cff-aa4c-4afb-898f-ecf2cc9fc3c0
       iscommand: false
       name: Send PANW IoT devices to SIEM
       script: SendPANWIoTAssetsToSIEM
       type: regular
       version: -1
-    taskid: b1efaeee-c2bd-4bc1-8c67-14fd8aebf0b9
+    taskid: 151b2cff-aa4c-4afb-898f-ecf2cc9fc3c0
     timertriggers: []
     type: regular
     view: |-
@@ -166,13 +165,13 @@ tasks:
       brand: ""
       description: This automation retrieves all specified assets from the PANW IoT
         cloud and send them to the SIEM server.
-      id: 2b9ca1b0-12fe-456d-816e-7c2bd74ffc23
+      id: 1c77fed3-ed32-437b-87eb-6e4a17d4cb5a
       iscommand: false
       name: Send PANW IoT alerts to SIEM
       script: SendPANWIoTAssetsToSIEM
       type: regular
       version: -1
-    taskid: 2b9ca1b0-12fe-456d-816e-7c2bd74ffc23
+    taskid: 1c77fed3-ed32-437b-87eb-6e4a17d4cb5a
     timertriggers: []
     type: regular
     view: |-
@@ -211,13 +210,13 @@ tasks:
       brand: ""
       description: This automation retrieves all specified assets from the PANW IoT
         cloud and send them to the SIEM server.
-      id: a832a561-43d3-4c92-8361-e41f93437614
+      id: 577bf0b1-a990-46b4-8ef9-52309c5d49cd
       iscommand: false
       name: Send PANW IoT vulnerabilities to SIEM
       script: SendPANWIoTAssetsToSIEM
       type: regular
       version: -1
-    taskid: a832a561-43d3-4c92-8361-e41f93437614
+    taskid: 577bf0b1-a990-46b4-8ef9-52309c5d49cd
     timertriggers: []
     type: regular
     view: |-
@@ -240,13 +239,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 6e95bd3c-5a4e-4e01-8eeb-1656accba0c9
+      id: ce8703fc-81ac-47c4-8c22-eaf6110616d2
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 6e95bd3c-5a4e-4e01-8eeb-1656accba0c9
+    taskid: ce8703fc-81ac-47c4-8c22-eaf6110616d2
     timertriggers: []
     type: regular
     view: |-
@@ -279,13 +278,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: d3610da0-0089-4b1c-8a1d-5436992ad368
+      id: d2f00763-f0ce-4de0-8713-9325afdde73a
       iscommand: false
       name: is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: d3610da0-0089-4b1c-8a1d-5436992ad368
+    taskid: d2f00763-f0ce-4de0-8713-9325afdde73a
     timertriggers: []
     type: condition
     view: |-
@@ -323,13 +322,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 26cb5c6a-b143-4277-8170-efddb22346dd
+      id: b64d19d1-d416-490d-889a-200b34728ee1
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 26cb5c6a-b143-4277-8170-efddb22346dd
+    taskid: b64d19d1-d416-490d-889a-200b34728ee1
     timertriggers: []
     type: regular
     view: |-
@@ -367,13 +366,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 956dffc5-fed2-4014-87f8-2a19aba6d839
+      id: 209c6dec-2567-4ba2-8f6e-829e797bee7a
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 956dffc5-fed2-4014-87f8-2a19aba6d839
+    taskid: 209c6dec-2567-4ba2-8f6e-829e797bee7a
     timertriggers: []
     type: regular
     view: |-
@@ -407,13 +406,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: b277abd3-5738-42e9-85ac-2f8cb03bc38e
+      id: ae6f4b9e-4c11-4166-814b-0df2a945b314
       iscommand: false
       name: Is Syslog(SIEM) Integration Instance Available
       script: Exists
       type: condition
       version: -1
-    taskid: b277abd3-5738-42e9-85ac-2f8cb03bc38e
+    taskid: ae6f4b9e-4c11-4166-814b-0df2a945b314
     timertriggers: []
     type: condition
     view: |-
@@ -451,13 +450,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: b273fe02-ab3c-463d-8f51-ebc9e1dd4aaf
+      id: ce303f3c-347c-488b-8941-f11c2c926f5e
       iscommand: true
       name: No Instance passed to this Playbook. Reporting Error
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: b273fe02-ab3c-463d-8f51-ebc9e1dd4aaf
+    taskid: ce303f3c-347c-488b-8941-f11c2c926f5e
     timertriggers: []
     type: regular
     view: |-
@@ -480,13 +479,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 1f44b0df-1c7f-4859-8b2a-b8f12609f044
+      id: c568a35a-8832-4f81-8a4a-102fb83b288b
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 1f44b0df-1c7f-4859-8b2a-b8f12609f044
+    taskid: c568a35a-8832-4f81-8a4a-102fb83b288b
     timertriggers: []
     type: regular
     view: |-
@@ -523,13 +522,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: 1f182557-bb9e-4ac0-8be2-4653db08b88a
+      id: 5ee17081-4c56-40da-818d-7b9b1a3ac21c
       iscommand: false
       name: Is Syslog (SIEM)  Integration Enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: 1f182557-bb9e-4ac0-8be2-4653db08b88a
+    taskid: 5ee17081-4c56-40da-818d-7b9b1a3ac21c
     timertriggers: []
     type: condition
     view: |-
@@ -560,13 +559,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 0b2ee803-88cf-40ef-82b3-1105b4614f3e
+      id: c09c6ee6-b1bb-4054-8552-5d80d011f6f6
       iscommand: false
       name: Retrieve Configured SIEM Asset Types
       script: CheckConfiguredSIEMAssetTypes
       type: regular
       version: -1
-    taskid: 0b2ee803-88cf-40ef-82b3-1105b4614f3e
+    taskid: c09c6ee6-b1bb-4054-8552-5d80d011f6f6
     timertriggers: []
     type: regular
     view: |-
@@ -604,12 +603,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: a1de5eae-8de6-405b-82cb-4431ae505713
+      id: 5f554098-f796-4fe9-8340-6fffe40e3cb7
       iscommand: false
       name: Device Type Selected?
       type: condition
       version: -1
-    taskid: a1de5eae-8de6-405b-82cb-4431ae505713
+    taskid: 5f554098-f796-4fe9-8340-6fffe40e3cb7
     timertriggers: []
     type: condition
     view: |-
@@ -647,12 +646,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: c609dd15-3512-459b-8a73-e75cd415fe33
+      id: 404cfb6d-f7e6-45aa-8bce-72311c5b99fc
       iscommand: false
       name: Vulnerability Type Selected?
       type: condition
       version: -1
-    taskid: c609dd15-3512-459b-8a73-e75cd415fe33
+    taskid: 404cfb6d-f7e6-45aa-8bce-72311c5b99fc
     timertriggers: []
     type: condition
     view: |-
@@ -690,12 +689,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: a483feb5-140b-4a7c-86c3-8eb10cdb09d7
+      id: 5f8de2b0-9972-4dc7-87c7-362a706db013
       iscommand: false
       name: Alert Type Selected?
       type: condition
       version: -1
-    taskid: a483feb5-140b-4a7c-86c3-8eb10cdb09d7
+    taskid: 5f8de2b0-9972-4dc7-87c7-362a706db013
     timertriggers: []
     type: condition
     view: |-
