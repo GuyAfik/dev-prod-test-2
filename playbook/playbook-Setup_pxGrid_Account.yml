@@ -31,11 +31,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 0ace6c7a-e471-47cc-802d-87a7cbcf5ecb
+      id: b941e8a2-7175-4584-8328-261841a227ed
       iscommand: false
       name: ""
       version: -1
-    taskid: 0ace6c7a-e471-47cc-802d-87a7cbcf5ecb
+    taskid: b941e8a2-7175-4584-8328-261841a227ed
     timertriggers: []
     type: start
     view: |-
@@ -70,13 +70,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 0aff1bd3-9731-43ca-8154-dd0ccf0ee17c
+      id: c05ff546-4ea7-4e8f-8e6b-e1beeea1187b
       iscommand: false
       name: Is pxGrid Integration enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 0aff1bd3-9731-43ca-8154-dd0ccf0ee17c
+    taskid: c05ff546-4ea7-4e8f-8e6b-e1beeea1187b
     timertriggers: []
     type: condition
     view: |-
@@ -114,13 +114,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 60961e02-3aa0-4dbf-8d7d-c3492d0594a6
+      id: e698c89c-958b-4db3-8cc1-43844d6e7a38
       iscommand: true
       name: Report disabled status to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 60961e02-3aa0-4dbf-8d7d-c3492d0594a6
+    taskid: e698c89c-958b-4db3-8cc1-43844d6e7a38
     timertriggers: []
     type: regular
     view: |-
@@ -147,13 +147,13 @@ tasks:
     task:
       brand: ""
       description: Gets pxGrid account status
-      id: fe5a3170-252b-4809-89aa-65df7cdf0cc8
+      id: 91792904-2bf7-4dbe-8cb5-6100e4e24c2b
       iscommand: true
       name: Get pxGrid Status
       script: '|||pxgrid-get-account-status'
       type: regular
       version: -1
-    taskid: fe5a3170-252b-4809-89aa-65df7cdf0cc8
+    taskid: 91792904-2bf7-4dbe-8cb5-6100e4e24c2b
     timertriggers: []
     type: regular
     view: |-
@@ -176,13 +176,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 38148acb-9323-4c34-8d19-97731258edf5
+      id: 832cae43-cf3e-4aa0-8da3-0306de4478ab
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 38148acb-9323-4c34-8d19-97731258edf5
+    taskid: 832cae43-cf3e-4aa0-8da3-0306de4478ab
     timertriggers: []
     type: regular
     view: |-
