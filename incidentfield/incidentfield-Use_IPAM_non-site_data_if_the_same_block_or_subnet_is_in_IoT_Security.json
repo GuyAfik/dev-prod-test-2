@@ -30,7 +30,7 @@
 	"name": "Use IPAM non-site data if the same block or subnet is in IoT Security",
 	"neverSetAsRequired": false,
 	"openEnded": false,
-	"orgType": "",
+	"orgType": "boolean",
 	"ownerOnly": false,
 	"packID": "",
 	"packName": "",
