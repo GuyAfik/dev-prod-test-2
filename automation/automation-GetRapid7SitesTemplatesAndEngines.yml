@@ -1,0 +1,163 @@
+args:
+- name: rapid7_instance
+  required: true
+- name: scanner_sync
+comment: Get list of Rapid7 Sites, Templates and  Engines and write to context
+commonfields:
+  id: GetRapid7SitesTemplatesAndEngines
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GetRapid7SitesTemplatesAndEngines
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('GetRapid7SitesTemplatesAndEngines', 'start', __line__())
+
+
+
+
+  import traceback
+
+
+  SCANNER_SYNC = demisto.args().get("scanner_sync")
+  if SCANNER_SYNC == "Sync" or SCANNER_SYNC == None or SCANNER_SYNC == "":
+      SCANNER_SYNC = True
+  else:
+      SCANNER_SYNC = False
+  USING_RAPID7_INSTANCE = demisto.args().get('rapid7_instance')
+
+  def is_valid_ipv4_address(address):
+      try:
+          socket.inet_pton(socket.AF_INET, address)
+      except AttributeError:  # no inet_pton here, sorry
+          try:
+              socket.inet_aton(address)
+          except socket.error:
+              return False
+          return address.count('.') == 3
+      except socket.error:  # not a valid address
+          return False
+
+      return True
+
+  def build_engine_obj(engine):
+      engine_obj = {}
+      if "engineAddress" in engine:
+          address = engine["engineAddress"]
+          if is_valid_ipv4_address(address):
+              if address != "127.0.0.1":
+                  engine_obj["ip_address"] = address
+          else:
+              engine_obj["scanner_hostname"] = address
+      if "engineName" in engine:
+          engine_obj["scanner_name"] = engine["engineName"]
+          engine_obj["engineName"] = engine["engineName"]
+      if "engineId" in engine:
+          engine_obj["engineId"] = engine["engineId"]
+
+      return engine_obj
+
+  def get_rapid7_sites_templates_and_engines():
+      op_data = {}
+      template_list = []
+      site_list = []
+      engine_list = []
+
+      templates_res = demisto.executeCommand("nexpose-get-scan-templates", {'using': USING_RAPID7_INSTANCE})
+      if isError(templates_res[0]):
+          raise Exception("Failed to get Rapid7 Nexpose templates")
+      try:
+          templates = templates_res[0]['Contents']
+          if isinstance(templates, list) == False:
+              template_list.append(templates)
+          else:
+              for template in templates:
+                  template_list.append(template)
+          # return_outputs(templates)
+      except Exception:
+          # hack, API didnt fail, we got a unexpected format, seen when the list is empty
+          return "No Templates available for Rapid7"
+
+      engines_res = demisto.executeCommand("nexpose-get-scan-engines-details", {'using':USING_RAPID7_INSTANCE})
+      if isError(engines_res[0]):
+          raise Exception("Failed to get Rapid7 Nexpose engines - "+ str(engines_res[0]['Contents']))
+      try:
+          engines = engines_res[0]['Contents']
+          if isinstance(engines, list) == False:
+              engine_list.append(build_engine_obj(engines))
+          else:
+              for engine in engines:
+                  engine_list.append(build_engine_obj(engine))
+          # return_outputs(engines)
+      except Exception:
+          # hack, API didnt fail, we got an unexpected format, seen when the list is empty
+          return "No engines available for Rapid7"
+
+      sites_res = demisto.executeCommand("nexpose-get-sites", {'using':USING_RAPID7_INSTANCE})
+      if isError(sites_res[0]):
+          raise Exception("Failed to get Rapid7 Nexpose sites")
+      try:
+          sites = sites_res[0]['Contents']
+          if isinstance(sites, list) == False:
+              site_list.append(sites)
+          else:
+              for site in sites:
+                  vul={'siteId':str(site['id']),'siteName':site['name']}
+                  site_list.append(vul)
+          # return_outputs(sites)
+      except Exception:
+          # hack, API didnt fail, we got a unexpected format, seen when the list is empty
+          return "No sites available for Rapid7"
+
+      res = demisto.executeCommand("panw-iot-3rd-party-report-vulnerability-scan-option", {
+          "scan_type":"rapid7",
+          "scanner_list":engine_list,
+          "profile_list":template_list,
+          "site_list": site_list,
+          #"integration_instance": USING_RAPID7_INSTANCE,
+          "scanner_sync": SCANNER_SYNC
+      })
+      if isError(res[0]):
+          raise Exception("Failed to send Scanner data to IoT.%s" % res[0]['Contents'])
+
+      op_data={'siteIdList':site_list,'profileList':template_list,'scannerList':engine_list}
+      # return_outputs(op_data)
+      return CommandResults(
+          readable_output=tableToMarkdown("Summary:", op_data, removeNull=True)
+      )
+
+  def main():
+      try:
+          return_results(get_rapid7_sites_templates_and_engines())
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute GetRapid7SitesProfilesAndEngines. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('GetRapid7SitesTemplatesAndEngines', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- nexpose
+timeout: 100800h0m0s
+type: python
