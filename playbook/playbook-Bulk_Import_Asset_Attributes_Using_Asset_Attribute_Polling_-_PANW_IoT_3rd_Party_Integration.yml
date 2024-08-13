@@ -1,0 +1,719 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.0
+    packID: ""
+    packName: Palo Alto Networks IoT 3rd Party Integrations
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: Bulk Import Asset Attributes Using Asset Attribute Polling - PANW IoT
+  3rd Party Integration
+dirtyInputs: true
+id: Bulk Import Asset Attributes Using Asset Attribute Polling - PANW IoT 3rd Party
+  Integration
+inputs:
+- description: ""
+  key: ""
+  playbookInputQuery:
+    daterange:
+      fromdate: "0001-01-01T00:00:00Z"
+      fromdatelicenseval: "0001-01-01T00:00:00Z"
+      period:
+        by: ""
+        byfrom: ""
+        byto: ""
+        field: ""
+        fromvalue: null
+        tovalue: null
+      todate: "0001-01-01T00:00:00Z"
+    query: ""
+    queryEntity: indicators
+    results: null
+    runFromLastJobTime: false
+  required: false
+  value: {}
+name: Bulk Import Asset Attributes Using Asset Attribute Polling - PANW IoT 3rd Party
+  Integration
+outputs:
+- contextPath: instance
+  description: instance_name
+  type: string
+- contextPath: OTProbing.Deviceinfo.device_info
+  description: OTProbing.Deviceinfo.device_info
+  type: string
+sourceplaybookid: 861d916c-638d-41ac-87fe-62436fdf7f44
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 0a43a9bd-a3a5-447a-8af8-d00dcee19bb1
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 0a43a9bd-a3a5-447a-8af8-d00dcee19bb1
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 1022.5,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "2"
+      "yes":
+      - "14"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Asset Attribute Polling
+      instancename:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available and provided instance
+        is Active. Otherwise returns 'no'.
+      id: 3c721339-1536-43c2-89f8-0f9d9db6d667
+      iscommand: false
+      name: Is Asset Attribute Polling integration enabled?
+      script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+      type: condition
+      version: -1
+    taskid: 3c721339-1536-43c2-89f8-0f9d9db6d667
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1452.5,
+          "y": 545
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: device_polling
+      message:
+        simple: OTProbing integration is disabled
+      playbook_name:
+        simple: Bulk Import Devices using Asset Attribute Polling - PANW IoT 3rd Party
+          Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 594c37ef-d370-4eb7-805b-4ad1c84daa9d
+      iscommand: true
+      name: Report disabled status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 594c37ef-d370-4eb7-805b-4ad1c84daa9d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 807.5,
+          "y": 1245
+        }
+      }
+  "3":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_attribute_polling_instance_name:
+        simple: ${incident.integrationinstancename}
+      ip:
+        simple: ${incident.assetattributepollingipsubnet}
+      otprobing_instance_name:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: a4006499-8da3-43bf-8415-06bfa5c28c0a
+      iscommand: false
+      name: Fetch Asset Attribute Polling info and Send to PANW IoT Cloud
+      script: AssetAttributePollingFetchDeviceInfoAndSendToPANWIoTCloud
+      type: regular
+      version: -1
+    taskid: a4006499-8da3-43bf-8415-06bfa5c28c0a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1452.5,
+          "y": 895
+        }
+      }
+  "4":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "6"
+      "yes":
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: 5d2fee4f-6059-4684-8eef-efeb46edf304
+      iscommand: false
+      name: Was there any error ?
+      script: isError
+      type: condition
+      version: -1
+    taskid: 5d2fee4f-6059-4684-8eef-efeb46edf304
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1452.5,
+          "y": 1070
+        }
+      }
+  "5":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: device_polling
+      message:
+        simple: Failed to Fetch OTProbing data
+      playbook_name:
+        simple: Bulk Import Device Attributes Using Asset Attribute Polling - PANW
+          IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 18a73cca-0d6b-4c1d-8702-4550bb0957e6
+      iscommand: true
+      name: Report error status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 18a73cca-0d6b-4c1d-8702-4550bb0957e6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1237.5,
+          "y": 1245
+        }
+      }
+  "6":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: device_polling
+      message:
+        simple: Successfully imported Asset Attribute Polling data to PANW IoT Cloud
+      playbook_name:
+        simple: Bulk Import Asset Attributes Using Asset Attribute Polling - PANW
+          IoT 3rd Party Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 6cb35195-0077-4fe6-8e20-2161c672ef86
+      iscommand: true
+      name: Report Success status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 6cb35195-0077-4fe6-8e20-2161c672ef86
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1667.5,
+          "y": 1245
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 741159f0-32a5-4f3d-8db7-453171f82fb5
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 741159f0-32a5-4f3d-8db7-453171f82fb5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1667.5,
+          "y": 1420
+        }
+      }
+  "8":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "9"
+      "yes":
+      - "17"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: 50969b11-9e16-4d8a-8e35-0f390d44a72b
+      iscommand: false
+      name: Is Asset Attribute Polling Integration Instance available?
+      script: Exists
+      type: condition
+      version: -1
+    taskid: 50969b11-9e16-4d8a-8e35-0f390d44a72b
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1022.5,
+          "y": 195
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: device_polling
+      message:
+        simple: No Asset Attribute Polling integration instance passed
+      playbook_name:
+        simple: Bulk Import Device Attributes Using Asset Attribute Polling - PANW
+          IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 26048601-5654-495f-81f4-b67ba2696aab
+      iscommand: true
+      name: No Instance passed to this Playbook. Reporting Error
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 26048601-5654-495f-81f4-b67ba2696aab
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+  "13":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 474f35b6-4291-497a-8e5e-d6bf72e496a3
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 474f35b6-4291-497a-8e5e-d6bf72e496a3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 720
+        }
+      }
+  "14":
+    continueonerrortype: ""
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "16"
+      "no":
+      - "15"
+      "yes":
+      - "3"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - Asset Attribute Polling
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 93209251-6396-4a67-87f6-1b8b86a4db53
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: 93209251-6396-4a67-87f6-1b8b86a4db53
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 2097.5,
+          "y": 720
+        }
+      }
+  "15":
+    continueonerrortype: ""
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: device_polling
+      message:
+        simple: License Limit Exceeded
+      playbook_name:
+        simple: Bulk Import Device Attributes Using Asset Attribute Polling - PANW
+          IoT 3rd Party Integration
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: cab96dd3-a484-4bb1-8b47-b8a10e9bb14d
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: cab96dd3-a484-4bb1-8b47-b8a10e9bb14d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2097.5,
+          "y": 1245
+        }
+      }
+  "16":
+    continueonerrortype: ""
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: device_polling
+      message:
+        simple: Failed to get License
+      playbook_name:
+        simple: Bulk Import Device Attributes Using Asset Attribute Polling - PANW
+          IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 8b4844b5-8ece-4bff-8732-8601ef8cd4ba
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 8b4844b5-8ece-4bff-8732-8601ef8cd4ba
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2527.5,
+          "y": 1245
+        }
+      }
+  "17":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "18"
+      "yes":
+      - "1"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${incident.assetattributepollingipsubnet}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: 2702039f-cb25-41bb-8f75-f3d9de49dce8
+      iscommand: false
+      name: Is Asset Attribute Polling IP/Subnet available?
+      script: Exists
+      type: condition
+      version: -1
+    taskid: 2702039f-cb25-41bb-8f75-f3d9de49dce8
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1237.5,
+          "y": 370
+        }
+      }
+  "18":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: device_polling
+      message:
+        simple: 'No Asset Attribute IP/Subnet passed '
+      playbook_name:
+        simple: Bulk Import Device Attributes Using Asset Attribute Polling - PANW
+          IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: fc4e0264-9d1f-47d7-8bc5-59ec8550c06f
+      iscommand: true
+      name: No Asset Attribute IP/Subnet passed to this Playbook. Reporting Error
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: fc4e0264-9d1f-47d7-8bc5-59ec8550c06f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 545
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "1_2_no": 0.58,
+      "8_9_no": 0.9
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1465,
+        "width": 2857.5,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
