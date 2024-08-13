@@ -1,0 +1,207 @@
+args:
+- name: panw_iot_3rd_party_instance
+  required: true
+- name: aruba_wlc_instance
+  required: true
+commonfields:
+  id: 63e5da9b-9f57-463e-8ba2-c4578185b6cb
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/netmiko:1.0.0.23064
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendArubaWLCBluetoothDevicesToPANWIoT
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendArubaWLCBluetoothDevicesToPANWIoT', 'start', __line__())
+
+
+
+
+
+
+  """
+  Fetches clients of aruba wlc and send it to the PANW-IoT
+  """
+
+  from typing import Dict, Any
+  import traceback
+
+  ''' STANDALONE FUNCTION '''
+
+  ''' GLOBAL VARIABLES '''
+
+  PANW_IOT_INSTANCE = demisto.args().get('panw_iot_3rd_party_instance')
+  ARUBA_INSTANCE = demisto.args().get('aruba_wlc_instance')
+  PAGE_SIZE = 100
+
+
+  def __get_devices_mac_id(devices_list):
+      mac_ids = []
+      for device in devices_list:
+          mac_ids.append(device.get('macAddress'))
+      return mac_ids
+
+
+  def send_status_to_panw_iot_cloud(status, msg, retry=0):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+          "status": status,
+          "message": msg,
+          "integration_name": "aruba_wlc",
+          "playbook_name": "Import Aruba WLC devices to PANW IoT cloud",
+          "asset_type": 'device',
+          "timestamp": int(round(time.time() * 1000)),
+          "custom_integration_name": ARUBA_INSTANCE,
+          #"using": PANW_IOT_INSTANCE
+      })
+
+      if isError(resp[0]):
+          if retry == 0:
+              time.sleep(1)
+              return send_status_to_panw_iot_cloud(status, msg, retry=1)
+          err_msg = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+
+  def send_devices_to_panw_iot_cloud(devices_list,retry=0):
+      """
+      Sends devices to PANW IoT Cloud.
+      :type devices_list: ``array``
+      :param devices_list: List of devices to be sent to PANW IoT cloud
+      """
+      res = ''
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-devices", {
+          "DeviceData": devices_list,
+          "pageLength": None,
+          "IntegrationName": 'aruba_wlc',
+          #"using": PANW_IOT_INSTANCE
+      })
+      if isError(resp[0]):
+          if retry == 0:
+              time.sleep(1)
+              return send_devices_to_panw_iot_cloud(devices_list, retry=1)
+          err_msg = f'Error, could not send devices to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+      #else:
+          # sending periodic status messages to PANW IoT paltform.
+          #status_msg = f'Successfully imported {len(devices_list)} Aruba WLAN Controller clients to PANW IoT'
+          #send_status_to_panw_iot_cloud('success', status_msg)
+      if resp[0]['Contents']:
+          res = resp[0]['Contents']
+      return res
+
+
+  def extract_device_data(aruba_wlc_client_output):
+      '''
+      Extract the device data from aruba wlc output data
+      :type aruba_wlc_client_output: ``dict``
+      :param aruba_wlc_client_output: output data for client
+      :return: Array of extracted devices which are connected to aruba wlc
+      :rtype ``array``
+      '''
+      res = ''
+      resp = demisto.executeCommand("panw-iot-3rd-party-extract-device-data", {
+          "client": "aruba_wlc",
+          "clientData": aruba_wlc_client_output,
+          #"using": PANW_IOT_INSTANCE
+      })
+      if isError(resp[0]):
+          err_msg = f'Error, could not extract devices - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+      if resp[0]['Contents']:
+          res = resp[0]['Contents']
+      return res
+
+
+  def get_bt_devices_from_aruba_wlc():
+      '''
+      Get devices from Aruba WLAN Controller integration
+      :return: dict containing data of the aruba wlc devices and access points
+      :rtype ``dict``
+      '''
+      res = ''
+      resp = demisto.executeCommand("aruba-wlc-get-all-bluetooth-client-details", {"using": ARUBA_INSTANCE})
+      if isError(resp[0]):
+          err_msg = f'Error, could not get devices from Aruba WLC - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+      if resp[0]['Contents']:
+          res = resp[0]['Contents']
+      return res
+
+
+  def import_aruba_wlc_bt_devices_to_panw_iot():
+      """
+      Send aruba wlc clients to PANW IoT cloud
+      """
+      count = 0
+      devices_mac_id = []
+      devices_list = ''
+
+      aruba_wlc_bt_device_data = get_bt_devices_from_aruba_wlc()
+      if type(aruba_wlc_bt_device_data) == dict:
+          devices_list = extract_device_data(aruba_wlc_bt_device_data)
+
+      if devices_list:
+          count = len(devices_list)
+          device_sent = 0
+          while device_sent != count:
+              end_index = (device_sent + PAGE_SIZE) if (count - device_sent) > PAGE_SIZE else count
+              sub_device_list = devices_list[device_sent:end_index]
+              resp = send_devices_to_panw_iot_cloud(sub_device_list)
+              device_sent = end_index
+          devices_mac_id = __get_devices_mac_id(devices_list)
+      status_msg = f'Successfully imported total {count} Aruba WLAN Controller clients to PANW IoT'
+      return status_msg, count, devices_mac_id
+
+
+  def main():
+      status_msg = None
+      try:
+          status_msg, count, devices_mac_id = import_aruba_wlc_bt_devices_to_panw_iot()
+          send_status_to_panw_iot_cloud("success", status_msg)
+          status = dict({'Status': status_msg})
+          status.update({'Imported Bluetooth Devices': devices_mac_id})
+          report_summary = {'Asset Type': 'Total Assets Reported'}
+          report_summary.update({'Bluetooth Devices': count})
+          return_results(
+              CommandResults(
+                  readable_output=tableToMarkdown("Asset Report Summary:", report_summary, removeNull=True),
+                  outputs_prefix="status",
+                  outputs=status
+              )
+          )
+      except Exception as ex:
+          send_status_to_panw_iot_cloud("error", str(ex))
+          demisto.error(traceback.format_exc())
+          return_error(str(ex))
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('SendArubaWLCBluetoothDevicesToPANWIoT', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- PANW IoT 3rd Party Integration
+- Aruba WLAN Controller
+timeout: 100800h0m0s
+type: python
