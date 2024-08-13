@@ -1,0 +1,74 @@
+args:
+- isArray: true
+  name: entryId
+  required: true
+- name: path
+  required: true
+comment: Checks for errors in a given task. If found, write it to the path provided
+  as an argument.
+commonfields:
+  id: ba739f62-3f46-417e-809b-3c73715e062d
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GetPANWIoTNexposeErrors
+outputs:
+- contextPath: "yes"
+- contextPath: "no"
+- {}
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('GetPANWIoTNexposeErrors', 'start', __line__())
+
+
+  RAPID7_ERR_MSG = "The device selected for scanning is not in the Rapid7 site configuration. Check that a device ip is in Rapid7 discovery before attempting to scan it."
+
+  def check_errors(args):
+      entry_id = args.get('entryId')
+      path = args.get('path')
+      if isinstance(entry_id, list) == False:
+          entry_id = [entry_id]
+      for entry in entry_id:
+          res = demisto.executeCommand("getEntry", {"id":entry});
+          if isError(res):
+              if "One or more assets in the request are not included in the site configuration" in str(res[0]['Contents']):
+                  appendContext(path, RAPID7_ERR_MSG)
+              else:
+                  appendContext(path, res[0]['Contents'])
+              return ('yes')
+      return ('no')
+  def main():
+      args = demisto.args()
+      try:
+          return_results(check_errors(args))
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute GetPANWIoTNexposeErrors. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('GetPANWIoTNexposeErrors', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- Condition
+- nexpose
+type: python
