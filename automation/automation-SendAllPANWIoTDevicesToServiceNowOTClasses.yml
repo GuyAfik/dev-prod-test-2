@@ -1,0 +1,588 @@
+args:
+- description: PANW IoT and ServiceNow category mapping.
+  isArray: true
+  name: iot_servicenow_category_map
+- description: Servicenow Instance Name
+  name: servicenow_instance_name
+comment: Gets all available devices from the IoT cloud and sends it to the ServiceNow
+  OT Classes
+commonfields:
+  id: 9103572f-1d45-4ff6-8f2c-9ecc32bb2fd1
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendAllPANWIoTDevicesToServiceNowOTClasses
+outputs:
+- contextPath: SN-IoT.bulkResult
+  description: The result of the bulk exporting.
+  type: unknown
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendAllPANWIoTDevicesToServiceNowOTClasses', 'start', __line__())
+
+
+
+
+  SERVICENOW_INSTANCE = demisto.args().get('servicenow_instance_name')
+  if SERVICENOW_INSTANCE == "" or SERVICENOW_INSTANCE == None:
+      SERVICENOW_INSTANCE = "PANW IoT 3rd Party ServiceNow Integration Instance"
+  CONFIDENCE_SCORE_TRESHOLD=70
+  PANW_DISCOVERY_SOURCE="Palo Alto Networks IoT Security"
+  PANW_CATEGORY_VS_SERVICENOW_TABLE_NAMES = {
+      "Traditional IT": "cmdb_ci_hardware",
+      "Industrial": "cmdb_ci_ot",
+      "Medical": "cmdb_ci_medical",
+      "Smart Building":"cmdb_ci_iot",
+      "Industrial Automation":"cmdb_ci_ot",
+      "Industrial Network Equipment":"cmdb_ci_netgear",
+      "Industrial Controller":"CMDB_ci_ot_control",
+      "Beckhoff Automation Bus Terminal Controller":"cmdb_ci_ot_control",
+      "IAI Robot Controller":"cmdb_ci_ot_control",
+      "HEIDENHAIN CNC Controller":"cmdb_ci_ot_cnc",
+      "HEIDENHAIN CNC Controller":"cmdb_ci_ot_cnc",
+      "HEIDENHAIN CNC Controller":"cmdb_ci_ot_cnc",
+      "DSE Control Module":"cmdb_ci_ot_control",
+      "Omron PLC":"cmdb_ci_ot_plc",
+      "Siemens Motion Control Device":"cmdb_ci_ot_control",
+      "Atlas Copco Torque Controller":"cmdb_ci_ot_control",
+      "WAGO PLC":"cmdb_ci_ot_plc",
+      "Schneider SCADA Device":"cmdb_ci_ot_control",
+      "Bentek SCADA Device":"cmdb_ci_ot_control",
+      "OLDI Industrial Controller Module":"cmdb_ci_ot_control",
+      "Host Engineering PLC":"cmdb_ci_ot_plc",
+      "FACTS Industrial PLC":"cmdb_ci_ot_plc",
+      "Banner DXM Controller":"cmdb_ci_ot_control",
+      "NI CompactRIO Controller":"cmdb_ci_ot_control",
+      "Yokogawa PLC":"cmdb_ci_ot_plc",
+      "Siemens PLC":"cmdb_ci_ot_plc",
+      "Siemens CNC Controller":"cmdb_ci_ot_cnc",
+      "Schneider Electric PLC":"cmdb_ci_ot_plc",
+      "Rockwell Automation PLC":"cmdb_ci_ot_plc",
+      "Peek Traffic Advanced Traffic Controller":"cmdb_ci_ot_control",
+      "PLC-Windows":"cmdb_ci_ot_plc",
+      "JK microsystems Device":"cmdb_ci_ot_control",
+      "Grundfos Pump Management Device":"cmdb_ci_ot_control",
+      "GE PLC":"cmdb_ci_ot_plc",
+      "F. ANUC CNC Controller":"cmdb_ci_ot_cnc",
+      "CTI PLC":"cmdb_ci_ot_plc",
+      "Beckhoff Automation Embedded PC Controller":"cmdb_ci_ot_control",
+      "ABB PLC":"cmdb_ci_ot_plc",
+      "Industrial Measurement":"cmdb_ci_ot_field_device",
+      "Industrial Sensor":"cmdb_ci_ot_industrial_sensor",
+      "Machine Vision":"cmdb_ci_ot_field_device",
+      "Industrial Condition Monitoring":"cmdb_ci_ot_field_device",
+      "Industrial Printer":"cmdb_ci_ot",
+      "Industrial Safety":"cmdb_ci_ot_control",
+      "Industrial PC":"cmdb_ci_ot_supervisory",
+      "Industrial Tool":"cmdb_ci_ot_field_device",
+      "Semiconductor Manufacturing Equipment":"cmdb_ci_ot_control",
+      "Warehouse Equipment":"cmdb_ci_ot_supervisory",
+      "Industrial IoT Gateway":"cmdb_ci_iot_gateway",
+      "Contamination Monitoring":"cmdb_ci_ot_field_device",
+      "Water Testing Equipment":"cmdb_ci_ot_field_device",
+      "Cutting Machine":"CMDB_ci_ot_control",
+      "SCADA System":"cmdb_ci_ot_scada_client",
+      "Textile Machinery":"CMDB_ci_ot_control",
+      "SCADA Server":"cmdb_ci_ot_scada_server",
+      "Industrial Autoclave":"CMDB_ci_ot_control",
+      "Industrial IO Module":"cmdb_ci_ot_field_device",
+      "Industrial Drive":"cmdb_ci_ot_industrial_drive",
+      "Food Analyzer":"cmdb_ci_ot_field_device",
+      "Machine Vision Lighting":"cmdb_ci_ot_field_device",
+      "Commercial Oven":"CMDB_ci_ot_control",
+      "Industrial Robot":"cmdb_ci_ot_industrial_robot",
+      "Control System Engineering Workstation":"cmdb_ci_ot_ews",
+      "HMI Panel":"cmdb_ci_ot_hmi",
+      "Industrial Thin Client":"cmdb_ci_ot_supervisory",
+      "Robotic Arm":"cmdb_ci_ot_industrial_robot",
+      "Industrial Camera":"cmdb_ci_ot_field_device",
+      "Geospatial Surveying":"cmdb_ci_ot_field_device",
+      "Commercial Refrigeration":"CMDB_ci_ot_control",
+      "Industrial Quality Assurance":"cmdb_ci_ot_field_device",
+      "Automatic Guided Vehicle":"cmdb_ci_ot_field_device"
+  }
+
+  OT_RECORD = 'OT_RECORD'
+  DEVICE = 'DEVICE'
+  INVALID_TABLES=[]
+  PANW_PURDUE_LEVEL="u_panw_purdue_level"
+  PANW_FIELDS_VS_SNOW_FIELDS = {"hostname":"name","ip_address":"ip_address","deviceid":"mac_address","category":"category","model":"model_number","Serial_Number":"serial_number","os/firmware_version":"firmware_version"}
+  PANW_CUSTOM_FIELDS_VS_SNOW_FIELDS={"panwIoTFname_1001":PANW_PURDUE_LEVEL}
+  PAGE_SIZE = 100
+
+  def get_devices_from_panw_iot_cloud(offset):
+      """
+      To retrieve a list of devices list from PANW IoT cloud controled by offset and PAGE_SIZE
+      :param offset: The index from DB to return the results.
+      :return: list of device
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-get-asset-list", {
+          "asset_type": "device",
+          "offset": offset,
+          "page_length": PAGE_SIZE
+          #"using": PANW_IOT_INSTANCE
+      })
+      if isError(resp[0]):
+          err_msg = f'Error, could not get assets from PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+      return resp[0]['Contents']
+
+  def query_servicenow_table(query, table_name, return_fields):
+      """
+      To query Servicenow table to get a deviceid and Servicenow table row id map
+      :param query: Servicenow table query with device information
+      :return: the deviceid and Servicenow table row id map
+      """
+      sn_query_resp = demisto.executeCommand("servicenow-query-table", {
+          "table_name": table_name,
+          "limit": 10000,
+          "query": query,
+          "fields": return_fields,
+          "using": SERVICENOW_INSTANCE
+      })
+      contents = sn_query_resp[0]['Contents']
+      if isinstance(contents, str):
+          if ("error" in contents) or ("Error" in contents):
+              raise Exception(contents)
+          else:
+              return contents
+      return sn_query_resp[0]['Contents']['result']
+
+  def query_cmdb_ot_entity_table(query):
+      sn_results = query_servicenow_table(query, 'cmdb_ot_entity', 'sys_id,purdue_level')
+      '''
+      sn_results = {
+        "result": [
+          {
+            "sys_id": "c47677aa1b17f9109a41fdd51a4bcbb0"
+          }
+        ]
+      }
+      '''
+      if sn_results and isinstance(sn_results, list) and len(sn_results)>0:
+          single_record = sn_results[0]
+          return single_record
+      return None
+
+  def query_cmdb_ci_network_adapter_table(query):
+      sn_results = query_servicenow_table(query, 'cmdb_ci_network_adapter', 'sys_id,ip_address')
+      '''
+      sn_results = {
+        "result": [
+          {
+            "sys_id": "c47677aa1b17f9109a41fdd51a4bcbb0",
+            "ip_address": "1.2.3.4"
+          }
+        ]
+      }
+      '''
+      if sn_results and isinstance(sn_results, list) and len(sn_results)>0:
+          single_ip_address_record = sn_results[0]
+          sys_id = single_ip_address_record['sys_id']
+          return sys_id
+      return None
+
+  def query_core_company_table(query, table_name):
+      sn_results = query_servicenow_table(query, table_name, 'sys_id,name')
+      if sn_results and isinstance(sn_results, list) and len(sn_results)>0:
+          single_core_company_record = sn_results[0]
+          sys_id = single_core_company_record['sys_id']
+          return sys_id
+      return None
+
+  def create_servicenow_record(device):
+      fields = device['fields']
+      table_name = device['table_name']
+      custom_fields = device['custom_fields']
+      response = demisto.executeCommand("servicenow-create-record", {
+          "table_name": table_name,
+          "fields": fields,
+          "custom_fields": custom_fields,
+          "using": SERVICENOW_INSTANCE
+      })
+      create = response[0]['Contents']
+      return response[0]['Contents']
+
+  def create_servicenow_record_list(insert_list):
+      """
+      To create Servicenow record
+      :param insert_list: device list that needs to insert into Servicenow table
+      """
+      for x in range(len(insert_list)):
+          device = insert_list[x]
+          panw_device = device[DEVICE]
+          ot_device = device[OT_RECORD]
+          res = create_servicenow_record(ot_device)
+          if 'result' in res and 'sys_id' in res['result']:
+              cmdb_ci_sys_id= res['result']['sys_id']
+              demisto.info(f'cmdb_ci_sys_id:{cmdb_ci_sys_id}')
+              na_sys_id = create_or_update_network_adapter_table_with_cmdb_ci_sys_id(panw_device,cmdb_ci_sys_id)
+              ot_entity_sys_id = create_or_update_cmdb_ot_entity(panw_device,cmdb_ci_sys_id, None)
+              demisto.info(f'na_sys_id:{na_sys_id} for cmdb_ci:{cmdb_ci_sys_id}')
+              demisto.info(f'ot_entity_sys_id:{ot_entity_sys_id} for cmdb_ci:{cmdb_ci_sys_id}')
+          else:
+              demisto.error(f'Error while creating snow record with details {ot_device} and the error is {res}' )
+
+
+  def update_servicenow_record(device):
+      fields = device['fields']
+      table_name=''
+      if 'sys_class_name' in device:
+          table_name = device['sys_class_name']
+      else:
+          table_name = device['table_name']
+      custom_fields = device['custom_fields']
+      sys_id = device['sys_id']
+      response = demisto.executeCommand("servicenow-update-record", {
+          "table_name": table_name,
+          "fields": fields,
+          "custom_fields": custom_fields,
+          "id": sys_id,
+          "using": SERVICENOW_INSTANCE
+      })
+      update = response[0]['Contents']
+      return response[0]['Contents']
+
+  def update_servicenow_record_list(update_list):
+      """
+      To update existing device record in Servicenow
+      :param update_list: device list that needs to be updated
+      """
+      for x in range(len(update_list)):
+          device = update_list[x]
+          panw_device = device[DEVICE]
+          ot_device = device[OT_RECORD]
+          snow_panw_purdue_level = device[PANW_PURDUE_LEVEL]
+          res = update_servicenow_record(ot_device)
+          if 'result' in res and 'sys_id' in res['result']:
+              cmdb_ci_sys_id = res['result']['sys_id']
+              na_sys_id = create_or_update_network_adapter_table_with_cmdb_ci_sys_id(panw_device,cmdb_ci_sys_id)
+              demisto.info(f'na_sys_id:{na_sys_id} for cmdb_ci: {cmdb_ci_sys_id}')
+              ot_entity_sys_id = create_or_update_cmdb_ot_entity(panw_device,cmdb_ci_sys_id, snow_panw_purdue_level)
+          else:
+              demisto.error(f'Error while creating snow record with details {ot_device} and the error is {res}' )
+
+
+  def get_device_table_name(device):
+      if 'profile' in device and device['profile'] in PANW_CATEGORY_VS_SERVICENOW_TABLE_NAMES.keys():
+          return PANW_CATEGORY_VS_SERVICENOW_TABLE_NAMES[device['profile']]
+      elif 'category' in device and device['category'] in PANW_CATEGORY_VS_SERVICENOW_TABLE_NAMES.keys():
+          return PANW_CATEGORY_VS_SERVICENOW_TABLE_NAMES[device['category']]
+      elif 'profile_vertical' in device and device['profile_vertical'] in PANW_CATEGORY_VS_SERVICENOW_TABLE_NAMES.keys():
+          return PANW_CATEGORY_VS_SERVICENOW_TABLE_NAMES[device['profile_vertical']]
+      return "cmdb_ci_iot"
+
+  def get_servicenow_upsert_device_list(sn_id_deviceids, device_list):
+      if isinstance(sn_id_deviceids, str):
+          sn_id_deviceids = {}
+      ids_map = {}
+      if sn_id_deviceids:
+          for i in range(len(sn_id_deviceids)):
+              ids = sn_id_deviceids[i]
+              sn_id = ''
+              if "ID" in ids:
+                  sn_id = ids["ID"]
+              else:
+                  sn_id = ids['sys_id']
+              deviceid = ids["mac_address"]
+              snow_panw_purdue_level=ids[PANW_PURDUE_LEVEL]
+              sys_id_class_name_pl={}
+              sys_id_class_name_pl['sys_id']=sn_id
+              sys_id_class_name_pl[PANW_PURDUE_LEVEL]=snow_panw_purdue_level
+              if 'sys_class_name' in ids:
+                  sys_id_class_name_pl['sys_class_name']=ids['sys_class_name']
+              ids_map[deviceid] = sys_id_class_name_pl
+
+      update_list = []
+      insert_list = []
+
+      for i in range(len(device_list)):
+          device = device_list[i]
+          deviceid = device["deviceid"]
+          device_metadata={}
+          instance = convert_device_to_servicenow_format(device)
+          if (not ids_map) or (deviceid not in ids_map):
+              device_metadata[OT_RECORD]=instance
+              device_metadata[DEVICE]=device
+              insert_list.append(device_metadata)
+          else:
+              confidence_score = None
+              if 'confidence_score' in device:
+                  confidence_score = device['confidence_score']
+              if confidence_score is not None and confidence_score < CONFIDENCE_SCORE_TRESHOLD:
+                  continue
+              sys_id_class_name_pl = ids_map[deviceid]
+              sn_id = sys_id_class_name_pl['sys_id']
+              instance["sys_id"] = sn_id
+              if 'sys_class_name' in sys_id_class_name_pl:
+                  instance["sys_class_name"] = sys_id_class_name_pl['sys_class_name']
+
+              device_metadata[OT_RECORD]=instance
+              device_metadata[DEVICE]=device
+              device_metadata[PANW_PURDUE_LEVEL]=sys_id_class_name_pl[PANW_PURDUE_LEVEL]
+              update_list.append(device_metadata)
+
+
+      result = {
+          "insert": insert_list,
+          "update": update_list,
+          "update_count": len(update_list),
+          "insert_count": len(insert_list)
+      }
+      return result
+
+  def create_or_update_cmdb_ot_entity(device, cmdb_ci_sys_id, cmdb_ci_purdue_level):
+      if 'attr' in device and 'panwIoTFname_1001' in device['attr'] and device['attr']['panwIoTFname_1001'] not in ['unknown']:
+          panw_purdue_level = str(device['attr']['panwIoTFname_1001'])
+          query = "ot_asset="+cmdb_ci_sys_id
+          instance={}
+          fields = ''
+          custom_fields = ''
+          ot_entiry_record = query_cmdb_ot_entity_table(query)
+          if ot_entiry_record is None:
+              table_name='cmdb_ot_entity'
+              fields += ("purdue_level=" + panw_purdue_level + ';ot_asset='+cmdb_ci_sys_id)
+              instance["fields"] = fields
+              instance["custom_fields"] = custom_fields
+              instance["table_name"] = table_name
+              entry_res = create_servicenow_record(instance)
+              return entry_res['result']['sys_id']
+          else:
+              table_name='cmdb_ot_entity'
+              cmdb_ot_entity_sys_id = ot_entiry_record['sys_id']
+              cmdb_ot_purdue_level = ot_entiry_record['purdue_level']
+              if cmdb_ci_purdue_level and cmdb_ci_purdue_level == cmdb_ot_purdue_level:
+                  fields += ("purdue_level=" + panw_purdue_level +';ot_asset='+cmdb_ci_sys_id)
+              instance["fields"] = fields
+              instance["custom_fields"] = custom_fields
+              instance["table_name"] = table_name
+              instance["sys_id"]=cmdb_ot_entity_sys_id
+              instance["sys_class_name"]=table_name
+              entry_res = update_servicenow_record(instance)
+              entry_sys_id = entry_res['result']['sys_id']
+              demisto.info(f"cmdb_ot_entity_sys_id={cmdb_ot_entity_sys_id} and entry_res={entry_sys_id}")
+              return cmdb_ot_entity_sys_id
+
+
+  def create_or_update_network_adapter_table_with_cmdb_ci_sys_id(device, cmdb_ci_sys_id):
+      ip = None
+      mac=None
+      if 'MAC' in device:
+          mac=device['MAC']
+      else:
+          mac = device['deviceid']
+      if not is_mac_address(mac):
+          return None
+      if 'ip_address' in device:
+          ip=device['ip_address']
+      instance={}
+      fields = ''
+      custom_fields = ''
+      query=''
+      if ip:
+          query+="ip_address="+ip
+      if mac:
+          if len(query)>0:
+              query+="^mac_address="+mac
+          else:
+              query+="mac_address="+mac
+      # query = "ip_address="+ip+"^mac_address="+mac
+      network_adapter_sys_id = query_cmdb_ci_network_adapter_table(query)
+      if network_adapter_sys_id is None:
+          table_name='cmdb_ci_network_adapter'
+          if ip:
+              fields += ("ip_address=" + ip + ";")
+          if mac:
+              fields += ("mac_address=" + mac + ";")
+          fields += ("cmdb_ci="+cmdb_ci_sys_id+';')
+          instance["fields"] = fields
+          instance["custom_fields"] = custom_fields
+          instance["table_name"] = table_name
+          entry_res = create_servicenow_record(instance)
+          return entry_res['result']['sys_id']
+      else:
+          table_name='cmdb_ci_network_adapter'
+          if ip:
+              fields += ("ip_address=" + ip + ";")
+          if mac:
+              fields += ("mac_address=" + mac + ";")
+          fields += ("cmdb_ci="+cmdb_ci_sys_id+';')
+          instance["fields"] = fields
+          instance["custom_fields"] = custom_fields
+          instance["table_name"] = table_name
+          instance["sys_id"]=network_adapter_sys_id
+          instance["sys_class_name"]=table_name
+          entry_res = update_servicenow_record(instance)
+          entry_sys_id = entry_res['result']['sys_id']
+          return network_adapter_sys_id
+
+  def get_core_company_sys_id(vendor):
+      instance={}
+      fields = ''
+      custom_fields = ''
+      name_query = "name="+vendor
+      table_name='core_company'
+      cc_sys_id = query_core_company_table(name_query, table_name)
+      if cc_sys_id is None:
+
+          fields += ('name=' + vendor +';')
+          instance["fields"] = fields
+          instance["custom_fields"] = custom_fields
+          instance["table_name"] = table_name
+          entry_res = create_servicenow_record(instance)
+          return entry_res['result']['sys_id']
+      return cc_sys_id
+
+  def convert_device_to_servicenow_format(device):
+
+      instance = {}
+      fields = ''
+      custom_fields = ''
+
+      for panw_field, snow_field in PANW_FIELDS_VS_SNOW_FIELDS.items():
+          sn_name = snow_field
+          value = ''
+          if panw_field in device:
+              if device[panw_field] is not None:
+                  if panw_field == 'deviceid':
+                      deviceid = str(device[panw_field])
+                      if is_mac_address(deviceid):
+                          value = deviceid
+                      else:
+                          continue
+                  else:
+                      value = str(device[panw_field])
+          else:
+              value = ''
+          fields += (sn_name + "=" + value + ";")
+      for panw_field, snow_custom_field in PANW_CUSTOM_FIELDS_VS_SNOW_FIELDS.items():
+          sn_name = snow_custom_field
+          value = ''
+          if 'attr' in device and panw_field in device['attr']:
+              if device['attr'][panw_field] and device['attr'][panw_field] not in ['unknown']:
+                  value = str(device['attr'][panw_field])
+          else:
+              value = ''
+          custom_fields += (sn_name + "=" + value + ";")
+
+      if 'vendor' in device:
+          vendor_sys_id = get_core_company_sys_id(device['vendor'])
+          fields += ("vendor=" + vendor_sys_id + ";")
+      instance["fields"] = fields
+      instance["custom_fields"] = custom_fields
+      instance["table_name"] = get_device_table_name(device)
+      return instance
+
+  def get_all_panw_iot_devices_and_send_to_servicenow(args):
+      """
+      To send all devices from PANW IoT cloud to Servicenow
+      :return: A summary message
+      """
+      run_time_count = 1
+      offset = 0
+      update_num = 0
+      insert_num = 0
+      total_update_num = 0
+      total_insert_num = 0
+      table_name = 'cmdb_ci_hardware'
+      while True:
+          size = 0
+          device_list = get_devices_from_panw_iot_cloud(offset)
+          size = len(device_list)
+          deviceid_list = [device['deviceid'] for device in device_list]
+          query = "mac_addressIN" + ",".join(deviceid_list)
+          return_fields="sys_id,mac_address,sys_class_name,"+PANW_PURDUE_LEVEL
+          sn_query_result = query_servicenow_table(query, table_name, return_fields)
+
+          upsert_devices_result = get_servicenow_upsert_device_list(sn_query_result, device_list)
+          insert_count = upsert_devices_result['insert_count']
+          update_count = upsert_devices_result['update_count']
+          total_update_num += update_count
+          total_insert_num += insert_count
+          update_num = update_count
+          insert_num = insert_count
+          if insert_count > 0:
+              insert_list = upsert_devices_result['insert']
+              create_servicenow_record_list(insert_list)
+          if update_count > 0:
+              update_list = upsert_devices_result['update']
+              update_servicenow_record_list(update_list)
+          if size == PAGE_SIZE:
+              offset += PAGE_SIZE
+              run_time_count += 1
+
+          else:
+              break
+      invalid_tables = ",".join(INVALID_TABLES)
+      summary_msg = (
+          f'Successfully total update {str(total_update_num)} devices to Servicenow and '
+          f'total insert {str(total_insert_num)} devices to ServiceNow table {table_name}\n'
+          f'Invalid servicenow table mappings found are :{invalid_tables}'
+      )
+      return summary_msg
+
+  def populate_panw_snow_category_mapping():
+      global INVALID_TABLES
+      if 'panw_sn_category_mapping' in demisto.args():
+          panw_sn_category_mapping = demisto.args().get("panw_sn_category_mapping")
+          global PANW_CATEGORY_VS_SERVICENOW_TABLE_NAMES
+
+          if panw_sn_category_mapping:
+              for i in range(len(panw_sn_category_mapping)):
+                  mapping = panw_sn_category_mapping[i]
+                  panw_category = mapping.get("panwiotcategory", "")
+                  SN_category = mapping.get("servicenowcategory", "")
+                  query="test=test"#dummy query to check if the table exists
+                  try:
+                      query_servicenow_table(query, SN_category, 'sys_id')
+                  except:
+                      INVALID_TABLES.append(SN_category)
+                      SN_category='cmdb_ci_hardware'
+                  PANW_CATEGORY_VS_SERVICENOW_TABLE_NAMES[panw_category] = SN_category
+
+  def main():
+      summary_msg = ""
+      args = demisto.args()
+      try:
+          populate_panw_snow_category_mapping()
+          summary_msg = get_all_panw_iot_devices_and_send_to_servicenow(args)
+      except Exception as ex:
+          demisto.error(traceback.format_exc())
+          return_error(str(ex))
+
+      return CommandResults(
+          readable_output=f'Asset import summary: {summary_msg}',
+          outputs_prefix = "SN-IoT.bulkResult",
+          outputs = summary_msg
+      )
+
+
+  if __name__ in ['__main__', 'builtin', 'builtins']:
+      res = main()
+      return_results(res)
+
+
+  register_module_line('SendAllPANWIoTDevicesToServiceNowOTClasses', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- PANW IoT 3rd Party Integration
+- servicenow v2
+timeout: 100800h0m0s
+type: python
