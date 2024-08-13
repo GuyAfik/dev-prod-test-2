@@ -1,0 +1,543 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.6
+    packID: ""
+    packName: Palo Alto Networks IoT 3rd Party Integrations
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: Fetch data from MS Entra ID and send it to PANW IoT Platform
+dirtyInputs: true
+id: cb6dc39a-2314-4d9a-83e9-dfbf36982b67
+inputs: []
+name: Import MS Entra ID devices to PANW IoT cloud
+outputs: []
+sourceplaybookid: Import MS Entra ID devices to PANW IoT cloud
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "24"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: ec20d0ee-92e8-4d73-8525-1d76e4681607
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: ec20d0ee-92e8-4d73-8525-1d76e4681607
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "18"
+      "no":
+      - "2"
+      "yes":
+      - "19"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - MS Entra ID
+      instancename:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available and provided instance
+        is Active. Otherwise returns 'no'.
+      id: 5bab74d3-0f02-4f70-8761-cc07de4e1c73
+      iscommand: false
+      name: Is MS Entra integration enabled?
+      script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+      type: condition
+      version: -1
+    taskid: 5bab74d3-0f02-4f70-8761-cc07de4e1c73
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 730,
+          "y": 410
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "23"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: ms_entra_id
+      message:
+        simple: MS Entra ID integration is not enabled
+      playbook_name:
+        simple: Import MS Entra ID devices to PANW IoT cloud
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: b579f041-31ac-4eed-8a46-862ee5874fbb
+      iscommand: true
+      name: Send disabled status back to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: b579f041-31ac-4eed-8a46-862ee5874fbb
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 730,
+          "y": 585
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 144cb9fa-2a85-4239-84b9-6caae9d50a1f
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 144cb9fa-2a85-4239-84b9-6caae9d50a1f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1842.5,
+          "y": 970
+        }
+      }
+  "18":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "23"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: ms_entra_id
+      message:
+        simple: Invalid integration instance name provided
+      playbook_name:
+        simple: Import MS Entra ID devices to PANW IoT cloud
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: aede9cf8-74d5-447e-88df-8a74860a4ad9
+      iscommand: true
+      name: Send error status back to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: aede9cf8-74d5-447e-88df-8a74860a4ad9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 257.5,
+          "y": 545
+        }
+      }
+  "19":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "19"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "20"
+      "no":
+      - "21"
+      "yes":
+      - "26"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_instance_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: ms_entra_id
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 6fcc63db-d074-498b-8fc0-b20b0d5d9146
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: 6fcc63db-d074-498b-8fc0-b20b0d5d9146
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1510,
+          "y": 460
+        }
+      }
+  "20":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "20"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: ms_entra_id
+      message:
+        simple: 'Error: Failed to get License'
+      playbook_name:
+        simple: Import MS Entra ID devices to PANW IoT cloud
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 0f827477-79d4-4a7c-8ada-74fdf6c4e8bf
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 0f827477-79d4-4a7c-8ada-74fdf6c4e8bf
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1032.5,
+          "y": 720
+        }
+      }
+  "21":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: ms_entra_id
+      message:
+        simple: License Limit Exceeded.
+      playbook_name:
+        simple: Import MS Entra ID devices to PANW IoT cloud
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: b3c3fe4a-a9cb-436d-8476-12d3dda74c6f
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: b3c3fe4a-a9cb-436d-8476-12d3dda74c6f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1462.5,
+          "y": 720
+        }
+      }
+  "22":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "22"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: e8eb5316-eaf1-4a7d-869e-95699e513adb
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: e8eb5316-eaf1-4a7d-869e-95699e513adb
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 900,
+          "y": 960
+        }
+      }
+  "23":
+    continueonerrortype: ""
+    id: "23"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 275b8fd3-67f9-431d-8356-bcdab2739cee
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 275b8fd3-67f9-431d-8356-bcdab2739cee
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 540,
+          "y": 760
+        }
+      }
+  "24":
+    continueonerror: true
+    continueonerrortype: ""
+    defaultassigneecomplex:
+      simple: ${incident.integrationinstancename}
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "25"
+      "yes":
+      - "1"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: 2df188f8-1bb2-42e8-8ac6-ccf26555c49e
+      iscommand: false
+      name: Is MS Entra Integration Instance Available
+      script: Exists
+      type: condition
+      version: -1
+    taskid: 2df188f8-1bb2-42e8-8ac6-ccf26555c49e
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 195
+        }
+      }
+  "25":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: ms_entra_id
+      message:
+        simple: No MS Entra Integration instance passed
+      playbook_name:
+        simple: Import MS Entra devices to PANW IoT cloud
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: d7a6830e-609a-4bfa-862b-b71ed70ce86b
+      iscommand: true
+      name: No Instance passed to this Playbook. Reporting Error
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: d7a6830e-609a-4bfa-862b-b71ed70ce86b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -150,
+          "y": 420
+        }
+      }
+  "26":
+    continueonerrortype: ""
+    id: "26"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      active_ms_entra_id_instance:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 5e8cc669-87c2-41d9-8cdf-03868f57eaa0
+      iscommand: false
+      name: SendMSEntraIDDevicesToPANWIoT
+      script: SendMSEntraIDDevicesToPANWIoT
+      type: regular
+      version: -1
+    taskid: 5e8cc669-87c2-41d9-8cdf-03868f57eaa0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1932.5,
+          "y": 720
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "1_18_#default#": 0.85,
+      "1_2_no": 0.65
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1015,
+        "width": 2462.5,
+        "x": -150,
+        "y": 50
+      }
+    }
+  }
