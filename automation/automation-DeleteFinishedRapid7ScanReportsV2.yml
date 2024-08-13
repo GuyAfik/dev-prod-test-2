@@ -1,0 +1,80 @@
+args:
+- isArray: true
+  name: reportInfo
+  required: true
+- description: Rapid7 active instance name.
+  name: active_rapid7_instance
+  required: true
+commonfields:
+  id: DeleteFinishedRapid7ScanReportsV2
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 1.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: DeleteFinishedRapid7ScanReportsV2
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('DeleteFinishedRapid7ScanReportsV2', 'start', __line__())
+
+
+
+  USING_RAPID7_INSTANCE = demisto.args().get('active_rapid7_instance')
+  if USING_RAPID7_INSTANCE is None or USING_RAPID7_INSTANCE == '':
+      USING_RAPID7_INSTANCE='PANW IoT 3rd Party Rapid7 Nexpose Integration Instance'
+
+  from typing import Dict, Any
+  import traceback
+
+  reportsInfo = demisto.args().get('reportInfo')
+
+  def delete_report():
+      deleted_reports = []
+      for scan in reportsInfo:
+          delete_report_id = scan['report_id']
+          try:
+              res = demisto.executeCommand("nexpose-delete-report",{'reportID':delete_report_id,'using':USING_RAPID7_INSTANCE })
+              deleted_reports.append(res)
+              if isError(res):
+                  print("Error deleting the report: "+str(delete_report_id))
+                  continue
+
+          except Exception as e:
+              print("Error in Deletion.")
+              continue
+
+      return deleted_reports
+
+
+
+  def main():
+      try:
+          return_results(delete_report())
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute BaseScript. Error: {str(ex)}')
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('DeleteFinishedRapid7ScanReportsV2', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
