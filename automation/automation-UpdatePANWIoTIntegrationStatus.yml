@@ -1,0 +1,125 @@
+commonfields:
+  id: UpdatePANWIoTIntegrationStatus
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: UpdatePANWIoTIntegrationStatus
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('UpdatePANWIoTIntegrationStatus', 'start', __line__())
+
+
+  """Base Script for Cortex XSOAR (aka Demisto)
+  This is an empty script with some basic structure according
+  to the code conventions.
+  MAKE SURE YOU REVIEW/REPLACE ALL THE COMMENTS MARKED AS "TODO"
+  Developer Documentation: https://xsoar.pan.dev/docs/welcome
+  Code Conventions: https://xsoar.pan.dev/docs/integrations/code-conventions
+  Linting: https://xsoar.pan.dev/docs/integrations/linting
+  """
+
+  from typing import Dict, Any
+  import traceback
+
+  INTEGRATION_MAP = {
+      "Syslog Sender": "siem",
+      "Tenable.io": "tenable",
+      "Cisco ISE": "ise",
+      "AIMS": "aims",
+      "Nuvolo": "nuvolo",
+      "Cisco Prime": "cisco_prime",
+      "cisco-dnac-IoT": "cisco_dnac",
+      "SNMP": "snmp",
+      "Qualys": "qualys",
+      "Aruba ClearPass": "clearpass",
+      "ServiceNow v2" : "servicenow",
+      "Rapid7 Nexpose" : "rapid7",
+      "Cisco ISE pxGrid" : "pxgrid",
+      "Aruba WLAN Controller" : "aruba_wlc",
+      "Cisco WLAN Controller" : "cisco_wlc",
+      "Forescout": "forescout",
+      "Cortex XDR - IR":"cortex_xdr",
+      "Infoblox IPAM": "infoblox_ipam",
+      "Network Discovery":"network_discovery",
+  }
+
+  def send_panw_iot_status(instance, integration, status):
+      status_map = {
+          "active": "success",
+          "disabled": "disabled"
+      }
+      if instance != None and instance != "":
+          response = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+              "status": status_map[status],
+              "message":"%s instance %s is %s" % (integration, instance, status),
+              "integration_name": integration,
+              "playbook_name":"None",
+              "custom_integration_name": instance,
+              "asset_type":"device"
+          })
+
+
+  def update_instances():
+
+      all_instances = demisto.getModules()
+
+      enabled_instances = []
+      disabled_instances = []
+
+      for instance in all_instances:
+          xsoar_integration_name = all_instances[instance]['brand']
+          if xsoar_integration_name in INTEGRATION_MAP:
+              panw_integration_name = INTEGRATION_MAP[xsoar_integration_name]
+              state = all_instances[instance]['state']
+              if state == 'active':
+                  send_panw_iot_status(instance, panw_integration_name, state)
+                  enabled_instances.append(instance)
+              elif state == 'disabled':
+                  send_panw_iot_status(instance, panw_integration_name, state)
+                  disabled_instances.append(instance)
+          time.sleep(0.5)
+      return enabled_instances, disabled_instances
+
+
+
+
+  ''' MAIN FUNCTION '''
+
+
+  def main():
+      try:
+          enabled_instances, disabled_instances = update_instances()
+          demisto.results("Active Integration instances = %s" % enabled_instances)
+          demisto.results("Disabled Integration instances = %s" % disabled_instances)
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute UpdatePANWIoTIntegrationStatus. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('UpdatePANWIoTIntegrationStatus', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+type: python
