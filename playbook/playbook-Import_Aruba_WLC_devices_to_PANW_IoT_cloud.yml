@@ -32,11 +32,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 986135b1-bfb5-4100-859e-6c7bb6eb42dd
+      id: 38fc838a-54fc-43e7-89c2-bacaf86982d0
       iscommand: false
       name: ""
       version: -1
-    taskid: 986135b1-bfb5-4100-859e-6c7bb6eb42dd
+    taskid: 38fc838a-54fc-43e7-89c2-bacaf86982d0
     timertriggers: []
     type: start
     view: |-
@@ -75,13 +75,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: cdb17d60-058b-4a8d-8fc7-1d5343413e1a
+      id: 3eccea80-409d-4991-8d6a-a94bf5c4311f
       iscommand: false
       name: Is Aruba WLC integration enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: cdb17d60-058b-4a8d-8fc7-1d5343413e1a
+    taskid: 3eccea80-409d-4991-8d6a-a94bf5c4311f
     timertriggers: []
     type: condition
     view: |-
@@ -121,13 +121,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: cdb64764-d6d0-4e12-8dbe-07f5d103277d
+      id: 7f0a5f7f-896f-455c-8c7d-5606adbee4cd
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: cdb64764-d6d0-4e12-8dbe-07f5d103277d
+    taskid: 7f0a5f7f-896f-455c-8c7d-5606adbee4cd
     timertriggers: []
     type: regular
     view: |-
@@ -151,13 +151,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: e5713eef-a833-4aaf-86ee-27f4a0103ecf
+      id: e32ed505-0e87-4126-8e4f-39d2d9b2a3c5
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: e5713eef-a833-4aaf-86ee-27f4a0103ecf
+    taskid: e32ed505-0e87-4126-8e4f-39d2d9b2a3c5
     timertriggers: []
     type: regular
     view: |-
@@ -188,13 +188,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 1d453fdf-9ff5-4308-8764-2cfc96b77e94
+      id: 728e7ca1-3b58-4aa8-8454-ae2422cddfdd
       iscommand: false
       name: Send Aruba WiFi clients to PANW IoT
       script: f97053f9-65c2-4ed0-842a-feccacea18a9
       type: regular
       version: -1
-    taskid: 1d453fdf-9ff5-4308-8764-2cfc96b77e94
+    taskid: 728e7ca1-3b58-4aa8-8454-ae2422cddfdd
     timertriggers: []
     type: regular
     view: |-
@@ -225,13 +225,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 81df01f2-dc77-4703-81c1-e6cfb1b98d41
+      id: 32da5706-656a-4b24-8f2a-df09323769b2
       iscommand: false
       name: Send Aruba Bluetooth clients to PANW IoT
       script: 63e5da9b-9f57-463e-8ba2-c4578185b6cb
       type: regular
       version: -1
-    taskid: 81df01f2-dc77-4703-81c1-e6cfb1b98d41
+    taskid: 32da5706-656a-4b24-8f2a-df09323769b2
     timertriggers: []
     type: regular
     view: |-
@@ -271,13 +271,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 7bce4d2e-c139-47e2-8d09-afb7683b44dc
+      id: da0bcee3-dcad-4419-80d1-405edfc93137
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 7bce4d2e-c139-47e2-8d09-afb7683b44dc
+    taskid: da0bcee3-dcad-4419-80d1-405edfc93137
     timertriggers: []
     type: regular
     view: |-
@@ -313,13 +313,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 064063cb-7fd9-4c3f-809d-27505403b393
+      id: e2e2841b-76f0-42e3-80cf-bbb455d916c2
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 064063cb-7fd9-4c3f-809d-27505403b393
+    taskid: e2e2841b-76f0-42e3-80cf-bbb455d916c2
     timertriggers: []
     type: condition
     view: |-
@@ -359,13 +359,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: e3f6a9d1-562a-4d2e-8023-c8a08fcb59cf
+      id: 07c5dca3-c60c-4601-80ce-122352607953
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: e3f6a9d1-562a-4d2e-8023-c8a08fcb59cf
+    taskid: 07c5dca3-c60c-4601-80ce-122352607953
     timertriggers: []
     type: regular
     view: |-
@@ -405,13 +405,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 38fa2f5b-9e7e-4548-82c1-02b432c3f02e
+      id: 9d9a4983-221e-403e-8b47-d8cddff07c22
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 38fa2f5b-9e7e-4548-82c1-02b432c3f02e
+    taskid: 9d9a4983-221e-403e-8b47-d8cddff07c22
     timertriggers: []
     type: regular
     view: |-
@@ -435,13 +435,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 30b75258-42a4-4407-8b2a-d45e4ffe4b62
+      id: d13daba7-6578-406a-8ef0-548d5dcacf8c
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 30b75258-42a4-4407-8b2a-d45e4ffe4b62
+    taskid: d13daba7-6578-406a-8ef0-548d5dcacf8c
     timertriggers: []
     type: regular
     view: |-
@@ -465,13 +465,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 3acca8e7-5483-4918-8a74-6c9de3c7ff7b
+      id: 2ef9e7dd-1509-4bbf-88a5-3f3dd3da3696
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 3acca8e7-5483-4918-8a74-6c9de3c7ff7b
+    taskid: 2ef9e7dd-1509-4bbf-88a5-3f3dd3da3696
     timertriggers: []
     type: regular
     view: |-
@@ -505,13 +505,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 94c6d575-61c4-4a9b-8adb-00cba1bc044a
+      id: 12b526c7-9dd7-4d96-867a-4392e9e80875
       iscommand: false
       name: Is Aruba WLC Integration Instance Available
       script: Exists
       type: condition
       version: -1
-    taskid: 94c6d575-61c4-4a9b-8adb-00cba1bc044a
+    taskid: 12b526c7-9dd7-4d96-867a-4392e9e80875
     timertriggers: []
     type: condition
     view: |-
@@ -549,13 +549,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 721032ff-bbf3-4f8d-89a7-228cafc1f556
+      id: 2f7b68a4-618d-481b-8669-55642e63c11f
       iscommand: true
       name: No Instance passed to this Playbook. Reporting Error
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 721032ff-bbf3-4f8d-89a7-228cafc1f556
+    taskid: 2f7b68a4-618d-481b-8669-55642e63c11f
     timertriggers: []
     type: regular
     view: |-
@@ -587,13 +587,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 216e9b6f-910b-4f1f-840c-962b3d603fea
+      id: 099d458d-95ac-4f19-8276-4c89aaf040f5
       iscommand: false
       name: Send Aruba WLC Switches to PanW IoT
       script: 63e5da9b-9f57-463e-8ba2-c4578185b6cb
       type: regular
       version: -1
-    taskid: 216e9b6f-910b-4f1f-840c-962b3d603fea
+    taskid: 099d458d-95ac-4f19-8276-4c89aaf040f5
     timertriggers: []
     type: regular
     view: |-
@@ -625,13 +625,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 287cbf0b-4d5a-40f4-8e58-bbabbc767efc
+      id: a51527d3-e6be-4086-890c-43c85513f8b8
       iscommand: false
       name: Send Aruba WLC Access Points to PanW IoT
       script: 63e5da9b-9f57-463e-8ba2-c4578185b6cb
       type: regular
       version: -1
-    taskid: 287cbf0b-4d5a-40f4-8e58-bbabbc767efc
+    taskid: a51527d3-e6be-4086-890c-43c85513f8b8
     timertriggers: []
     type: regular
     view: |-
@@ -663,13 +663,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 7bf25866-2695-44f7-8f34-f944a82121c3
+      id: d3fe2c3b-d720-4fb8-8277-4d3b0438def0
       iscommand: false
       name: Send Aruba WLC IAPs to PanW IoT
       script: 63e5da9b-9f57-463e-8ba2-c4578185b6cb
       type: regular
       version: -1
-    taskid: 7bf25866-2695-44f7-8f34-f944a82121c3
+    taskid: d3fe2c3b-d720-4fb8-8277-4d3b0438def0
     timertriggers: []
     type: regular
     view: |-
