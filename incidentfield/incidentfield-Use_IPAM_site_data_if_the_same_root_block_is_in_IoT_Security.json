@@ -30,7 +30,7 @@
 	"name": "Use IPAM site data if the same root block is in IoT Security",
 	"neverSetAsRequired": false,
 	"openEnded": false,
-	"orgType": "",
+	"orgType": "boolean",
 	"ownerOnly": false,
 	"packID": "",
 	"packName": "",
