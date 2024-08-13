@@ -36,11 +36,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 0d3034e6-20b7-4769-8cf2-056eb0132e47
+      id: d2ee596f-b629-4a31-805d-41bf01dcfd93
       iscommand: false
       name: ""
       version: -1
-    taskid: 0d3034e6-20b7-4769-8cf2-056eb0132e47
+    taskid: d2ee596f-b629-4a31-805d-41bf01dcfd93
     timertriggers: []
     type: start
     view: |-
@@ -64,13 +64,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 87804d7e-495d-4885-82a5-fd71334b7cce
+      id: 39542ef9-ced7-4791-8340-0e245956d2bd
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 87804d7e-495d-4885-82a5-fd71334b7cce
+    taskid: 39542ef9-ced7-4791-8340-0e245956d2bd
     timertriggers: []
     type: regular
     view: |-
@@ -103,13 +103,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 7423e637-f132-4249-8163-694a6cff28d7
+      id: 783dbc6d-b1c6-4651-844b-9c66eccae970
       iscommand: false
       name: Is Rapid7 Nexpose Integration Enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: 7423e637-f132-4249-8163-694a6cff28d7
+    taskid: 783dbc6d-b1c6-4651-844b-9c66eccae970
     timertriggers: []
     type: condition
     view: |-
@@ -147,13 +147,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: c4cf6f4d-cdd8-47d7-8bc5-2b6c6f20d8bd
+      id: 101b528d-3ac8-4adb-84a2-a02b96157b1a
       iscommand: true
       name: Report disabled status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: c4cf6f4d-cdd8-47d7-8bc5-2b6c6f20d8bd
+    taskid: 101b528d-3ac8-4adb-84a2-a02b96157b1a
     timertriggers: []
     type: regular
     view: |-
@@ -191,13 +191,13 @@ tasks:
     task:
       brand: ""
       description: Starts a scan for the specified engine and template.
-      id: 7ff612d1-56f3-4cca-809a-70bb0035064c
+      id: 57fcf320-b5eb-4314-8a0c-b0e89b1581d2
       iscommand: true
       name: Launch Rapid7 vulnerability Scan
       script: '|||nexpose-start-scan-using-template-engine'
       type: regular
       version: -1
-    taskid: 7ff612d1-56f3-4cca-809a-70bb0035064c
+    taskid: 57fcf320-b5eb-4314-8a0c-b0e89b1581d2
     timertriggers: []
     type: regular
     view: |-
@@ -235,13 +235,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: de747511-f25f-476c-8e3c-6186d990039b
+      id: b6c8227c-9fe4-483f-8488-c64a7410b4d5
       iscommand: true
       name: Report Scan Launch Error to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: de747511-f25f-476c-8e3c-6186d990039b
+    taskid: b6c8227c-9fe4-483f-8488-c64a7410b4d5
     timertriggers: []
     type: regular
     view: |-
@@ -275,13 +275,13 @@ tasks:
     task:
       brand: ""
       description: List operations, will create a new list if list does not exist
-      id: e354a68b-5509-4928-813e-e6c3bfb6311a
+      id: 9d6d8963-ec1c-459f-803b-7c87079cc49d
       iscommand: false
       name: Update Rapid7 launched scan cache
       script: PANWIoTLaunchedVulnerabilityScanCacheOperations
       type: regular
       version: -1
-    taskid: e354a68b-5509-4928-813e-e6c3bfb6311a
+    taskid: 9d6d8963-ec1c-459f-803b-7c87079cc49d
     timertriggers: []
     type: regular
     view: |-
@@ -317,13 +317,13 @@ tasks:
       brand: ""
       description: Checks for errors in a given task. If found, write it to the path
         provided as an argument.
-      id: c8d8bfb6-1cc2-48f9-8b75-6b6c96852b09
+      id: 6bd328c2-6620-4aa0-8a0f-d6644284beb2
       iscommand: false
       name: Did the Scan Launch Fail?
       script: ba739f62-3f46-417e-809b-3c73715e062d
       type: condition
       version: -1
-    taskid: c8d8bfb6-1cc2-48f9-8b75-6b6c96852b09
+    taskid: 6bd328c2-6620-4aa0-8a0f-d6644284beb2
     timertriggers: []
     type: condition
     view: |-
@@ -361,13 +361,13 @@ tasks:
     task:
       brand: ""
       description: Upload reports (PDF + XML) for specified scan to IoT Cloud
-      id: 90d27aa6-b56b-4181-8b78-772e8322a08e
+      id: 4455853e-002e-4a5b-858c-2bf3afa75a3e
       iscommand: true
       name: Report Scan Launch Error As Event
       script: '|||panw-iot-3rd-party-upload-vulnerability-scan-report'
       type: regular
       version: -1
-    taskid: 90d27aa6-b56b-4181-8b78-772e8322a08e
+    taskid: 4455853e-002e-4a5b-858c-2bf3afa75a3e
     timertriggers: []
     type: regular
     view: |-
@@ -405,13 +405,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 8da66a20-3252-42c8-8601-926188137fe0
+      id: fdc6552b-8c4e-4db3-8593-abfae9585122
       iscommand: true
       name: Report Success Status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 8da66a20-3252-42c8-8601-926188137fe0
+    taskid: fdc6552b-8c4e-4db3-8593-abfae9585122
     timertriggers: []
     type: regular
     view: |-
