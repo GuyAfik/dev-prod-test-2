@@ -1,0 +1,220 @@
+args:
+- description: User defined ServiceNow table configuration
+  name: customized_servicenow_config
+- description: PANW IoT and ServiceNow category mapping.
+  name: iot_servicenow_category_map
+comment: Gets all available devices from the IoT cloud and sends it to the ServiceNow.
+  server
+commonfields:
+  id: SendAllPANWIoTDevicesToServiceNow
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendAllPANWIoTDevicesToServiceNow
+outputs:
+- contextPath: SN-IoT.bulkResult
+  description: The result of the bulk exporting.
+  type: unknown
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendAllPANWIoTDevicesToServiceNow', 'start', __line__())
+
+
+
+
+  PANW_IOT_INSTANCE = "PANW IoT 3rd Party Integration Instance"
+  SERVICENOW_INSTANCE = "PANW IoT 3rd Party ServiceNow Integration Instance"
+  PAGE_SIZE = 100
+  def get_devices_from_panw_iot_cloud(offset):
+      """
+      To retrieve a list of devices list from PANW IoT cloud controled by offset and PAGE_SIZE
+      :param offset: The index from DB to return the results.
+      :return: list of device
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-get-asset-list", {
+          "asset_type": "device",
+          "offset": offset,
+          "page_length": PAGE_SIZE
+          #"using": PANW_IOT_INSTANCE
+      })
+      if isError(resp[0]):
+          err_msg = f'Error, could not get assets from PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+      return resp[0]['Contents']
+
+
+  def query_servicenow_table(query, table_name):
+      """
+      To query Servicenow table to get a deviceid and Servicenow table row id map
+      :param query: Servicenow table query with device information
+      :return: the deviceid and Servicenow table row id map
+      """
+      sn_query_resp = demisto.executeCommand("servicenow-query-table", {
+          "table_name": table_name,
+          "limit": 10000,
+          "query": query,
+          "fields": "sys_id,mac_address"
+          #"using": SERVICENOW_INSTANCE
+      })
+      contents = sn_query_resp[0]['Contents']
+      if isinstance(contents, str):
+          if ("error" in contents) or ("Error" in contents):
+              raise Exception(contents)
+          else:
+              return contents
+      return sn_query_resp[0]['Contents']['result']
+
+
+  def get_servicenow_upsert_device_list(sn_query_result, device_list, sn_config, category_map):
+      """
+      To get Upsert device json object
+      :param sn_query_result: the deviceid and Servicenow table row id map
+      :param device_list: list of device
+      :return: upsert device json object
+      """
+      upsert_devices_resp = demisto.executeCommand("panw-iot-3rd-party-convert-assets-to-external-format", {
+          "asset_type": "device",
+          "output_format": "ServiceNow",
+          "servicenow_map": sn_query_result,
+          "asset_list": device_list,
+          #"using": PANW_IOT_INSTANCE,
+          "customized_servicenow_config": sn_config,
+          "iot_servicenow_category_map": category_map
+      })
+
+      contents = upsert_devices_resp[0]["Contents"]
+      if isinstance(contents, str):
+          if ("error" in contents) or ("Error" in contents):
+              raise Exception(contents)
+      return upsert_devices_resp[0]["Contents"]
+
+
+  def create_servicenow_record(insert_list, table_name):
+      """
+      To create Servicenow record
+      :param insert_list: device list that needs to insert into Servicenow table
+      """
+      for x in range(len(insert_list)):
+          device = insert_list[x]
+          fields = device['fields']
+          custom_fields = device['custom_fields']
+          demisto.executeCommand("servicenow-create-record", {
+              "table_name": table_name,
+              "fields": fields,
+              "custom_fields": custom_fields
+              #"using": SERVICENOW_INSTANCE
+          })
+
+
+  def update_servicenow_record(update_list, table_name):
+      """
+      To update existing device record in Servicenow
+      :param update_list: device list that needs to be updated
+      """
+      for x in range(len(update_list)):
+          device = update_list[x]
+          fields = device['fields']
+          custom_fields = device['custom_fields']
+          sys_id = device['sys_id']
+          demisto.executeCommand("servicenow-update-record", {
+              "table_name": table_name,
+              "fields": fields,
+              "custom_fields": custom_fields,
+              "id": sys_id
+              #"using": SERVICENOW_INSTANCE
+          })
+
+
+  def get_all_panw_iot_devices_and_send_to_servicenow(args):
+      """
+      To send all devices from PANW IoT cloud to Servicenow
+      :return: A summary message
+      """
+      run_time_count = 1
+      offset = 0
+      update_num = 0
+      insert_num = 0
+      total_update_num = 0
+      total_insert_num = 0
+      sn_config = args.get("customized_servicenow_config")
+      table_name = sn_config.get("device_table_name")
+      category_map = args.get("iot_servicenow_category_map")
+      if not category_map:
+          category_map = None
+      while True:
+          size = 0
+          device_list = get_devices_from_panw_iot_cloud(offset)
+          size = len(device_list)
+          deviceid_list = [device['deviceid'] for device in device_list]
+          query = "mac_addressIN" + ",".join(deviceid_list)
+          sn_query_result = query_servicenow_table(query, table_name)
+
+          upsert_devices_result = get_servicenow_upsert_device_list(sn_query_result, device_list, sn_config, category_map)
+          insert_count = upsert_devices_result['insert_count']
+          update_count = upsert_devices_result['update_count']
+          total_update_num += update_count
+          total_insert_num += insert_count
+          update_num = update_count
+          insert_num = insert_count
+          if insert_count > 0:
+              insert_list = upsert_devices_result['insert']
+              create_servicenow_record(insert_list, table_name)
+          if update_count > 0:
+              update_list = upsert_devices_result['update']
+              update_servicenow_record(update_list, table_name)
+          if size == PAGE_SIZE:
+              offset += PAGE_SIZE
+              run_time_count += 1
+          else:
+              break
+      summary_msg = (
+          f'Successfully total update {str(total_update_num)} devices to Servicenow and '
+          f'total insert {str(total_insert_num)} devices to ServiceNow table {table_name}'
+      )
+      return summary_msg
+
+
+  def main():
+      summary_msg = ""
+      args = demisto.args()
+      try:
+          summary_msg = get_all_panw_iot_devices_and_send_to_servicenow(args)
+      except Exception as ex:
+          demisto.error(traceback.format_exc())
+          return_error(str(ex))
+
+      return CommandResults(
+          readable_output=f'Asset import summary: {summary_msg}',
+          outputs_prefix = "SN-IoT.bulkResult",
+          outputs = summary_msg
+      )
+
+
+  if __name__ in ['__main__', 'builtin', 'builtins']:
+      res = main()
+      return_results(res)
+
+  register_module_line('SendAllPANWIoTDevicesToServiceNow', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- PANW IoT 3rd Party Integration
+- servicenow v2
+timeout: 100800h0m0s
+type: python
