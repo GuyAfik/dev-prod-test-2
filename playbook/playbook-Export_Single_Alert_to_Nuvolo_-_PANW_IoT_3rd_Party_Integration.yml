@@ -9,7 +9,6 @@ contentitemexportablefields:
     propagationLabels:
     - all
     toServerVersion: ""
-dirtyInputs: true
 id: acee6fd5-71eb-4d99-832c-c30aa7961004
 inputs: []
 name: Export Single Alert to Nuvolo - PANW IoT 3rd Party Integration
@@ -31,11 +30,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: a9b586ff-142b-461a-813e-db90e0bd4034
+      id: e2be8f58-605d-4057-8437-a78b620fbc69
       iscommand: false
       name: ""
       version: -1
-    taskid: a9b586ff-142b-461a-813e-db90e0bd4034
+    taskid: e2be8f58-605d-4057-8437-a78b620fbc69
     timertriggers: []
     type: start
     view: |-
@@ -70,13 +69,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: fe8243d4-06c5-4322-8fad-a1a156573d89
+      id: 14d9e009-1292-480b-8823-c0f0a741eac0
       iscommand: false
       name: Is Nuvolo enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: fe8243d4-06c5-4322-8fad-a1a156573d89
+    taskid: 14d9e009-1292-480b-8823-c0f0a741eac0
     timertriggers: []
     type: condition
     view: |-
@@ -113,13 +112,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 9ac9b796-b676-4e6f-8850-56e84a577fc6
+      id: 484e79f7-d0ef-425a-87c8-9b341530ebe5
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 9ac9b796-b676-4e6f-8850-56e84a577fc6
+    taskid: 484e79f7-d0ef-425a-87c8-9b341530ebe5
     timertriggers: []
     type: regular
     view: |-
@@ -142,13 +141,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 198cd156-8def-4281-82bc-c542c520764d
+      id: 05df02b1-6fa4-4ebc-8e38-a0e35cd88af2
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 198cd156-8def-4281-82bc-c542c520764d
+    taskid: 05df02b1-6fa4-4ebc-8e38-a0e35cd88af2
     timertriggers: []
     type: regular
     view: |-
@@ -186,13 +185,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: dbf21891-f40d-457a-86b8-3eda820369c6
+      id: 237aa29e-ae20-4dc2-8179-09b3e17d406f
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: dbf21891-f40d-457a-86b8-3eda820369c6
+    taskid: 237aa29e-ae20-4dc2-8179-09b3e17d406f
     timertriggers: []
     type: regular
     view: |-
@@ -215,13 +214,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 5b2f5c89-c8b3-4563-839a-45dce9f4aa1b
+      id: d0d1835c-9e34-4be0-80c1-3b9796e6c5bc
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 5b2f5c89-c8b3-4563-839a-45dce9f4aa1b
+    taskid: d0d1835c-9e34-4be0-80c1-3b9796e6c5bc
     timertriggers: []
     type: regular
     view: |-
@@ -258,13 +257,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 44da6d5f-d209-4a0c-80ed-e51be3d72752
+      id: 4f444c9e-e15c-4b38-804f-c48b4b9e3ac8
       iscommand: false
       name: Send alert to Nuvolo
       script: 89c1450e-b144-4b38-8559-11ecbd629c1f
       type: regular
       version: -1
-    taskid: 44da6d5f-d209-4a0c-80ed-e51be3d72752
+    taskid: 4f444c9e-e15c-4b38-804f-c48b4b9e3ac8
     timertriggers: []
     type: regular
     view: |-
@@ -298,13 +297,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: dd28cd7b-c57a-44b7-8fd7-f70baed94e3b
+      id: 94cac51c-fa0b-48c5-8a8b-8f056d7f1d1c
       iscommand: false
       name: Was there an error when get alert details?
       script: isError
       type: condition
       version: -1
-    taskid: dd28cd7b-c57a-44b7-8fd7-f70baed94e3b
+    taskid: 94cac51c-fa0b-48c5-8a8b-8f056d7f1d1c
     timertriggers: []
     type: condition
     view: |-
@@ -341,13 +340,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: a8a070fb-ec07-4e15-84d9-5ebd2468250b
+      id: 05d6f75e-85b6-493a-87c4-97c81cf2ff0c
       iscommand: true
       name: Send success status back to PANW IoT cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: a8a070fb-ec07-4e15-84d9-5ebd2468250b
+    taskid: 05d6f75e-85b6-493a-87c4-97c81cf2ff0c
     timertriggers: []
     type: regular
     view: |-
@@ -370,13 +369,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 87505904-482f-4f48-8b21-90b5dd257840
+      id: 7f997198-2d26-4ab6-8128-f44470d75f76
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 87505904-482f-4f48-8b21-90b5dd257840
+    taskid: 7f997198-2d26-4ab6-8128-f44470d75f76
     timertriggers: []
     type: regular
     view: |-
@@ -403,13 +402,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Return the PANW IoT customer id.
-      id: 945a86d7-3817-4794-8d25-d6a0c153553e
+      id: 9f4df3c1-5c83-4e54-85c8-a4ddaba8a1bb
       iscommand: true
       name: Get PANW IoT customer id.
       script: panw-iot-3rd-party-get-customerid
       type: regular
       version: -1
-    taskid: 945a86d7-3817-4794-8d25-d6a0c153553e
+    taskid: 9f4df3c1-5c83-4e54-85c8-a4ddaba8a1bb
     timertriggers: []
     type: regular
     view: |-
