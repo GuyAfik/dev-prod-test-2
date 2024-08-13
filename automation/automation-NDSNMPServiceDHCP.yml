@@ -1,0 +1,237 @@
+args:
+- description: Local Entry IP
+  name: local_entry_ip
+  required: true
+- description: Network Discovery instance name
+  name: nd_instance
+  required: true
+commonfields:
+  id: NDSNMPServiceDHCP
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: NDSNMPServiceDHCP
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('NDSNMPServiceDHCP', 'start', __line__())
+
+
+  from pysnmp.hlapi import *
+  import socket
+  import re
+
+
+  NETWORK_DISCOVERY_INSTANCE=demisto.args().get("nd_instance")
+  VENDOR_CISCO = "cisco"
+  VENDOR_ARUBAOS = "arubaos"
+  VENDOR_ARISTA = "arista"
+  VENDOR_CISCO_AIREOS_WLC = "controller"
+
+  # *************** DHCP Helper OIDs ***************
+  CISCO_SWITCH_IP_HELPER_OID = '1.3.6.1.4.1.9.2.4.1.1.3'
+  SYS_DESC_OID = '1.3.6.1.2.1.1.1'
+
+  IF_IDX_TO_IF_NAME_OID               = '1.3.6.1.2.1.31.1.1.1.1'
+  IF_IDX_TO_IF_DESC_OID               = '1.3.6.1.2.1.2.2.1.2'
+  IF_IDX_TO_IP_ADDR_OID               = '1.3.6.1.2.1.4.20.1.2'
+  IF_IDX_TO_MAC_ADDRESS_OID           = '1.3.6.1.2.1.2.2.1.6'
+  IF_IDX_TO_OPER_STATUS_OID           = '1.3.6.1.2.1.2.2.1.8'
+
+  IF_OPER_STATUS = "intf_operational_status"
+  IF_INDEX = "intf_index"
+  IF_NAME = "intf_name"
+  IF_IP4_ADDR = "intf_ipv4_addr"
+  IF_MAC_ADDR = "intf_mac_addr"
+
+  def get_ip_interface_info(host):
+      if_info = {}
+      # SNMP Walk to get IF Names
+      raw_result = walk(host, IF_IDX_TO_IF_DESC_OID)
+      for k, v in raw_result.items():
+          if_idx = k.split('.')[-1]
+          if if_idx not in if_info:
+              if_info[if_idx] = {}
+          if_info[if_idx][IF_NAME] = v.strip()
+
+      # SNMP Walk to get IF IP address
+      raw_result = walk(host, IF_IDX_TO_IP_ADDR_OID)
+      for k, v in raw_result.items():
+          if_idx = v
+          ip = '.'.join(k.strip().split('.')[-4:])
+          if is_valid_ipv4_address(ip):
+              if if_idx in if_info:
+                  if_info[if_idx][IF_IP4_ADDR] = ip
+
+      raw_result = walk(host, IF_IDX_TO_MAC_ADDRESS_OID)
+      for k, v in raw_result.items():
+          if(v!=''):
+              if_idx = k.strip().split('.')[-1]
+              mac = remove_prefix(v,"0x")
+              if if_idx in if_info:
+                  if_info[if_idx][IF_MAC_ADDR]=mac
+
+      raw_result = walk(host, IF_IDX_TO_OPER_STATUS_OID)
+      for k, v in raw_result.items():
+          if (v != ''):
+              if_idx = k.strip().split('.')[-1]
+              if if_idx in if_info:
+                  val=''
+                  if v == '1':
+                      val='up'
+                  elif v == '2':
+                      val='down'
+                  elif v == '3':
+                      val='testing'
+                  elif v == '4':
+                      val='unknown'
+                  elif v == '5':
+                      val='dormant'
+                  elif v == '6':
+                      val='notPresent'
+                  else:
+                      val='lowerLayerDown'
+
+                  if_info[if_idx][IF_OPER_STATUS] = val
+      # Return the IP Interface list
+      return if_info
+
+  def is_valid_ipv4_address(address):
+      try:
+          socket.inet_pton(socket.AF_INET, address)
+      except AttributeError:  # no inet_pton here, sorry
+          try:
+              socket.inet_aton(address)
+          except socket.error:
+              return False
+          return address.count('.') == 3
+      except socket.error:  # not a valid address
+          return False
+
+      return True
+
+  def get_str_from_hex(val):
+      #Check if the string starts with 0x then convert it to utf-8
+      if val.startswith('0x'):
+          try:
+              ver = bytes.fromhex(remove_prefix(val, '0x')).decode('utf-8')
+          except:
+              ver = val
+      else:
+          ver = val
+      return ver
+
+  def remove_prefix(text, oid_prefix):
+      if text.startswith(oid_prefix):
+          return text[len(oid_prefix):]
+      return text
+
+  def walk(ip,oid):
+      response = demisto.executeCommand("nd-snmp-v2-walk-command", {
+          "ip":ip,
+          "oid": oid,
+          "using": NETWORK_DISCOVERY_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = 'Error, couldn\'t snmp v2 walk - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+      return response[0]['Contents']
+
+
+  def get_cisco_dhcp_helper_info(host):
+      result_map = {}
+      # SNMP Walk to get Cisco IP Helper info
+      ip_intf_info = get_ip_interface_info(host)
+      raw_result = walk(host, CISCO_SWITCH_IP_HELPER_OID)
+      for k, v in raw_result.items():
+          helper_ipaddr = '.'.join(v.strip().split('.')[-4:])
+          if helper_ipaddr != "0.0.0.0":
+              intf_address = '.'.join(k.strip().split('.')[-4:])
+              intf_info={}
+              intf_info['interface_ip']=intf_address
+              intf_info['interface_name']=get_intf_name_from_interface_info(intf_address,ip_intf_info)
+              if helper_ipaddr in result_map:
+                  intf_obj_list = result_map[helper_ipaddr]
+                  intf_obj_list.append(intf_info)
+              else:
+                  result_map[helper_ipaddr] = [intf_info]
+      return result_map
+
+  def get_intf_name_from_interface_info(ip, ip_interface_info):
+      for ip_interface_key in ip_interface_info.keys():
+          ip_interface_values = ip_interface_info[ip_interface_key]
+          if IF_IP4_ADDR in ip_interface_values.keys() and IF_NAME in ip_interface_values.keys():
+              ip_address = ip_interface_values[IF_IP4_ADDR]
+              if ip_address == ip:
+                  intf_name = ip_interface_values[IF_NAME]
+                  return intf_name
+      return ""
+
+
+  def get_dhcp_helper_list(host):
+      result_map={}
+      # Get Vendor Specific information
+      vendor = get_vendor(host)
+      # Get Vendor specific DHCP info
+      if vendor == VENDOR_CISCO:
+          result_map = get_cisco_dhcp_helper_info(host)
+      # Return the result
+      return result_map
+
+  def get_dhcp_info(host):
+      result_map = {}
+      # result_map["node"] = host
+      # Get DHCP Helper info
+      return get_dhcp_helper_list(host)
+
+  def get_vendor(host):
+      try:
+          raw_result = walk(host, SYS_DESC_OID)
+          for k, v in raw_result.items():
+              sys_desc = get_str_from_hex(v)
+              if re.search(VENDOR_CISCO, sys_desc, re.IGNORECASE):
+                  if re.search(VENDOR_CISCO_AIREOS_WLC, sys_desc, re.IGNORECASE):
+                      return VENDOR_CISCO_AIREOS_WLC
+                  else:
+                      return VENDOR_CISCO
+              elif re.search(VENDOR_ARUBAOS, sys_desc, re.IGNORECASE):
+                  return VENDOR_ARUBAOS
+              elif re.search(VENDOR_ARISTA, sys_desc, re.IGNORECASE):
+                  return VENDOR_ARISTA
+              else:
+                  return "NA"
+      except Exception as ex:
+          raise Exception("NDSNMPServiceDHCP - Exception while retrieving vendor for host "+ str(host) +" and the error is:" + str(ex))
+
+  def main():
+      try:
+          LOCAL_ENTRY_IP = demisto.args().get('local_entry_ip')
+          dhcp_info = get_dhcp_info(LOCAL_ENTRY_IP)
+          return_results(dhcp_info)
+
+      except Exception as e:
+          raise Exception("Failed to get Node DHCP data for :"+str(LOCAL_ENTRY_IP)+" and the error is :"+str(e))
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('NDSNMPServiceDHCP', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
