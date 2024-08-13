@@ -1,0 +1,441 @@
+args:
+- description: local entry ip
+  name: local_entry_ip
+  required: true
+- description: Network Discovery Instance name
+  name: nd_instance
+  required: true
+commonfields:
+  id: NDSNMPTopologyL2Cisco
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/netutils:1.0.0.24101
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: NDSNMPTopologyL2Cisco
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('NDSNMPTopologyL2Cisco', 'start', __line__())
+
+
+  # from pysnmp.hlapi import *
+  import socket
+  import re
+  from ipaddress import IPv4Network
+  from netaddr import IPNetwork, IPAddress
+  # from snmp_common import *
+
+  NETWORK_DISCOVERY_INSTANCE=demisto.args().get("nd_instance")
+
+  VLAN_STR = "VLAN"
+  VLAN_ID = "vlan_id"
+  VLAN_NAME = "vlan_name"
+  VLAN_TYPE = "vlan_type"
+  VLAN_IP = "vlan_ip"
+  VLAN_TRUNK_STATUS = "vlan_trunk"
+  VLAN_LIST = "vlan_list"
+  VLAN_IF_LIST = "vlan_interface_list"
+  INTERFACE_LIST = "interface_list"
+  VLAN_IF_NAME = "vlan_intf_name"
+  VLAN_IF_IP = "vlan_intf_ipaddr"
+  VLAN_IF_IPMASK = "vlan_intf_ipmask"
+  CISCO_VLAN_PREFIX = "Vlan"
+
+  IP_CIDR_ROUTES_OID  = '1.3.6.1.2.1.4.24.4.1.5'
+
+  IP_SUBNET      = "ip_subnet"
+  IP_SUBNET_MASK = "ip_subnet_mask"
+  IP_SUBNET_GATEWAY = "ip_subnet_gateway"
+  IP_SUBNET_IF   = "ip_subnet_interface"
+  IP_DEFAULT_ROUTE_ADDR = "0.0.0.0"
+
+  # *************** Get L3 Network Information *********************
+  IP_IF_LIST = "ip_interface_list"
+  IP_SUBNET_LIST = "ip_subnet_list"
+
+  # *************** CISCO VLAN Discovery Functions ***************
+  #Cisco VLAN OIDs
+  CISCO_VLAN_TOP_LEVEL_OID            = '1.3.6.1.4.1.9.9.46.1.3.1'
+  CISCO_VLAN_ID_TO_TYPE_LIST_OID      = '1.3.6.1.4.1.9.9.46.1.3.1.1.3'
+  CISCO_VLAN_ID_TO_NAME_LIST_OID      = '1.3.6.1.4.1.9.9.46.1.3.1.1.4'
+  CISCO_VLAN_IF_IDX_TRUNK_STATUS_OID  = '1.3.6.1.4.1.9.9.46.1.6.1.1.14'
+  CISCO_VLAN_ID_TO_IF_IDX_OID         = '1.3.6.1.4.1.9.9.68.1.2.2.1.2'
+
+  DOT = '.'
+  YES = "yes"
+  NO = "no"
+
+  def walk(ip,oid):
+      response = demisto.executeCommand("nd-snmp-v2-walk-command", {
+          "ip":ip,
+          "oid": oid,
+          "using": NETWORK_DISCOVERY_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = 'Error, couldn\'t complete snmp v2 walk - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+      return response[0]['Contents']
+
+  def remove_prefix(text, prefix):
+      if text.startswith(prefix):
+          return text[len(prefix):]
+      return text
+
+
+  # ***************** IP Interface Functions*************
+  # Below two OIDs for VLAN Subnet discovery
+  IF_IDX_TO_IF_NAME_OID               = '1.3.6.1.2.1.31.1.1.1.1'
+  IF_IDX_TO_IF_DESC_OID               = '1.3.6.1.2.1.2.2.1.2'
+  IF_IDX_TO_IP_ADDR_OID               = '1.3.6.1.2.1.4.20.1.2'
+  IF_IDX_TO_MAC_ADDRESS_OID           = '1.3.6.1.2.1.2.2.1.6'
+  IF_IDX_TO_OPER_STATUS_OID           = '1.3.6.1.2.1.2.2.1.8'
+
+  IF_OPER_STATUS = "intf_operational_status"
+  IF_INDEX = "intf_index"
+  IF_NAME = "intf_name"
+  IF_IP4_ADDR = "intf_ipv4_addr"
+  IF_MAC_ADDR = "intf_mac_addr"
+
+  def get_ip_interface_info(host):
+      if_info = {}
+      # SNMP Walk to get IF Names
+      raw_result = walk(host, IF_IDX_TO_IF_DESC_OID)
+      for k, v in raw_result.items():
+          if_idx = k.split('.')[-1]
+          if if_idx not in if_info:
+              if_info[if_idx] = {}
+          if_info[if_idx][IF_NAME] = v.strip()
+
+      # SNMP Walk to get IF IP address
+      raw_result = walk(host, IF_IDX_TO_IP_ADDR_OID)
+      for k, v in raw_result.items():
+          if_idx = v
+          ip = '.'.join(k.strip().split('.')[-4:])
+          if is_valid_ipv4_address(ip):
+              if if_idx in if_info:
+                  if_info[if_idx][IF_IP4_ADDR] = ip
+
+      # SNMP Walk to get IF MAC address
+      raw_result = walk(host, IF_IDX_TO_MAC_ADDRESS_OID)
+      for k, v in raw_result.items():
+          if(v!=''):
+              if_idx = k.strip().split('.')[-1]
+              mac = remove_prefix(v,"0x")
+              if if_idx in if_info:
+                  if(len(mac) == 12):
+                      mac_colon = ':'.join(mac[i:i + 2] for i in range(0, 12, 2))
+
+                      if_info[if_idx][IF_MAC_ADDR]=mac_colon
+                  else:
+                      if_info[if_idx][IF_MAC_ADDR]=mac
+
+      # SNMP Walk to get IF operational status
+      raw_result = walk(host, IF_IDX_TO_OPER_STATUS_OID)
+      for k, v in raw_result.items():
+          if(v!=''):
+              if_idx = k.strip().split('.')[-1]
+              if if_idx in if_info:
+                  val=''
+                  if v == '1':
+                      val='up'
+                  elif v == '2':
+                      val='down'
+                  elif v == '3':
+                      val='testing'
+                  elif v == '4':
+                      val='unknown'
+                  elif v == '5':
+                      val='dormant'
+                  elif v == '6':
+                      val='notPresent'
+                  else:
+                      val='lowerLayerDown'
+                  if_info[if_idx][IF_OPER_STATUS]=val
+      # Return the IP Interface list
+      return if_info
+
+  def is_valid_ipv4_address(address):
+      try:
+          socket.inet_pton(socket.AF_INET, address)
+      except AttributeError:  # no inet_pton here, sorry
+          try:
+              socket.inet_aton(address)
+          except socket.error:
+              return False
+          return address.count('.') == 3
+      except socket.error:  # not a valid address
+          return False
+
+      return True
+
+  def get_cisco_vlan_interfaces(host, if_list):
+      vlan_if_list = {}
+      if len(if_list) == 0:
+          return vlan_if_list
+
+      # SNMP Walk to get VLAN Interface Trunk Status
+      raw_result = walk(host, CISCO_VLAN_IF_IDX_TRUNK_STATUS_OID)
+      for k, v in raw_result.items():
+          if_idx = k.split('.')[-1]
+          if v == '1':
+              trunk_status = YES
+          else:
+              trunk_status = NO
+          if if_idx in if_list:
+              if_list[if_idx][VLAN_TRUNK_STATUS] = trunk_status
+              intf_name = if_list[if_idx][IF_NAME]
+              if intf_name not in vlan_if_list:
+                  vlan_if_list[intf_name] = {}
+              vlan_if_list[intf_name][VLAN_TRUNK_STATUS] = trunk_status
+
+      # SNMP Walk to get VLAN Interfaces
+      raw_result = walk(host, CISCO_VLAN_ID_TO_IF_IDX_OID)
+      for k, v in raw_result.items():
+          if_idx = k.split('.')[-1]
+          if if_idx in if_list:
+              if_name = if_list[if_idx][IF_NAME]
+              if if_name not in vlan_if_list:
+                  vlan_if_list[if_name] = {}
+              vlan_if_list[if_name][IF_INDEX] = if_idx
+              vlan_if_list[if_name][VLAN_ID] = v
+      # return_outputs('if_list'+str(if_list))
+      if_indexes = if_list.keys()
+      for if_idx in if_indexes:
+          if_name = if_list[if_idx][IF_NAME]
+          if if_name not in vlan_if_list:
+              vlan_if_list[if_name] = {}
+          if IF_IP4_ADDR in if_list[if_idx]:
+              ip = if_list[if_idx][IF_IP4_ADDR]
+              vlan_if_list[if_name][IF_IP4_ADDR] = ip
+          if IF_MAC_ADDR in if_list[if_idx]:
+              mac = if_list[if_idx][IF_MAC_ADDR]
+              # mac_colon = ':'.join(mac[i:i + 2] for i in range(0, 12, 2))
+              vlan_if_list[if_name][IF_MAC_ADDR] = mac
+          if IF_OPER_STATUS in if_list[if_idx]:
+              operational_status = if_list[if_idx][IF_OPER_STATUS]
+              vlan_if_list[if_name][IF_OPER_STATUS] = operational_status
+      # Return VLAN IF list
+      return vlan_if_list
+
+  def get_cisco_vlan_subnets(host, if_list, vlan_list, ip_subnet_list):
+      for k, v in if_list.items():
+          # Check if the IF name has VLAN
+          if re.search("vlan", v[IF_NAME], re.IGNORECASE):
+              # Extract VLAN ID
+              vlan_id = remove_prefix(v[IF_NAME], CISCO_VLAN_PREFIX).strip()
+              if vlan_id in vlan_list:
+                  if IF_IP4_ADDR in if_list[k]:
+                      vlan_list[vlan_id][VLAN_IP] = if_list[k][IF_IP4_ADDR]
+                  if IF_NAME in if_list[k]:
+                      vlan_intf_name = if_list[k][IF_NAME]
+                      vlan_list[vlan_id][VLAN_IF_NAME] = vlan_intf_name
+                      vlan_list[vlan_id][IP_SUBNET] = get_ip_subnet_using_vlan_name(vlan_intf_name,ip_subnet_list)
+
+                  if IF_IP4_ADDR in if_list[k] and IF_NAME in if_list[k]:
+                      vlan_intf_name = if_list[k][IF_NAME]
+                      vlan_ip=if_list[k][IF_IP4_ADDR]
+                      # update_ip_subnet_list(ip_subnet_list, vlan_intf_name, vlan_ip)
+
+  def update_ip_subnet_list_with_gateway_ip(vlan_id_map, ip_subnet_list, default_gateway_map):
+      if len(vlan_id_map) > 0:
+          for k,v in vlan_id_map.items():
+              if 'vlan_intf_name' in v.keys() and 'vlan_ip' in v.keys():
+                  vlan_intf_name = v['vlan_intf_name']
+                  vlan_if_ip = v['vlan_ip']
+                  if len(ip_subnet_list) > 0:
+                      for k,v in ip_subnet_list.items():
+                           if 'ip_subnet_interface' in v.keys():
+                                  ip_subnet_interface = v['ip_subnet_interface']
+                                  if vlan_intf_name == ip_subnet_interface:
+                                      separator='.'
+                                      gateway_ip = separator.join(vlan_if_ip.split(separator, 3)[:-1])
+                                      default_gateway_ip = gateway_ip+".1"
+                                      if default_gateway_ip in default_gateway_map.keys():
+                                          v['gateway_ip']=default_gateway_ip
+                                      else:
+                                          v['gateway_ip']=vlan_if_ip
+                                      continue
+
+  def get_ip_subnet_using_vlan_name(vlan_intf_name, ip_subnet_list):
+      if len(ip_subnet_list) > 0:
+          for k, v in ip_subnet_list.items():
+              if IP_SUBNET_IF in v.keys() and IP_SUBNET in v.keys():
+                  ip_subnet_interface = v[IP_SUBNET_IF]
+                  if ip_subnet_interface == vlan_intf_name:
+                      ip_subnet = v[IP_SUBNET]
+                      return ip_subnet
+      return ""
+
+  def get_cisco_vlan_list(host):
+      vlan_list = {}
+      # SNMP Walk to get VLAN Names
+      raw_result = walk(host, CISCO_VLAN_ID_TO_NAME_LIST_OID)
+      for k, v in raw_result.items():
+          vlan_id = k.split('.')[-1]
+          # return_outputs("VLAN ID: ", vlan_id)
+          if vlan_id not in vlan_list:
+              vlan_list[vlan_id] = {}
+          vlan_list[vlan_id][VLAN_NAME] = v.strip()
+      # SNMP Walk to get VLAN Types
+      raw_result = walk(host, CISCO_VLAN_ID_TO_TYPE_LIST_OID)
+      for k, v in raw_result.items():
+          vlan_id = k.split('.')[-1]
+          if vlan_id in vlan_list:
+              vlan_list[vlan_id][VLAN_TYPE] = v
+      # Return the vlan list
+      return vlan_list
+
+  def get_ip_subnet_info(host, ip_if_list, dhcp_ip_list):
+      ip_subnet_info = {}
+      # SNMP Walk to get IF Names
+      raw_result = walk(host, IP_CIDR_ROUTES_OID)
+      for k, v in raw_result.items():
+          ip_rem_prefix = remove_prefix(k, IP_CIDR_ROUTES_OID)
+          ip_entry = ip_rem_prefix.split('.')
+          # return_outputs("ip entry: ",ip_entry)
+          if len(ip_entry) == 14:
+              # Get IP address
+              ip_addr = '.'.join(ip_entry[1:5])
+              ip_mask = '.'.join(ip_entry[5:9])
+              if ip_mask == '255.255.255.255':
+                  continue
+              if ip_addr not in ip_subnet_info:
+                  ip_subnet_info[ip_addr] = {}
+              ip_subnet_info[ip_addr][IP_SUBNET] = ip_addr
+              # Get IP Subnet Mask
+              ip_subnet_info[ip_addr][IP_SUBNET_MASK] = ip_mask
+              # Get Gateway if present
+              ip_gateway = '.'.join(ip_entry[10:14])
+              if ip_gateway != IP_DEFAULT_ROUTE_ADDR:
+                  ip_subnet_info[ip_addr][IP_SUBNET_GATEWAY] = ip_gateway
+              # Get IF name
+              if v in ip_if_list:
+                  interface_name = ip_if_list[v][IF_NAME]
+                  ip_subnet_info[ip_addr][IP_SUBNET_IF] = interface_name
+                  ip_subnet_info[ip_addr]['dhcp_server_ip'] = get_dhcp_server_ip_using_ip_subnet_intf(interface_name, dhcp_ip_list)
+      # Return the IP Subnet list
+      return ip_subnet_info
+
+  def get_dhcp_server_ip_using_ip_subnet_intf(ip_subnet_interface, dhcp_ip_list):
+
+      for k, v in dhcp_ip_list.items():
+          for each_intf in v:
+              if 'interface_name' in each_intf.keys():
+                  interface_name = each_intf['interface_name']
+                  if interface_name == ip_subnet_interface:
+                      return k
+      return ""
+
+  def get_snmp_service_dhcp_info(ip):
+      response = demisto.executeCommand("NDSNMPServiceDHCP", {
+          "local_entry_ip":ip,
+          "nd_instance": NETWORK_DISCOVERY_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = 'Error while executing NDSNMPServiceDHCP- '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+      return response[0]['Contents']
+
+  def get_cisco_vlan_info(host):
+      result_map = {}
+      # Get VLAN List
+      vlan_list = get_cisco_vlan_list(host)
+      if len(vlan_list) == 0:
+          return result_map
+      # Get the interface list
+      if_list = get_ip_interface_info(host)
+      if len(if_list) == 0:
+          return result_map
+      # Get VLAN interfaces
+      vlan_if_list = get_cisco_vlan_interfaces(host, if_list)
+
+      dhcp_ip_list = get_snmp_service_dhcp_info(host)
+      result_map['dhcp_ip_list']=dhcp_ip_list
+
+      #Get IPSubnetList
+      ip_subnet_list = get_ip_subnet_info(host, if_list, dhcp_ip_list)
+
+
+      #Get VlanList
+      get_cisco_vlan_subnets(host, if_list, vlan_list, ip_subnet_list)
+      default_gateway_list = get_default_gateway_list(ip_subnet_list)
+      update_ip_subnet_list_with_gateway_ip(vlan_list, ip_subnet_list, default_gateway_list)
+
+      result_map[VLAN_LIST] = vlan_list
+      result_map[IP_SUBNET_LIST] = ip_subnet_list
+      # Populate the dict
+      if len(vlan_if_list) != 0:
+          result_map[INTERFACE_LIST] = vlan_if_list
+      #Return the L2 & L3 information
+
+      result_map['default_gateway_list'] = default_gateway_list
+      # result_map['node_ip']=host
+      # result_map['node_mac_address']=get_mac_address_from_interface_info(host, if_list)
+      return result_map
+
+  def get_default_gateway_list(ip_subnet_list):
+      default_gateway_list={}
+      if len(ip_subnet_list) > 0:
+          for k,v in ip_subnet_list.items():
+              if isinstance(v, dict) and 'ip_subnet_gateway' in v.keys():
+                  ip_subnet_gateway = v['ip_subnet_gateway']
+                  separator = "."
+                  default_gateway_subnet = findLongestMatch(ip_subnet_gateway,ip_subnet_list)
+                  if default_gateway_subnet == '':
+                      default_gateway_subnet = separator.join(ip_subnet_gateway.split(separator, 3)[:-1])
+                      default_gateway_subnet = default_gateway_subnet+".0/24"
+                  default_gateway_list[ip_subnet_gateway]={"interface":[],"default_gateway_subnet":default_gateway_subnet}
+      return default_gateway_list
+
+  def findLongestMatch(ipaddr, ip_subnet_list):
+      longest_prefix = 32
+      longest_match = ''
+      for k, v in ip_subnet_list.items():
+          ip_subnet = v['ip_subnet']
+          if ip_subnet != '0.0.0.0':
+              ip_subnet_mask = v['ip_subnet_mask']
+              try:
+                  ip = IPv4Network(ip_subnet+'/'+ip_subnet_mask)
+
+                  if IPAddress(ipaddr) in IPNetwork(ip_subnet+'/'+str(ip.prefixlen)):
+                      if ip.prefixlen < longest_prefix:
+                          longest_prefix = ip.prefixlen
+                          longest_match=ip_subnet+'/'+str(ip.prefixlen)
+              except Exception as e:
+                  demisto.error('error while loading IPv4Network/IPAddress: '+ str(e))
+
+      return longest_match
+
+  def main():
+      try:
+          LOCAL_ENTRY_IP = demisto.args().get('local_entry_ip')
+          vlan_info = get_cisco_vlan_info(LOCAL_ENTRY_IP)
+          return_results(vlan_info)
+          # return_outputs("finished SNMP probing for Cisco VLAN data for Node!")
+      except Exception as e:
+          raise Exception("Failed to get Cisco Node VLAN data: %s" % str(e))
+
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('NDSNMPTopologyL2Cisco', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
