@@ -1,0 +1,401 @@
+args:
+- default: true
+  defaultValue: "15"
+  description: 'specify minutes of active device. Default is: ''15'''
+  name: active_range
+- description: '(Optional) Offset for paging. Null value will accumulate all results
+    by default. '
+  name: offset
+- description: (Optional) Page size for paging. Null value will accumulate all results
+    by default.
+  name: pageLength
+- description: specify comma seperated site ids.
+  name: siteids
+- description: 'CrowdStrike Falcon instance name '
+  name: crowdstrike_instance_name
+  required: true
+comment: For Bulk Export
+commonfields:
+  id: b460678e-ab1e-476e-8670-734c87888832
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: ImportDeviceAttributesFromCrowdStrikeToPANWIoTCloud
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('ImportDeviceAttributesFromCrowdStrikeToPANWIoTCloud', 'start', __line__())
+
+
+  import re
+  import time
+
+  CROWDSTRIKE_INSTANCE = demisto.args().get('crowdstrike_instance_name')
+
+  def get_active_devices_from_panw_iot_cloud(retry=0,active_range=None,pageLength=None,offset=None,siteids=None):
+      """
+      Gets assets from PANW IoT cloud.
+      param offset: Offset number for the asset list.
+      param page_size: Page size of the response being requested.
+      """
+      active_range=demisto.args().get('active_range')
+      if active_range is None or active_range == '':
+          active_range='15'
+      siteids=demisto.args().get('siteids')
+      pageLength=demisto.args().get('pageLength')
+      offset=demisto.args().get('offset')
+      response = demisto.executeCommand("panw-iot-3rd-party-get-active-list", {
+          "active_range":active_range,
+          "pageLength": pageLength,
+          "offset": offset,
+          "siteids": siteids,
+          "mac_only":"false"
+      })
+      if isError(response[0]):
+          if retry == 0:
+              time.sleep(1)
+              return get_active_devices_from_panw_iot_cloud(retry=1)
+          err_msg = f'Error, could not get active device list from PANW IoT Cloud - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def send_status_to_panw_iot_cloud(status, msg):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+          "status": status,
+          "message": msg,
+          "playbook_name": "Incremental Import of CrowdStrike Falcon - PANW IoT 3rd Party Integration",
+          "integration_name": "crowdstrike_falcon",
+          "custom_integration_name":CROWDSTRIKE_INSTANCE,
+          "asset_type": 'device'
+      })
+
+      if isError(resp[0]):
+          pass
+
+
+  def get_crowdstrike_groups():
+
+      cs_falcon_groups_dict = {}
+      cs_falcon_groups = demisto.executeCommand("cs-falcon-list-host-groups", {
+              "using": CROWDSTRIKE_INSTANCE
+          })
+
+      if isError(cs_falcon_groups[0]):
+          err_msg = f'Error while extracting crowdstrike groups - '+str(cs_falcon_groups[0]['Contents'])
+          raise Exception(err_msg)
+
+
+      if cs_falcon_groups[0]['Contents']:
+          if cs_falcon_groups[0]['Contents'] is not None and isinstance(cs_falcon_groups[0]['Contents'], dict):
+              if 'resources' in cs_falcon_groups[0]['Contents']:
+                  for data in cs_falcon_groups[0]['Contents']['resources']:
+                      group_id = ""
+                      group_name = ""
+                      for key,value in data.items():
+                          if key == "id":
+                              group_id = value
+                          if key == "name":
+                              group_name = value
+
+                      if group_id != "" and group_name != "":
+                          cs_falcon_groups_dict[group_id] = group_name
+
+      return cs_falcon_groups_dict
+
+
+
+  def get_crowdstrike_devices(mac_address,ip_address):
+      """
+      Get devices from CrowdStrike Falcon.
+      param mac_address: List of mac address.
+      param ip_address: List of mac ip_address.
+      """
+      mac_res=[]
+      mac_devices=[]
+      ip_devices=[]
+      res=[]
+      ip_res=[]
+      address_size = len(mac_address)
+      ip_size = len(ip_address)
+      count=0
+      # try:
+      while True:
+          if count>=address_size and count >=ip_size:
+              break
+          sub,ip = mac_address[count:count+1000], ip_address[count:count+1000]
+          count = count+1000
+          if sub:
+              mac_response = demisto.executeCommand("cs-falcon-search-devices-by-mac", {
+                  "mac_address": sub,
+                  # "local_ip": ip,
+                  "using": CROWDSTRIKE_INSTANCE
+              })
+              time.sleep(1)
+              if isError(mac_response[0]):
+                  err_msg = f'Error while extracting crowdstrike devices - '+str(mac_response[0]['Contents'])
+                  raise Exception(err_msg)
+
+              if mac_response[0]['Contents']:
+                  if mac_response[0]['Contents'] is not None and isinstance(mac_response[0]['Contents'], dict):
+                      if 'resources' in mac_response[0]['Contents']:
+                          for data in mac_response[0]['Contents']['resources']:
+                              val={}
+                              for key,value in data.items():
+                                  val[key]=value
+                              mac_res.append(val)
+          if ip:
+              ip_response = demisto.executeCommand("cs-falcon-search-devices-by-mac", {
+                  "local_ip": ip,
+                  "using": CROWDSTRIKE_INSTANCE
+              })
+              time.sleep(1)
+              if isError(ip_response[0]):
+                  err_msg = f'Error while extracting crowdstrike devices - '+str(ip_response[0]['Contents'])
+                  raise Exception(err_msg)
+
+              if ip_response[0]['Contents']:
+                  if ip_response[0]['Contents'] is not None and isinstance(ip_response[0]['Contents'], dict):
+                      if 'resources' in ip_response[0]['Contents']:
+                          for data in ip_response[0]['Contents']['resources']:
+                              val={}
+                              for key,value in data.items():
+                                  val[key]=value
+                              ip_res.append(val)
+
+     # Sending reponse to convert attributes from Crowdstrike Falcon to PAN Iot Cloud
+      if len(mac_res)>0:
+          mac_devices = convert_crowdstrike_attributes_to_iot_attributes(mac_res,'mac_address')
+      if len(ip_res)>0:
+          ip_devices = convert_crowdstrike_attributes_to_iot_attributes(ip_res,'ip_address')
+      res = mac_devices + ip_devices
+      # except:
+      #     pass
+      return res
+
+
+  def format_mac_address(mac_address):
+      mac_address = mac_address.replace("-", ":")
+      return mac_address
+
+  def get_group_names(group_ids, cs_falcon_groups):
+      group_names = []
+      for group_id in group_ids:
+          group_name = cs_falcon_groups.get(group_id, "")
+          if group_name != "":
+              group_names.append(group_name)
+      return group_names
+
+
+
+  def convert_crowdstrike_attributes_to_iot_attributes(crowdstrike_devices,field_param):
+      """
+      Convert attributes from CrowdStrike Falcon to PAN IoT Cloud.
+      param crowdstrike_devices: List of crowdstrike devices.
+      """
+
+      # Getting all the group names from CS Falcon
+      cs_falcon_groups =  get_crowdstrike_groups()
+      res = []
+
+      for each_endpoint in crowdstrike_devices:
+          data={}
+          operational_status=''
+          group_name=''
+          os_type=''
+          os_version=''
+          status=''
+          serial_number=''
+          os_build=''
+          hostname=''
+          try:
+
+              operational_status = each_endpoint.get('status','')
+              if operational_status != '':
+                  data['operational_status'] = operational_status
+
+              group_ids = each_endpoint.get('groups','')
+              if group_ids != '' and len(cs_falcon_groups) != 0:
+                  group_name = get_group_names(group_ids, cs_falcon_groups)
+                  data['group_name'] = group_name
+
+              os_type = each_endpoint.get('platform_name','')
+              if os_type != '':
+                  data['os_type'] = os_type
+
+              os_version = each_endpoint.get('os_version','')
+              if os_version != '':
+                  data['os_version'] = os_version
+
+              status = each_endpoint.get('status','')
+              if status != '':
+                  data['is_isolated'] = 'True'
+                  if status.lower() == 'normal':
+                      data['is_isolated'] = 'False'
+
+              serial_number = each_endpoint.get('serial_number','')
+              if serial_number != '' and serial_number != '0':
+                  data['serial_Number'] = serial_number
+
+              os_build = each_endpoint.get('os_build','')
+              if os_build != '':
+                  data['os_build'] = os_build
+
+              vendor = each_endpoint.get('system_manufacturer', '')
+              if vendor != '':
+                  data['vendor'] = vendor
+
+              hostname = each_endpoint.get('hostname','')
+              if hostname != '':
+                  data['hostname'] = hostname
+
+              # Since we are searching for MAC Address/ IP Address these fields are going to be always available.
+              if field_param == 'mac_address':
+                  data['deviceid'] = format_mac_address(each_endpoint.get('mac_address',''))
+              elif field_param == 'ip_address':
+                  data['deviceid'] = each_endpoint.get('local_ip','')
+          except:
+              pass
+          res.append(data)
+      return res
+
+  def report_devices_panw_iot_cloud(crowdstrike_devices, retry=0):
+      """
+      Report devices to PAN IoT Cloud.
+      param crowdstrike_devices: List of devices.
+      """
+      response = demisto.executeCommand("panw-iot-3rd-party-report-devices", {
+          "DeviceData":crowdstrike_devices,
+          "IntegrationName":"crowdstrike_falcon"
+      })
+
+
+      if isError(response[0]):
+          if retry == 0:
+              time.sleep(1)
+              return report_devices_panw_iot_cloud(crowdstrike_devices, retry=1)
+          err_msg = f'Error while reporting the device data to the PANW IoT Cloud - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+
+  def check_valid_mac_address(mac_address):
+      """
+      Validating mac address from device list.
+      param mac_address: List of devices.
+      """
+      mac_list = []
+      # Regex to check valid
+      # MAC address
+      regex = ("^([0-9A-Fa-f]{2}[:-])" +
+               "{5}([0-9A-Fa-f]{2})|" +
+               "([0-9a-fA-F]{4}\\." +
+               "[0-9a-fA-F]{4}\\." +
+               "[0-9a-fA-F]{4})$")
+
+      # Compile the ReGex
+      p = re.compile(regex)
+
+      for mac in mac_address:
+          if re.search(p, mac):
+              mac_list.append(mac)
+      return mac_list
+
+  def check_valid_ip_address(ip_address):
+      """
+      Validating ip address from device list.
+      param ip_address: List of devices.
+      """
+      ip_list = []
+      regex = "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$"
+
+      for ip in ip_address:
+          if re.search(regex, ip):
+              ip_list.append(ip)
+      return ip_list
+
+  def sort_mac_address_and_ip_address(device_id):
+      """
+      Filtering mac address and ip address from device id list.
+      param device_id: List of device ids.
+      """
+      mac = [ x for x in device_id if "." not in x ]
+      mac_list  = [m.replace(':', '-') for m in mac]
+
+      # validating mac-address from mac_list
+      mac_address = check_valid_mac_address(mac_list)
+      ip_list = [ x for x in device_id if ":" not in x ]
+
+      # validating ip-address from ip_list
+      ip_address = check_valid_ip_address(ip_list)
+      return mac_address,ip_address
+
+  def main():
+      try:
+          mac_address=[]
+          ip_address=[]
+          send_status_to_panw_iot_cloud("success", "Starting export of Crowdstrike Falcon")
+          device_list=get_active_devices_from_panw_iot_cloud(retry=0)
+
+
+          if device_list is not None and isinstance(device_list, list) and device_list[0]['active_list'] is not None and len(device_list[0]['active_list']) > 0:
+              active_device_list_length = len(device_list[0]['active_list'])
+              return_outputs('Total number of active devices extracted :'+ str(active_device_list_length))
+              device_id=[]
+              active_list = device_list[0]['active_list']
+              for each_device in active_list:
+                  try:
+                      device_id.append(each_device['deviceid'])
+                  except Exception as ex:
+                      pass
+              mac_address,ip_address = sort_mac_address_and_ip_address(device_id)
+              if len(mac_address) > 0 or len(ip_address)>0:
+                  iot_attribute_device_list = get_crowdstrike_devices(mac_address, ip_address)
+                  return_outputs('Total number of CrowdStrike Falcon devices extracted are :'+str(len(iot_attribute_device_list)))
+                  if iot_attribute_device_list is not None:
+                      message=report_devices_panw_iot_cloud(iot_attribute_device_list)
+                      send_status_to_panw_iot_cloud("success", message)
+                      return_results(message)
+                  else:
+                      return_results('IoT device attributes are empty')
+                      send_status_to_panw_iot_cloud("error", "IoT device attributes are empty")
+              else:
+                  return_results('Devices with ip address and mac address list is empty or object is not list')
+                  send_status_to_panw_iot_cloud("error", "Devices with ip address and mac address list is empty")
+          else:
+              return_results('Active device list is empty or object is not list')
+              send_status_to_panw_iot_cloud("error", "Get Active List does not exists")
+      except Exception as ex:
+          send_status_to_panw_iot_cloud("error", "Failed to export devices to CrowdStrike Falcon %s" % str(ex))
+          return_error(str(ex))
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('ImportDeviceAttributesFromCrowdStrikeToPANWIoTCloud', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- CrowdStrike
+timeout: 9080h0m0s
+type: python
