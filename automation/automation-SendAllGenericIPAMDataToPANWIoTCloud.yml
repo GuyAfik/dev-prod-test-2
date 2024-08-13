@@ -1,0 +1,165 @@
+args:
+- description: 'Overwrites the IPAM data ex: vlan, description '
+  name: data_overwrite
+  required: true
+- description: Overwrite the site data
+  name: site_overwrite
+  required: true
+- description: 'IPAM Data list name(Default: IOTSecurity_SITE_SUBNET_Addition_Automation)'
+  name: list_name
+commonfields:
+  id: SendAllGenericIPAMDataToPANWIoTCloud
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.14.95956
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendAllGenericIPAMDataToPANWIoTCloud
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendAllGenericIPAMDataToPANWIoTCloud', 'start', __line__())
+
+
+  IPAM_DATA_LIST_NAME='IOTSecurity_SITE_SUBNET_Addition_Automation'
+  list_name = demisto.args().get('list_name')
+  if list_name:
+      IPAM_DATA_LIST_NAME=list_name
+
+  OVERRIDE_IPAM_DATA = ''
+  OVERRIDE_IPAM_DATA = demisto.args().get('data_overwrite')
+  if OVERRIDE_IPAM_DATA is None or OVERRIDE_IPAM_DATA == '':
+      OVERRIDE_IPAM_DATA='false'
+  OVERRIDE_IPAM_SITE = demisto.args().get('site_overwrite')
+  if OVERRIDE_IPAM_SITE is None or OVERRIDE_IPAM_SITE == '':
+      OVERRIDE_IPAM_SITE='false'
+
+  IMPORT_IPAM_SITE_DEFINITIONS = demisto.args().get('import_ipam_site_definitions')
+  if IMPORT_IPAM_SITE_DEFINITIONS is None or IMPORT_IPAM_SITE_DEFINITIONS == '' or IMPORT_IPAM_SITE_DEFINITIONS == False:
+      IMPORT_IPAM_SITE_DEFINITIONS='false'
+  else:
+      IMPORT_IPAM_SITE_DEFINITIONS='true'
+
+  def get_ipam_list_data():
+      res = demisto.executeCommand('getList', {'listName': IPAM_DATA_LIST_NAME})
+      if (
+          not isinstance(res, list)
+          or 'Contents' not in res[0]
+          or 'Item not found (8)' in res[0]['Contents']
+      ):
+          return None
+      contents = json.loads(res[0]['Contents'])
+      return contents
+
+  def send_subnet_info_to_panw_iot_cloud(subnet_list):
+      response = demisto.executeCommand("panw-iot-3rd-party-report-subnets", {
+          "integration_name":"ipam_generic",
+          "subnet_data":subnet_list,
+          "data_overwrite":str(OVERRIDE_IPAM_DATA),
+          "site_overwrite":str(OVERRIDE_IPAM_SITE),
+          "page_length":"100"
+      })
+      if isError(response[0]):
+          err_msg = f'Error, couldn\'t report the subnet data info to panw iot cloud - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def rewrite_data(each_ipam_obj):
+      subnet={}
+      subnet['type']='subnet'
+      vlan=None
+      net_type=None
+      description=None
+      ip_network=None
+      location=None
+      location_type=None
+      if 'vlan' in each_ipam_obj:
+          vlan = each_ipam_obj['vlan']
+      if 'net_type' in each_ipam_obj:
+          net_type = each_ipam_obj['net_type']
+      if 'description' in each_ipam_obj:
+          description = each_ipam_obj['description']
+      if 'ip network' in each_ipam_obj:
+          ip_network = each_ipam_obj['ip network']
+      if 'location' in each_ipam_obj:
+          location = each_ipam_obj['location']
+      if 'location type' in each_ipam_obj:
+          location_type = each_ipam_obj['location type']
+
+      #PANW Data
+      #name
+      name = ''
+      if location:
+          name+=location
+      if vlan:
+          name += str(vlan)
+      if description:
+          name += description
+      if location:
+          subnet['site'] = location
+      if vlan:
+          subnet['vlan']=vlan
+      if ip_network:
+          subnet['prefix']=ip_network
+      if name:
+          subnet['description']=name
+          subnet['name']=name
+      # if net_type:
+      #     subnet['zone']=net_type
+      return subnet
+
+  def process_and_rewrite_data(ipam_obj_list):
+      result=[]
+      for each_ipam_obj in ipam_obj_list:
+          processed_data = rewrite_data(each_ipam_obj)
+          result.append(processed_data)
+      return result
+
+  def main():
+      op_msg = {}
+      try:
+          heading = "IPAM Summary"
+          ipam_data = get_ipam_list_data()
+          if ipam_data:
+              ipam_obj_list = ipam_data['response']
+              result = process_and_rewrite_data(ipam_obj_list)
+              demisto.info(f'result:{result}')
+              msg = send_subnet_info_to_panw_iot_cloud(result)
+              op_msg["Total No. of subnets discoverted"] = len(result)
+              op_msg["Total Subnets inserted/updated in PANW IoT Cloud"] = str(msg)
+
+              return_results(
+                  CommandResults(
+                      readable_output=tableToMarkdown(heading, op_msg, removeNull=True)
+                  )
+              )
+          else:
+              op_msg['Error'] = f'No Data found using lists:{IPAM_DATA_LIST_NAME}'
+              return_results(
+                      CommandResults(
+                          readable_output=tableToMarkdown(heading, op_msg, removeNull=True)
+                      )
+                  )
+      except Exception as ex:
+          return_error(str(ex))
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('SendAllGenericIPAMDataToPANWIoTCloud', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+type: python
