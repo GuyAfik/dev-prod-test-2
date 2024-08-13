@@ -397,7 +397,7 @@
 	"name": "PANW IoT Device Custom Attributes",
 	"neverSetAsRequired": false,
 	"openEnded": false,
-	"orgType": "",
+	"orgType": "grid",
 	"ownerOnly": false,
 	"packID": "",
 	"packName": "",
