@@ -1,0 +1,101 @@
+args:
+- defaultValue: PANW IoT 3rd Party Integration Instance
+  description: Name of the configured PANW IoT 3rd party instance
+  name: panw_iot_3rd_party_instance
+  required: true
+comment: Gets all available devices from the AIMS and send them to PANW IoT cloud
+  using the custom attributes.
+commonfields:
+  id: SendAIMSDevicesToPANWIoT
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendAIMSDevicesToPANWIoT
+pswd: ""
+runas: DBotWeakRole
+runonce: true
+script: "register_module_line('SendAIMSDevicesToPANWIoT', 'start', __line__())\n\n\n\n\n\n\n'''
+  IMPORTS '''\n\nimport json\nimport time\nimport gc\nimport traceback\n\n''' GLOBAL
+  VARIABLES '''\n\nAIMS_INSTANCE = demisto.args().get('using', 'PANW IoT 3rd Party
+  AIMS Integration Instance')\nGET_DEVICES_CMD = 'aims-get-device-details'\nPAGE_SIZE
+  = 100\n\ndef send_status_to_panw_iot_cloud(status, msg, retry=0):\n    \"\"\"\n
+  \   Reports status details back to PANW IoT Cloud.\n    param status: Status (error,
+  disabled, success) to be send to PANW IoT cloud.\n    param msg: Debug message to
+  be send to PANW IoT cloud.\n    \"\"\"\n    resp = demisto.executeCommand(\"panw-iot-3rd-party-report-status-to-panw\",
+  {\n        \"status\": status,\n        \"message\": msg,\n        \"integration_name\":
+  \"aims\",\n        \"playbook_name\": \"Export AIMS maps and devices to PANW IoT\",\n
+  \       \"asset_type\": 'device',\n        \"timestamp\": int(round(time.time()
+  * 1000))\n    })\n    if isError(resp[0]):\n        if retry == 0:\n            demisto.info(f'Retrying
+  send status with response {resp[0].get(\"Contents\")}')\n            time.sleep(4)\n
+  \           return send_status_to_panw_iot_cloud(status, msg, retry=1)\n        demisto.info(f'Error,
+  failed to send status to PANW IoT Cloud - {resp[0].get(\"Contents\")}')\n        err_msg
+  = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get(\"Contents\")}'\n
+  \       raise Exception(err_msg)\n\n\ndef send_devices_to_panw_iot_cloud(devices_list,
+  retry=0):\n    \"\"\"\n    Sends devices to PANW IoT Cloud.\n    param devices_list:
+  List of devices to be sent to PANW IoT cloud\n    \"\"\"\n    devices_dict = dict()\n
+  \   total = len(devices_list)\n    devices_dict['deviceLength'] = total\n    devices_dict['deviceList']
+  = devices_list\n    devices_dict['date'] = str(round(time.time() * 1000))\n    resp
+  = demisto.executeCommand(\"panw-iot-3rd-party-report-devices\", {\n        \"DeviceData\":
+  json.dumps(devices_dict),\n        \"IntegrationName\": 'aims'\n    })\n    if isError(resp[0]):\n
+  \       if retry == 0:\n            demisto.info(f'Retrying the send devices with
+  response {resp[0].get(\"Contents\")}')\n            time.sleep(4)\n            return
+  send_devices_to_panw_iot_cloud(devices_list, retry=1)\n        demisto.info(f'Error,
+  could not send devices to PANW IoT Cloud - {resp[0].get(\"Contents\")}')\n        err_msg
+  = f'Error, could not send devices to PANW IoT Cloud - {resp[0].get(\"Contents\")}'\n
+  \       raise Exception(err_msg)\n    return resp[0]['Contents']\n\ndef get_devices_from_aims(page_number,
+  retry=0):\n    \"\"\"\n    Get devices from AIMS\n    Param device_list: a list
+  of devices and their custom attributes.\n    \"\"\"\n    resp = demisto.executeCommand(GET_DEVICES_CMD,
+  {\n        \"page_number\": page_number,\n        \"page_size\": PAGE_SIZE,\n        \"using\":
+  AIMS_INSTANCE\n    })\n    if isError(resp[0]):\n        if retry == 0:\n            demisto.info(f'Retrying
+  the get_devices_from_aims function')\n            time.sleep(4)\n            return
+  get_devices_from_aims(page_number, retry=1)\n        err_msg = f'Error, could not
+  get assets from AIMS - {resp[0].get(\"Contents\")}'\n        demisto.info(f'Error
+  from AIMS {str(err_msg)}')\n        raise Exception(err_msg)\n    return resp[0]['Contents']\n\ndef
+  export_aims_devices_to_panw_iot():\n    \"\"\"\n    Send AIMS devices to PANW IoT
+  cloud\n    Param device_list: a list of devices and their custom attributes.\n    \"\"\"\n
+  \   count = 0\n    total_devices = 0\n    total_device_count = 0\n    page_number
+  = 1\n    last_page = False\n    devices_list = []\n    while not last_page:\n        device_data
+  = get_devices_from_aims(page_number)\n        demisto.debug(f\"Device data from
+  AIMS API after extracting the fields - {device_data}\")\n        devices_list =
+  device_data.get(\"Device Data\", None)\n        total_devices = device_data.get(\"Total
+  Devices\", 0)\n        total_devices_with_mac = device_data.get(\"Total Devices
+  With MAC\", 0)\n        total_device_count += total_devices\n        if devices_list:\n
+  \           count += total_devices_with_mac\n            resp = send_devices_to_panw_iot_cloud(devices_list)\n
+  \           gc.collect()\n            msg = f'Exported Page {page_number} having
+  devices-with-MAC/total-devices = {total_devices_with_mac}/{total_device_count} and
+  Page Size = {PAGE_SIZE} from AIMS to PANW IoT cloud'\n            send_status_to_panw_iot_cloud(\"success\",
+  msg)\n            demisto.info(msg)\n        page_number += 1\n        if total_devices
+  < PAGE_SIZE:\n            last_page = True\n    status_msg = f'Successfully exported
+  {count} devices from AIMS to PANW IoT'\n    demisto.info(status_msg)\n    return
+  status_msg, count, total_device_count\n\n\ndef main():\n    status_msg = None\n
+  \   try:\n        status_msg, count, total_device_count = export_aims_devices_to_panw_iot()\n
+  \   except Exception as ex:\n        send_status_to_panw_iot_cloud(\"error\", str(ex))\n
+  \       demisto.error(traceback.format_exc())\n        return_error(str(ex))\n\n
+  \   send_status_to_panw_iot_cloud(\"success\", status_msg)\n    report_summary =
+  {'Asset Type': 'Device Count'}\n    report_summary.update({f'Total Assets Reported':
+  total_device_count})\n    report_summary.update({f'Total Assets Reported with MAC':
+  count})\n    \n    return_results(\n        CommandResults(\n            readable_output=tableToMarkdown(\"Asset
+  Report Summary:\", report_summary, removeNull=True),\n            outputs_prefix=\"PaloAltoIoTIntegrationBase.Status\",\n
+  \           outputs=status_msg\n        )\n    )\n\n\nif __name__ in ('__main__',
+  '__builtin__', 'builtins'):\n    main()\n\nregister_module_line('SendAIMSDevicesToPANWIoT',
+  'end', __line__())\n"
+scripttarget: 0
+subtype: python3
+tags:
+- PANW IoT 3rd Party Integration
+- AIMS
+timeout: 100800h0m0s
+type: python
