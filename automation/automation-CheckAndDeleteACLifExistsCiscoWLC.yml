@@ -1,0 +1,166 @@
+args:
+- description: Name of the ACL to check and delete
+  name: aclName
+  required: true
+- description: All instancces of cisco in which to check
+  isArray: true
+  name: ciscoInstances
+  required: true
+comment: Checks and delete ACL from Cisco WLC if exists
+commonfields:
+  id: 8a629001-b62d-45dd-8c49-dd3d64e6788b
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: CheckAndDeleteACLifExistsCiscoWLC
+pswd: ""
+runas: DBotWeakRole
+runonce: true
+script: |
+  register_module_line('CheckAndDeleteACLifExistsCiscoWLC', 'start', __line__())
+
+
+
+
+
+
+  """Check and Delete ACL from Cisco WLC
+  This script checks for ACL and
+  delete if it exists in any instances
+  """
+
+  from typing import Dict, Any
+  import traceback
+
+  ''' GLOBAL Arguments '''
+  #PANW_IOT_INSTANCE = demisto.args().get('panw_iot_3rd_party_instance')
+
+
+  ''' STANDALONE FUNCTION '''
+
+
+  def send_status_to_panw_iot_cloud(status, msg, cisco_instance):
+      """
+      Reports status details back to PANW IoT Cloud.
+      :param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      :param msg: Debug message to be send to PANW IoT cloud.
+      :param cisco_instance: Instance name of the cisco_wlc for which error is sent.
+      """
+      demisto.log(f'{status} : {msg}')
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+          "status": status,
+          "message": msg,
+          "integration_name": "cisco_wlc",
+          "playbook_name": "Export Cisco WLC devices to PANW IoT cloud",
+          "asset_type": 'device',
+          "timestamp": int(round(time.time() * 1000)),
+          "custom_integration_name": cisco_instance
+          # "using": PANW_IOT_INSTANCE
+      })
+
+      if isError(resp[0]):
+          err_msg = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+
+  def check_if_acl_exists(acl_name, cisco_instance):
+      '''
+      Check if ACL exists or not in provided cisco wlc instance.
+      :type acl_name: ``str``
+      :param acl_name: Name of the ACL to check in cisco wlc
+      :type cisco_instance: ``str``
+      :param cisco_instance: Instance name of the cisco_wlc in which ACL checking will be done.
+      '''
+      resp = demisto.executeCommand("cisco-wlc-is-acl-exists", {
+          "aclName": acl_name,
+          "using": cisco_instance
+      })
+
+      if isError(resp[0]):
+          err_msg = 'Error, could not check for ACL existence - {}'.format(resp[0].get("Contents"))
+          raise Exception(err_msg)
+
+      return resp[0]['Contents']
+
+
+  def delete_acl(acl_name, cisco_instance):
+      '''
+      Delete the ACl from the provided cisco wlc instance.
+      :type acl_name: ``str``
+      :param acl_name: Name of the ACL to delete in cisco wlc
+      :type cisco_instance: ``str``
+      :param cisco_instance: Instance name of the cisco_wlc in which ACL will be deleted.
+      '''
+      demisto.log(f'Deleting {acl_name} ACL from {cisco_instance}.')
+      resp = demisto.executeCommand("cisco-wlc-delete-existing-acl", {
+          "aclName": acl_name,
+          "using": cisco_instance
+      })
+
+      if isError(resp[0]):
+          err_msg = f'Error, could not delete ACL - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+      return resp[0]['Contents']
+
+
+  ''' MAIN FUNCTION '''
+
+
+  def main():
+      exp_raised_once = False
+      try:
+          cisco_instances = argToList(demisto.args().get('ciscoInstances'))
+          acl_name = demisto.args().get('aclName')
+          total_acl_removed = 0
+          for cisco_instance in cisco_instances:
+              try:
+                  acl_exists = check_if_acl_exists(acl_name, cisco_instance)
+                  if acl_exists and acl_exists.lower() == "true":
+                      demisto.log(f'ACL with name {acl_name} exists in {cisco_instance}.')
+                      delete_acl(acl_name, cisco_instance)
+                      total_acl_removed += 1
+                  send_status_to_panw_iot_cloud("success", f'Successfully checked ACL {acl_name} in {cisco_instance}', cisco_instance)
+              except Exception as ex:
+                  send_status_to_panw_iot_cloud("error", str(ex), cisco_instance)
+                  exp_raised_once = True
+                  raise ex
+
+          rp_data = {
+              "ACL Name" : acl_name,
+              "No. of ACL deleted from Cisco Instance" : total_acl_removed
+          }
+          return_results(CommandResults(readable_output=tableToMarkdown("ACL verification summary:", rp_data, removeNull=True)))
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          if not exp_raised_once:
+              send_status_to_panw_iot_cloud("error", str(ex), "")
+          demisto.setContext('cisco-wlc-IoT.aclStatus', str(ex))
+          return_error(str(ex))
+
+
+  ''' ENTRY POINT '''
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('CheckAndDeleteACLifExistsCiscoWLC', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- Cisco WLAN Controller
+type: python
