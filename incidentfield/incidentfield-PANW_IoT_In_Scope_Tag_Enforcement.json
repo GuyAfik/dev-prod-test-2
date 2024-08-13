@@ -30,7 +30,7 @@
 	"name": "PANW IoT In Scope Tag Enforcement ",
 	"neverSetAsRequired": false,
 	"openEnded": false,
-	"orgType": "",
+	"orgType": "boolean",
 	"ownerOnly": false,
 	"packID": "",
 	"packName": "",
