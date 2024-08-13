@@ -30,11 +30,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 35eeddc7-fe54-4297-8bc5-9924f438aa7e
+      id: 3261493c-e6df-49e6-832b-5a0eccb00783
       iscommand: false
       name: ""
       version: -1
-    taskid: 35eeddc7-fe54-4297-8bc5-9924f438aa7e
+    taskid: 3261493c-e6df-49e6-832b-5a0eccb00783
     timertriggers: []
     type: start
     view: |-
@@ -69,13 +69,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: f8b2e880-4b33-4c37-8237-e37e2c7089cf
+      id: eb6bb537-5d17-407d-8f5e-3a1e02350a3b
       iscommand: false
       name: Is Aruba ClearPass Enabled?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: f8b2e880-4b33-4c37-8237-e37e2c7089cf
+    taskid: eb6bb537-5d17-407d-8f5e-3a1e02350a3b
     timertriggers: []
     type: condition
     view: |-
@@ -112,13 +112,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 2c7b5230-ac55-4e6d-8279-f94d27651591
+      id: 7d10b842-1b95-4e03-8865-0a56441c0464
       iscommand: false
       name: Create AlertType and AlertSeverity Custom Attributes for endpoint
       script: QuarantinePANWIoTDevice
       type: regular
       version: -1
-    taskid: 2c7b5230-ac55-4e6d-8279-f94d27651591
+    taskid: 7d10b842-1b95-4e03-8865-0a56441c0464
     timertriggers: []
     type: regular
     view: |-
@@ -155,13 +155,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 4e57cc89-06e0-4027-8a1d-3dfa5bed169f
+      id: efa0d494-1a6e-4d4d-8b9f-887135381eb9
       iscommand: true
       name: Send disable status to IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 4e57cc89-06e0-4027-8a1d-3dfa5bed169f
+    taskid: efa0d494-1a6e-4d4d-8b9f-887135381eb9
     timertriggers: []
     type: regular
     view: |-
@@ -184,13 +184,13 @@ tasks:
     task:
       brand: Builtin
       description: commands.local.cmd.close.inv
-      id: 48ff28b2-da7b-49f3-81c6-d9f1b8ab9be0
+      id: ea9ff6fa-5e93-4f38-8197-dfdeac3b0a11
       iscommand: true
       name: Close Investigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 48ff28b2-da7b-49f3-81c6-d9f1b8ab9be0
+    taskid: ea9ff6fa-5e93-4f38-8197-dfdeac3b0a11
     timertriggers: []
     type: regular
     view: |-
