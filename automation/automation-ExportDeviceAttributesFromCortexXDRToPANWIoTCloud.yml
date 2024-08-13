@@ -1,0 +1,255 @@
+args:
+- description: 'specify minutes of active device. Default is: ''15'''
+  name: active_range
+  required: true
+- description: '(Optional)Offset for paging: Null value will accumulate all results
+    by default.'
+  name: offset
+- description: '(Optional)Page size for paging: Null value will accumulate all results
+    by default.'
+  name: pageLength
+- description: specify comma seperated site ids
+  name: siteids
+- description: Cortex XDR instance name
+  name: xdr_instance_name
+  required: true
+commonfields:
+  id: ExportDeviceAttributesFromCortexXDRToPANWIoTCloud
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: ExportDeviceAttributesFromCortexXDRToPANWIoTCloud
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('ExportDeviceAttributesFromCortexXDRToPANWIoTCloud', 'start', __line__())
+
+
+  XDR_INSTANCE = demisto.args().get('xdr_instance_name')
+
+  def get_devices_from_panw_iot_cloud(increment_time=None, sites=None, tags=None, retry=0):
+      """
+      Gets assets from PANW IoT cloud.
+      param offset: Offset number for the asset list.
+      param page_size: Page size of the response being requested.
+      """
+
+      response = demisto.executeCommand("panw-iot-3rd-party-get-asset-list", {
+          "asset_type":"device",
+          "increment_time": increment_time,
+          "site_names": sites,
+          "tags": tags
+      })
+
+      if isError(response[0]):
+          if retry == 0:
+              time.sleep(1)
+              return get_devices_from_panw_iot_cloud(increment_time=increment_time, retry=1)
+          err_msg = f'Error, could not get assets from PANW IoT Cloud - {response[0].get("Contents")}'
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def get_active_devices_from_panw_iot_cloud(retry=0,active_range=None,pageLength=None,offset=None,siteids=None):
+      active_range=demisto.args().get('active_range')
+      sites=demisto.args().get('siteids')
+      pageLength=demisto.args().get('pageLength')
+      offset=demisto.args().get('offset')
+      response = demisto.executeCommand("panw-iot-3rd-party-get-active-list", {
+          "active_range":active_range,
+          "pageLength": pageLength,
+          "offset": offset,
+          "siteids": siteids,
+          "mac_only":"false"
+      })
+      if isError(response[0]):
+          if retry == 0:
+              time.sleep(1)
+              return get_active_devices_from_panw_iot_cloud(retry=1)
+          err_msg = f'Error, could not get active device list from PANW IoT Cloud - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+
+
+  def get_cortex_xdr_endpoints(ip_list):
+      res=[]
+      ips_size = len(ip_list)
+      # return_outputs('ips_size'+str(ips_size))
+      count=0
+      while True:
+          if count>=ips_size:
+              break
+          sub = ip_list[count:count+100]
+          count = count+100
+          response = demisto.executeCommand("xdr-get-endpoints", {
+              "ip_list":sub,
+              "execution-timeout":86400,
+              "limit":"100",
+              "using": XDR_INSTANCE
+          })
+          time.sleep(1)
+          if isError(response[0]):
+              err_msg = f'Error while extracting xdr endpoints - '+str(response[0]['Contents'])
+              raise Exception(err_msg)
+          for each_endpoint in response[0]['Contents']:
+              res.append(each_endpoint)
+      return res
+
+  def get_device_id(xdr_ips, ipVsDeviceIdDict):
+      try:
+          for each_ip in xdr_ips:
+              if each_ip in ipVsDeviceIdDict:
+                  deviceId = ipVsDeviceIdDict[each_ip]
+                  if deviceId is not None:
+                      return deviceId
+      except:
+          pass
+      #If deviceId is not found, treat first IP in the cortex xdr ip list as deviceID
+      return xdr_ips[0]
+
+  def convert_xdr_attributes_to_iot_attributes(xdr_endpoints, ipVsDeviceIdDict):
+      res = []
+      for each_endpoint in xdr_endpoints:
+          data = {}
+          if 'err_msg' in each_endpoint:
+              continue
+          xdr_ips = each_endpoint['ip']
+          # return_outputs('instance '+str(isinstance(xdr_ips, list))+' - xdr ips'+str(xdr_ips)+' string-'+str(isinstance(xdr_ips[0], str))+' ipVsDeviceIdDict-'+str(ipVsDeviceIdDict))
+          device_id = get_device_id(xdr_ips, ipVsDeviceIdDict)
+          data['deviceid'] = device_id
+          try:
+              data['is_isolated'] = each_endpoint['is_isolated']
+          except:
+              pass
+          try:
+              data['operational_status'] =  each_endpoint['operational_status']
+          except:
+              pass
+          try:
+              data['group_name'] =  each_endpoint['group_name']
+          except:
+              pass
+          try:
+              data['os_type'] = each_endpoint['os_type']
+          except:
+              pass
+          try:
+              data['os_version'] = each_endpoint['os_version']
+          except:
+              pass
+          res.append(data)
+      return res
+
+
+  def report_devices_panw_iot_cloud(xdr_endpoints):
+      response = demisto.executeCommand("panw-iot-3rd-party-report-devices", {
+          "DeviceData":xdr_endpoints,
+          "IntegrationName":"cortex_xdr",
+          "pageLength":"100"
+      })
+      if isError(response[0]):
+          err_msg = f'Error while reporting the device data to the PANW IoT Cloud - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def send_status_to_panw_iot_cloud(status, msg):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+          "status": status,
+          "message": msg,
+          "integration_name": "cortex_xdr",
+          "playbook_name": "Incremental Export of Cortex XDR - PANW IoT 3rd Party Integration",
+          "custom_integration_name":XDR_INSTANCE,
+          "asset_type": 'device',
+          "timestamp": int(round(time.time() * 1000))
+      })
+
+      if isError(resp[0]):
+          pass
+
+  def main():
+      try:
+          send_status_to_panw_iot_cloud("success", "Starting export of Cortex XDR endpoint")
+          active_range=demisto.args().get('active_range')
+          if active_range is None or active_range == '':
+              active_range='15'
+          siteids=demisto.args().get('siteids')
+          # device_list = get_devices_from_panw_iot_cloud(increment_time=active_range,sites=siteids)
+          device_list=get_active_devices_from_panw_iot_cloud(retry=0)
+          # return_outputs('devices extracted :'+ str(device_list))
+          # device_list=[{'ip_address':'10.6.72.196','deviceid':'00:0c:29:02:ab:b8'},{'ip_address':'10.6.72.195','deviceid':'10.6.72.195'}]
+          if device_list is not None and isinstance(device_list, list) and device_list[0]['active_list'] is not None and len(device_list[0]['active_list']) > 0:
+              active_device_list_length = len(device_list[0]['active_list'])
+              return_outputs('total number of active devices extracted :'+ str(active_device_list_length))
+              deviceId_vs_ip_address={}
+              active_list = device_list[0]['active_list']
+              for each_device in active_list:
+                  try:
+                      deviceid = each_device['deviceid']
+                      ip_address=None
+                      ip_address = each_device['ip_address']
+                      deviceId_vs_ip_address[ip_address]=deviceid
+                  except Exception as ex:
+                      pass
+
+              ip_address_list = deviceId_vs_ip_address.keys()
+              if ip_address_list is not None and len(ip_address_list) > 0:
+                  cortex_xdr_endpoints = get_cortex_xdr_endpoints(list(ip_address_list))
+                  # return_outputs("xdr endpoints are"+ str(cortex_xdr_endpoints))
+                  if cortex_xdr_endpoints is not None and isinstance(cortex_xdr_endpoints, list):
+                      return_outputs('total number of Cortex XDR endpoints extracted are :'+str(len(cortex_xdr_endpoints)))
+                      iot_attribute_device_list = convert_xdr_attributes_to_iot_attributes(cortex_xdr_endpoints, deviceId_vs_ip_address)
+                      # return_outputs('iot_attribute_device_list:'+str(iot_attribute_device_list))
+                      if iot_attribute_device_list is not None:
+                          message=report_devices_panw_iot_cloud(iot_attribute_device_list)
+                          send_status_to_panw_iot_cloud("success", message)
+                          return_results(message)
+                      else:
+                          return_results('IoT device attributes are empty')
+                          send_status_to_panw_iot_cloud("error", "IoT device attributes are empty")
+                  else:
+                      return_results('Extracted Cortex XDR endpoint details are empty or object is not dict:'+str(cortex_xdr_endpoints))
+                      send_status_to_panw_iot_cloud("error", "Extracted Cortex XDR endpoint details are empty or object is not dict:"+str(cortex_xdr_endpoints))
+              else:
+                  return_results('Devices with ip address list is empty or object is not list')
+                  send_status_to_panw_iot_cloud("error", "Devices with ip address list is empty")
+          else:
+              return_results('Active device list is empty or object is not list')
+              send_status_to_panw_iot_cloud("error", "Get Active List does not exists")
+      except Exception as ex:
+          send_status_to_panw_iot_cloud("error", "Failed to export devices to Cortex XDR %s" % str(ex))
+          return_error(str(ex))
+
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('ExportDeviceAttributesFromCortexXDRToPANWIoTCloud', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- cortex_xdr
+timeout: 100800h0m0s
+type: python
