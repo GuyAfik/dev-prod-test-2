@@ -1,0 +1,379 @@
+args:
+- name: splunk_instance_name
+  required: true
+- description: Splunk Source Type
+  name: sourcetype
+  required: true
+- description: Splunk Index
+  name: index
+  required: true
+- description: Poll interval in minutes
+  name: poll_interval
+commonfields:
+  id: ExportDeviceAttributesFromSplunkToPANWIoTCloud
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: ExportDeviceAttributesFromSplunkToPANWIoTCloud
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('ExportDeviceAttributesFromSplunkToPANWIoTCloud', 'start', __line__())
+
+
+  SPLUNK_INSTANCE = demisto.args().get('splunk_instance_name')
+  SOURCE_TYPE = demisto.args().get('sourcetype')
+  INDEX = demisto.args().get('index')
+  INTERVAL = demisto.args().get('poll_interval')
+  NO_VIRUS_DEFINITION_VERSION='No Virus Definition Version'
+  if INTERVAL is None or INTERVAL == '':
+      INTERVAL='15'
+
+  SKIP_VALUES=['Irresolvable','Unknown', NO_VIRUS_DEFINITION_VERSION]
+  DONE='DONE'
+
+  OS_DICT={"Windows":["Windows Server 2008 R2","Windows Kernel 6.0","Windows Server 2019 Standard","Windows","Windows Server 2016 Standard","Windows Kernel 6.2","Windows 7","Windows 7 Embedded Standard POSReady SP1","Windows Server 2019 Datacenter","Windows 10 Professional","Windows Server 2012","Windows 10 Enterprise","Windows Server 2016 Datacenter","Windows 7 Ultimate SP1","Windows Server 2016","Windows 7 Professional SP1"],"MacOS":["Apple Desktop OS","Apple OS X"],"Linux":["Debian","FreeBSD","CentOS 7","RedHat","Linux","Linux Embedded","CentOS","Ubuntu","RedHat"],"Cisco IOS":["Cisco IOS 12.2(55)SE12","Cisco IOS","Cisco NX-OS 6.2(20a)","Cisco IOS 17.4.1","Cisco IOS 15.5(1)SY4"],"iOS":["Apple iOS"],"VxWorks":["VxWorks"],"PAN-OS":["PAN-OS"],"Junos":["JunOS"],"Android":["Android Mobile","Android"],"Raspberry Pi OS":["Raspbian"],"APC AOS":["APC AOS"],"Unix":["Unix","Solaris"],"Embedded":["Embedded Firmware"],"BrightSign OS":["BrightSign OS"]}
+
+  def get_splunk_jobs_status(sid):
+
+      response = demisto.executeCommand("splunk-job-status", {
+          "sid": sid,
+          "using": SPLUNK_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = f'Error, could not get splunk job status - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def search_jobs_get_id():
+      search='search index='+INDEX+' sourcetype="'+SOURCE_TYPE+'" | join type=left bigfix_id [search index=bigfix sourcetype="bigfix:endpoint_protection" | rename comp_id as bigfix_id ] |join type=left ip [ search index="redseal" sourcetype="redseal_nat_chain" | rename final_target as ip] | table ip mac model manufacturer os_classification os serial_number netbios_domain netbios_hn dns_hn dhcp_hn mcafee_client_version mcafee_engine_version mcafee_dat_version src_ip'
+      # search='search index='+INDEX+' sourcetype="'+SOURCE_TYPE+'" | dedup mac | table ip mac model manufacturer os_classification os serial_number netbios_domain netbios_hn dns_hn dhcp_hn'
+      # search='search index='+INDEX+' sourcetype="'+SOURCE_TYPE+'" | dedup mac | regex ip="^10.(?:165|166)" | table ip mac model manufacturer os_classification os serial_number netbios_domain netbios_hn dns_hn dhcp_hn'
+      # search='search index='+INDEX+' sourcetype="'+SOURCE_TYPE+'" ip="10.165.205.39" | table ip mac model manufacturer os_classification os serial_number netbios_domain netbios_hn dns_hn dhcp_hn'
+      demisto.info('search query: '+ search)
+      response = demisto.executeCommand("splunk-search-jobs", {
+          "search": search,
+          "earliest_time":'-'+INTERVAL+'mins',
+          "using": SPLUNK_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = f'Error, could not get splunk search ID - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def get_splunk_jobs_results(search_results_path, offset, count):
+
+      response = demisto.executeCommand("splunk-job-results", {
+          "path": search_results_path,
+          "offset": str(offset),
+          "count": str(count),
+          "using": SPLUNK_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = f'Error, could not get splunk job results - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+
+  def report_devices_panw_iot_cloud(devices):
+      total = len(devices)
+      offset = 0
+      page_length = 1000
+      total_devices_updated=0
+      while total >= offset:
+          new_offset = offset+page_length
+          sub_devices = devices[offset:new_offset]
+          offset = new_offset
+          response = demisto.executeCommand("panw-iot-3rd-party-report-devices", {
+              "DeviceData":sub_devices,
+              "pageLength":"1000",
+              "IntegrationInstanceName":SPLUNK_INSTANCE,
+              "IntegrationName":"splunk"
+          })
+          if isError(response[0]):
+              err_msg = f'Error while reporting the device data to the PANW IoT Cloud - '+str(response[0]['Contents'])
+              raise Exception(err_msg)
+
+          panw_response=response[0]['Contents']
+          devices_updated = panw_response.split()[0]
+          if devices_updated.isdigit() == True:
+              total_devices_updated = total_devices_updated+int(devices_updated)
+      return total_devices_updated
+
+  def delete_splunk_search_job(sid):
+      response = demisto.executeCommand("splunk-search-job-delete", {
+          "sid": sid,
+          "using": SPLUNK_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = f'Error, could not perform  delete splunk search job - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def get_os_group(device):
+      if 'os_combined' in device:
+          for each_key in OS_DICT.keys():
+              os_values = OS_DICT[each_key]
+              for each_os_value in os_values:
+                  if each_os_value.lower() in device['os_combined'].lower():
+                      return each_key
+      return None
+
+  def build_device(results):
+      devices = []
+      for result in results:
+          device={}
+          if 'mac' in result.keys():
+              raw_mac = result['mac']
+              if raw_mac not in SKIP_VALUES or raw_mac != '':
+                  mac = ':'.join(a+b for a,b in zip(raw_mac[::2], raw_mac[1::2]))
+                  device['deviceid']=mac
+              else:
+                  if 'ip' in result.keys():
+                      ip = result['ip']
+                      if ip not in SKIP_VALUES or ip != '':
+                          device['deviceid']=ip
+                      else:
+                          continue
+                  else:
+                      continue
+          if 'ip' in result.keys():
+              ip = result['ip']
+              if ip not in SKIP_VALUES:
+                  device['connect_evtContent.ip']=ip
+          if 'dns_hn' in result.keys():
+              dns_hn = result['dns_hn']
+              if dns_hn not in SKIP_VALUES:
+                  device['dns_hn']=dns_hn
+
+          if 'netbios_hn' in result.keys():
+              netbios_hn = result['netbios_hn']
+              if netbios_hn not in SKIP_VALUES:
+                  device['netbios_hn']=netbios_hn
+
+          if 'os_classification' in result.keys():
+              os_classification = result['os_classification']
+              if os_classification not in SKIP_VALUES:
+                  device['os_combined']=os_classification
+
+          if 'os' in result.keys():
+              os = result['os']
+              if os not in SKIP_VALUES:
+                  device['os_group']=os
+          else:
+              os_group = get_os_group(device)
+              if os_group:
+                  device['os_group'] = os_group
+
+          if 'netbios_domain' in result.keys():
+              netbios_domain = result['netbios_domain']
+              if netbios_domain not in SKIP_VALUES:
+                  device['netbios_domain']=netbios_domain
+
+          if 'serial_number' in result.keys():
+              serial_number = result['serial_number']
+              if serial_number not in SKIP_VALUES:
+                  device['serial_number']=serial_number
+
+          if 'model' in result.keys():
+              model = result['model']
+              if model not in SKIP_VALUES:
+                  device['model']=model
+
+          if 'manufacturer' in result.keys():
+              manufacturer = result['manufacturer']
+              if manufacturer not in SKIP_VALUES:
+                  device['vendor']=manufacturer
+
+          if 'mcafee_client_version' in result.keys():
+              mcafee_client_version = result['mcafee_client_version']
+              if mcafee_client_version not in SKIP_VALUES:
+                  device['mcafee_client_version']=mcafee_client_version
+              else:
+                  demisto.info(f'mcafee_client_version: {mcafee_client_version} found in skip values')
+
+
+          if 'mcafee_engine_version' in result.keys():
+              mcafee_engine_version = result['mcafee_engine_version']
+              if mcafee_engine_version not in SKIP_VALUES:
+                  device['mcafee_engine_version']=mcafee_engine_version
+              else:
+                  demisto.info(f'mcafee_engine_version: {mcafee_engine_version} found in skip values')
+
+          if 'mcafee_dat_version' in result.keys():
+              mcafee_dat_version = result['mcafee_engine_version']
+              if mcafee_dat_version not in SKIP_VALUES:
+                  device['mcafee_dat_version']=mcafee_dat_version
+              else:
+                  demisto.info(f'mcafee_dat_version: {mcafee_dat_version} found in skip values')
+
+          if 'src_ip' in result.keys():
+              src_ip = result['src_ip']
+              if src_ip not in SKIP_VALUES:
+                  device['nat_ip']=src_ip
+              else:
+                  demisto.info(f'nat_ip: {src_ip} found in skip values')
+
+          devices.append(device)
+      return devices
+
+  def getStatus(params):
+      for each in params:
+          if each['@name'] == 'dispatchState':
+              job_state = each['#text']
+              return job_state
+      return None
+
+  def get_dispatch_status(status_response):
+      if 'entry' in status_response:
+          entry = status_response['entry']
+          if isinstance(entry, list):
+              for each_entry in entry:
+                  if 'content' in each_entry:
+                      content = each_entry['content']
+                      if 'dispatchState' in content:
+                          dispatchState = content['dispatchState']
+                          return dispatchState
+          elif isinstance(entry, dict):
+              if 'content' in entry:
+                  content = entry['content']
+                  if 'dict' in content:
+                      dict_p = content['dict']
+                      params = dict_p['key']
+                      job_state = getStatus(params)
+                      return job_state
+      return None
+
+  def getSearchResultsPath(status_response):
+      if 'entry' in status_response:
+          entry = status_response['entry']
+          if isinstance(entry, list):
+              for each_entry in entry:
+                  if 'links' in each_entry:
+                      links = each_entry['links']
+                      if 'results' in links:
+                          results = links['results']
+                          return results
+          elif isinstance(entry, dict):
+              if 'link' in entry:
+                  links = entry['link']
+                  for link in links:
+                      if '@rel' in link:
+                          rel = link['@rel']
+                          if rel == 'results':
+                              return link['@href']
+      return None
+
+  def getJobStatus(sid, retry=0, state=None):
+      if retry < 3:
+          time.sleep(60)
+          status_response = get_splunk_jobs_status(sid)
+          job_state = get_dispatch_status(status_response)
+          demisto.info('Splunk search job status: '+ str(job_state)+' and retry = '+ str(retry))
+          if job_state and job_state == DONE:
+              return job_state, status_response
+          return getJobStatus(sid, retry=retry+1, state=job_state)
+      return state, None
+
+  def run():
+      sid = None
+      try:
+          sid_response = search_jobs_get_id()
+          sid = sid_response['response']['sid']
+          report_summary={}
+          demisto.info('search id:'+sid)
+
+          job_state, status_response = getJobStatus(sid)
+          # return_outputs('jobstate = '+ job_state+ ' status_response = ' + str(status_response))
+          demisto.info('jobstate = '+ job_state+ ' status_response = ' + str(status_response))
+          search_results_path = getSearchResultsPath(status_response)
+          # return_outputs('search_results_path = '+str(search_results_path))
+          demisto.info('search_results_path = '+str(search_results_path))
+          if job_state and job_state == DONE:
+              final_result = '0 device data updated'
+              count=10000
+              offset=0
+              total_devices_updated=0
+              total_search_results=0
+              while True:
+                  response = get_splunk_jobs_results(search_results_path, offset, count)
+                  demisto.info('search results = '+str(response))
+                  if(isinstance(response, str)):
+                      response = json.loads(response)
+                  if 'results' in response and response['results']:
+                      demisto.info('got search response')
+                      results = response['results']
+                      devices = build_device(results)
+                      demisto.info('number of search results found: '+ str(len(devices)))
+                      # return_outputs('number of search results found: '+ str(len(devices)))
+                      total_search_results+=len(devices)
+                      demisto.info('device_list: '+ str(devices))
+                      # return_outputs('device_list: '+ str(devices))
+                      devices_updated = report_devices_panw_iot_cloud(devices)
+                      total_devices_updated = total_devices_updated+int(devices_updated)
+                      final_result = str(total_devices_updated) + ' device data updated'
+                      if len(response['results']) > 0:
+                          if 'init_offset' in response:
+                              offset=int(count)+int(response['init_offset'])
+                          else:
+                              report_summary.update({f'Total number of Splunk search results found': str(total_search_results)})
+                              report_summary.update({f'Total number of devices updated': str(total_devices_updated)})
+                              return CommandResults(readable_output=tableToMarkdown("Splunk Search summary:", report_summary, removeNull=True))
+                      else:
+                          report_summary.update({f'Total number of Splunk search results found': str(total_search_results)})
+                          report_summary.update({f'Total number of devices updated': str(total_devices_updated)})
+                          return CommandResults(readable_output=tableToMarkdown("Splunk Search summary:", report_summary, removeNull=True))
+                  else:
+                      report_summary.update({f'Total number of Splunk search results found': str(total_search_results)})
+                      report_summary.update({f'Total number of devices updated': str(total_devices_updated)})
+                      return CommandResults(readable_output=tableToMarkdown("Splunk Search summary:", report_summary, removeNull=True))
+          else:
+              if status_response:
+                  demisto.info('search id status is still:'+str(job_state)+ '. status_response = '+str(status_response))
+              else:
+                  demisto.info('search id status is still:'+str(job_state))
+              return 'search id status is still:'+str(job_state)+ '. Please check logs for more details'
+
+
+      except Exception as e:
+          raise Exception("Failed to run Splunk command: %s" % str(e))
+      finally:
+          if sid:
+              res = delete_splunk_search_job(sid)
+              demisto.info('deleted the splunk job: '+str(json.loads(res)['messages'][0]['text']))
+
+
+  def main():
+      try:
+          return_results(run())
+      except Exception as e:
+          raise Exception("Failed to get Splunk data: %s" % str(e))
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('ExportDeviceAttributesFromSplunkToPANWIoTCloud', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
