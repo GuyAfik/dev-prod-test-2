@@ -1,0 +1,972 @@
+category: Network Security
+commonfields:
+  id: PANW IoT 3rd Party Integration - AIMS
+  version: -1
+configuration:
+- additionalinfo: Name of the IP or hostname
+  display: AIMS Server (IP or hostname)
+  name: host_name
+  required: true
+  type: 0
+- additionalinfo: Authentication token to connect to AIMS
+  display: Auth Token
+  name: auth_token
+  required: true
+  type: 4
+- display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: AIMS Integration for Palo Alto Networks IoT
+detaileddescription: |-
+  ## AIMS Integration Help
+
+  Please configure the instance by providing following details:
+  - Name of the instance
+  - AIMS server IP or Host address
+  - Authentication token
+
+  ## Test Configuration
+
+  After providing the mandatory details, please test the configuration using the Test button.
+
+  ---
+  [View Integration Documentation](https://xsoar.pan.dev/docs/reference/integrations/aims)
+display: PANW IoT 3rd Party Integration - AIMS
+image: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAV4AAAB4CAMAAACNd2q3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIE1hY2ludG9zaCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo2MTNGMTNGOTRDMzAxMUU0OTAwNjhDMjc0OEFENjhBQyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo2MTNGMTNGQTRDMzAxMUU0OTAwNjhDMjc0OEFENjhBQyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkM4REEyNUZFNEJBMjExRTQ5MDA2OEMyNzQ4QUQ2OEFDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjYxM0YxM0Y4NEMzMDExRTQ5MDA2OEMyNzQ4QUQ2OEFDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+ItH6dQAAAutQTFRFxTEw////xTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwxTEwbwcMQgAAAPh0Uk5TAAABAgMEBQYHCAkKCwwNDg8QERITFBUWFxgZGhscHR4fICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj9AQUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVtcXV5fYGFiZGVmZ2hpamtsbW5vcHFyc3R1dnd4enx9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SV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
+name: PANW IoT 3rd Party Integration - AIMS
+script:
+  commands:
+  - arguments: []
+    description: Get the facilities mapping details from AIMS
+    name: aims-get-facility-maps
+    outputs:
+    - contextPath: CommandOutput.FacilityMaps
+      description: Facility maps output
+  - arguments: []
+    description: Get the vendors mapping details from AIMS
+    name: aims-get-vendor-maps
+    outputs:
+    - contextPath: CommandOutput.VendorMaps
+      description: Vendor maps output
+  - arguments:
+    - description: Contains the page number for pagination purpose
+      name: page_number
+      required: true
+    - description: Contains the page size for pagination purpose
+      name: page_size
+      required: true
+    description: Get the device details from AIMS
+    name: aims-get-device-details
+    outputs:
+    - contextPath: CommandOutput.DeviceDetails
+      description: Device details output
+  - arguments: []
+    description: Get the equipment type mapping details from AIMS
+    name: aims-get-equipment-type-maps
+    outputs:
+    - contextPath: CommandOutput.EquipmentTypeMaps
+      description: Equipment Type maps output
+  - arguments: []
+    description: Get the cost center mapping details from AIMS
+    name: aims-get-cost-center-maps
+    outputs:
+    - contextPath: CommandOutput.CostCenterMaps
+      description: Cost Center Maps output
+  - arguments: []
+    description: Get a list of all employees in the AIMS server
+    name: aims-get-employee-list
+    outputs:
+    - contextPath: CommandOutput.EmployeeList
+      description: Employee List output
+  - arguments: []
+    description: Get the priority list for work orders in AIMS
+    name: aims-get-work-order-priority-list
+    outputs:
+    - contextPath: CommandOutput.WorkOrderPriorityList
+      description: Work Order Priority List output
+  - arguments:
+    - description: AIMS Work order assigned to name
+      name: AssignedTo
+      required: true
+    - description: AIMS Work order contact
+      name: Contact
+      required: true
+    - description: AIMS Work order facility
+      name: Facility
+      required: true
+    - description: AIMS Work order notes
+      name: Notes
+      required: true
+    - description: AIMS Work order priority
+      name: Priority
+      required: true
+    - description: AIMS Work order problem
+      name: Problem
+      required: true
+    - description: AIMS Work order requester
+      name: Requester
+      required: true
+    - description: AIMS Work order tag
+      name: Tag
+      required: true
+    - description: Work order reason
+      name: Reason
+      required: true
+    - description: Work order ticket id
+      name: ZbTicketId
+      required: true
+    - description: Work order user email
+      name: UserEmail
+      required: true
+    description: Create work order in AIMS
+    name: aims-create-work-order
+    outputs:
+    - contextPath: CommandOutput.WorkOrderResponse
+      description: Work Order Response
+  - arguments:
+    - description: Contains the page number for pagination purpose
+      name: page_number
+      required: true
+    - description: Contains the page size for pagination purpose
+      name: page_size
+      required: true
+    - description: List of vendors to be passed in query param
+      isArray: true
+      name: vendor_list
+      required: true
+    - description: List of facility to be passed in query param
+      isArray: true
+      name: facility_list
+      required: true
+    description: Get device details filtered with vendors and facility list.
+    name: aims-get-filtered-device-data
+  - arguments:
+    - description: Contains the page number for pagination purpose
+      name: page_number
+      required: true
+    - description: Contains the page size for pagination purpose
+      name: page_size
+      required: true
+    description: 'Get device details from new AIMS command ISEquipment Query '
+    name: aims-get-device-details-isequipment
+  dockerimage: demisto/panw-iot:1.0.0.79918
+  runonce: false
+  script: |
+    register_module_line('PANW IoT 3rd Party Integration - AIMS', 'start', __line__())
+
+
+
+
+
+    ''' IMPORTS '''
+
+    import requests
+    import traceback
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+    AIMS_PROVIDER = 'phoenixDataSystems'
+    AIMS_QUERY_FACILITY = 'facQR'
+    AIMS_QUERY_VENDOR = 'manufQR'
+    AIMS_QUERY_EQUIPMENT_TYPE = 'equipTypeQR'
+    AIMS_QUERY_COST_CENTER = 'costCtrQR'
+    AIMS_QUERY_EMPLOYEE = 'employeeQR'
+    AIMS_QUERY_PRIORITY = 'priorityQR'
+    AIMS_QUERY_DEVICE = 'equipQR'
+    AIMS_CREATE_WORK_ORDER = 'woCreate'
+
+
+    ''' WRAPPER CLASS '''
+
+
+    class RestApiCall(object):
+        '''
+            Wrapper class to make GET or POST api calls
+        '''
+
+        def __init__(self, verify=None, proxies=None, timeout=50):
+            self.verify = verify
+            self.proxies = proxies
+            self.timeout = timeout
+
+        def post(self, url, headers={}, data=None, auth=None):
+            '''
+                Wrapper for POST method
+            '''
+            return requests.post(url, headers=headers, data=data, auth=auth, verify=self.verify, proxies=self.proxies, timeout=self.timeout)
+
+        def get(self, url, headers={}, params={}):
+            '''
+                Wrapper for GET method
+            '''
+            return requests.get(url, headers=headers, params=params, verify=self.verify, proxies=self.proxies, timeout=self.timeout)
+
+
+    ''' CLIENT CLASSES '''
+
+
+    class AimsClient():
+        '''
+            AimsClient class to interact with the service API
+        '''
+
+        def __init__(self, base_url, auth_token, rest_object):
+            self.url_path = base_url + '/AIMSUtilityService/AIMS.api'
+            self.auth_token = auth_token
+            self.rest_object = rest_object
+            self.provider = AIMS_PROVIDER
+            self.payload_segment = ("------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n"
+                                    "Content-Disposition: form-data; ")
+            self.payload_auth = self.payload_segment + \
+                "form-data; name=\"ClientID\"\r\n\r\n"
+            self.payload_paging = self.payload_segment + \
+                "name=\"QueryIsPaging\"\r\n\r\nY\r\n" + \
+                self.payload_segment + \
+                "name=\"QueryRecordsPerPage\"\r\n\r\n"
+            self.payload_end = "------WebKitFormBoundary7MA4YWxkTrZu0gW--"
+            self.headers = {
+                'content-type': "multipart/form-data; "
+                                "boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+                'cache-control': "no-cache"
+            }
+
+        def aims_api_test(self):
+            '''
+                Checks the API services
+            '''
+            return self.rest_object.get(url=self.url_path)
+
+        def __send_api_to_aims(self, url, payload, cmd):
+            success = False
+            aims_json = None
+            # paging
+            try:
+                paging = cmd['paging']
+                pagenum = cmd['page_num']
+                recsPerPage = cmd['recs_per_page']
+            except KeyError:
+                paging = False
+            if paging:
+                paging_payload = self.payload_paging + \
+                    str(recsPerPage) + "\r\n" +  \
+                    self.payload_segment + "name=\"QueryPage\"\r\n\r\n" + \
+                    str(pagenum) + "\r\n"
+            else:
+                paging_payload = ''
+            data = payload + paging_payload + self.payload_end
+            response = self.rest_object.post(url=url, headers=self.headers, data=data)
+            if response.status_code == 200:
+                # parse json blob returned
+                aims_json = response.json()
+                # parse for error and last page
+                success = aims_json["IsSuccessful"]
+            return success, aims_json
+
+        def query_mappings(self, cmd):
+            success = False
+            response = None
+            payload = ''
+            op_type = cmd['opType']
+            if op_type == AIMS_QUERY_FACILITY:
+                query_type = 'Facility'
+            elif op_type == AIMS_QUERY_VENDOR:
+                query_type = 'Manufacturer'
+            elif op_type == AIMS_QUERY_EQUIPMENT_TYPE:
+                query_type = 'EquipmentType'
+            elif op_type == AIMS_QUERY_COST_CENTER:
+                query_type = 'Account'
+            elif op_type == AIMS_QUERY_EMPLOYEE:
+                query_type = 'Employee'
+            elif op_type == AIMS_QUERY_PRIORITY:
+                query_type = 'Priority'
+            query_url = self.url_path + "/DataManager/Query"
+            payload += self.payload_auth + cmd.get('auth_token', '') + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"Type\"\r\n\r\n" + query_type + "\r\n"
+            if op_type == AIMS_QUERY_EMPLOYEE:
+                payload += self.payload_segment + \
+                    "name=\"Active\"\r\n\r\nY\r\n"
+            success, response = self.__send_api_to_aims(query_url, payload, cmd)
+            return success, response
+
+        def query_devices(self, cmd):
+            success = False
+            devices_response = None
+            payload = ''
+            query_url = self.url_path + "/Equipment/Query"
+            payload += self.payload_auth + cmd.get('auth_token', '') + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"StartingFacility\"\r\n\r\n" + \
+                cmd.get('start_facility', '') + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"EndingFacility\"\r\n\r\n" + \
+                cmd.get('end_facility', '') + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"StartingManufacturer\"\r\n\r\n" + \
+                cmd.get('start_manufacturer', '') + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"EndingManufacturer\"\r\n\r\n" + \
+                cmd.get('end_manufacturer', '') + "\r\n"
+            success, devices_response = self.__send_api_to_aims(query_url, payload, cmd)
+            return success, devices_response
+
+        def get_equipment_devices(self, cmd):
+            success = False
+            devices_response = None
+            query_param = ''
+            query_url = self.url_path + "/Equipment/Get"
+            query_param = {
+                'ClientID': cmd.get('auth_token', ''),
+                'TagNumber': cmd.get('TagNumber', ''),
+                'Facility': cmd.get('Facility', '')
+            }
+
+            response = self.rest_object.get(url=query_url, headers=self.headers, params=query_param)
+            if response.status_code == 200:
+                devices_response = response.json()
+                success = devices_response["IsSuccessful"]
+            return success, devices_response
+
+        def isequipment_query_devices(self, cmd):
+            success = False
+            devices_response = None
+            payload = ''
+            query_url = self.url_path + "/ISEquipment/Query"
+            payload += self.payload_auth + cmd.get('auth_token', '') + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"StartingFacility\"\r\n\r\n" + \
+                cmd.get('start_facility', '') + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"EndingFacility\"\r\n\r\n" + \
+                cmd.get('end_facility', '') + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"StartingManufacturer\"\r\n\r\n" + \
+                cmd.get('start_manufacturer', '') + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"EndingManufacturer\"\r\n\r\n" + \
+                cmd.get('end_manufacturer', '') + "\r\n"
+            success, devices_response = self.__send_api_to_aims(query_url, payload, cmd)
+            return success, devices_response
+
+        def create_work_order(self, cmd):
+            success = False
+            payload = ""
+            woType = "CM"
+            params = self.url_path + "/WorkOrders/Create"
+            payload += self.payload_auth + str(cmd.get('auth_token', '')) + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"Facility\"\r\n\r\n" + str(cmd.get('facility', '')) + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"TagNumber\"\r\n\r\n" + str(cmd.get('tag', '')) + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"Type\"\r\n\r\n" + woType + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"Problem\"\r\n\r\n" + str(cmd.get('problem', '')) + "\r\n"
+            notes = str(cmd.get('notes', ''))
+            if notes is not None:
+                payload += self.payload_segment + \
+                    "name=\"Notes\"\r\n\r\n" + notes + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"Priority\"\r\n\r\n" + str(cmd.get('priority', '')) + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"Requester\"\r\n\r\n" + str(cmd.get('requester', '')) + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"Contact\"\r\n\r\n" + str(cmd.get('contact', '')) + "\r\n"
+            payload += self.payload_segment + \
+                "name=\"AssignedTo\"\r\n\r\n" + str(cmd.get('assignedTo', '')) + "\r\n"
+            success, response = self.__send_api_to_aims(params, payload, cmd)
+            return success, response
+
+
+    ''' COMMAND FUNCTIONS '''
+
+
+    def test_module(client: AimsClient, rest_object: RestApiCall) -> str:
+        '''
+            Tests API connectivity and authentication'
+            Returning 'ok' indicates that the integration works like it is supposed to.
+            Raises exceptions if something goes wrong.
+
+            :param client (object): AimsClient class object
+            :param rest_object (object): RestApiCall class object
+
+            :return: 'ok' if test passed, anything else will fail the test.
+        '''
+
+        try:
+            success = False
+            response = client.aims_api_test()
+            if response.status_code == 200:
+                # query Facility list to check authToken
+                fac_cmd = {
+                    "opType": AIMS_QUERY_FACILITY,
+                    "provider": AIMS_PROVIDER,
+                    "host": client.url_path,
+                    "auth_token": client.auth_token
+                }
+                success, facilities_data = client.query_mappings(fac_cmd)
+                if success:
+                    return 'ok'
+                else:
+                    return 'Authorization Error: make sure server details are correctly set'
+            else:
+                return 'Response code: {} Error in reaching AIMS API'.format(response.status_code)
+        except DemistoException as e:
+            if 'Forbidden' in str(e):
+                return 'Authorization Error: make sure server details are correctly set'
+            else:
+                raise e
+
+
+    def get_mappings(client: AimsClient, rest_object: RestApiCall, query: str, retry=0) -> dict:
+        '''
+            Get mappings for a query from AIMS
+            :param client(object): AimsClient class object
+            :param rest_object(object): RestApiCall class object
+            :param query(object): String
+            :returns query mappings dictionary
+        '''
+        success = False
+        mappings = None
+        cmd = {
+            "opType": query,
+            "provider": AIMS_PROVIDER,
+            "host": client.url_path,
+            "auth_token": client.auth_token
+        }
+        success, response = client.query_mappings(cmd)
+        response_data = response.get('Data')
+        if response_data:
+            if query == AIMS_QUERY_EMPLOYEE:
+                mappings = response_data
+            elif query == AIMS_QUERY_PRIORITY:
+                mappings = []
+                for priority in response_data:
+                    priority_object = dict()
+                    priority_object[priority.get('Code', 'N/A')] = priority.get('Name', 'N/A')
+                    mappings.append(priority_object)
+            elif query in (AIMS_QUERY_FACILITY, AIMS_QUERY_VENDOR, AIMS_QUERY_EQUIPMENT_TYPE, AIMS_QUERY_COST_CENTER):
+                mappings = {}
+                for mapping in response_data:
+                    mapping_object = dict()
+                    mapping_object[mapping.get('Code', 'N/A')] = mapping.get('Name', 'N/A')
+                    mappings.update(mapping_object)
+        if success:
+            return mappings
+        else:
+            if retry == 0:
+                demisto.info(f'Retrying get mapping function for the command {query}')
+                time.sleep(4)
+                return get_mappings(client, rest_object, query, retry=1)
+            raise Exception('Error while getting metadata from AIMS.\nAPI Response: {}'.format(response))
+
+    def map_equipment_device_list(devices_list):
+        '''
+            Map device field
+        '''
+        device_details = []
+        for _data in devices_list:
+            data = {}
+            ISDevices = []
+            ISDevices_dict = {}
+            valid_mac = ''
+            valid_ip = ''
+            is_device = _data.get('ISDevices', '')
+            if is_device:
+                mac_address = is_device[0].get('MACAddress', '')
+                if mac_address:
+                        valid_mac = is_mac_address(mac_address)
+            if valid_mac:
+                ISDevices_dict['MACAddress'] = valid_mac
+                data['MACAddress'] = valid_mac
+                ip_address = is_device[0].get('IPAddress', '')
+                if ip_address:
+                    valid_ip = is_ip_address(ip_address)
+                    if valid_ip:
+                        ISDevices_dict['IPAddress'] = ip_address
+                        data['IPAddress'] = ip_address
+                ISDevices.append(ISDevices_dict)
+                data['ISDevices'] = ISDevices
+                TagNumber = _data.get('TagNumber', '')
+                if TagNumber:
+                    data['TagNumber'] = TagNumber
+                Facility = _data.get('Facility', '')
+                if Facility:
+                    data['Facility'] = Facility
+                SerialNumber = _data.get('SerialNumber', '')
+                if SerialNumber:
+                    data['SerialNumber'] = SerialNumber
+                Description = _data.get('Description', '')
+                if Description:
+                    data['Description'] = Description
+                Type = _data.get('Type', '')
+                if Type:
+                    data['Type'] = Type
+                ModelNumber = _data.get('ModelNumber', '')
+                if ModelNumber:
+                    data['ModelNumber'] = ModelNumber
+                Manufacturer = _data.get('Manufacturer', '')
+                if Manufacturer:
+                    data['Manufacturer'] = Manufacturer
+                CostCenter = _data.get('CostCenter', '')
+                if CostCenter:
+                    data['CostCenter'] = CostCenter
+                Status = _data.get('Status', '')
+                if Status:
+                    data['Status'] = Status
+                Location = _data.get('Location', '')
+                if Location:
+                    data['Location'] = Location
+                device_details.append(data)
+        return device_details
+
+    def get_device_details(client: AimsClient, rest_object: RestApiCall, page_number: int, page_size: int) -> dict:
+        '''
+            Get device details from AIMS
+            :param client(object): AimsClient class object
+            :param rest_object(object): RestApiCall class object
+            :param page_number(int): Offset to fetch devices
+            :param page_size(int): Maximum devices to be fetched in single api call
+            :returns device details dictionary
+        '''
+        success = False
+        devices_list = []
+        devices_info = {}
+        facility_maps = get_mappings(client, rest_object, AIMS_QUERY_FACILITY)
+        vendor_maps = get_mappings(client, rest_object, AIMS_QUERY_VENDOR)
+        sorted_facilities_list = sorted(list(facility_maps.keys()))
+        sorted_vendors_list = sorted(list(vendor_maps.keys()))
+        cmd = {
+            "opType": AIMS_QUERY_DEVICE,
+            "provider": AIMS_PROVIDER,
+            "paging": True,
+            "host": client.url_path,
+            "auth_token": client.auth_token,
+            "start_facility": sorted_facilities_list[0],
+            "end_facility": sorted_facilities_list[-1],
+            "start_manufacturer": sorted_vendors_list[0],
+            "end_manufacturer": sorted_vendors_list[-1],
+            "page_num": page_number,
+            "recs_per_page": page_size
+        }
+        success, response = client.query_devices(cmd)
+        demisto.debug("AIMS Equipment/Query API response - %s" % response)
+        devices_list = response.get('Data', [])
+        devices_info["Total"] = len(devices_list)
+        if devices_list and success:
+            # MAP function for equipment query.
+            devices_list = map_equipment_device_list(devices_list)
+            if devices_list:
+                devices_info["Devices"] = devices_list
+        elif not success:
+            raise Exception('Error while getting devices from AIMS Equipment Endpoint. Error Response: {}'.format(response))
+        return devices_info
+
+
+    def is_mac_address(mac):
+        """
+        Test for valid mac address
+
+        :type mac: ``str``
+        :param mac: MAC address in the form of AA:BB:CC:00:11:22
+
+        :return: True/False
+        :rtype: ``bool``
+        """
+        if re.search('-', mac):
+            mac = mac.replace('-', ':')
+        if re.search(r'([0-9A-F]{2}[:]){5}([0-9A-F]){2}', mac.upper()) is not None:
+            return mac
+        else:
+            return mac
+
+    def is_ip_address(ip):
+        """
+        Test for valid ip address
+
+        :type ip: ``str``
+        :param ip: IP address in the form of 192.168.0.1
+
+        :return: True/False
+        :rtype: ``bool``
+        """
+        ip_regex = "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$"
+        if(re.search(ip_regex, ip)):
+            return True
+        else:
+            return False
+
+    def map_device_list(client, devices_list):
+        '''
+            Map device field
+        '''
+        device_details = []
+        for _data in devices_list:
+            data = {}
+            ISDevices = []
+            ISDevices_dict = {}
+            valid_mac = ''
+            valid_ip = ''
+            # This condition will check if device type is wireless or wired.
+            if _data.get('WLMAC', ''):
+                mac_address = _data.get('WLMAC', '')
+                valid_mac = is_mac_address(mac_address)
+            elif _data.get('WRMAC', ''):
+                mac_address = _data.get('WRMAC', '')
+                valid_mac = is_mac_address(mac_address)
+            # This condition will get IP Address. If in any case mac_address is empty then we will get data with IP Address.
+            if _data.get('WLIPV4', ''):
+                ip_address = _data.get('WLIPV4', '')
+                valid_ip = is_ip_address(ip_address)
+            elif _data.get('WRIPV4', ''):
+                ip_address = _data.get('WRIPV4', '')
+                valid_ip = is_ip_address(ip_address)
+            # We will only go further if there are atleast mac or ip present, otherwise the device is dropped
+            if valid_mac:
+                if valid_mac:
+                    ISDevices_dict['MACAddress'] = valid_mac
+                    data['MACAddress'] = valid_mac
+                if valid_ip:
+                    ISDevices_dict['IPAddress'] = ip_address
+                    data['IPAddress'] = ip_address
+                ISDevices.append(ISDevices_dict)
+                data['ISDevices'] = ISDevices
+                TagNumber = _data.get('TagNumber', '')
+                if TagNumber:
+                    data['TagNumber'] = TagNumber
+                Facility = _data.get('Facility', '')
+                if Facility:
+                    data['Facility'] = Facility
+                if TagNumber and Facility:
+                    # Here we will call ..Equipment/Get API to get device details which are required and not available in the ..ISEquipment/Query API
+                    # GET call required both TagNumber and Facility, if this is not present we will add the device without details like SerialNumber, Type, etc.
+                    # Reason for not going with /Query endpoint is to avoid descipency in data
+                    cmd = {
+                        "auth_token": client.auth_token,
+                        "TagNumber": TagNumber,
+                        "Facility": Facility
+                    }
+                    success, response = client.get_equipment_devices(cmd)
+                    devices_data = response.get('Data', '')
+                    if devices_data and success:
+                        SerialNumber = devices_data.get('SerialNumber', '')
+                        if SerialNumber:
+                            data['SerialNumber'] = SerialNumber
+                        Description = devices_data.get('Description', '')
+                        if Description:
+                            data['Description'] = Description
+                        Type = devices_data.get('Type', '')
+                        if Type:
+                            data['Type'] = Type
+                        ModelNumber = devices_data.get('ModelNumber', '')
+                        if ModelNumber:
+                            data['ModelNumber'] = ModelNumber
+                        Manufacturer = devices_data.get('Manufacturer', '')
+                        if Manufacturer:
+                            data['Manufacturer'] = Manufacturer
+                        CostCenter = devices_data.get('CostCenter', '')
+                        if CostCenter:
+                            data['CostCenter'] = CostCenter
+                        Status = devices_data.get('Status', '')
+                        if Status:
+                            data['Status'] = Status
+                        Location = devices_data.get('Location', '')
+                        if Location:
+                            data['Location'] = Location
+                    else:
+                        raise Exception('Error while getting devices from AIMS.\n Equipment API Response: {}'.format(response))
+                device_details.append(data)
+        return device_details
+
+
+    def get_device_details_from_isequipment_query(client: AimsClient, rest_object: RestApiCall, page_number: int, page_size: int) -> dict:
+        '''
+            Get device details from AIMS
+            :param client(object): AimsClient class object
+            :param rest_object(object): RestApiCall class object
+            :param page_number(int): Offset to fetch devices
+            :param page_size(int): Maximum devices to be fetched in single api call
+            :returns device details dictionary
+        '''
+        success = False
+        devices_list = []
+        devices_info = {}
+        facility_maps = get_mappings(client, rest_object, AIMS_QUERY_FACILITY)
+        vendor_maps = get_mappings(client, rest_object, AIMS_QUERY_VENDOR)
+        sorted_facilities_list = sorted(list(facility_maps.keys()))
+        sorted_vendors_list = sorted(list(vendor_maps.keys()))
+        cmd = {
+            "opType": AIMS_QUERY_DEVICE,
+            "provider": AIMS_PROVIDER,
+            "paging": True,
+            "host": client.url_path,
+            "auth_token": client.auth_token,
+            "start_facility": sorted_facilities_list[0],
+            "end_facility": sorted_facilities_list[-1],
+            "start_manufacturer": sorted_vendors_list[0],
+            "end_manufacturer": sorted_vendors_list[-1],
+            "page_num": page_number,
+            "recs_per_page": page_size
+        }
+        success, response = client.isequipment_query_devices(cmd)
+        error = response.get('Errors', '')
+        demisto.debug("AIMS ISEquipment/Query API response - %s" % response)
+        if 'Invalid resource or action.' in error:
+            demisto.info('ISEquipment/Query does not exist in this version so we are falling back to older version')
+            devices_list = get_device_details(client, rest_object, page_number, page_size)
+            return devices_list
+        devices_list = response.get('Data', [])
+        devices_info["Total"] = len(devices_list)
+        if devices_list and success:
+            devices_list = map_device_list(client, devices_list)
+            if devices_list:
+                devices_info["Devices"] = devices_list
+        elif not success:
+            raise Exception('Error while getting devices from AIMS ISEquipment Endpoint. Error Response: {}'.format(response))
+        return devices_info
+
+
+    def get_filtered_device_details(client: AimsClient, rest_object: RestApiCall, page_number: int, page_size: int, vendor_list: list, facility_list: list) -> dict:
+        '''
+            Get device details filtered by vendor and facility list from AIMS
+            :param client(object): AimsClient class object
+            :param rest_object(object): RestApiCall class object
+            :param page_number(int): Offset to fetch devices
+            :param page_size(int): Maximum devices to be fetched in single api call
+            :param vendor_list(list): List of vendors
+            :param facility_list(list): List of facility
+            :returns device details dictionary
+        '''
+        success = False
+        cmd = {
+            "opType": AIMS_QUERY_DEVICE,
+            "provider": AIMS_PROVIDER,
+            "paging": True,
+            "host": client.url_path,
+            "auth_token": client.auth_token,
+            "start_facility": facility_list[0],
+            "end_facility": facility_list[-1],
+            "start_manufacturer": vendor_list[0],
+            "end_manufacturer": vendor_list[-1],
+            "page_num": page_number,
+            "recs_per_page": page_size
+        }
+
+        success, response = client.query_devices(cmd)
+        devices_list = response.get('Data')
+        resp = {'success': success, 'response': response}
+        if success:
+            return devices_list
+        else:
+            raise Exception('Error while getting devices from AIMS.\nAPI Response: {}'.format(resp))
+
+
+    def aims_create_work_order(client: AimsClient, rest_object: RestApiCall, args) -> dict:
+        '''
+            Create work order in AIMS
+            :param client(object): AimsClient class object
+            :param rest_object(object): RestApiCall class object
+            :param args(object): Arguments from the incident
+            :returns data dictionary
+        '''
+        success = False
+        # Priority is an integer, so it can not be a mandatory field in XSOAR
+        # Hence a default value has to be defined here
+        priority = 0
+        if args.get('Priority'):
+            priority = args.get('Priority')
+        problem = args.get('Problem')
+        notes = args.get('Notes')
+        # Condition to truncate some data due to api limitations
+        if len(problem) > 500:
+            problem = problem[:497] + '...'
+        if len(notes) > 500:
+            notes = notes[:497] + '...'
+        cmd = {
+            "opType": AIMS_CREATE_WORK_ORDER,
+            "provider": AIMS_PROVIDER,
+            "host": client.url_path,
+            "auth_token": client.auth_token,
+            "facility": args.get('Facility'),
+            "tag": args.get('Tag'),
+            "problem": problem,
+            "notes": notes,
+            "priority": priority,
+            "requester": args.get('Requester'),
+            "contact": args.get('Contact'),
+            "assignedTo": args.get('AssignedTo')
+        }
+        success, response = client.create_work_order(cmd)
+        if response and success:
+            work_order_number = response.get('Data').get('Number', 'N/A')
+            data = {
+                "WorkOrderResponse": {
+                    "reason": args.get('Reason'),
+                    "zb_ticketid": args.get("ZbTicketId"),
+                    "user_email": args.get("UserEmail"),
+                    "work_order_number": str(work_order_number)
+                }
+            }
+            return data
+        else:
+            raise Exception('Error while creating work order in AIMS.\nAPI Response: {}'.format(response))
+
+
+    ''' MAIN FUNCTION '''
+
+
+    def main() -> None:
+        '''
+            main function, parses params and runs command functions
+        '''
+
+        # get the saved configuration
+        op_data = dict()
+        command = demisto.command()
+        args = demisto.args()
+        params = demisto.params()
+        host_name = params.get('host_name')
+        auth_token = params.get('auth_token')
+        base_url = 'https://{}'.format(host_name)
+        verify_certificate = not params.get('insecure', False)
+
+        try:
+            # AimsClient object formation
+            rest_object = RestApiCall(verify=verify_certificate, timeout=50)
+            client = AimsClient(base_url=base_url, auth_token=auth_token, rest_object=rest_object)
+
+            # The command holds the command sent from the user.
+            demisto.debug(f'Command being called is {command}')
+            if command == 'test-module':
+                # This is the call made when pressing the integration Test button.
+                result = test_module(client, rest_object)
+                return_results(result)
+            elif command == 'aims-get-facility-maps':
+                query = AIMS_QUERY_FACILITY
+                facility_maps = get_mappings(client, rest_object, query)
+                op_data['Total facilities fetched'] = len(facility_maps)
+                results = CommandResults(
+                    readable_output=tableToMarkdown("Facility Maps Summary:", op_data, removeNull=True),
+                    outputs_prefix='CommandOutput.FacilityMaps',
+                    outputs=facility_maps
+                )
+                return_results(results)
+            elif command == 'aims-get-vendor-maps':
+                query = AIMS_QUERY_VENDOR
+                vendor_maps = get_mappings(client, rest_object, query)
+                op_data['Total vendors fetched'] = len(vendor_maps)
+                results = CommandResults(
+                    readable_output=tableToMarkdown("Vendor Maps Summary:", op_data, removeNull=True),
+                    outputs_prefix='CommandOutput.VendorMaps',
+                    outputs=vendor_maps
+                )
+                return_results(results)
+            elif command == 'aims-get-device-details':
+                device_data = {}
+                page_number = int(args.get('page_number'))
+                page_size = int(args.get('page_size'))
+                device_details = get_device_details_from_isequipment_query(client, rest_object, page_number, page_size)
+                if device_details:
+                    device_data['Total Devices'] = device_details.get("Total", 0)
+                    device_data['Total Devices With MAC'] = len(device_details.get("Devices", []))
+                    device_data['Device Data'] = device_details.get("Devices", [])
+                return_results(device_data)
+            elif command == 'aims-get-device-details-isequipment':
+                device_data = {}
+                page_number = int(args.get('page_number'))
+                page_size = int(args.get('page_size'))
+                device_details = get_device_details_from_isequipment_query(client, rest_object, page_number, page_size)
+                if device_details:
+                    device_data['Total Devices'] = device_details.get("Total", 0)
+                    device_data['Total Devices With MAC'] = len(device_details.get("Devices", []))
+                    device_data['Device Data'] = device_details.get("Devices", [])
+                return_results(device_data)
+            elif command == 'aims-get-filtered-device-data':
+                page_number = int(args.get('page_number'))
+                page_size = int(args.get('page_size'))
+                vendor_list = args.get('vendor_list')
+                facility_list = args.get('facility_list')
+                device_details = get_filtered_device_details(client, rest_object, page_number, page_size, vendor_list, facility_list)
+                op_data['Total devices fetched'] = len(device_details)
+                results = CommandResults(
+                    readable_output=tableToMarkdown("Devices Summary:", op_data, removeNull=True),
+                    outputs_prefix='CommandOutput.DeviceDetails',
+                    outputs=device_details
+                )
+                return_results(results)
+            elif command == 'aims-get-equipment-type-maps':
+                query = AIMS_QUERY_EQUIPMENT_TYPE
+                equipment_type_maps = get_mappings(client, rest_object, query)
+                op_data['Total equipments fetched'] = len(equipment_type_maps)
+                results = CommandResults(
+                    readable_output=tableToMarkdown("Equipment Type Maps Summary:", op_data, removeNull=True),
+                    outputs_prefix='CommandOutput.EquipmentTypeMaps',
+                    outputs=equipment_type_maps
+                )
+                return_results(results)
+            elif command == 'aims-get-cost-center-maps':
+                query = AIMS_QUERY_COST_CENTER
+                cost_center_maps = get_mappings(client, rest_object, query)
+                op_data['Total cost centers fetched'] = len(cost_center_maps)
+                results = CommandResults(
+                    readable_output=tableToMarkdown("Cost Center Maps Summary:", op_data, removeNull=True),
+                    outputs_prefix='CommandOutput.CostCenterMaps',
+                    outputs=cost_center_maps
+                )
+                return_results(results)
+            elif command == 'aims-get-employee-list':
+                query = AIMS_QUERY_EMPLOYEE
+                employee_list = get_mappings(client, rest_object, query)
+                op_data['Total employees fetched'] = len(employee_list)
+                results = CommandResults(
+                    readable_output=tableToMarkdown("Employees Summary:", op_data, removeNull=True),
+                    outputs_prefix='CommandOutput.EmployeeList',
+                    outputs=employee_list
+                )
+                return_results(results)
+            elif command == 'aims-get-work-order-priority-list':
+                query = AIMS_QUERY_PRIORITY
+                work_order_priority_list = get_mappings(client, rest_object, query)
+                op_data['Total work order priorities fetched'] = len(work_order_priority_list)
+                results = CommandResults(
+                    readable_output=tableToMarkdown("Work Order Priorities Summary:", op_data, removeNull=True),
+                    outputs_prefix='CommandOutput.WorkOrderPriorityList',
+                    outputs=work_order_priority_list
+                )
+                return_results(results)
+            elif command == 'aims-create-work-order':
+                query = AIMS_CREATE_WORK_ORDER
+                work_order_response = aims_create_work_order(client, rest_object, args)
+                results = CommandResults(
+                    readable_output='Created work order in AIMS successfully',
+                    outputs_prefix='CommandOutput.WorkOrderResponse',
+                    outputs=work_order_response
+                )
+                return_results(results)
+        # Log exceptions and return errors
+        except Exception as e:
+            demisto.error(traceback.format_exc()) # print the traceback
+            return_error(f'Failed to execute {command} command.\nError: {str(e)}')
+
+
+    ''' ENTRY POINT '''
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+
+    register_module_line('PANW IoT 3rd Party Integration - AIMS', 'end', __line__())
+  subtype: python3
+  type: python
