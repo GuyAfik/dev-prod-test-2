@@ -1,0 +1,288 @@
+args:
+- description: Panorama Instance
+  name: panorama_instance
+commonfields:
+  id: SavePanoramaDeviceGroups
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SavePanoramaDeviceGroups
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SavePanoramaDeviceGroups', 'start', __line__())
+
+
+  from typing import Dict, Any
+  import traceback
+  import json
+
+  USING_PANORAMA_INSTANCE = demisto.args().get('panorama_instance')
+  PANAROMA_DEVICE_GROUPS_LIST_NAME = 'DeviceGroups_'+USING_PANORAMA_INSTANCE
+  PANAROMA_ADDRESS_GROUPS_LIST_NAME = 'AddressGroups_'+USING_PANORAMA_INSTANCE
+  PANAROMA_ADDRESSES_LIST_NAME = 'Addresses_'+USING_PANORAMA_INSTANCE
+
+  def get_api_type():
+      try:
+          res = demisto.executeCommand("panw-panorama-api-type",{'using':USING_PANORAMA_INSTANCE})
+          if (
+                  not isinstance(res, list)
+                  or 'Contents' not in res[0]
+                  or not isinstance(res[0]['Contents'], str)
+                  or res[0]['Contents'] == 'Item not found (8)'
+              ):
+                  return 'No Panorama api type found'
+          return res[0]['Contents']
+      except Exception as e:
+          raise Exception('error while retrieving the panorama api type :'+str(e))
+
+  ''' COMMAND FUNCTION '''
+  def process_device_groups(args):
+      panorama_api_type = get_api_type()
+      res = demisto.executeCommand("panw-panorama-get-device-groups",{'using':USING_PANORAMA_INSTANCE})
+      device_groups=[]
+      if ('Contents' not in res[0] or res[0]['Contents'] == 'Item not found (8)'):
+          return 'No device groups found'
+      devices_group_res = res[0]['Contents']
+      device_groups.append('Shared')
+      for each_device_group in devices_group_res:
+          device_groups.append(each_device_group['@name'])
+
+      res = demisto.executeCommand('createList', {'listName': PANAROMA_DEVICE_GROUPS_LIST_NAME, 'listData': json.dumps(device_groups)})
+      return device_groups
+
+
+  def get_panorama_object_address_groups(device_group):
+      res = demisto.executeCommand("panw-panorama-object-address-groups",{'device_group':device_group,'using':USING_PANORAMA_INSTANCE})
+
+      if res[0]['Contents'] == None:
+          return None
+      if (
+          not isinstance(res, list)
+          or 'Contents' not in res[0]
+          or 'Request Failed.' in res[0]['Contents']
+      ):
+          demisto.info('No panorama object address groups found for device_group:' + str(device_group))
+          return None
+      return res[0]['Contents']
+
+
+  def get_panorama_object_address(device_group):
+      res = demisto.executeCommand("panw-panorama-object-addresses",{'device_group':device_group,'using':USING_PANORAMA_INSTANCE})
+      if res[0]['Contents'] == None:
+          return None
+      if (
+          not isinstance(res, list)
+          or 'Contents' not in res[0]
+          or 'Request Failed.' in res[0]['Contents']
+          or res[0]['Contents'] == None
+      ):
+          demisto.info('No panorama object addresses found for device_group:' + str(device_group))
+          return None
+
+      return res[0]['Contents']
+
+  def get_ip_netmask_or_range(entry):
+      if 'ip-netmask' in entry:
+          ip_netmask = entry['ip-netmask']
+          if isinstance(ip_netmask, dict):
+              return ip_netmask['#text']
+          return ip_netmask
+      elif 'ip-range' in entry:
+          ip_range = entry['ip-range']
+          if isinstance(ip_range, dict):
+              return ip_range['#text']
+          return ip_range
+      demisto.info(f'No ip netmask or ip range exists in this entry: {entry} ')
+      return None
+
+  def get_xml_address_name_vs_ip_netmask_range(obj_addresses):
+      address_name_vs_ip_netmask_range_list = []
+      if 'entry' in  obj_addresses:
+          entry = obj_addresses['entry']
+      else:
+          entry = obj_addresses
+      if isinstance(entry, list):
+          for each_obj_addresses in entry:
+              name = each_obj_addresses['@name']
+              ip_netmask_or_range = get_ip_netmask_or_range(each_obj_addresses)
+              address_name_vs_ip_netmask_range = {}
+              address_name_vs_ip_netmask_range['name'] = name
+              address_name_vs_ip_netmask_range['ip_netmask_range'] = ip_netmask_or_range
+              address_name_vs_ip_netmask_range_list.append(address_name_vs_ip_netmask_range)
+      else:
+          address_name_vs_ip_netmask_range = {}
+          name = entry['@name']
+          ip_netmask_or_range = get_ip_netmask_or_range(entry)
+          address_name_vs_ip_netmask_range['name'] = name
+          address_name_vs_ip_netmask_range['ip_netmask_range'] = ip_netmask_or_range
+          address_name_vs_ip_netmask_range_list.append(address_name_vs_ip_netmask_range)
+      return address_name_vs_ip_netmask_range_list
+
+  def get_rest_address_name_vs_ip_netmask_range(obj_addresses):
+      address_name_vs_ip_netmask_range_list=[]
+      if obj_addresses:
+          for each_obj_addresses in obj_addresses:
+              name = each_obj_addresses['@name']
+              ip_netmask_range = None
+              if 'ip-netmask' in each_obj_addresses:
+                  ip_netmask_or_range = each_obj_addresses['ip-netmask']
+                  address_name_vs_ip_netmask_range = {}
+                  address_name_vs_ip_netmask_range['name'] = name
+                  address_name_vs_ip_netmask_range['ip_netmask_range'] = ip_netmask_or_range
+                  address_name_vs_ip_netmask_range_list.append(address_name_vs_ip_netmask_range)
+              elif 'ip-range' in each_obj_addresses:
+                  ip_netmask_or_range = each_obj_addresses['ip-range']
+                  address_name_vs_ip_netmask_range = {}
+                  address_name_vs_ip_netmask_range['name'] = name
+                  address_name_vs_ip_netmask_range['ip_netmask_range'] = ip_netmask_or_range
+                  address_name_vs_ip_netmask_range_list.append(address_name_vs_ip_netmask_range)
+      return address_name_vs_ip_netmask_range_list
+
+  def process_object_address(device_group):
+      panorama_api_type = get_api_type()
+      obj_addresses = get_panorama_object_address(device_group)
+      if panorama_api_type == 'XML_API':
+          if obj_addresses:
+              address_name_vs_ip_netmask_range = get_xml_address_name_vs_ip_netmask_range(obj_addresses)
+              return address_name_vs_ip_netmask_range
+      elif panorama_api_type == 'REST_API':
+          if obj_addresses:
+              address_name_vs_ip_netmask_range = get_rest_address_name_vs_ip_netmask_range(obj_addresses)
+              return address_name_vs_ip_netmask_range
+      return None
+
+  def get_xml_address_group_name_vs_members(obj_addresses_groups):
+      address_group_name_vs_members_list = []
+      if 'entry' in  obj_addresses_groups:
+          entry = obj_addresses_groups['entry']
+      else:
+          entry = obj_addresses_groups
+      if isinstance(entry, list):
+          for each_obj_addresses in entry:
+              name = each_obj_addresses['@name']
+              if 'static' in each_obj_addresses and 'member' in each_obj_addresses['static']:
+                  members = each_obj_addresses['static']['member']
+                  if isinstance(members,str):
+                      members_list=[]
+                      members_list.append(members)
+                      address_group_name_vs_members = {}
+                      address_group_name_vs_members['name'] = name
+                      address_group_name_vs_members['members'] = members_list
+                      address_group_name_vs_members_list.append(address_group_name_vs_members)
+                  elif isinstance(members,list):
+                      address_group_name_vs_members = {}
+                      address_group_name_vs_members['name'] = name
+                      address_group_name_vs_members['members'] = members
+                      address_group_name_vs_members_list.append(address_group_name_vs_members)
+
+      else:
+          name = entry['@name']
+          if 'static' in entry and 'member' in entry['static']:
+              members = entry['static']['member']
+              if isinstance(members,str):
+                  members_list=[]
+                  members_list.append(members)
+                  address_group_name_vs_members = {}
+                  address_group_name_vs_members['name'] = name
+                  address_group_name_vs_members['members'] = members_list
+                  address_group_name_vs_members_list.append(address_group_name_vs_members)
+              elif isinstance(members,list):
+                  address_group_name_vs_members = {}
+                  address_group_name_vs_members['name'] = name
+                  address_group_name_vs_members['members'] = members
+                  address_group_name_vs_members_list.append(address_group_name_vs_members)
+      return address_group_name_vs_members_list
+
+  def get_rest_address_group_name_vs_members(obj_addresses_groups):
+      address_group_name_vs_members_list=[]
+      if obj_addresses_groups:
+          for each_obj_addresses in obj_addresses_groups:
+              name = each_obj_addresses['@name']
+              ip_netmask_range = None
+              if 'static' in each_obj_addresses:
+                  member = each_obj_addresses['static']['member']
+                  address_group_name_vs_members = {}
+                  address_group_name_vs_members['name'] = name
+                  address_group_name_vs_members['members'] = member
+                  address_group_name_vs_members_list.append(address_group_name_vs_members)
+      return address_group_name_vs_members_list
+
+  def process_object_address_groups(device_group):
+      panorama_api_type = get_api_type()
+      obj_addresses_groups = get_panorama_object_address_groups(device_group)
+      if obj_addresses_groups:
+          if panorama_api_type == 'XML_API':
+              return get_xml_address_group_name_vs_members(obj_addresses_groups)
+          elif panorama_api_type == 'REST_API':
+              return get_rest_address_group_name_vs_members(obj_addresses_groups)
+      return None
+
+  def process_addresses_and_its_group(device_groups):
+      try:
+          addresses_list=[]
+          address_group_list=[]
+          for device_group in device_groups:
+              if device_group=='Shared':
+                  device_group=device_group.lower()
+              addresses = process_object_address(device_group)
+              demisto.info(f'device_group : {device_group} - addresses: {addresses}')
+              if addresses and len(addresses)>0:
+                  addresses_list.extend(addresses)
+              address_groups = process_object_address_groups(device_group)
+              # return_outputs(f'device_group : {device_group} - address_groups: {address_groups}')
+              if address_groups and len(address_groups)>0:
+                  address_group_list.extend(address_groups)
+          if addresses_list:
+              demisto.executeCommand('createList', {'listName': PANAROMA_ADDRESSES_LIST_NAME, 'listData': json.dumps(addresses_list)})
+          if address_group_list:
+              demisto.executeCommand('createList', {'listName': PANAROMA_ADDRESS_GROUPS_LIST_NAME, 'listData': json.dumps(address_group_list)})
+      except Exception as ex:
+          raise Exception('Exception while process device addresses and its group', ex)
+
+
+  ''' MAIN FUNCTION '''
+  def main():
+      try:
+          device_groups = process_device_groups(demisto.args())
+          process_addresses_and_its_group(device_groups)
+          report_summary = {}
+          CommandResults()
+          report_summary.update({f'DeviceGroups': device_groups})
+          summary = {
+              "Device Groups" : str(device_groups)
+          }
+          return_results(CommandResults(readable_output=tableToMarkdown("Device Group summary:", summary, removeNull=True)))
+          # return_results(CommandResults(readable_output=device_groups, ignore_auto_extract=True))
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute SavePanoramaDeviceGroups. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('SavePanoramaDeviceGroups', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
