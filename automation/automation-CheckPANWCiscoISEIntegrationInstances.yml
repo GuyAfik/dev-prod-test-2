@@ -1,0 +1,175 @@
+args:
+- name: primary_instances
+- name: secondary_instances
+- name: single_instance
+commonfields:
+  id: e6c4b775-d4eb-443e-876e-4526ff22aa95
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: CheckPANWCiscoISEIntegrationInstances
+outputs:
+- contextPath: "yes"
+  description: If integration is available and at least one of the input instances
+    is active
+- contextPath: "no"
+  description: If the integration is unavailable or none of the input instances are
+    active
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('CheckPANWCiscoISEIntegrationInstances', 'start', __line__())
+
+
+
+
+  ''' MAIN FUNCTION '''
+
+  def check_instance_states():
+      active_instances = []
+      disabled_instances = []
+      primary_instances = []
+      secondary_instances = []
+      brand_name = "PANW IoT 3rd Party Integration - Cisco ISE"
+      if demisto.get(demisto.args(), 'primary_instances') is not None and demisto.get(demisto.args(), 'primary_instances') != "":
+          primary_instances = demisto.get(demisto.args(), 'primary_instances').split(",")
+      if demisto.get(demisto.args(), 'secondary_instances') is not None and demisto.get(demisto.args(), 'secondary_instances') != "":
+          secondary_instances = demisto.get(demisto.args(), 'secondary_instances').split(",")
+
+      single_instance = demisto.args().get('single_instance')
+      dummy_active_instance = "PANW IoT 3rd Party ISE Integration Active Instance"
+      dummy_standby_instance = "PANW IoT 3rd Party ISE Integration Standby Instance"
+
+      integration_instances = []
+      for instance in primary_instances:
+          if instance is not None and instance != "":
+              integration_instances.append(instance.strip())
+
+      for instance in secondary_instances:
+          if instance is not None and instance != "":
+              integration_instances.append(instance.strip())
+
+      if single_instance is not None and single_instance != "":
+          integration_instances.append(single_instance.strip())
+
+      integration_instances.append(dummy_active_instance)
+      integration_instances.append(dummy_standby_instance)
+
+
+      all_instances = demisto.getModules()
+
+      for instance in all_instances:
+          if instance in integration_instances and all_instances[instance]['brand'] == brand_name:
+              if all_instances[instance]['state'] == 'active':
+                  active_instances.append(instance)
+              elif all_instances[instance]['state'] == 'disabled':
+                  disabled_instances.append(instance)
+
+
+      return active_instances, disabled_instances
+
+
+  def handle_multi_ise_instances():
+      primary_instances = demisto.get(demisto.args(), 'primary_instances')
+      secondary_instances = demisto.get(demisto.args(), 'secondary_instances')
+      single_instance = demisto.args().get('single_instance')
+
+      """
+      Backwards compatibility with older dummy active/standby instances.
+      If Job/playbook does not have any of the new custom fields populated then check if single instance is configured.
+      If nothing found then use older dummy instances.
+      """
+      if (primary_instances == None or primary_instances == "") and \
+          (secondary_instances == None or secondary_instances == ""):
+              if (single_instance == None or single_instance == ""):
+                  demisto.executeCommand("setIncident",
+                      {"primaryactiveinstancename": "PANW IoT 3rd Party ISE Integration Active Instance"})
+                  demisto.executeCommand("setIncident",
+                      {"primarystandbyinstancename": "PANW IoT 3rd Party ISE Integration Standby Instance"})
+              else:
+                  demisto.executeCommand("setIncident",
+                      {"primaryactiveinstancename": single_instance})
+
+      if demisto.get(demisto.args(), 'primary_instances') is not None and demisto.get(demisto.args(), 'primary_instances') != "":
+          primary_instances = demisto.get(demisto.args(), 'primary_instances').split(",")
+          if len(primary_instances) == 1:
+              demisto.executeCommand("setIncident",
+                      {"primaryactiveinstancename": primary_instances[0].strip()})
+          if len(primary_instances) > 1:
+              demisto.executeCommand("setIncident",
+                      {"primaryactiveinstancename": primary_instances[0].strip()})
+              demisto.executeCommand("setIncident",
+                      {"primarystandbyinstancename": primary_instances[1].strip()})
+
+      if demisto.get(demisto.args(), 'secondary_instances') is not None and demisto.get(demisto.args(), 'secondary_instances') != "":
+          secondary_instances = demisto.get(demisto.args(), 'secondary_instances').split(",")
+          if len(secondary_instances) == 1:
+              demisto.executeCommand("setIncident",
+                      {"secondaryactiveinstancename": secondary_instances[0].strip()})
+          if len(secondary_instances) > 1:
+              demisto.executeCommand("setIncident",
+                      {"secondaryactiveinstancename": secondary_instances[0].strip()})
+              demisto.executeCommand("setIncident",
+                      {"secondarystandbyinstancename": secondary_instances[1].strip()})
+
+  def send_panw_iot_disabled_status(instances):
+      for instance in instances:
+          if instance != None and instance != "":
+              response = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+                  "status":"disabled",
+                  "message":"Cisco ISE instance %s is disabled" % instance,
+                  "integration_name":"ise",
+                  "playbook_name":"Incremental Export to Cisco ISE - PANW IoT 3rd Party Integration",
+                  "custom_integration_name": instance,
+                  "asset_type":"device"
+              })
+              if isError(response[0]):
+                  continue
+
+  def main():
+      try:
+          handle_multi_ise_instances()
+          active_instances, disabled_instances = check_instance_states()
+          if disabled_instances:
+              send_panw_iot_disabled_status(disabled_instances)
+
+          if active_instances:
+              demisto.results("Enabled instances : %s" % active_instances)
+              demisto.results('yes')
+          else:
+              demisto.results("No Cisco ISE instance found in enabled state. Make sure job fields are populated")
+              if disabled_instances:
+                  demisto.results("Disabled instances = %s" % disabled_instances)
+              demisto.results('no')
+
+      except Exception as ex:
+          return_error(f'Failed to execute BaseScript. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('CheckPANWCiscoISEIntegrationInstances', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- Condition
+type: python
