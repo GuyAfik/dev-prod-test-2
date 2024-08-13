@@ -1,0 +1,78 @@
+args:
+- name: job_data
+  required: true
+- isArray: true
+  name: file_data
+  required: true
+commonfields:
+  id: UploadFinishedQualysScanReportstoPANWIoTCloudV2
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: UploadFinishedQualysScanReportstoPANWIoTCloudV2
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: "register_module_line('UploadFinishedQualysScanReportstoPANWIoTCloudV2', 'start',
+  __line__())\n\n\n\n\n\n\n\nfrom typing import Dict, Any\nimport traceback\nimport
+  ipaddress\n\n\ndef validate_ip_address(address):\n    try:\n        ip = ipaddress.ip_address(address)\n
+  \       return True\n    except ValueError:\n        return False\n\ndef upload_files_to_panw_iot_cloud(report_job_map,
+  file_data):\n    op_list = []\n    err_list=[]\n    if report_job_map == None or
+  file_data == None:\n        raise Exception(\"Invalid job data or file data\")\n
+  \   args_list = []\n    count = 0\n    for scan_id in report_job_map:\n        count
+  += 1\n        job_data = report_job_map.get(scan_id)\n        first_id, second_id
+  = 0, 0\n        pdf_file = None\n        xml_file = None\n        xml_id = None\n
+  \       pdf_id = None\n        ip = job_data[0]['ip']\n        for data in job_data:\n
+  \           if data['output_format'] == \"XML\":\n                first_id = data['id']\n
+  \           if data['output_format'] == \"PDF\":\n                second_id = data['id']\n
+  \           if first_id and second_id:\n                break\n        if first_id
+  == 0 and second_id == 0:\n            break\n        for file in file_data:\n            if
+  'Name' in file and 'Info':\n                name = file['Name']\n                info
+  = file['Info']\n                extracted_format = info.split('/')[1]\n                extracted_id
+  = name.split('_')[1].split(\".\")[0]\n                if extracted_id == first_id
+  or extracted_id == second_id:\n                    if \"xml\" in extracted_format:\n
+  \                       xml_file = file['EntryID']\n                        xml_id
+  = extracted_id\n                    elif 'pdf' in extracted_format:\n                        pdf_file
+  = file['EntryID']\n                        pdf_id = extracted_id\n\n        args_list.append({'xml_file'
+  : xml_file, 'pdf_file': pdf_file, 'pdf_id': pdf_id, 'ip': ip, 'scan_id':scan_id})\n
+  \   results = {}\n    # return_outputs(str(args_list))\n    for args in args_list:\n
+  \       ip = args['ip']\n        xml_file = args['xml_file']\n        pdf_file =
+  args['pdf_file']\n        pdf_id=args['pdf_id']\n        res = []\n        if ip
+  == 'multiIP':\n            res = demisto.executeCommand(\"panw-iot-3rd-party-upload-vulnerability-scan-report\",
+  {\n                'xml_upload': xml_file,\n                'pdf_upload': pdf_file,\n
+  \               'scan_type': 'qualys',\n                'report_id': pdf_id,\n                'status':
+  'success',\n                'message': 'Uploading reports for scan:%s' % args['scan_id']\n
+  \           })\n        else:\n            res = demisto.executeCommand(\"panw-iot-3rd-party-upload-vulnerability-scan-report\",
+  {\n                'xml_upload': xml_file,\n                'pdf_upload': pdf_file,\n
+  \               'scan_type': 'qualys',\n                'report_id': pdf_id,\n                'status':
+  'success',\n                'message': 'Uploading reports for scan:%s' % args['scan_id'],\n
+  \               'ip': ip\n            })\n            \n        if res:\n            if
+  isError(res[0]):\n                op_list.append(res[0]['Contents'])\n                time.sleep(5)\n
+  \               continue\n            res_str = json.dumps(res[0]['Contents'])\n
+  \           op_list.append(res[0])\n        time.sleep(5)\n\n    return op_list\n\n\ndef
+  main():\n    job_data = demisto.args().get('job_data')\n    file_data = demisto.args().get('file_data')\n
+  \   try:\n        return_results(upload_files_to_panw_iot_cloud(job_data, file_data))\n
+  \   except Exception as ex:\n        demisto.error(traceback.format_exc())  # print
+  the traceback\n        return_error(f'Failed to execute upload_files_to_panw_iot_cloud.
+  Error: {str(ex)}')\n\n''' ENTRY POINT '''\nif __name__ in ('__main__', '__builtin__',
+  'builtins'):\n    main()\n\n\n\nregister_module_line('UploadFinishedQualysScanReportstoPANWIoTCloudV2',
+  'end', __line__())\n"
+scripttarget: 0
+subtype: python3
+tags:
+- Qualys
+timeout: 100800h0m0s
+type: python
