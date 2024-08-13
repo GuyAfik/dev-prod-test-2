@@ -1,0 +1,172 @@
+args:
+- description: Active Tenable Instance
+  name: tenable_instance_name
+- name: scanner_sync
+comment: |
+  Get list of Tenable Scanners and Profiles and Send to IoT
+commonfields:
+  id: GetTenableScannersAndProfiles
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GetTenableScannersAndProfiles
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('GetTenableScannersAndProfiles', 'start', __line__())
+
+
+
+
+
+
+  from typing import Dict, Any
+  import traceback
+
+
+
+  SCANNER_SYNC = demisto.args().get("scanner_sync")
+  if SCANNER_SYNC == "Sync" or SCANNER_SYNC == None or SCANNER_SYNC == "":
+      SCANNER_SYNC = True
+  else:
+      SCANNER_SYNC = False
+
+  USING_TENABLE = demisto.args().get("tenable_instance_name")
+
+
+  def is_valid_ipv4_address(address):
+      try:
+          socket.inet_pton(socket.AF_INET, address)
+      except AttributeError:  # no inet_pton here, sorry
+          try:
+              socket.inet_aton(address)
+          except socket.error:
+              return False
+          return address.count('.') == 3
+      except socket.error:  # not a valid address
+          return False
+
+      return True
+
+  def build_engine_obj(engine):
+
+      engine_obj = {}
+
+      if "scannerAddress" in engine:
+          ip_addresses = engine["scannerAddress"]
+          if ip_addresses:
+              if isinstance(ip_addresses, list) == False:
+                  ip_addresses = [ip_addresses]
+
+              for ip_address in ip_addresses:
+                  if is_valid_ipv4_address(ip_address) and ip_address != "127.0.0.1":
+                      engine_obj["ip_address"] = ip_address
+                      break
+      else:
+          return None
+
+      if "scannerName" in engine:
+          engine_obj["scannerName"] = engine["scannerName"]
+          engine_obj["scanner_name"] = engine["scannerName"]
+      #hard code mac address to null for now
+
+      if "scannerId" in engine:
+          engine_obj["scannerId"] = engine["scannerId"]
+      return engine_obj
+
+  def get_tenable_profiles_and_scanners():
+      op_data = {}
+      profile_list = []
+      scanner_list = []
+
+      res = demisto.executeCommand("tenable-io-fetch-scanners-details", {'using':USING_TENABLE})
+
+      if isError(res[0]):
+          raise Exception(f"Failed to get Tenable scanners:- {res[0]}")
+      try:
+          scanners = res[0]['Contents']
+
+          #scanners = SCANNER_INPUT_DATA['APPLIANCE']
+          if isinstance(scanners, list) == False:
+              scanners = [scanners]
+
+          for scanner in scanners:
+              if scanner['scannerAddress'] == None:
+                  continue
+              scanner_list.append(build_engine_obj(scanner))
+          if not scanner_list:
+              return "No scanners available on Tenable"
+      except Exception as e:
+          # hack, API didnt fail, we got a unexpected format, seen when the list is empty
+          return "No scanners available on Tenable"
+
+      res = demisto.executeCommand("tenable-io-fetch-profiles", {'using':USING_TENABLE})
+      if isError(res[0]):
+          raise Exception(f"Failed to get Tenable profiles:- {res[0]}")
+      try:
+          profiles = res[0]['Contents']
+          if isinstance(profiles, list) == False:
+              profiles = [profiles]
+          for profile in profiles:
+              profile_list.append(profile)
+          if not profile_list:
+              return "No profiles available on Tenable"
+          #print(profile_list)
+      except Exception:
+          # hack
+          return "No profiles available on Tenable"
+
+
+      res = demisto.executeCommand("panw-iot-3rd-party-report-vulnerability-scan-option", {
+          "scan_type":"tenable",
+          "scanner_list":scanner_list,
+          "profile_list":profile_list,
+          "integration_instance": USING_TENABLE,
+          "scanner_sync": SCANNER_SYNC
+      })
+
+      if isError(res[0]):
+          raise Exception("Failed to send Scanner data to IoT. %s" % res[0]['Contents'])
+
+      op_data['Scanner Appliances'] = scanner_list
+      op_data['Scan Profiles'] = profile_list
+
+      return CommandResults(
+          readable_output=tableToMarkdown("Summary:", op_data, removeNull=True)
+      )
+
+  def main():
+      try:
+          return_results(get_tenable_profiles_and_scanners())
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute GetTenableScannersAndProfiles. Error: {str(ex)}')
+
+  ''' ENTRY POINT '''
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+
+
+
+  register_module_line('GetTenableScannersAndProfiles', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
