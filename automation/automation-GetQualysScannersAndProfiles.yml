@@ -1,0 +1,153 @@
+args:
+- description: Qualys Instance Name
+  name: qualys_instance_name
+  required: true
+- name: scanner_sync
+comment: |
+  Get list of Qualys Scanners and Profiles and write to context
+commonfields:
+  id: GetQualysScannersAndProfiles
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GetQualysScannersAndProfiles
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('GetQualysScannersAndProfiles', 'start', __line__())
+
+
+
+
+
+
+
+
+  from typing import Dict, Any
+  import traceback
+
+  SCANNER_SYNC = demisto.args().get("scanner_sync")
+  if SCANNER_SYNC == "Sync" or SCANNER_SYNC == None or SCANNER_SYNC == "":
+      SCANNER_SYNC = True
+  else:
+      SCANNER_SYNC = False
+
+  USING_QUALYS_INSTANCE = demisto.args().get('qualys_instance_name')
+
+  def is_valid_ipv4_address(address):
+      if address is None:
+          return False
+      try:
+          socket.inet_pton(socket.AF_INET, address)
+      except AttributeError:  # no inet_pton here, sorry
+          try:
+              socket.inet_aton(address)
+          except socket.error:
+              return False
+          return address.count('.') == 3
+      except socket.error:  # not a valid address
+          return False
+
+      return True
+
+  def build_engine_obj(engine):
+      engine_obj = {}
+
+      if "INTERFACE_SETTINGS" in engine:
+          interface_settings = engine["INTERFACE_SETTINGS"]
+          if isinstance(interface_settings, list) == False:
+              interface_settings = [interface_settings]
+
+          for interface in interface_settings:
+              if "IP_ADDRESS" in interface and is_valid_ipv4_address(interface["IP_ADDRESS"]) and interface["IP_ADDRESS"] != "127.0.0.1":
+                  engine_obj["ip_address"] = interface["IP_ADDRESS"]
+
+      if "NAME" in engine:
+          engine_obj["scanner_name"] = engine["NAME"]
+      #hard code mac address to null for now
+      #engine_obj["mac_address"] = None
+      return engine_obj
+
+  def get_qualys_profiles_and_scanners():
+      op_data = {}
+      profile_list = []
+      scanner_list = []
+
+      res = demisto.executeCommand("qualys-vm-fetch-scanners-details", {'using':USING_QUALYS_INSTANCE})
+      if isError(res[0]):
+          raise Exception("Failed to get Qualys scanners")
+      try:
+          scanners = res[0]['EntryContext']['Qualys.Appliances(val.QID && val.QID == obj.QID)']
+          if isinstance(scanners, list) == False:
+              scanners = [scanners]
+          for scanner in scanners:
+              scanner_list.append(build_engine_obj(scanner))
+      except Exception as e:
+          # hack, API didnt fail, we got a unexpected format, seen when the list is empty
+          return "No scanners available on Qualys"
+
+      res = demisto.executeCommand("qualys-vm-fetch-profiles", {'using':USING_QUALYS_INSTANCE})
+      if isError(res[0]):
+          raise Exception("Failed to get Qualys profiles")
+      try:
+          profiles = res[0]['EntryContext']['Qualys.Profiles(val.QID && val.QID == obj.QID)']
+          if isinstance(profiles, list) == False:
+              profiles = [profiles]
+          for profile in profiles:
+              profile_list.append(profile['BASIC_INFO']['GROUP_NAME'])
+      except Exception:
+          # hack
+          return "No profiles available on Qualys"
+
+      res = demisto.executeCommand("panw-iot-3rd-party-report-vulnerability-scan-option", {
+          "scan_type":"qualys",
+          "scanner_list":scanner_list,
+          "profile_list":profile_list,
+          #"integration_instance": USING_QUALYS,
+          "scanner_sync": SCANNER_SYNC
+      })
+
+      if isError(res[0]):
+          raise Exception("Failed to send Scanner data to IoT. %s" % res[0]['Contents'])
+
+      op_data['Scanner Appliances'] = scanner_list
+      op_data['Scan Profiles'] = profile_list
+
+      return CommandResults(
+          readable_output=tableToMarkdown("Summary:", op_data, removeNull=True)
+      )
+
+  def main():
+      try:
+          return_results(get_qualys_profiles_and_scanners())
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute GetQualysScannersAndProfiles. Error: {str(ex)}')
+
+  ''' ENTRY POINT '''
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+
+
+  register_module_line('GetQualysScannersAndProfiles', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
