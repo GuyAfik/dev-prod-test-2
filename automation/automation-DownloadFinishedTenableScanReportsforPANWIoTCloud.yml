@@ -1,0 +1,125 @@
+commonfields:
+  id: 3758775d-a78d-4899-8f31-cbb95354faa7
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: DownloadFinishedTenableScanReportsforPANWIoTCloud
+outputs:
+- contextPath: Tenable.finishedReports
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('DownloadFinishedTenableScanReportsforPANWIoTCloud', 'start', __line__())
+
+
+
+
+  from typing import Dict, Any
+  import traceback
+
+
+  def get_cache_report_list():
+      list_name = 'TenableLaunchedReports'
+      res = demisto.executeCommand('getList', {'listName': list_name})
+      if (
+          not isinstance(res, list)
+          or 'Contents' not in res[0]
+          or not isinstance(res[0]['Contents'], str)
+          or 'Item not found (8)' in res[0]['Contents']
+      ):
+          return 'No launched Reports - Report Cache TenableLaunchedReports is Empty'
+
+      report_ids = res[0]['Contents']
+      report_id_list = [line.split(',') for line in report_ids.split('\n')]
+      return check_for_finished_reports(report_id_list[0])
+
+
+  def check_for_finished_reports(launched_report_list):
+
+      if len(launched_report_list) == 0:
+          return 'No launched Reports - Report Cache TenableLaunchedReports is Empty'
+
+      report_job_map = {}
+      failed_download_job_ids = []
+      for entry in launched_report_list:
+          try:
+              if '_' in entry:
+                  report_id, report_uuid, report_ip, report_job, report_format = entry.split('_')
+                  resp = demisto.executeCommand("tenable-io-check-report-status",{"scan_uuid": report_uuid, "report_id": report_id})
+                  if isError(resp):
+                      raise Exception(resp[0]['Contents'])
+                  if resp[0]['Contents'] == "ready":
+                      if report_job in report_job_map:
+                          report_job_map[report_job].append({'ip': report_ip, 'report_id': report_id, 'uuid':report_uuid, 'format': report_format})
+                      else:
+                          report_job_map[report_job] = [{'ip': report_ip, 'report_id': report_id, 'uuid':report_uuid, 'format': report_format}]
+                      # report_map[report_id] = {'uuid':report_uuid, 'ip': report_ip, 'job': report_job}
+
+                      demisto.executeCommand("PANWIoTLaunchedVulnerabilityScanCacheOperationsForTenable",
+                                          {"name": "TenableLaunchedReports", "operation": "delete", "value": entry})
+          except Exception:
+              failed_download_job_ids.append(report_job)
+              raise Exception('Failed to get Tenable report data')
+
+      return download_finished_reports_to_context(report_job_map, failed_download_job_ids)
+
+
+  def download_finished_reports_to_context(report_job_map, failed_download_job_ids):
+      op_list = []
+      result = {}
+      for job, job_data in report_job_map.items():
+          for entry in job_data:
+              report_uuid = entry['uuid']
+              report_ip = entry['ip']
+              report_id = entry['report_id']
+              report_format = entry['format']
+
+              res = demisto.executeCommand("tenable-io-download-report",
+                                              {"scanUUID": report_uuid,
+                                              "reportID": report_id,
+                                              "format" : report_format
+                                              })
+
+              op_list.append(res[0])
+              if isError(res[0]):
+                  failed_download_job_ids.append(job)
+              local_report_name = res[0]['Contents']
+              time.sleep(15)
+
+      appendContext('Tenable.finishedReports', report_job_map)
+      demisto.setContext('failed_download_job_ids', failed_download_job_ids)
+      return op_list
+
+
+  def main():
+      try:
+          return_results(get_cache_report_list())
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute DownloadFinishedTenableScanReportsforPANWIoTCloud. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('DownloadFinishedTenableScanReportsforPANWIoTCloud', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
