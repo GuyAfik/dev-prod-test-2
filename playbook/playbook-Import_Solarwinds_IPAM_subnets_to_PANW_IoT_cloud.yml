@@ -10,7 +10,6 @@ contentitemexportablefields:
     - all
     toServerVersion: ""
 description: Fetch IPAM subnets from SolarWinds IPAM and send it to PANW IoT Platform
-dirtyInputs: true
 id: a2c426ee-a823-4828-83b1-8c53cb6bf017
 inputs: []
 name: Import Solarwinds IPAM subnets to PANW IoT cloud
@@ -33,11 +32,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 086ebefe-e5a6-42ed-8741-be49455537e4
+      id: c53d2ba8-2939-4326-84c1-2cdd8bb7e7b9
       iscommand: false
       name: ""
       version: -1
-    taskid: 086ebefe-e5a6-42ed-8741-be49455537e4
+    taskid: c53d2ba8-2939-4326-84c1-2cdd8bb7e7b9
     timertriggers: []
     type: start
     view: |-
@@ -76,13 +75,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: d24ab681-afed-46fd-8567-0c40b3f897df
+      id: ff71ad61-a277-4373-86ba-b9a74146478e
       iscommand: false
       name: Is SolarWinds Orion integration enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: d24ab681-afed-46fd-8567-0c40b3f897df
+    taskid: ff71ad61-a277-4373-86ba-b9a74146478e
     timertriggers: []
     type: condition
     view: |-
@@ -120,13 +119,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: aefd668b-85fd-4284-81d9-f934e7f8c41d
+      id: dac02000-3ba4-4df1-8002-6c4f6a36183d
       iscommand: true
       name: Send disabled status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: aefd668b-85fd-4284-81d9-f934e7f8c41d
+    taskid: dac02000-3ba4-4df1-8002-6c4f6a36183d
     timertriggers: []
     type: regular
     view: |-
@@ -150,13 +149,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: d8dee474-1aa8-4088-8408-fafb561ec664
+      id: 82b320c3-443d-4cae-857c-59635e8bcbfd
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: d8dee474-1aa8-4088-8408-fafb561ec664
+    taskid: 82b320c3-443d-4cae-857c-59635e8bcbfd
     timertriggers: []
     type: regular
     view: |-
@@ -187,13 +186,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 7294f5fc-9018-49fe-8739-e6f598a1d12a
+      id: be35158f-97d4-4cb9-8cd1-9fe6842f9047
       iscommand: false
       name: Send SolarWinds IPAM Subnets to PANW IoT
       script: 358c1c93-3141-4f13-878d-7ffa27562df7
       type: regular
       version: -1
-    taskid: 7294f5fc-9018-49fe-8739-e6f598a1d12a
+    taskid: be35158f-97d4-4cb9-8cd1-9fe6842f9047
     timertriggers: []
     type: regular
     view: |-
@@ -231,13 +230,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: b0c54814-e635-484f-8f8c-0448b5615f90
+      id: d3315912-c7cc-4091-8fc5-bcaf825a848d
       iscommand: true
       name: Send error status back to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: b0c54814-e635-484f-8f8c-0448b5615f90
+    taskid: d3315912-c7cc-4091-8fc5-bcaf825a848d
     timertriggers: []
     type: regular
     view: |-
@@ -272,13 +271,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 995fdb22-3bf0-489b-8f46-77d07587ce6f
+      id: e45f2f03-f0f4-4733-8e57-18f8e6159f22
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 995fdb22-3bf0-489b-8f46-77d07587ce6f
+    taskid: e45f2f03-f0f4-4733-8e57-18f8e6159f22
     timertriggers: []
     type: condition
     view: |-
@@ -318,13 +317,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 18069077-132a-48a3-8ae4-1e799e446137
+      id: 573dc001-0561-41cb-8ccc-8db5efc5dbee
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 18069077-132a-48a3-8ae4-1e799e446137
+    taskid: 573dc001-0561-41cb-8ccc-8db5efc5dbee
     timertriggers: []
     type: regular
     view: |-
@@ -348,13 +347,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 6920e105-3ed8-4965-8e6a-0c2a699492f9
+      id: 21eb9138-e892-4d4c-847a-75d7a3d177c9
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 6920e105-3ed8-4965-8e6a-0c2a699492f9
+    taskid: 21eb9138-e892-4d4c-847a-75d7a3d177c9
     timertriggers: []
     type: regular
     view: |-
@@ -377,13 +376,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: b1d7a6b5-2e7c-496f-821d-b142802256dd
+      id: 25a37122-4f26-486d-8739-609f6468ee3f
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: b1d7a6b5-2e7c-496f-821d-b142802256dd
+    taskid: 25a37122-4f26-486d-8739-609f6468ee3f
     timertriggers: []
     type: regular
     view: |-
@@ -418,13 +417,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 240509a6-b6a3-46b5-8cb0-85ad66bc7e26
+      id: fe922be3-42b5-4244-8d95-f4b401148d37
       iscommand: false
       name: Is Solarwinds Orion Integration Instance Available
       script: Exists
       type: condition
       version: -1
-    taskid: 240509a6-b6a3-46b5-8cb0-85ad66bc7e26
+    taskid: fe922be3-42b5-4244-8d95-f4b401148d37
     timertriggers: []
     type: condition
     view: |-
@@ -460,13 +459,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: f941fba9-e258-4195-835b-b90bcd44f409
+      id: c88ec047-abd2-4d8d-8320-2cc40354bb44
       iscommand: true
       name: No Instance passed to this Playbook. Reporting Error
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: f941fba9-e258-4195-835b-b90bcd44f409
+    taskid: c88ec047-abd2-4d8d-8320-2cc40354bb44
     timertriggers: []
     type: regular
     view: |-
@@ -506,13 +505,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 471d0947-47b1-494c-8585-f5fc9bade411
+      id: 7063f372-a10f-4b36-8bc7-51caf20f8474
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 471d0947-47b1-494c-8585-f5fc9bade411
+    taskid: 7063f372-a10f-4b36-8bc7-51caf20f8474
     timertriggers: []
     type: regular
     view: |-
