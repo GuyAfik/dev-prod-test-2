@@ -1,0 +1,439 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 1.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: This playbook is meant to be triggered by incident type from PANW IoT
+  Cloud. The custom fields (jobid, ip, scanner, scanType and profile) are used to
+  launch a scan on Qualys
+dirtyInputs: true
+id: 38d9fa0d-80ca-4d0b-8424-4d388ebce25b
+inputs: []
+name: Qualys Scan Launch - PANW IoT 3rd Party Integration
+outputs:
+- contextPath: incident
+  type: unknown
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7bf6b8e2-b7df-4755-8314-648df719199b
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 7bf6b8e2-b7df-4755-8314-648df719199b
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 50
+        }
+      }
+  "2":
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 7ff67f4b-e884-4b13-8e7f-e297ef0dc279
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 7ff67f4b-e884-4b13-8e7f-e297ef0dc279
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 1070
+        }
+      }
+  "5":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "6"
+      "yes":
+      - "7"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Qualys
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available. Otherwise returns
+        'no'
+      id: 14810a0b-f78a-4cd1-821a-2202ace7d99c
+      iscommand: false
+      name: Is Qualys Integration Enabled?
+      script: IsIntegrationAvailable
+      type: condition
+      version: -1
+    taskid: 14810a0b-f78a-4cd1-821a-2202ace7d99c
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 195
+        }
+      }
+  "6":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: qualys
+      message:
+        simple: Qualys integration is not enabled
+      playbook_name:
+        simple: Qualys Scan Launch - PANW IoT 3rd Party Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: 39cbf801-eaff-401c-8e77-8208d92dc645
+      iscommand: true
+      name: Report disabled status to PANW IoT Cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: 39cbf801-eaff-401c-8e77-8208d92dc645
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 895
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      ip:
+        simple: ${incident.ip}
+      iscanner_name:
+        simple: ${incident.scanner}
+      option_title:
+        simple: ${incident.profile}
+      scan_title:
+        simple: panw_iot_${incident.ip}_scan_${incident.jobid}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: ' launch vulnerability scans in the user’s account.'
+      id: 4b6a40f3-f2ef-4eeb-81cd-c9a22ad999bd
+      iscommand: true
+      name: Launch Qualys VM vulnerability Scan
+      script: '|||qualys-vm-scan-launch'
+      type: regular
+      version: -1
+    taskid: 4b6a40f3-f2ef-4eeb-81cd-c9a22ad999bd
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 370
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: qualys
+      message:
+        simple: ${Qualys.scanLaunchfailStatus}
+      playbook_name:
+        simple: Qualys Scan Launch - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 9ee01426-7ae6-4754-8814-257894b1c222
+      iscommand: true
+      name: Report Scan Launch Error to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 9ee01426-7ae6-4754-8814-257894b1c222
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 895
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      name:
+        simple: QualysLaunchedScans
+      operation:
+        simple: insert
+      value:
+        simple: ${Qualys.Scan.Reference}_${incident.ip}_${incident.jobid}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: List operations, will create a new list if list does not exist
+      id: 6c3922c5-624c-49d7-84f1-e465beb3cbed
+      iscommand: false
+      name: Update Qualys launched scan cache
+      script: PANWIoTLaunchedVulnerabilityScanCacheOperations
+      type: regular
+      version: -1
+    taskid: 6c3922c5-624c-49d7-84f1-e465beb3cbed
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 720
+        }
+      }
+  "15":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "12"
+      "yes":
+      - "9"
+      - "16"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+      path:
+        simple: Qualys.scanLaunchfailStatus
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks for errors in a given task. If found, write it to the path
+        provided as an argument.
+      id: 3483fde5-99ba-4644-8504-0f80082bd8e6
+      iscommand: false
+      name: Did the Scan Launch Fail?
+      script: ea2fa025-47c1-420b-895b-d5b62cfab9b3
+      type: condition
+      version: -1
+    taskid: 3483fde5-99ba-4644-8504-0f80082bd8e6
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 545
+        }
+      }
+  "16":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      job_id:
+        simple: ${incident.jobid}
+      message:
+        simple: ${Qualys.scanLaunchfailStatus}
+      scan_type:
+        simple: qualys
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Upload reports (PDF + XML) for specified scan to IoT Cloud
+      id: 02a903e7-5352-4a6c-8dc7-6d92e1461daa
+      iscommand: true
+      name: Report Scan Launch Error As Event
+      script: '|||panw-iot-3rd-party-upload-vulnerability-scan-report'
+      type: regular
+      version: -1
+    taskid: 02a903e7-5352-4a6c-8dc7-6d92e1461daa
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 895
+        }
+      }
+  "17":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: qualys
+      message:
+        simple: Successfully launched scan for ip ${incident.ip}
+      playbook_name:
+        simple: Qualys Scan Launch - PANW IoT 3rd Party Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 41336ebc-e902-44b5-854c-5b8763631913
+      iscommand: true
+      name: Report Success Status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 41336ebc-e902-44b5-854c-5b8763631913
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 895
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1115,
+        "width": 1670,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
