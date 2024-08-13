@@ -30,11 +30,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 76e4ac58-e3c0-4f77-8a4f-e9e68efa99ea
+      id: 520f319b-15a5-41fa-8cea-a34bfefa8c3b
       iscommand: false
       name: ""
       version: -1
-    taskid: 76e4ac58-e3c0-4f77-8a4f-e9e68efa99ea
+    taskid: 520f319b-15a5-41fa-8cea-a34bfefa8c3b
     timertriggers: []
     type: start
     view: |-
@@ -59,13 +59,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 0d0b45b8-84b5-4a50-89bc-ee3aafa282bf
+      id: 378818db-30f6-4326-87f2-b7ad2d4525ce
       iscommand: false
       name: UpdatePANWIoTIntegrationStatus
       script: UpdatePANWIoTIntegrationStatus
       type: regular
       version: -1
-    taskid: 0d0b45b8-84b5-4a50-89bc-ee3aafa282bf
+    taskid: 378818db-30f6-4326-87f2-b7ad2d4525ce
     timertriggers: []
     type: regular
     view: |-
@@ -88,13 +88,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 95811e13-04fa-4c37-894a-63a8edd46c24
+      id: e633ce73-ba8e-4af4-8e76-d3b5ec7d1d2e
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 95811e13-04fa-4c37-894a-63a8edd46c24
+    taskid: e633ce73-ba8e-4af4-8e76-d3b5ec7d1d2e
     timertriggers: []
     type: regular
     view: |-
