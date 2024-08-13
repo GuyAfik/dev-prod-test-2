@@ -1,0 +1,212 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 6.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: 4cfab387-f603-461c-8ce2-29a8b8330e02
+inputs: []
+name: Quarantine Device in Forescout - PANW IoT 3rd Party Integration
+outputs: []
+sourceplaybookid: 86d00619-d4a6-4c08-8b00-86e96b1f62ca
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 6940f5a6-2de0-42e8-8b1b-be1fc50c9c3d
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 6940f5a6-2de0-42e8-8b1b-be1fc50c9c3d
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "2"
+      "yes":
+      - "6"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      brand_name:
+        simple: PANW IoT 3rd Party Integration - Forescout
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 0b10b248-7446-4038-8d5b-731da3c0c451
+      iscommand: false
+      name: Is Forescout enabled?
+      script: 292ae09c-ada1-4d3c-840a-add10bfefa5a
+      type: condition
+      version: -1
+    taskid: 0b10b248-7446-4038-8d5b-731da3c0c451
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 195
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: forescout
+      message:
+        simple: The Forescout Integration Instance is Disabled
+      playbook_name:
+        simple: Quarantine Device in Forescout - PANW IoT 3rd Party Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message to PANW IOT cloud.
+      id: 07de2bc3-3d34-4b7e-8f87-d3aa1c6cffe3
+      iscommand: true
+      name: Send disabled status to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 07de2bc3-3d34-4b7e-8f87-d3aa1c6cffe3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 150,
+          "y": 380
+        }
+      }
+  "6":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      action:
+        simple: Quarantine
+      field:
+        simple: PanwIoTQuarantine
+      integration:
+        simple: forescout
+      mac_address:
+        simple: ${incident.macAddress}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 9fd0610d-3011-450b-8542-b1492fac4ada
+      iscommand: false
+      name: Quarantine device using Forescout
+      script: QuarantinePANWIoTDeviceOnForescout
+      type: regular
+      version: -1
+    taskid: 9fd0610d-3011-450b-8542-b1492fac4ada
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 370
+        }
+      }
+  "9":
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.close.inv
+      id: 00b6b698-e77c-4300-8b04-2f9e4691f234
+      iscommand: true
+      name: Close Investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 00b6b698-e77c-4300-8b04-2f9e4691f234
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 420,
+          "y": 570
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 615,
+        "width": 925,
+        "x": 150,
+        "y": 50
+      }
+    }
+  }
