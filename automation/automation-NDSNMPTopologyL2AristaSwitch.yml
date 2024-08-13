@@ -1,0 +1,431 @@
+args:
+- description: Local Entry IP
+  name: local_entry_ip
+  required: true
+- description: Network Discovery instance name
+  name: nd_instance
+  required: true
+commonfields:
+  id: NDSNMPTopologyL2AristaSwitch
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/netutils:1.0.0.24101
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: NDSNMPTopologyL2AristaSwitch
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('NDSNMPTopologyL2AristaSwitch', 'start', __line__())
+
+
+  # from pysnmp.hlapi import *
+  import socket
+  import re
+  from ipaddress import IPv4Network
+  from netaddr import IPNetwork, IPAddress
+  # from pyasn1.type.univ import OctetString
+
+  NETWORK_DISCOVERY_INSTANCE=demisto.args().get("nd_instance")
+
+  IF_INDEX = "intf_index"
+  IF_NAME = "intf_name"
+  IF_IP4_ADDR = "intf_ipv4_addr"
+  IF_MAC_ADDR = "intf_mac_addr"
+  VLAN_ID = "vlan_id"
+  VLAN_TRUNK_STATUS = "vlan_trunk"
+  VLAN_IF_IDX = "vlan_if_idx"
+  VLAN_IF_NAME = "vlan_intf_name"
+  VLAN_LIST = "vlan_list"
+  VLAN_IF_IP = "vlan_intf_ipaddr"
+  VLAN_IF_LIST = "vlan_interface_list"
+  INTERFACE_LIST = "interface_list"
+
+  IF_IDX_TO_IF_NAME_OID = '1.3.6.1.2.1.31.1.1.1.1'
+  IF_IDX_TO_IF_DESC_OID = '1.3.6.1.2.1.2.2.1.2'
+  IF_IDX_TO_IP_ADDR_OID = '1.3.6.1.2.1.4.20.1.2'
+  IF_IDX_TO_MAC_ADDRESS_OID = '1.3.6.1.2.1.2.2.1.6'
+  IF_IDX_TO_OPER_STATUS_OID           = '1.3.6.1.2.1.2.2.1.8'
+
+  IF_OPER_STATUS = "intf_operational_status"
+
+  VLAN_STR = "VLAN"
+  DOT = '.'
+  YES = "yes"
+  NO = "no"
+  # ****************** BRIDGE-MIB Functions for the VLANs ***************************
+  BRIDGE_MIB_DOT1Q_VLAN_TABLE_OID = '1.3.6.1.2.1.17.7.1.4.2'
+  BRIDGE_MIB_DOT1Q_VLAN_TABLE_FDBID_OID         = '1.3.6.1.2.1.17.7.1.4.2.1.3'
+  BRIDGE_MIB_VLAN_EGRESS_PORTS_OID_PREFIX       = 'SNMPv2-SMI::mib-2.17.7.1.4.2.1.4'
+  BRIDGE_MIB_VLAN_RAW_EGRESS_PORTS_OID_PREFIX   = '1.3.6.1.2.1.17.7.1.4.2.1.4'
+  BRIDGE_MIB_VLAN_UNTAGGED_PORTS_OID_PREFIX     = 'SNMPv2-SMI::mib-2.17.7.1.4.2.1.5'
+  BRIDGE_MIB_VLAN_RAW_UNTAGGED_PORTS_OID_PREFIX = '1.3.6.1.2.1.17.7.1.4.2.1.5'
+
+  IP_CIDR_ROUTES_OID  = '1.3.6.1.2.1.4.24.4.1.5'
+
+  IP_SUBNET      = "ip_subnet"
+  IP_SUBNET_MASK = "ip_subnet_mask"
+  IP_SUBNET_GATEWAY = "ip_subnet_gateway"
+  IP_SUBNET_IF   = "ip_subnet_interface"
+  IP_DEFAULT_ROUTE_ADDR = "0.0.0.0"
+
+  # *************** Get L3 Network Information *********************
+  IP_IF_LIST = "ip_interface_list"
+  IP_SUBNET_LIST = "ip_subnet_list"
+
+  def walk(ip,oid):
+      response = demisto.executeCommand("nd-snmp-v2-walk-command", {
+          "ip":ip,
+          "oid": oid,
+          "using": NETWORK_DISCOVERY_INSTANCE
+      })
+      if isError(response[0]):
+          err_msg = 'Error, couldn\'t complete snmp v2 walk - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+      return response[0]['Contents']
+
+  def remove_prefix(text, prefix):
+      if text.startswith(prefix):
+          return text[len(prefix):]
+      return text
+
+  def get_ip_interface_info(host):
+      if_info = {}
+      # SNMP Walk to get IF Names
+      raw_result = walk(host, IF_IDX_TO_IF_DESC_OID)
+      for k, v in raw_result.items():
+          if_idx = k.split('.')[-1]
+          if if_idx not in if_info:
+              if_info[if_idx] = {}
+          if_info[if_idx][IF_NAME] = v.strip()
+
+      # SNMP Walk to get IF IP address
+      raw_result = walk(host, IF_IDX_TO_IP_ADDR_OID)
+      for k, v in raw_result.items():
+          if_idx = v
+          ip = '.'.join(k.strip().split('.')[-4:])
+          if is_valid_ipv4_address(ip):
+              if if_idx in if_info:
+                  if_info[if_idx][IF_IP4_ADDR] = ip
+      raw_result = walk(host, IF_IDX_TO_MAC_ADDRESS_OID)
+      for k, v in raw_result.items():
+          if(v!=''):
+              if_idx = k.strip().split('.')[-1]
+              mac = remove_prefix(v,"0x")
+              if if_idx in if_info:
+                  mac_colon = ':'.join(mac[i:i + 2] for i in range(0, 12, 2))
+                  if_info[if_idx][IF_MAC_ADDR]=mac_colon
+      raw_result = walk(host, IF_IDX_TO_OPER_STATUS_OID)
+      for k, v in raw_result.items():
+          if (v != ''):
+              if_idx = k.strip().split('.')[-1]
+              if if_idx in if_info:
+                  val=''
+                  if v == '1':
+                      val='up'
+                  elif v == '2':
+                      val='down'
+                  elif v == '3':
+                      val='testing'
+                  elif v == '4':
+                      val='unknown'
+                  elif v == '5':
+                      val='dormant'
+                  elif v == '6':
+                      val='notPresent'
+                  else:
+                      val='lowerLayerDown'
+
+                  if_info[if_idx][IF_OPER_STATUS] = val
+      # Return the IP Interface list
+      return if_info
+
+
+  def is_valid_ipv4_address(address):
+      try:
+          socket.inet_pton(socket.AF_INET, address)
+      except AttributeError:  # no inet_pton here, sorry
+          try:
+              socket.inet_aton(address)
+          except socket.error:
+              return False
+          return address.count('.') == 3
+      except socket.error:  # not a valid address
+          return False
+
+      return True
+  # GET Port list for each VLAN and Trunk Status (Tagged = TRUNK)
+
+  # Portlist is a bit map based on the position of the Interface index
+  # For example: 0x08003 is IF indexes [9, 23, 24] based on the bit positions starting from left
+  def get_arista_std_vlan_untagged_interfaces_portlist(val, vlan_idx, result_map, if_info_map):
+      port_str = remove_prefix(val.lstrip(), '0x')
+      temp_list = '.'.join(str(int(a+b,16)) for a,b in zip(port_str[::2], port_str[1::2]) if a and b)
+      # Parse through the DOT seperated list of Octets and convert them to Port list based on IF indexes
+      base_idx = 0
+      for v in temp_list.split("."):
+          local_idx  = 1
+          if v:
+              v_int = int(v)
+              while local_idx <= 8:
+                  if v_int & 128 == 128:
+                      port_idx = base_idx + local_idx
+                      if str(port_idx) in if_info_map:
+                          port_name = if_info_map[str(port_idx)][IF_NAME]
+                      else:
+                          port_name = port_idx
+                      # Add Port index and interface name to this VLAN
+                      if port_name not in result_map:
+                          result_map[port_name] = {}
+                          result_map[port_name][IF_INDEX] = port_idx
+                          result_map[port_name][IF_NAME] = port_name
+                          result_map[port_name][VLAN_ID] = vlan_idx
+                      else:
+                          result_map[port_name][VLAN_TRUNK_STATUS] = NO
+                  v_int = v_int << 1
+                  local_idx += 1
+              base_idx += 8
+
+  def get_arista_std_vlan_untagged_portlist(k, v, result_map, if_info_map):
+      if BRIDGE_MIB_VLAN_UNTAGGED_PORTS_OID_PREFIX not in k:
+          if BRIDGE_MIB_VLAN_RAW_UNTAGGED_PORTS_OID_PREFIX not in k:
+              return
+      # GET VLAN ID
+      vlan_idx = k.split('.')[-1]
+      if vlan_idx != " " and len(vlan_idx) > 0:
+          # Get port list/interfaces for this VLAN
+          if v!='':
+              get_arista_std_vlan_untagged_interfaces_portlist(v, vlan_idx, result_map, if_info_map)
+
+  # Portlist is a bit map based on the position of the Interface index
+  # For example: 0x08003 is IF indexes [9, 23, 24] based on the bit positions starting from left
+  def get_arista_std_vlan_interfaces_from_portlist(val, vlan_idx, result_map, if_info_map):
+      port_str = remove_prefix(val.lstrip(), '0x')
+      temp_list = '.'.join(str(int(a+b,16)) for a,b in zip(port_str[::2], port_str[1::2]) if a and b)
+      # Parse through the DOT seperated list of Octets and convert them to Port list based on IF indexes
+      base_idx = 0
+      for v in temp_list.split("."):
+          local_idx  = 1
+          if v:
+              v_int = int(v)
+              while local_idx <= 8:
+                  if v_int & 128 == 128:
+                      port_idx = base_idx + local_idx
+                      if str(port_idx) in if_info_map:
+                          port_name = if_info_map[str(port_idx)][IF_NAME]
+                      else:
+                          port_name = port_idx
+                      # Add Port index and interface name to this VLAN
+                      if port_name not in result_map:
+                          result_map[port_name] = {}
+                      result_map[port_name][IF_INDEX] = port_idx
+                      result_map[port_name][IF_NAME] = port_name
+                      result_map[port_name][VLAN_ID] = vlan_idx
+                  v_int = v_int << 1
+                  local_idx += 1
+              base_idx += 8
+
+  def get_arista_std_vlan_portlist(k, v, result_map, if_info_map):
+      if BRIDGE_MIB_VLAN_EGRESS_PORTS_OID_PREFIX not in k:
+          if BRIDGE_MIB_VLAN_RAW_EGRESS_PORTS_OID_PREFIX not in k:
+              return
+      # GET VLAN ID
+      vlan_idx = k.split('.')[-1]
+      if vlan_idx != " " and len(vlan_idx) > 0:
+          # Get port list/interfaces for this VLAN
+          get_arista_std_vlan_interfaces_from_portlist(v, vlan_idx, result_map, if_info_map)
+
+  def get_arista_std_vlan_interface_info(host, result_map, if_info_map):
+      # SNMP Walk to get IF Names
+      raw_result = walk(host, BRIDGE_MIB_DOT1Q_VLAN_TABLE_OID)
+      for k, v in raw_result.items():
+          get_arista_std_vlan_portlist(k, v, result_map, if_info_map)
+          get_arista_std_vlan_untagged_portlist(k, v, result_map, if_info_map)
+      if_indexes = if_info_map.keys()
+      for if_idx in if_indexes:
+          if_name = if_info_map[if_idx][IF_NAME]
+          if if_name not in result_map:
+              result_map[if_name] = {}
+          if IF_IP4_ADDR in if_info_map[if_idx]:
+              ip = if_info_map[if_idx][IF_IP4_ADDR]
+              result_map[if_name][IF_IP4_ADDR] = ip
+          if IF_MAC_ADDR in if_info_map[if_idx]:
+              mac = if_info_map[if_idx][IF_MAC_ADDR]
+              # mac_colon =  ':'.join(mac[i:i + 2] for i in range(0, 12, 2))
+              result_map[if_name][IF_MAC_ADDR] = mac
+          if IF_OPER_STATUS in if_info_map[if_idx]:
+              operational_status = if_info_map[if_idx][IF_OPER_STATUS]
+              result_map[if_name][IF_OPER_STATUS] = operational_status
+
+  # GET VLAN ID information - name, ip address/subnet
+  def get_arista_std_vlan_id_if_entry(key, val, result_map, if_ip_map, ip_subnet_list):
+      if VLAN_STR in val:
+          vlan_id = remove_prefix(val, VLAN_STR)
+          if_idx = key.split('.')[-1]
+          if vlan_id not in result_map:
+              result_map[vlan_id] = {}
+          result_map[vlan_id][VLAN_ID] = vlan_id
+          result_map[vlan_id][VLAN_IF_IDX] = if_idx
+          if if_idx in if_ip_map:
+              vlan_intf_name = if_ip_map[if_idx][IF_NAME]
+              result_map[vlan_id][VLAN_IF_NAME] = vlan_intf_name
+              result_map[vlan_id][IP_SUBNET] = get_ip_subnet_using_vlan_name(vlan_intf_name,ip_subnet_list)
+              if IF_IP4_ADDR in if_ip_map[if_idx]:
+                  result_map[vlan_id][VLAN_IF_IP] = if_ip_map[if_idx][IF_IP4_ADDR]
+
+  def get_ip_subnet_using_vlan_name(vlan_intf_name, ip_subnet_list):
+      if len(ip_subnet_list) > 0:
+          for k, v in ip_subnet_list.items():
+              if IP_SUBNET_IF in v.keys() and IP_SUBNET in v.keys():
+                  ip_subnet_interface = v[IP_SUBNET_IF]
+                  if ip_subnet_interface == vlan_intf_name:
+                      ip_subnet = v[IP_SUBNET]
+                      return ip_subnet
+      return ""
+
+  def get_arista_std_vlan_id_info(host, result_map, if_ip_map, ip_subnet_list):
+      # SNMP Walk to get VLAN IDs
+      raw_result = walk(host, BRIDGE_MIB_DOT1Q_VLAN_TABLE_FDBID_OID)
+      for k, v in raw_result.items():
+          vlan_id = k.split('.')[-1]
+          if vlan_id not in result_map:
+              result_map[vlan_id] = {}
+          result_map[vlan_id][VLAN_ID] = vlan_id
+      # SNMP Walk to get IF Names
+      raw_result = walk(host, IF_IDX_TO_IF_NAME_OID)
+      for k, v in raw_result.items():
+          get_arista_std_vlan_id_if_entry(k, v, result_map, if_ip_map, ip_subnet_list)
+
+
+  def get_arista_vlan_info(host):
+      result_map = {}
+      vlan_id_map = {}
+      vlan_intf_map = {}
+      if_info_map = {}
+
+      # Get interface information
+      if_info_map = get_ip_interface_info(host)
+      if len(if_info_map) == 0:
+          return result_map
+
+      #Return the IP_SUBNET_LIST information
+      ip_subnet_list = get_ip_subnet_info(host, if_info_map)
+      result_map[IP_SUBNET_LIST] = ip_subnet_list
+
+      # Get VLAN ID and Interfaces information
+      get_arista_std_vlan_id_info(host, vlan_id_map, if_info_map, ip_subnet_list)
+      if len(vlan_id_map) == 0:
+          return result_map
+      else:
+          result_map[VLAN_LIST] = vlan_id_map
+
+      # Get VLAN Interface information
+      get_arista_std_vlan_interface_info(host, vlan_intf_map, if_info_map)
+      if len(vlan_intf_map) == 0:
+          return result_map
+      else:
+          result_map[INTERFACE_LIST] = vlan_intf_map
+
+
+      result_map['default_gateway_list'] = get_default_gateway_list(ip_subnet_list)
+      # result_map['node_ip']=host
+      # result_map['node_mac_address']=get_mac_address_from_interface_info(host, if_info_map)
+      return result_map
+
+  def get_default_gateway_list(ip_subnet_list):
+      default_gateway_list={}
+      if len(ip_subnet_list) > 0:
+          for k,v in ip_subnet_list.items():
+              if isinstance(v, dict) and 'ip_subnet_gateway' in v.keys():
+                  ip_subnet_gateway = v['ip_subnet_gateway']
+                  separator = "."
+                  default_gateway_subnet = findLongestMatch(ip_subnet_gateway,ip_subnet_list)
+                  if default_gateway_subnet == '':
+                      default_gateway_subnet = separator.join(ip_subnet_gateway.split(separator, 3)[:-1])
+                      default_gateway_subnet = default_gateway_subnet+".0/24"
+                  default_gateway_list[ip_subnet_gateway]={"interface":[],"default_gateway_subnet":default_gateway_subnet}
+      return default_gateway_list
+
+  def findLongestMatch(ipaddr, ip_subnet_list):
+      longest_prefix = 32
+      longest_match = ''
+      for k, v in ip_subnet_list.items():
+          ip_subnet = v['ip_subnet']
+          if ip_subnet != '0.0.0.0':
+              ip_subnet_mask = v['ip_subnet_mask']
+              try:
+                  ip = IPv4Network(ip_subnet+'/'+ip_subnet_mask)
+
+                  if IPAddress(ipaddr) in IPNetwork(ip_subnet+'/'+str(ip.prefixlen)):
+                      if ip.prefixlen < longest_prefix:
+                          longest_prefix = ip.prefixlen
+                          longest_match=ip_subnet+'/'+str(ip.prefixlen)
+              except Exception as e:
+                  demisto.error('error while loading IPv4Network/IPAddress: '+ str(e))
+
+      return longest_match
+
+  def get_ip_subnet_info(host, ip_if_list):
+      ip_subnet_info = {}
+      # SNMP Walk to get IF Names
+      raw_result = walk(host, IP_CIDR_ROUTES_OID)
+      for k, v in raw_result.items():
+          ip_rem_prefix = remove_prefix(k, IP_CIDR_ROUTES_OID)
+          ip_entry = ip_rem_prefix.split('.')
+          # return_outputs("ip entry: ",ip_entry)
+          if len(ip_entry) == 14:
+              # Get IP address
+              ip_addr = '.'.join(ip_entry[1:5])
+              ip_mask = '.'.join(ip_entry[5:9])
+              if ip_mask == '255.255.255.255':
+                  continue
+              if ip_addr not in ip_subnet_info:
+                  ip_subnet_info[ip_addr] = {}
+              ip_subnet_info[ip_addr][IP_SUBNET] = ip_addr
+              # Get IP Subnet Mask
+              ip_subnet_info[ip_addr][IP_SUBNET_MASK] = ip_mask
+              # Get Gateway if present
+              ip_gateway = '.'.join(ip_entry[10:14])
+              if ip_gateway != IP_DEFAULT_ROUTE_ADDR:
+                  ip_subnet_info[ip_addr][IP_SUBNET_GATEWAY] = ip_gateway
+              # Get IF name
+              if v in ip_if_list:
+                  ip_subnet_info[ip_addr][IP_SUBNET_IF] = ip_if_list[v][IF_NAME]
+
+      # Return the IP Subnet list
+      return ip_subnet_info
+
+      return ""
+
+  def main():
+      try:
+
+          LOCAL_ENTRY_IP = demisto.args().get('local_entry_ip')
+          vlan_info = get_arista_vlan_info(LOCAL_ENTRY_IP)
+          # return_outputs("finished SNMP probing for Arista Switch VLAN data for Node!")
+          return_results(vlan_info)
+
+      except Exception as e:
+          raise Exception("Failed to get Arista Switch Node VLAN data for ip: "+str(LOCAL_ENTRY_IP)+" and the data is :"+str(e))
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('NDSNMPTopologyL2AristaSwitch', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
