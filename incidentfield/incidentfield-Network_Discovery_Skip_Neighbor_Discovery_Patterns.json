@@ -72,7 +72,7 @@
 	"name": "Network Discovery Skip Neighbor Discovery Patterns",
 	"neverSetAsRequired": false,
 	"openEnded": false,
-	"orgType": "",
+	"orgType": "grid",
 	"ownerOnly": false,
 	"packID": "",
 	"packName": "",
