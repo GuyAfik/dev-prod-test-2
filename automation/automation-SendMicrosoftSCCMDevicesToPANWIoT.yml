@@ -1,0 +1,193 @@
+args:
+- name: microsoft_sccm_instance
+  required: true
+commonfields:
+  id: d4259325-0b09-4e73-8101-cc5df499fa8f
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/genericsql:1.1.0.26235
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendMicrosoftSCCMDevicesToPANWIoT
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendMicrosoftSCCMDevicesToPANWIoT', 'start', __line__())
+
+
+
+
+  """
+  Fetches clients of Microsoft SCCM and send it to the PANW-IoT
+  """
+
+  from typing import Dict, Any
+  import traceback
+  import json
+
+
+  #PANW_IOT_INSTANCE = demisto.args().get('panw_iot_3rd_party_instance')
+  MICROSOFT_SCCM_INSTANCE = demisto.args().get('microsoft_sccm_instance')
+
+
+  def __get_device_mac_id_list(device_list):
+      mac_ids = []
+      for device in device_list:
+          if isinstance(device, dict):
+              mac_ids.append(device.get('deviceid'))
+      return mac_ids
+
+
+  def send_status_to_panw_iot_cloud(status, msg, retry=0):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+          "status": status,
+          "message": msg,
+          "integration_name": "sccm",
+          "playbook_name": "Import Microsoft SCCM devices to PANW IoT cloud",
+          "asset_type": 'device',
+          "timestamp": int(round(time.time() * 1000))
+          #"using": PANW_IOT_INSTANCE
+      })
+
+      if isError(resp[0]):
+          if retry == 0:
+              time.sleep(1)
+              return send_status_to_panw_iot_cloud(status, msg, retry=1)
+          err_msg = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+
+  def send_devices_to_panw_iot_cloud(device_list, retry=0):
+      """
+      Sends devices to PANW IoT Cloud.
+      :type device_list: ``array``
+      :param device_list: List of devices to be sent to PANW IoT cloud
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-devices", {
+          "DeviceData": device_list,
+          "pageLength": None,
+          "IntegrationName": 'sccm'
+          #"using": PANW_IOT_INSTANCE
+      })
+      if isError(resp[0]):
+          if retry == 0:
+              time.sleep(1)
+              return send_devices_to_panw_iot_cloud(device_list, retry=1)
+          err_msg = f'Error, could not send devices to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+      return resp[0]['Contents']
+
+
+  def get_devices_from_microsoft_sccm(page_size_limit, page_offset):
+      '''
+      Get devices from Microsoft SCCM SQL Server integration
+      :return: dict containing data of the Microsoft SCCM devices and access points
+      :rtype ``dict``
+      '''
+      resp = demisto.executeCommand("ms-sccm-get-all-client-details", {"using": MICROSOFT_SCCM_INSTANCE, "page_size_limit": page_size_limit, "page_offset": page_offset})
+
+      if isError(resp[0]):
+          err_msg = f'Error, could not get devices from Microsoft SCCM - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+      return resp[0]['Contents']
+
+
+  def import_microsoft_sccm_devices_to_panw_iot():
+      """
+      Send Microsoft SCCM clients to PANW IoT cloud
+      """
+      device_mac_id_list = []
+      device_list = []
+      count = 0
+
+      page_size_limit = 3000
+      page_offset = 0
+      max_pages_limit = 1000
+      page_counter = 0
+
+      page_size_for_reporting = 100
+
+      while page_counter < max_pages_limit:
+          device_list_from_sccm = get_devices_from_microsoft_sccm(page_size_limit, page_offset)
+          page_offset += page_size_limit
+          page_counter += 1
+
+          if device_list_from_sccm:
+              if len(device_list_from_sccm) < page_size_limit:
+                  device_list += device_list_from_sccm
+                  break
+
+              device_list += device_list_from_sccm
+          else:
+              break
+
+      if device_list:
+          count = len(device_list)
+
+          device_sent = 0
+          while device_sent != count:
+              end_index = (device_sent + page_size_for_reporting) if (count - device_sent) > page_size_for_reporting else count
+              sub_device_list = device_list[device_sent:end_index]
+
+              # Send devices sublist for reporting
+              resp = send_devices_to_panw_iot_cloud(sub_device_list)
+              time.sleep(5)
+
+              device_sent = end_index
+
+          device_mac_id_list = __get_device_mac_id_list(device_list)
+      status_msg = f'Successfully imported total {count} Microsoft SCCM clients to PANW IoT'
+      return status_msg, count, device_mac_id_list
+
+
+  def main():
+      status_msg = None
+      try:
+          status_msg, count, device_mac_id_list = import_microsoft_sccm_devices_to_panw_iot()
+          send_status_to_panw_iot_cloud("success", status_msg)
+          status = dict({'Status': status_msg})
+          status.update({'Imported Devices': device_mac_id_list})
+          report_summary = {'Asset Type': 'Total Assets Reported'}
+          report_summary.update({'Devices': count})
+          return_results(
+              CommandResults(
+                  readable_output=tableToMarkdown("Asset Report Summary:", report_summary, removeNull=True),
+                  outputs_prefix="status",
+                  outputs=status
+              )
+          )
+      except Exception as ex:
+          send_status_to_panw_iot_cloud("error", str(ex))
+          demisto.error(traceback.format_exc())
+          return_error(str(ex))
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('SendMicrosoftSCCMDevicesToPANWIoT', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- PANW IoT 3rd Party Integration
+- Microsoft SCCM
+timeout: 100800h0m0s
+type: python
