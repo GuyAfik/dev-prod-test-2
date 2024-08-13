@@ -1,0 +1,208 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: 'Playbook used to check pxGrid account status. '
+dirtyInputs: true
+id: 42657470-5b69-4793-8018-b3a746d7d11f
+inputs: []
+name: Setup pxGrid Account
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 3e24c10d-0c80-479f-85df-10a194c14a16
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 3e24c10d-0c80-479f-85df-10a194c14a16
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 410,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "2"
+      "yes":
+      - "3"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Cisco ISE pxGrid
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available. Otherwise returns
+        'no'
+      id: 152b6c0e-1e45-450a-8f70-3379083c6dfc
+      iscommand: false
+      name: Is pxGrid Integration enabled?
+      script: IsIntegrationAvailable
+      type: condition
+      version: -1
+    taskid: 152b6c0e-1e45-450a-8f70-3379083c6dfc
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 410,
+          "y": 230
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: pxgrid
+      message:
+        simple: pxGrid integration is not enabled
+      playbook_name:
+        simple: Setup pxGrid Account
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: e81637c8-69d8-4a81-8b64-df0910eaa015
+      iscommand: true
+      name: Report disabled status to PANW IoT cloud
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: e81637c8-69d8-4a81-8b64-df0910eaa015
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 160,
+          "y": 460
+        }
+      }
+  "3":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Gets pxGrid account status
+      id: 38bb70c5-b011-4b6d-8ef6-f59e6d6c5a9f
+      iscommand: true
+      name: Get pxGrid Status
+      script: '|||pxgrid-get-account-status'
+      type: regular
+      version: -1
+    taskid: 38bb70c5-b011-4b6d-8ef6-f59e6d6c5a9f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 640,
+          "y": 460
+        }
+      }
+  "4":
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 11b3cc4c-9d3f-4570-85c0-79b84d5a8181
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 11b3cc4c-9d3f-4570-85c0-79b84d5a8181
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 400,
+          "y": 670
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 715,
+        "width": 860,
+        "x": 160,
+        "y": 50
+      }
+    }
+  }
