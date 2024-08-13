@@ -1,0 +1,352 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 1.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: Handles incidents triggered from PANW Iot (Zingbox) UI to un-quarantine
+  a device in Cisco ISE.
+dirtyInputs: true
+id: Un-quarantine Device in Cisco ISE - PANW IoT 3rd Party Integration
+inputs: []
+name: Un-quarantine Device in Cisco ISE - PANW IoT 3rd Party Integration
+outputs:
+- contextPath: incident
+  description: This playbook is invoked via the incident type "PANW IoT 3rd Party
+    Cisco ISE Un-quarantine"
+  type: unknown
+sourceplaybookid: Un-quarantine Device in Cisco ISE - PANW IoT 3rd Party Integration
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 8aa3e35c-6a1c-4052-855d-180e5c3a982e
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 8aa3e35c-6a1c-4052-855d-180e5c3a982e
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "11"
+      "no":
+      - "3"
+      "yes":
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      brand_name:
+        simple: PANW IoT 3rd Party Integration - Cisco ISE pxGrid
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 4b4612d3-f09c-4eae-8d28-ab690077c055
+      iscommand: false
+      name: Check Cisco ISE instances. Are any available?
+      script: 292ae09c-ada1-4d3c-840a-add10bfefa5a
+      type: condition
+      version: -1
+    taskid: 4b4612d3-f09c-4eae-8d28-ab690077c055
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 195
+        }
+      }
+  "3":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: ise
+      message:
+        simple: No Cisco ISE instances available
+      playbook_name:
+        simple: Un-quarantine Device in Cisco ISE - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IoT cloud.
+      id: cf08be2b-4e2e-4034-8124-a4497edceeba
+      iscommand: true
+      name: Send error status to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: cf08be2b-4e2e-4034-8124-a4497edceeba
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 720
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      action:
+        simple: UnQuarantine
+      alert_severity:
+        simple: '""'
+      alert_type:
+        simple: '""'
+      integration:
+        simple: ise
+      mac_address:
+        simple: ${incident.macAddress}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 2a0b0202-e2e4-46e4-88f9-5051c1efef7e
+      iscommand: false
+      name: Un-Quarantine Endpoint
+      script: QuarantinePANWIoTDevice
+      type: regular
+      version: -1
+    taskid: 2a0b0202-e2e4-46e4-88f9-5051c1efef7e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 370
+        }
+      }
+  "10":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "12"
+      "yes":
+      - "11"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks whether the given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If an array is provided, will return yes
+        if one of the entries returned an error.
+      id: a3699551-5d3f-4f4e-80c5-7e63b358818f
+      iscommand: false
+      name: Was there an error?
+      script: isError
+      type: condition
+      version: -1
+    taskid: a3699551-5d3f-4f4e-80c5-7e63b358818f
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 545
+        }
+      }
+  "11":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: ise
+      message:
+        simple: Failed to unquarantine Endpoint ${Endpoint.MACAddress} on Cisco ISE
+      playbook_name:
+        simple: Un-quarantine Device in Cisco ISE - PANW IoT 3rd Party Integration_
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 187cfc70-2a69-4e3b-8a6e-a765c013ef0c
+      iscommand: true
+      name: Send error status to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 187cfc70-2a69-4e3b-8a6e-a765c013ef0c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 720
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: ise
+      message:
+        simple: Un-Quarantine Successful for Endpoint ${Endpoint.MACAddress}
+      playbook_name:
+        simple: Un-quarantine Device in Cisco ISE - PANW IoT 3rd Party Integration_
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 718484c0-df29-47de-8573-d4ef4148a587
+      iscommand: true
+      name: Send success status to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 718484c0-df29-47de-8573-d4ef4148a587
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 720
+        }
+      }
+  "13":
+    continueonerrortype: ""
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Closes the current incident.
+      id: e717ce30-0f7e-494d-8d18-a78c09738ff6
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: e717ce30-0f7e-494d-8d18-a78c09738ff6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 895
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "1_11_#default#": 0.51
+    },
+    "paper": {
+      "dimensions": {
+        "height": 940,
+        "width": 1240,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
