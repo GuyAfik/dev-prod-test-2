@@ -1,0 +1,342 @@
+args:
+- description: Meraki instance name
+  name: meraki_instance
+  required: true
+- description: Comma seperated organization names
+  name: organizations
+- description: Comma seperated network names
+  name: networks
+commonfields:
+  id: SendAllCiscoMerakiNetworkDevicesToPanwIoTCloud
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 2.0.11
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendAllCiscoMerakiNetworkDevicesToPanwIoTCloud
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendAllCiscoMerakiNetworkDevicesToPanwIoTCloud', 'start', __line__())
+
+
+  from typing import Dict, Any
+  import traceback
+  import json
+
+  USING_MERAKI_INSTANCE = demisto.args().get('meraki_instance')
+  ORGANIZATION_NAMES = demisto.args().get('organizations')
+  NETWORK_NAMES = demisto.args().get('networks')
+  NETWORK_NAMES_ARR=None
+  ORGANIZATION_NAMES_ARR=None
+
+  ORGANIZATION_NETWORKS = "panw-iot-3rd-party-cisco-meraki-get-networks"
+  ORGANIZATIONS = "panw-iot-3rd-party-cisco-meraki-get-organizations"
+  NETWORK_DEVICES="panw-iot-3rd-party-cisco-meraki-get-network-devices"
+
+  def populate_organizations_networks():
+      if ORGANIZATION_NAMES:
+          ORGANIZATION_NAMES_ARR = ORGANIZATION_NAMES.split(",")
+      if NETWORK_NAMES:
+          NETWORK_NAMES_ARR = NETWORK_NAMES.split(",")
+
+  def send_status_to_panw_iot_cloud(status, msg):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      resp = demisto.executeCommand("panw-iot-3rd-party-report-status-to-panw", {
+          "status": status,
+          "message": msg,
+          "integration_name": "cisco_meraki",
+          "playbook_name": "SendAllCiscoMerakiNetworkDevicesToPanwIoTCloud",
+          "asset_type": 'device',
+          "custom_integration_name":USING_MERAKI_INSTANCE,
+          "timestamp": int(round(time.time() * 1000))
+      })
+
+      if isError(resp[0]):
+          raise Exception(resp[0])
+      return resp
+
+  def convert_meraki_network_device_attributes_to_panw_iot_attributes(network_device):
+      device={}
+      if 'mac' in network_device.keys():
+          raw_mac = network_device['mac']
+          if raw_mac and raw_mac != '':
+              device['deviceid']=raw_mac
+          else:
+              if 'lanIp' in network_device.keys():
+                  ip = network_device['lanIp']
+                  if ip and ip != '':
+                      device['deviceid']=ip
+                  else:
+                      return
+              else:
+                  return
+      if 'lanIp' in network_device.keys():
+          ip = network_device['lanIp']
+          if ip:
+              device['ip']=ip
+
+      if 'serial' in network_device.keys():
+          serial = network_device['serial']
+          if serial:
+              device['display_sn']=serial
+      if 'model' in network_device.keys():
+          model = network_device['model']
+          if model:
+              device['display_model']=model
+      if 'firmware' in network_device.keys():
+          firmware = network_device['firmware']
+          if firmware:
+              device['display_firmwareVer']=firmware
+      if 'name' in network_device.keys():
+          name = network_device['name']
+          if name:
+              device['display_hostname']=name
+      return device
+
+
+  def report_devices_panw_iot_cloud(device_list, retry=0):
+      demisto.info(f'Reporting network device list: {device_list}')
+
+      response = demisto.executeCommand("panw-iot-3rd-party-report-devices", {
+          "DeviceData":device_list,
+          "IntegrationName":"cisco_meraki",
+          "pageLength":"100"
+      })
+      if isError(response[0]):
+          err_msg = f'Error while reporting the device data to the PANW IoT Cloud - '+str(response[0]['Contents'])
+          if retry == 0:
+              time.sleep(1)
+              return report_devices_panw_iot_cloud(device_list, retry=1)
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def get_meraki_organizations():
+      try:
+          command_params={}
+          command_params['using'] = USING_MERAKI_INSTANCE
+          return executeCommand(ORGANIZATIONS, command_params)
+      except Exception as e:
+          raise Exception('error while retrieving the meraki organizations :'+str(e))
+
+  def get_meraki_networks(organizationID):
+      try:
+          command_params={}
+          command_params['using'] = USING_MERAKI_INSTANCE
+          command_params['organizationID']=organizationID
+          return executeCommand(ORGANIZATION_NETWORKS, command_params)
+      except Exception as e:
+          raise Exception('error while retrieving the meraki networks :'+str(e))
+
+  def get_meraki_network_devices(networkID):
+      try:
+          command_params={}
+          command_params['using'] = USING_MERAKI_INSTANCE
+          command_params['networkID'] = networkID
+          return executeCommand(NETWORK_DEVICES, command_params)
+      except Exception as e:
+          raise Exception('error while retrieving the meraki devices :'+str(e))
+
+
+  def executeCommand(command, params):
+      try:
+          res = demisto.executeCommand(command, params)
+          if (not isinstance(res, list)
+              or 'Contents' not in res[0]
+              or isinstance(res[0]['Contents'], str)):
+              return None
+          if isinstance(res[0]['Contents'], dict):
+              result=[]
+              result.append(res[0]['Contents'])
+              return result
+          return res[0]['Contents']
+      except Exception as e:
+          raise Exception(f'error while calling the cisco meraki command : {command} and the error is: {e}')
+
+  def getPANWNetworkDevice(devices):
+      demisto.info(f'cisco meraki network devices: {devices}')
+      network_devices = []
+      if devices:
+          for each_device in devices:
+              network_device = convert_meraki_network_device_attributes_to_panw_iot_attributes(each_device)
+              network_devices.append(network_device)
+      return network_devices
+
+
+  ''' COMMAND FUNCTION '''
+  def get_and_process_meraki_devices(args):
+      organizations = get_meraki_organizations()
+      demisto.info(f'organizations:{organizations}')
+      total_devices_upserted=0
+      total_devices_updated=0
+      total_no_of_clients=0
+      if organizations:
+          if (ORGANIZATION_NAMES_ARR is None or len(ORGANIZATION_NAMES_ARR) == 0) and (NETWORK_NAMES_ARR is None or len(NETWORK_NAMES_ARR) == 0):
+              for organization in organizations:
+                  demisto.info(f'organization:{organization}')
+                  organizationID = organization['id']
+                  networks = get_meraki_networks(organizationID)
+                  if networks:
+                      demisto.info(f'networks:{networks}')
+                      for network in networks:
+                          networkID = network['id']
+                          networkName = network['name']
+                          network_devices = get_meraki_network_devices(networkID)
+                          if (network_devices is None or (isinstance(network_devices, list) and len(network_devices) == 0)) or (isinstance(network_devices, dict) and 'errors' in network_devices.keys()) or isinstance(network_devices, str):
+                              demisto.info(f'No Devices found for network name {networkName} and id {networkID}')
+                          else:
+                              demisto.info(f'Devices for network name {networkName} and id {networkID}: {network_devices}')
+                              panw_network_devices = getPANWNetworkDevice(network_devices)
+                              if panw_network_devices and len(panw_network_devices) > 0:
+                                  demisto.info(f'panw_network_devices:{panw_network_devices}')
+                                  status = report_devices_panw_iot_cloud(panw_network_devices)
+                                  demisto.info(f'panw_network_devices status: {status}')
+                                  devices_updated = status['updatedDeviceNum']
+                                  devices_upserted = status['upsertedDeviceNum']
+                                  total_no_of_clients+=len(panw_network_devices)
+                                  total_devices_updated+=devices_updated
+                                  total_devices_upserted+=devices_upserted
+          else:
+              for organization in organizations:
+                  organizationID = organization['id']
+                  organizationName = organization['name']
+                  if ORGANIZATION_NAMES_ARR:
+                      for each_organization_name in ORGANIZATION_NAMES_ARR:
+                          if each_organization_name == organizationName:
+                              demisto.info(f'matched organization:{each_organization_name}')
+                              networks = get_meraki_networks(organizationID)
+                              if networks:
+                                  for network in networks:
+                                      networkID = network['id']
+                                      networkName = network['name']
+                                      if NETWORK_NAMES_ARR:
+                                          for network_name in NETWORK_NAMES_ARR:
+                                              if networkName == network_name:
+                                                  network_devices = get_meraki_network_devices(networkID)
+                                                  if (network_devices is None or (isinstance(network_devices, list) and len(network_devices) == 0)) or (isinstance(network_devices, dict) and 'errors' in network_devices.keys()) or isinstance(network_devices, str):
+                                                      demisto.info(f'No Devices found for network name {networkName} and id {networkID}')
+                                                  else:
+                                                      demisto.info(f'Devices for network name {networkName} and id {networkID}: {network_devices}')
+                                                      panw_network_devices = getPANWNetworkDevice(network_devices)
+                                                      if panw_network_devices and len(panw_network_devices) > 0:
+                                                          demisto.info(f'panw_network_devices:{panw_network_devices}')
+                                                          status = report_devices_panw_iot_cloud(panw_network_devices)
+                                                          demisto.info(f'panw_network_devices status: {status}')
+                                                          devices_updated = status['updatedDeviceNum']
+                                                          devices_upserted = status['upsertedDeviceNum']
+                                                          total_no_of_clients+=len(panw_network_devices)
+                                                          total_devices_updated+=devices_updated
+                                                          total_devices_upserted+=devices_upserted
+                                      else:
+                                          network_devices = get_meraki_network_devices(networkID)
+                                          if (network_devices is None or (isinstance(network_devices, list) and len(network_devices) == 0)) or (isinstance(network_devices, dict) and 'errors' in network_devices.keys()) or isinstance(network_devices, str):
+                                              demisto.info('No Devices found for network name {networkName} and id {networkID}')
+                                          else:
+                                              demisto.info(f'Devices for network name {networkName} and id {networkID}: {network_devices}')
+                                              panw_network_devices = getPANWNetworkDevice(network_devices)
+                                              if panw_network_devices and len(panw_network_devices) > 0:
+                                                  demisto.info(f'panw_network_devices:{panw_network_devices}')
+                                                  status = report_devices_panw_iot_cloud(panw_network_devices)
+                                                  demisto.info(f'panw_network_devices status: {status}')
+                                                  devices_updated = status['updatedDeviceNum']
+                                                  devices_upserted = status['upsertedDeviceNum']
+                                                  total_no_of_clients+=len(panw_network_devices)
+                                                  total_devices_updated+=devices_updated
+                                                  total_devices_upserted+=devices_upserted
+
+                  else:
+                      networks = get_meraki_networks(organizationID)
+                      if networks:
+                          demisto.info(f'networks:{networks}')
+                          for network in networks:
+                              networkID = network['id']
+                              networkName = network['name']
+                              if NETWORK_NAMES_ARR:
+                                  for network_name in NETWORK_NAMES_ARR:
+                                      if networkName == network_name:
+                                          network_devices = get_meraki_network_devices(networkID)
+                                          if (network_devices is None or (isinstance(network_devices, list) and len(network_devices) == 0)) or (isinstance(network_devices, dict) and 'errors' in network_devices.keys()) or isinstance(network_devices, str):
+                                              demisto.info(f'No Devices found for network name {networkName} and id {networkID}')
+                                          else:
+                                              demisto.info(f'Devices for network name {networkName} and id {networkID}: {network_devices}')
+                                              panw_network_devices = getPANWNetworkDevice(network_devices)
+                                              if panw_network_devices and len(panw_network_devices) > 0:
+                                                  demisto.info(f'panw_network_devices:{panw_network_devices}')
+                                                  status = report_devices_panw_iot_cloud(panw_network_devices)
+                                                  demisto.info(f'panw_network_devices status: {status}')
+                                                  devices_updated = status['updatedDeviceNum']
+                                                  devices_upserted = status['upsertedDeviceNum']
+                                                  total_no_of_clients+=len(panw_network_devices)
+                                                  total_devices_updated+=devices_updated
+                                                  total_devices_upserted+=devices_upserted
+                              else:
+                                  network_devices = get_meraki_network_devices(networkID)
+                                  if (network_devices is None or (isinstance(network_devices, list) and len(network_devices) == 0)) or (isinstance(network_devices, dict) and 'errors' in network_devices.keys()) or isinstance(network_devices, str):
+                                      demisto.info(f'No Devices found for network name {networkName} and id {networkID}')
+                                  else:
+                                      demisto.info(f'Devices for network name {networkName} and id {networkID}: {network_devices}')
+                                      panw_network_devices = getPANWNetworkDevice(network_devices)
+                                      if panw_network_devices and len(panw_network_devices) > 0:
+                                          demisto.info(f'panw_network_devices:{panw_network_devices}')
+
+                                          status = report_devices_panw_iot_cloud(panw_network_devices)
+                                          demisto.info(f'panw_network_devices status: {status}')
+                                          devices_updated = status['updatedDeviceNum']
+                                          devices_upserted = status['upsertedDeviceNum']
+                                          total_no_of_clients+=len(panw_network_devices)
+                                          total_devices_updated+=devices_updated
+                                          total_devices_upserted+=devices_upserted
+
+          msg = f'Total network devices updated {total_devices_updated} and total devices upserted {total_devices_upserted}'
+          # send_status_to_panw_iot_cloud('success', msg)
+          op={}
+          op['Total Network Devices found'] = total_no_of_clients
+          op['No. of Devices Updated'] = total_devices_updated
+          op['No. of Devices Inserted'] = total_devices_upserted
+          return op
+      else:
+          msg = 'No Organizations found for the cisco meraki cloud configured.'
+          send_status_to_panw_iot_cloud('error', msg)
+          return_results(msg)
+
+
+  ''' MAIN FUNCTION '''
+  def main():
+      try:
+          populate_organizations_networks()
+          devices = get_and_process_meraki_devices(demisto.args())
+          return_results(CommandResults(readable_output=tableToMarkdown("Cisco Meraki Network Device Summary:", devices, removeNull=True)))
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Failed to execute SendAllCiscoMerakiNetworkDevicesToPanwIoTCloud. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('SendAllCiscoMerakiNetworkDevicesToPanwIoTCloud', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
