@@ -11,7 +11,6 @@ contentitemexportablefields:
     toServerVersion: ""
 description: Handles incidents triggered from PANW Iot (Zingbox) UI to un-quarantine
   a device in Cisco ISE.
-dirtyInputs: true
 id: Quarantine Device in Cisco ISE - PANW IoT 3rd Party Integration
 inputs: []
 name: Quarantine Device in Cisco ISE - PANW IoT 3rd Party Integration
@@ -38,11 +37,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 3dd0dc5b-fe4f-4e20-8cf6-669102b256e1
+      id: f61725fb-4d08-4b05-8a62-4d5fc4e3eb47
       iscommand: false
       name: ""
       version: -1
-    taskid: 3dd0dc5b-fe4f-4e20-8cf6-669102b256e1
+    taskid: f61725fb-4d08-4b05-8a62-4d5fc4e3eb47
     timertriggers: []
     type: start
     view: |-
@@ -75,13 +74,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 8cca8751-ceec-4426-88ca-f7bf36711be3
+      id: 29436cf7-ce30-4ee9-855e-6b8e719e12c9
       iscommand: false
       name: Check Cisco ISE instances. Are any available?
       script: 292ae09c-ada1-4d3c-840a-add10bfefa5a
       type: condition
       version: -1
-    taskid: 8cca8751-ceec-4426-88ca-f7bf36711be3
+    taskid: 29436cf7-ce30-4ee9-855e-6b8e719e12c9
     timertriggers: []
     type: condition
     view: |-
@@ -119,13 +118,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IoT cloud.
-      id: f984a139-a596-40a7-8a47-73bce1cc777d
+      id: fc273e5a-01c8-4883-8170-b9dd785abaf0
       iscommand: true
       name: Send error status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: f984a139-a596-40a7-8a47-73bce1cc777d
+    taskid: fc273e5a-01c8-4883-8170-b9dd785abaf0
     timertriggers: []
     type: regular
     view: |-
@@ -162,13 +161,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 5ab03001-32fe-44c5-8c9d-4586deb40722
+      id: 4eaffdd7-b7fa-4b36-8d00-84babf946d16
       iscommand: false
       name: Quarantine Endpoint
       script: QuarantinePANWIoTDevice
       type: regular
       version: -1
-    taskid: 5ab03001-32fe-44c5-8c9d-4586deb40722
+    taskid: 4eaffdd7-b7fa-4b36-8d00-84babf946d16
     timertriggers: []
     type: regular
     view: |-
@@ -202,13 +201,13 @@ tasks:
       description: Checks whether the given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If an array is provided, will return yes
         if one of the entries returned an error.
-      id: 8b735dc8-068f-4c97-847a-5d225dc14b1d
+      id: 415e7a93-a6f0-4662-85eb-8807b5e8f9a0
       iscommand: false
       name: Was there an error?
       script: isError
       type: condition
       version: -1
-    taskid: 8b735dc8-068f-4c97-847a-5d225dc14b1d
+    taskid: 415e7a93-a6f0-4662-85eb-8807b5e8f9a0
     timertriggers: []
     type: condition
     view: |-
@@ -246,13 +245,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: c329473f-513b-4fe6-8e6e-1ec95e8b5cf9
+      id: 62019f72-556a-466d-86af-9a2f1698fa24
       iscommand: true
       name: Send error status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: c329473f-513b-4fe6-8e6e-1ec95e8b5cf9
+    taskid: 62019f72-556a-466d-86af-9a2f1698fa24
     timertriggers: []
     type: regular
     view: |-
@@ -290,13 +289,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: fe70a677-f16a-4ae0-8032-cbf19b7ae9e2
+      id: 778bd95a-1957-4164-8d62-e3b641c96c06
       iscommand: true
       name: Send success status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: fe70a677-f16a-4ae0-8032-cbf19b7ae9e2
+    taskid: 778bd95a-1957-4164-8d62-e3b641c96c06
     timertriggers: []
     type: regular
     view: |-
@@ -319,13 +318,13 @@ tasks:
     task:
       brand: Builtin
       description: Closes the current incident.
-      id: 0c8de234-33dc-4b90-88dd-8121a9d7bbf7
+      id: 19a75e61-013a-4a96-8b78-fbf27a2a2fd5
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 0c8de234-33dc-4b90-88dd-8121a9d7bbf7
+    taskid: 19a75e61-013a-4a96-8b78-fbf27a2a2fd5
     timertriggers: []
     type: regular
     view: |-
