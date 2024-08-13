@@ -1,0 +1,305 @@
+args:
+- name: instance_name
+commonfields:
+  id: d5a8fb65-8bef-43be-8b9c-2cded0949211
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.14.95956
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendSolarwindsUDTdatatoPANWIoT
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendSolarwindsUDTdatatoPANWIoT', 'start', __line__())
+
+
+
+  import json
+  import traceback
+  import time
+  import ipaddress
+
+  PANW_IOT_INSTANCE = "PANW IoT 3rd Party Integration Instance"
+  SOLARWINDS_INSTANCE = demisto.args().get('instance_name')
+
+  def send_status_to_panw_iot_cloud(status, msg, solarwinds_udt_active_instance):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      resp = demisto.executeCommand(
+          "panw-iot-3rd-party-report-status-to-panw",
+          {
+              "status": status,
+              "message": msg,
+              "integration_name": "solarwinds_udt",
+              "playbook_name": "Import SolarWinds UDT Data to PANW IoT cloud",
+              "asset_type": "device",
+              "custom_integration_name": solarwinds_udt_active_instance,
+              "timestamp": int(round(time.time() * 1000)),
+
+          },
+      )
+      if isError(resp[0]):
+          err_msg = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+      demisto.info(f"Successfully report status to PANW IoT Cloud")
+
+
+  def send_devices_to_panw_iot_cloud(devices_list, retry=0):
+      """
+      Sends assets to PANW IoT Cloud.
+      :type devices_list: ``array``
+      :param devices_list: List of assets to be sent to PANW IoT cloud
+      """
+      demisto.info(f"Function send_devices_to_panw_iot_cloud has been triggered")
+      res = ""
+      resp = demisto.executeCommand(
+          "panw-iot-3rd-party-report-devices",
+          {
+              "DeviceData": devices_list,
+              "pageLength": None,
+              "IntegrationName": "solarwinds_udt",
+          },
+      )
+      if isError(resp[0]):
+          if retry == 0:
+              time.sleep(1)
+              return send_devices_to_panw_iot_cloud(devices_list, retry=1)
+          err_msg = f'Error, could not send devices to PANW IoT Cloud - {resp[0].get("Contents")}'
+          demisto.error(err_msg)
+          raise Exception(err_msg)
+      if resp[0]["Contents"]:
+          #print(resp[0]["Contents"])
+          demisto.info(f"Successfully report devices to PANW IoT Cloud:- {resp[0]['Contents']}")
+          res = resp[0]["Contents"]
+      return res
+
+  def validate_ip_address(address):
+      try:
+          ip = ipaddress.ip_address(address)
+          return True
+      except ValueError:
+          return False
+
+
+  def build_ip_node_cache():
+      page_length = 1000
+      offset = 1
+      ip_node_cache = {}
+
+      while(True):
+          nodes = []
+          res = demisto.executeCommand("swis_get_orion_nodes", {
+              'offset' : offset,
+              'page_length' : page_length,
+              'using' : SOLARWINDS_INSTANCE
+          })
+          if isError(res[0]):
+              err_msg = f'Error, failed to get node data from SolarWinds UDT - {res[0].get("Contents")}'
+              demisto.error(err_msg)
+              raise Exception(err_msg)
+          nodes = res[0]['Contents']['results']
+          for node in nodes:
+              node_ip = node.get("IPAddress")
+              if validate_ip_address(node_ip):
+                  ip_node_cache[node_ip] = node
+          offset += page_length
+
+          if len(nodes) == 0  or len(nodes) < page_length or nodes is None:
+              break
+
+      return ip_node_cache
+
+  def get_wired_clients(page_length=1000, offset=1):
+      res = demisto.executeCommand("swis_get_wired_endpoints", {
+          'offset' : offset,
+          'page_length' : page_length,
+          'using' : SOLARWINDS_INSTANCE
+      })
+      if isError(res[0]):
+          err_msg = f'Error, failed to get wired endpoint data from SolarWinds UDT - {res[0].get("Contents")}'
+          demisto.error(err_msg)
+      endpoints = res[0]['Contents']['results']
+      return endpoints
+
+  def get_wireless_clients(page_length=1000, offset=1):
+      res = demisto.executeCommand("swis_get_wireless_endpoints", {
+          'offset' : offset,
+          'page_length' : page_length,
+          'using' : SOLARWINDS_INSTANCE
+      })
+      if isError(res[0]):
+          err_msg = f'Error, failed to get wireless endpoint data from SolarWinds UDT - {res[0].get("Contents")}'
+          demisto.error(err_msg)
+      endpoints = res[0]['Contents']['results']
+      return endpoints
+
+  def build_iot_device_payload(endpoint, node, connected_node_ip, wired_or_wireless, direct_connection=True):
+      mac = endpoint.get("MACAddress")
+      if mac:
+          mac = mac.lower()
+      device_payload = {
+          'deviceid' : mac,
+          'MAC': mac,
+          'connect_evtContent.ip' : endpoint.get("IPAddress")
+      }
+
+      if wired_or_wireless == 'wired':
+          if direct_connection:
+              device_payload['display_switchName'] = endpoint.get('ConnectedTo')
+              device_payload['display_phyPort'] = endpoint.get('PortNumber')
+              device_payload['display_switchIP'] = connected_node_ip
+          device_payload['display_hostname'] = endpoint.get('HostName')
+          device_payload['display_vlan'] = endpoint.get('VLAN')
+      elif wired_or_wireless == 'wireless':
+          device_payload['display_ap_name'] = endpoint.get('AccessPoint')
+          device_payload['display_ssid'] = endpoint.get('SSID')
+          device_payload['display_hostname'] = endpoint.get('DNSName')
+          device_payload['display_ap_ip'] = connected_node_ip
+      if node:
+          if not device_payload.get("display_hostname"):
+              if node.get('DisplayName'):
+                  device_payload['display_hostname'] = node.get('DisplayName')
+              elif node.get('NodeName'):
+                  device_payload['display_hostname'] = node.get('NodeName')
+              elif node.get('SysName'):
+                  device_payload['display_hostname'] = node.get('SysName')
+              elif node.get('DNS'):
+                  device_payload['display_hostname'] = node.get('DNS')
+
+          device_payload['display_desc'] = node.get('Description')
+          device_payload['IOSImage'] = node.get('IOSImage')
+          device_payload['display_firmwareVer'] = node.get('IOSVersion')
+          device_payload['display_location'] = node.get('Location')
+          #device_payload['snmp_description'] = node.get('NodeDescription')
+          #device_payload['machine_type'] = node.get('MachineType')
+          #device_payload['is_server'] = node.get('IsServer')
+
+      return device_payload
+
+
+  def send_solarwinds_data_to_panw_iot():
+      ip_node_cache = build_ip_node_cache()
+      offset = 1
+      page_length = 1000
+      endpoint_cache = []
+      upserts = 0
+      updates = 0
+      res = {}
+      while(True):
+          iot_device_list = []
+          wired_endpoints = get_wired_clients(page_length, offset)
+          for endpoint in wired_endpoints:
+              mac = endpoint.get("MACAddress")
+              ip = endpoint.get("IPAddress")
+              if mac in endpoint_cache:
+                  continue
+              if endpoint.get("ConnectionTypeName") == "Direct":
+                  connected_node_id = endpoint.get("NodeID")
+                  connected_node_ip = None
+                  for key in ip_node_cache:
+                      if connected_node_id == ip_node_cache[key].get("NodeID"):
+                          connected_node_ip = key
+                          break
+                  iot_device_list.append(build_iot_device_payload(endpoint, ip_node_cache.get(ip), connected_node_ip, 'wired', True))
+                  endpoint_cache.append(mac)
+              else:
+              # elif endpoint.get("ConnectionTypeName") == "Indirect":
+                  connected_node_id = endpoint.get("NodeID")
+                  connected_node_ip = None
+                  for key in ip_node_cache:
+                      if connected_node_id == ip_node_cache[key].get("NodeID"):
+                          connected_node_ip = key
+                          break
+                  iot_device_list.append(build_iot_device_payload(endpoint, ip_node_cache.get(ip), connected_node_ip, 'wired', False))
+                  endpoint_cache.append(mac)
+
+
+          #Report Devices to IoT
+          res = send_devices_to_panw_iot_cloud(iot_device_list)
+          updates += res.get("updatedDeviceNum")
+          upserts += res.get("upsertedDeviceNum")
+          send_status_to_panw_iot_cloud("success", "Solarwind UDT data import in progress", SOLARWINDS_INSTANCE)
+
+          offset += page_length
+          if len(wired_endpoints) == 0  or len(wired_endpoints) < page_length or wired_endpoints is None:
+              break
+
+      offset = 1
+      page_length = 1000
+      while(True):
+          iot_device_list = []
+          wireless_endpoints = get_wireless_clients(page_length, offset)
+          for endpoint in wireless_endpoints:
+              mac = endpoint.get("MACAddress")
+              ip = endpoint.get("IPAddress")
+              connected_node_id = endpoint.get("NodeID")
+              connected_node_ip = None
+              for key in ip_node_cache:
+                  if connected_node_id == ip_node_cache[key].get("NodeID"):
+                      connected_node_ip = key
+                      break
+              iot_device_list.append(build_iot_device_payload(endpoint, ip_node_cache.get(ip),connected_node_ip, 'wireless'))
+              endpoint_cache.append(mac)
+
+
+          res = send_devices_to_panw_iot_cloud(iot_device_list)
+          updates += res.get("updatedDeviceNum")
+          upserts += res.get("upsertedDeviceNum")
+          send_status_to_panw_iot_cloud("success", "Solarwind UDT data import in progress", SOLARWINDS_INSTANCE)
+          offset += page_length
+          if len(wireless_endpoints) == 0  or len(wireless_endpoints) < page_length or wireless_endpoints is None:
+              break
+
+
+      results = {
+          "Devices Imported From Solarwinds UDT": len(endpoint_cache),
+          "New Devices learned on IoT": upserts,
+          "Devices Updated on IoT": updates
+      }
+      return results
+
+  def main():
+      try:
+          send_status_to_panw_iot_cloud("success", "Starting Solarwind UDT data import playboook", SOLARWINDS_INSTANCE)
+          res = send_solarwinds_data_to_panw_iot()
+
+
+          return_results(
+              CommandResults(
+                  readable_output=tableToMarkdown("Asset Report Summary:", res, removeNull=True),
+
+              )
+          )
+      except Exception as ex:
+          send_status_to_panw_iot_cloud("error", str(ex), SOLARWINDS_INSTANCE)
+          demisto.error(traceback.format_exc())
+          return_error(str(ex))
+
+
+  if __name__ in ("__main__", "__builtin__", "builtins"):
+      main()
+
+
+  register_module_line('SendSolarwindsUDTdatatoPANWIoT', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
