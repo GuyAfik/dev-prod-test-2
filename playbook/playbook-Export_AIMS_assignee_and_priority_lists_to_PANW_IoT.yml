@@ -1,0 +1,471 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: Export assignee list and work order priority list from AIMS to PANW IoT
+  cloud
+dirtyInputs: true
+id: Export AIMS assignee and priority lists to PANW IoT
+inputs: []
+name: Export AIMS assignee and priority lists to PANW IoT
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "24"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7b4ca39f-0c68-4976-8974-4193447323a8
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 7b4ca39f-0c68-4976-8974-4193447323a8
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 70
+        }
+      }
+  "3":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "21"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      using:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Get a list of all employees in the AIMS server
+      id: ff1ee2e7-a4f7-4f68-8827-dc0e27b9f1e7
+      iscommand: true
+      name: Get employee list
+      script: '|||aims-get-employee-list'
+      type: regular
+      version: -1
+    taskid: ff1ee2e7-a4f7-4f68-8827-dc0e27b9f1e7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 380
+        }
+      }
+  "8":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: alert
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: aims
+      message:
+        simple: AIMS instance is not enabled
+      playbook_name:
+        simple: Export AIMS assignee and priority lists to PANW IoT
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message to PANW IOT cloud.
+      id: a7478151-ce41-456b-891e-2013683bdb5c
+      iscommand: true
+      name: Send disabled status back to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: a7478151-ce41-456b-891e-2013683bdb5c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 130,
+          "y": 720
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 02ccec95-7405-4ebf-86a2-5b77b0ba6b1c
+      iscommand: true
+      name: Close Investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 02ccec95-7405-4ebf-86a2-5b77b0ba6b1c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 1245
+        }
+      }
+  "10":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: alert
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: aims
+      message:
+        simple: Error while getting data from AIMS
+      playbook_name:
+        simple: Export AIMS assignee and priority lists to PANW IoT
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message to PANW IOT cloud.
+      id: 444dafcc-7e0f-4718-8da0-7242a82240d4
+      iscommand: true
+      name: Send error status back to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 444dafcc-7e0f-4718-8da0-7242a82240d4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 1060
+        }
+      }
+  "11":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: alert
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: aims
+      message:
+        simple: Successfully received data from AIMS
+      playbook_name:
+        simple: Export AIMS assignee and priority lists to PANW IoT
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 6d199fef-2aca-404f-8bad-6bf3d4956818
+      iscommand: true
+      name: Send success status back to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 6d199fef-2aca-404f-8bad-6bf3d4956818
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 900,
+          "y": 1060
+        }
+      }
+  "13":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "21"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      using:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Get the priority list for work orders in AIMS
+      id: 3ecd455b-6f31-4238-8d84-19eb28bfcaf6
+      iscommand: true
+      name: Get work order priority list
+      script: '|||aims-get-work-order-priority-list'
+      type: regular
+      version: -1
+    taskid: 3ecd455b-6f31-4238-8d84-19eb28bfcaf6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 990,
+          "y": 380
+        }
+      }
+  "21":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "22"
+      "yes":
+      - "10"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: 334746ee-06fd-4e98-8196-023751acf9c1
+      iscommand: false
+      name: Was there an error getting data from AIMS?
+      script: isError
+      type: condition
+      version: -1
+    taskid: 334746ee-06fd-4e98-8196-023751acf9c1
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": 550
+        }
+      }
+  "22":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "22"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "23"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      IntegrationName:
+        simple: aims
+      MetaData:
+        simple: '{"EmployeeList": ${CommandOutput.EmployeeList}, "WorkOrderPriorityList":
+          ${CommandOutput.WorkOrderPriorityList}}'
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Send AIMS maps and list data to PANW IOT cloud
+      id: 4c60c8d8-d279-4f72-8ac5-309745a18bcd
+      iscommand: true
+      name: Send assignee and priority lists to PANW IoT
+      script: '|||panw-iot-3rd-party-report-metadata'
+      type: regular
+      version: -1
+    taskid: 4c60c8d8-d279-4f72-8ac5-309745a18bcd
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 900,
+          "y": 720
+        }
+      }
+  "23":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "23"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "11"
+      "yes":
+      - "10"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
+        to check the previous task entries. If array is provided, will return yes
+        if one of the entries returned an error.
+      id: 20ba923d-b743-476d-8052-3f27fdc24f18
+      iscommand: false
+      name: Was there an error sending data to PANW IoT?
+      script: isError
+      type: condition
+      version: -1
+    taskid: 20ba923d-b743-476d-8052-3f27fdc24f18
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 900,
+          "y": 890
+        }
+      }
+  "24":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "8"
+      "yes":
+      - "3"
+      - "13"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - AIMS
+      instancename:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available and provided instance
+        is Active. Otherwise returns 'no'.
+      id: 34147fab-c2eb-404e-893b-c771fe55e38f
+      iscommand: false
+      name: Is AIMS Integration enabled?
+      script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+      type: condition
+      version: -1
+    taskid: 34147fab-c2eb-404e-893b-c771fe55e38f
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 205
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "21_10_yes": 0.3,
+      "21_22_no": 0.54,
+      "23_10_yes": 0.31,
+      "24_13_yes": 0.48,
+      "24_3_yes": 0.72
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1270,
+        "width": 1240,
+        "x": 130,
+        "y": 70
+      }
+    }
+  }
