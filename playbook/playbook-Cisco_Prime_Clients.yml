@@ -31,11 +31,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 83794c83-9a49-4bf0-89cd-468713cd8e96
+      id: 311ec46c-d5a0-49df-8592-dbf9a0041134
       iscommand: false
       name: ""
       version: -1
-    taskid: 83794c83-9a49-4bf0-89cd-468713cd8e96
+    taskid: 311ec46c-d5a0-49df-8592-dbf9a0041134
     timertriggers: []
     type: start
     view: |-
@@ -72,13 +72,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: bfc249c0-59cb-4680-8e2f-2c41f505dd70
+      id: 5605fbd2-41de-427d-82f4-c31149f9d7fd
       iscommand: false
       name: Is Cisco Prime Available?
       script: IsIntegrationAvailable
       type: condition
       version: -1
-    taskid: bfc249c0-59cb-4680-8e2f-2c41f505dd70
+    taskid: 5605fbd2-41de-427d-82f4-c31149f9d7fd
     timertriggers: []
     type: condition
     view: |-
@@ -122,13 +122,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 7f9a9f95-d35c-4df4-80a0-5a3c2c894897
+      id: de619ba1-1a83-4ea1-8035-99e743119166
       iscommand: true
       name: Send Disable Status to IOT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 7f9a9f95-d35c-4df4-80a0-5a3c2c894897
+    taskid: de619ba1-1a83-4ea1-8035-99e743119166
     timertriggers: []
     type: regular
     view: |-
@@ -165,13 +165,13 @@ tasks:
     skipunavailable: false
     task:
       brand: Palo Alto Networks IoT 3rd Party
-      id: 6d45ccb7-3e27-4483-8687-738fb3a0a9f2
+      id: 0008a121-e2f8-47d9-889d-3a7c6cf36667
       iscommand: false
       name: Export Device Attributes from Cisco Prime to PANW
       script: ExportDeviceAttributesFromPrimeToPANWIoTCloud
       type: regular
       version: -1
-    taskid: 6d45ccb7-3e27-4483-8687-738fb3a0a9f2
+    taskid: 0008a121-e2f8-47d9-889d-3a7c6cf36667
     timertriggers: []
     type: regular
     view: |-
@@ -195,13 +195,13 @@ tasks:
     task:
       brand: Builtin
       description: commands.local.cmd.close.inv
-      id: aadb31ef-d9a8-4c1e-89ef-b135f291bc62
+      id: 8382ad3e-d16f-4c9d-8f80-edc078964bdc
       iscommand: true
       name: Close Investigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: aadb31ef-d9a8-4c1e-89ef-b135f291bc62
+    taskid: 8382ad3e-d16f-4c9d-8f80-edc078964bdc
     timertriggers: []
     type: regular
     view: |-
@@ -236,13 +236,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 780954f6-a869-4610-86ba-ad5d93e6bb28
+      id: 9f2926bd-cf89-4dda-845f-b0f3af6eff3f
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 780954f6-a869-4610-86ba-ad5d93e6bb28
+    taskid: 9f2926bd-cf89-4dda-845f-b0f3af6eff3f
     timertriggers: []
     type: condition
     view: |-
@@ -282,13 +282,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 8b09b843-cc7b-4820-82d0-00637c2a0abd
+      id: 48589b27-7f18-436f-8957-27608a063f89
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 8b09b843-cc7b-4820-82d0-00637c2a0abd
+    taskid: 48589b27-7f18-436f-8957-27608a063f89
     timertriggers: []
     type: regular
     view: |-
@@ -328,13 +328,13 @@ tasks:
     task:
       brand: Palo Alto Networks IoT 3rd Party
       description: Sends a status message back to PANW IOT cloud.
-      id: 4fee70d6-2da1-4853-8e64-8bcf85529e87
+      id: 3811fb4a-b85a-46b0-8b3b-266657e721a2
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
       type: regular
       version: -1
-    taskid: 4fee70d6-2da1-4853-8e64-8bcf85529e87
+    taskid: 3811fb4a-b85a-46b0-8b3b-266657e721a2
     timertriggers: []
     type: regular
     view: |-
@@ -358,13 +358,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 3b022c78-73f9-43e6-86b4-a335c78060ff
+      id: f7fc27e6-dbb7-4c3e-8578-74232a476a0d
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 3b022c78-73f9-43e6-86b4-a335c78060ff
+    taskid: f7fc27e6-dbb7-4c3e-8578-74232a476a0d
     timertriggers: []
     type: regular
     view: |-
