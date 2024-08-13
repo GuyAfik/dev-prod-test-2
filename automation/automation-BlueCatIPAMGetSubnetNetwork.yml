@@ -1,0 +1,114 @@
+args:
+- name: bluecat_instance_name
+  required: true
+- default: true
+  defaultValue: "false"
+  description: 'Overwrites the IPAM data ex: name etc. '
+  name: data_overwrite
+  required: true
+commonfields:
+  id: BlueCatIPAMGetSubnetNetwork
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: BlueCatIPAMGetSubnetNetwork
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('BlueCatIPAMGetSubnetNetwork', 'start', __line__())
+
+
+  # BlueCat Integration Automation
+
+  BLUECAT_INSTANCE = demisto.args().get('bluecat_instance_name')
+  LOG_PREFIX = 'PaloAltoNetworks3rdPartyIntegration_BlueCat_IPAM_' + BLUECAT_INSTANCE
+
+  OVERRIDE_IPAM_DATA = ''
+  OVERRIDE_IPAM_DATA = demisto.args().get('data_overwrite')
+  if OVERRIDE_IPAM_DATA is None or OVERRIDE_IPAM_DATA == '':
+      OVERRIDE_IPAM_DATA='false'
+
+
+  # This will always be False, as there is no Site Info in BlueCat IPAM
+  OVERRIDE_IPAM_SITE='false'
+
+  def flatten_ipv4_list(data):
+      flat_list = []
+      if data:
+          for sublist in data:
+              for item in sublist:
+                  flat_list.append(item)
+      return flat_list
+
+  def get_bluecat_ipv4_object():
+      ipv4Objects = []
+      count = 1000
+      start = 0
+      response = ''
+      res = []
+      while True:
+          response = demisto.executeCommand("bluecat-get-ipv4-object", {
+              "count": count,
+              "start": start,
+              "using": BLUECAT_INSTANCE
+          })
+          if response[0]['Contents'] == None or response[0]['Contents'] == '':
+              break
+          ipv4Objects.append(response[0]['Contents'])
+          start += count
+      if isError(response[0]):
+          err_msg = f'Error, could not get BlueCat IPv4Objects - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+      res = flatten_ipv4_list(ipv4Objects)
+      return res
+
+  def send_subnet_info_to_panw_iot_cloud(get_bluecat_ipv4_object_list):
+      response = demisto.executeCommand("panw-iot-3rd-party-report-subnets", {
+          "integration_name":"ipam_bluecat",
+          "subnet_data":get_bluecat_ipv4_object_list,
+          "data_overwrite":str(OVERRIDE_IPAM_DATA),
+          "site_overwrite":str(OVERRIDE_IPAM_SITE),
+          "page_length":"1000"
+      })
+      if isError(response[0]):
+          err_msg = f'Error, couldn\'t report the bluecat subnet network info to panw iot cloud - '+str(response[0]['Contents'])
+          raise Exception(err_msg)
+
+      return response[0]['Contents']
+
+  def get_bluecat_ipv4_objects_and_send_to_panw():
+      get_bluecat_ipv4_object_list = get_bluecat_ipv4_object()
+      subnet_info = send_subnet_info_to_panw_iot_cloud(get_bluecat_ipv4_object_list)
+      return subnet_info
+
+  def main():
+      try:
+          endpoints_info = get_bluecat_ipv4_objects_and_send_to_panw()
+          return_results(endpoints_info)
+      except Exception as e:
+          raise Exception("Failed to get BlueCat Subnet Network data: %s" % str(e))
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+  register_module_line('BlueCatIPAMGetSubnetNetwork', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
