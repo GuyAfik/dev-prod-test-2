@@ -1,0 +1,129 @@
+args:
+- name: instance_name
+- isArray: true
+  name: file_list
+  required: true
+commonfields:
+  id: d04b33ef-792c-48bb-84c4-fa6f1b3a3bf1
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.14.98254
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendArubaAirWaveVisualRFFloorplansToPANWIoT
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendArubaAirWaveVisualRFFloorplansToPANWIoT', 'start', __line__())
+
+
+  from typing import Dict, Any
+  import traceback
+  import pathlib
+  import time
+  AIRWAVE_INSTACE = demisto.args().get("instance_name")
+
+  ''' STANDALONE FUNCTION '''
+  def send_status_to_panw_iot_cloud(status, msg):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      resp = demisto.executeCommand(
+          "panw-iot-3rd-party-report-status-to-panw",
+          {
+              "status": status,
+              "message": msg,
+              "integration_name": "aruba_airwave",
+              "playbook_name": "Import Aruba AirWave FloorPlans to PANW IoT",
+              "asset_type": "device",
+              "custom_integration_name": AIRWAVE_INSTACE,
+              "timestamp": int(round(time.time() * 1000)),
+
+          },
+      )
+      if isError(resp[0]):
+          err_msg = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+  def upload_floorplan_to_panw_iot_cmd(floorplan_image, floor_id, retry=0):
+      if not floorplan_image or not floor_id:
+          return None
+      res = demisto.executeCommand("panw-iot-3rd-party-upload-floorplan", {
+          "upload_file": floorplan_image,
+          "floor_id": floor_id
+      })
+      if isError(res[0]):
+          if retry == 0:
+              time.sleep(1)
+              return upload_floorplan_to_panw_iot_cmd(floorplan_image, floor_id, retry=1)
+          err_msg = f'Error, could not upload FloorPlan to PANW IoT Cloud - {res[0].get("Contents")}'
+          demisto.error(err_msg)
+          raise Exception(err_msg)
+      return res[0]["Contents"]
+
+  def upload_floorplans_to_panw_iot():
+      count = 0
+      file_list = demisto.args().get("file_list")
+      if not file_list:
+          raise Exception("No available images to upload")
+      for file in file_list:
+          entry_id = file.get("EntryID")
+          file_name = file.get("Name")
+          uuid = file_name.split("_")[0]
+          # Upload File
+          res = upload_floorplan_to_panw_iot_cmd(entry_id, uuid)
+          print(uuid, file_name)
+          if res == {'result': 'success'}:
+              count += 1
+          if count % 25 == 0:
+              send_status_to_panw_iot_cloud("success", "Aruba AirWave FloorPlans Import in Progress")
+      return {"Floorplans Uploaded": count}
+
+  ''' MAIN FUNCTION '''
+
+
+  def main():
+      try:
+          op_data = upload_floorplans_to_panw_iot()
+          send_status_to_panw_iot_cloud("success", "Aruba AirWave FloorPlans Import Successfull")
+          return_results(
+              CommandResults(
+                  readable_output=tableToMarkdown("VisualRF Floorplan Upload Summary:",
+                  op_data, removeNull=True),
+              )
+          )
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          err_msg = "Aruba AirWave FloorPlans Import Failed - %s" % str(ex)
+          send_status_to_panw_iot_cloud("error", err_msg)
+          return_error(f'Failed to execute SendArubaAirWaveVisualRFFloorplansToPANWIoT. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+
+  register_module_line('SendArubaAirWaveVisualRFFloorplansToPANWIoT', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
