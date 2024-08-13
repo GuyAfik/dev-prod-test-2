@@ -1,0 +1,954 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: 1.0.0
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dirtyInputs: true
+id: 64d9bd53-b132-46cb-8142-4275c1dd4074
+inputs: []
+name: Incremental Rapid7 Report Download Handling V2- PANW IoT 3rd Party Integration
+outputs: []
+sourceplaybookid: 66d4a7a8-e7cd-4593-877c-d2f23f71a33a
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "31"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 317e3ae5-bdc8-44f5-8b37-d6f2eb118982
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 317e3ae5-bdc8-44f5-8b37-d6f2eb118982
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 1657.5,
+          "y": 50
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      active_rapid7_instance:
+        simple: ${incident.integrationinstancename}
+      type:
+        simple: INCREMENTAL
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 4d99caae-16c6-4c86-8dd3-f45eb5dc366a
+      iscommand: false
+      name: Preparing Download Finished Rapid7 Scan Reports
+      script: DownloadFinishedRapid7ScanReportsForPANWIoTCloudV2
+      type: regular
+      version: -1
+    taskid: 4d99caae-16c6-4c86-8dd3-f45eb5dc366a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 490,
+          "y": 545
+        }
+      }
+  "10":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "25"
+      "yes":
+      - "11"
+      - "12"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+      path:
+        simple: Rapid7.DownloadReportfailStatus
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks for errors in a given task. If found, write it to the path
+        provided as an argument.
+      id: 42d9eaf3-b221-4aab-8160-9fe954cac9b6
+      iscommand: false
+      name: Did the Report Download Fail?
+      script: ea2fa025-47c1-420b-895b-d5b62cfab9b3
+      type: condition
+      version: -1
+    taskid: 42d9eaf3-b221-4aab-8160-9fe954cac9b6
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 490,
+          "y": 720
+        }
+      }
+  "11":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "16"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      message:
+        simple: ${Rapid7.DownloadReportfailStatus}
+      scan_type:
+        simple: rapid7
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Upload reports (PDF + XML) for specified scan to IoT Cloud
+      id: 5669678d-e170-4997-8746-6bbdabd41103
+      iscommand: true
+      name: Report Download Error as Event
+      script: '|||panw-iot-3rd-party-upload-vulnerability-scan-report'
+      type: regular
+      version: -1
+    taskid: 5669678d-e170-4997-8746-6bbdabd41103
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1070
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "16"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: rapid7
+      message:
+        simple: ${Rapid7.DownloadReportfailStatus}
+      playbook_name:
+        simple: Incremental Rapid7 Report Download Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: aee43935-6295-472c-8464-ad9b13267464
+      iscommand: true
+      name: Report Download Errors to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: aee43935-6295-472c-8464-ad9b13267464
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 1070
+        }
+      }
+  "13":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "20"
+      "yes":
+      - "14"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${PANWIoTCloud.finishedReports}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: f8291965-fe2a-4904-8a1f-3ecda577fbde
+      iscommand: false
+      name: Check if there are any available reports to upload
+      script: Exists
+      type: condition
+      version: -1
+    taskid: f8291965-fe2a-4904-8a1f-3ecda577fbde
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 1420
+        }
+      }
+  "14":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      file_data:
+        simple: ${InfoFile}
+      job_data:
+        simple: ${PANWIoTCloud.finishedReports}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7e8b0e10-9727-406b-8475-247625fc82f3
+      iscommand: false
+      name: Upload Files to PANW IoT Cloud
+      script: UploadFinishedRapid7ScanReportstoPANWIoTCloudV2
+      type: regular
+      version: -1
+    taskid: 7e8b0e10-9727-406b-8475-247625fc82f3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 1595
+        }
+      }
+  "15":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "17"
+      "yes":
+      - "18"
+      - "19"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+      path:
+        simple: Rapid7.uploadReportfailStatus
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks for errors in a given task. If found, write it to the path
+        provided as an argument.
+      id: 2a3653e9-db20-42ba-8f55-afebf344a9b4
+      iscommand: false
+      name: Did the Report Uploads Fail?
+      script: ea2fa025-47c1-420b-895b-d5b62cfab9b3
+      type: condition
+      version: -1
+    taskid: 2a3653e9-db20-42ba-8f55-afebf344a9b4
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 1770
+        }
+      }
+  "16":
+    continueonerrortype: ""
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 65752723-619c-4089-826a-c8ed7ca868db
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 65752723-619c-4089-826a-c8ed7ca868db
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 152.5,
+          "y": 1245
+        }
+      }
+  "17":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: rapid7
+      message:
+        simple: 'Successfully uploaded reports '
+      playbook_name:
+        simple: Incremental Rapid7 Report Download Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 46d142df-52e1-4e7e-8852-3cd6a5a9f9a2
+      iscommand: true
+      name: Report Upload Success to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 46d142df-52e1-4e7e-8852-3cd6a5a9f9a2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 1945
+        }
+      }
+  "18":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: rapid7
+      message:
+        simple: ${Rapid7.uploadReportfailStatus}
+      playbook_name:
+        simple: Incremental Rapid7 Report Download Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 1879b97e-a1f6-44bf-86b6-508c27fedb7e
+      iscommand: true
+      name: Report Upload Errors to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 1879b97e-a1f6-44bf-86b6-508c27fedb7e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 1945
+        }
+      }
+  "19":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "19"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: rapid7
+      message:
+        simple: ${Rapid7.uploadReportfailStatus}
+      playbook_name:
+        simple: Incremental Rapid7 Report Download Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 307cf554-3adf-42ac-8c8d-abdbb2385260
+      iscommand: true
+      name: Report Upload Error as Event
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 307cf554-3adf-42ac-8c8d-abdbb2385260
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 1945
+        }
+      }
+  "20":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "20"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: rapid7
+      message:
+        simple: No scans available for reporting
+      playbook_name:
+        simple: Incremental Rapid7 Report Download Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: success
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 2fca7ead-46ff-4410-865f-d638f4de73a4
+      iscommand: true
+      name: Report status to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 2fca7ead-46ff-4410-865f-d638f4de73a4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1555,
+          "y": 1945
+        }
+      }
+  "21":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: rapid7
+      message:
+        simple: Rapid7 integration is not enabled
+      playbook_name:
+        simple: Incremental Rapid7 Report Download Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: disabled
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: ae6c7366-585e-461b-89ea-f0163563caf5
+      iscommand: true
+      name: Report disabled status to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: ae6c7366-585e-461b-89ea-f0163563caf5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1985,
+          "y": 1945
+        }
+      }
+  "22":
+    continueonerrortype: ""
+    id: "22"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: b4c6b8ec-c416-4f62-88e9-d699a8e33326
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: b4c6b8ec-c416-4f62-88e9-d699a8e33326
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 2120
+        }
+      }
+  "24":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "26"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      reportInfo:
+        simple: ${Nexpose.reportInfoList}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 6106c09a-b771-4045-8c14-cc97830d3fde
+      iscommand: true
+      name: Download Reports
+      script: '|||nexpose-get-file-reports'
+      type: regular
+      version: -1
+    taskid: 6106c09a-b771-4045-8c14-cc97830d3fde
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 1070
+        }
+      }
+  "25":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "12"
+      "yes":
+      - "24"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${Nexpose.reportInfoList}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: e4607714-87e5-45d6-82c8-27051b141be6
+      iscommand: false
+      name: Check if there are any available reports infos
+      script: Exists
+      type: condition
+      version: -1
+    taskid: e4607714-87e5-45d6-82c8-27051b141be6
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 890,
+          "y": 895
+        }
+      }
+  "26":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "26"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      active_rapid7_instance:
+        simple: ${incident.integrationinstancename}
+      reportInfo:
+        simple: ${Nexpose.reportInfoList}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 83fc21ab-a4bd-44ca-89cd-834bd427cac0
+      iscommand: false
+      name: Delete Reports
+      script: DeleteFinishedRapid7ScanReportsV2
+      type: regular
+      version: -1
+    taskid: 83fc21ab-a4bd-44ca-89cd-834bd427cac0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 1245
+        }
+      }
+  "27":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "27"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "28"
+      "NO":
+      - "30"
+      "yes":
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - Rapid7 Nexpose
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 0cd3b0b1-8e86-48b2-8be4-fc1c9ed0f174
+      iscommand: false
+      name: Is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: 0cd3b0b1-8e86-48b2-8be4-fc1c9ed0f174
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1237.5,
+          "y": 370
+        }
+      }
+  "28":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "28"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "32"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: rapid7
+      message:
+        simple: 'Error: Failed to get License'
+      playbook_name:
+        simple: Incremental Rapid7 Report Download Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 5269f76c-e8f4-49a1-8ce8-51c3419e4ef9
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 5269f76c-e8f4-49a1-8ce8-51c3419e4ef9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1330,
+          "y": 545
+        }
+      }
+  "30":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "30"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "32"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      custom_integration_name:
+        simple: ${incident.integrationinstancename}
+      integration_name:
+        simple: rapid7
+      message:
+        simple: License Limit Exceeded.
+      playbook_name:
+        simple: Incremental Rapid7 Report Download Handling V2- PANW IoT 3rd Party
+          Integration
+      status:
+        simple: license_limit_exceeded
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: ee06027a-fb97-4e40-87d1-7c3e7a61f572
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: ee06027a-fb97-4e40-87d1-7c3e7a61f572
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1760,
+          "y": 545
+        }
+      }
+  "31":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "31"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "21"
+      "yes":
+      - "27"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Rapid7 Nexpose
+      instancename:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available and provided instance
+        is Active. Otherwise returns 'no'.
+      id: d41a0f44-c22e-427a-8e56-cb7c08566d2a
+      iscommand: false
+      name: isIntegrationInstanceAvailable
+      script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+      type: condition
+      version: -1
+    taskid: d41a0f44-c22e-427a-8e56-cb7c08566d2a
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1657.5,
+          "y": 195
+        }
+      }
+  "32":
+    continueonerrortype: ""
+    id: "32"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 4f4bc9fb-2a6d-4315-876d-000970a5ead9
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 4f4bc9fb-2a6d-4315-876d-000970a5ead9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1545,
+          "y": 720
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 2165,
+        "width": 2315,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
