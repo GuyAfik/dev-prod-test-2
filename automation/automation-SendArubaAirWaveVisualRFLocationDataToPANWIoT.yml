@@ -1,0 +1,252 @@
+args:
+- name: instance_name
+commonfields:
+  id: 701bf9e6-3948-41b8-8aa9-b9098d069049
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.14.98254
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendArubaAirWaveVisualRFLocationDataToPANWIoT
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('SendArubaAirWaveVisualRFLocationDataToPANWIoT', 'start', __line__())
+
+
+  from typing import Dict, Any
+  import traceback
+  import pathlib
+  import time
+  AIRWAVE_INSTACE = demisto.args().get("instance_name")
+
+  ''' STANDALONE FUNCTION '''
+
+  def send_status_to_panw_iot_cloud(status, msg):
+      """
+      Reports status details back to PANW IoT Cloud.
+      param status: Status (error, disabled, success) to be send to PANW IoT cloud.
+      param msg: Debug message to be send to PANW IoT cloud.
+      """
+      resp = demisto.executeCommand(
+          "panw-iot-3rd-party-report-status-to-panw",
+          {
+              "status": status,
+              "message": msg,
+              "integration_name": "aruba_airwave",
+              "playbook_name": "Import Aruba AirWave FloorPlans to PANW IoT",
+              "asset_type": "device",
+              "custom_integration_name": AIRWAVE_INSTACE,
+              "timestamp": int(round(time.time() * 1000)),
+
+          },
+      )
+      if isError(resp[0]):
+          err_msg = f'Error, failed to send status to PANW IoT Cloud - {resp[0].get("Contents")}'
+          raise Exception(err_msg)
+
+  def get_aruba_vrf_location_data_cmd():
+      res = demisto.executeCommand("aruba-airwave-vrf-get-campuses", {
+          "using": AIRWAVE_INSTACE
+
+      })
+      if isError(res[0]):
+          err_msg = f'Error, failed to get FloorPlans from Aruba Airwave VRF - {res[0].get("Contents")}'
+          raise Exception(err_msg)
+
+      return res[0]["Contents"]
+
+  def report_location_map_to_panw_iot(campuses, retry=0):
+      if not campuses:
+          return None
+      res = demisto.executeCommand("panw-iot-3rd-party-upload-location-map", {
+          "location_map": campuses,
+      })
+      if isError(res[0]):
+          if retry == 0:
+              time.sleep(1)
+              return report_location_map_to_panw_iot(campuses, retry=1)
+          err_msg = f'Error, could not upload location map to PANW IoT Cloud - {res[0].get("Contents")}'
+          demisto.error(err_msg)
+          raise Exception(err_msg)
+      return res[0]["Contents"]
+
+  def get_aruba_vrf_location_data():
+      try:
+          op_data = {
+              "Campuses": 0,
+              "Buildings": 0,
+              "Floors": 0,
+          }
+          response = get_aruba_vrf_location_data_cmd()
+          campuses = []
+          for key in response:
+              if "campuses" in key:
+                  campus_data = response[key].get("campus")
+                  if not campus_data:
+                      continue
+                  if type(campus_data) != list:
+                      campus_data = [campus_data]
+
+                  for campus in campus_data:
+                      if type(campus) != dict: continue
+                      campuses_obj = {
+                          "name" : campus.get("name"),
+                          "uuid" : campus.get("id"),
+                          "buildings": []
+                      }
+                      buildings = campus.get("building")
+                      if not buildings:
+                          campuses.append(campuses_obj)
+                          op_data["Campuses"] += 1
+                          continue
+                      if type(buildings) != list:
+                          buildings = [buildings]
+                      for building in buildings:
+                          if type(campus) != dict: continue
+                          building_obj = {
+                              "name" : building.get("name"),
+                              "address" : building.get("address"),
+                              "uuid" : building.get("id"),
+                              "floors": []
+                          }
+                          floors = building.get("site")
+                          if not floors:
+                              campuses_obj["buildings"].append(building_obj)
+                              op_data["Buildings"] += 1
+                              continue
+                          if type(floors) != list:
+                              floors = [floors]
+                          for floor in floors:
+                              if type(floor) != dict:
+                                      continue
+                              floor_obj = {
+                                  "name": floor.get("name"),
+                                  "uuid": floor.get("id"),
+                                  "floor_number": floor.get("floor"),
+                                  "image_data" : None
+                              }
+                              images = floor.get("image")
+                              if not images:
+                                  building_obj["floors"].append(floor_obj)
+                                  op_data["Floors"] += 1
+                                  continue
+                              if type(images) != list:
+                                  images = [images]
+                              for image in images:
+                                  if type(image) != dict:
+                                      continue
+                                  if "background" in image.get("filename"):
+                                      image_obj = {
+                                          "floor_plan_dimension": image.get("pixel-width") + "," + image.get("pixel-height"),
+                                          "floor_image_url": image.get("relative-url"),
+                                          "floor_image_name": floor_obj["uuid"] + "_" + image.get("filename").split("/")[-1]
+                                       }
+                                      image_obj["floor_image_type"] = (pathlib.Path(image_obj["floor_image_name"]).suffix).replace(".", "")
+                                      floor_obj["image_data"] = image_obj
+                                      break
+                              building_obj["floors"].append(floor_obj)
+                              op_data["Floors"] += 1
+                          campuses_obj["buildings"].append(building_obj)
+                          op_data["Buildings"] += 1
+                      campuses.append(campuses_obj)
+                      op_data["Campuses"] += 1
+
+      except Exception as e:
+          raise("Failed to parse Aruba Airwave FloorPlan data. Error - %s" % str(e))
+      return campuses, op_data
+
+  def download_vrf_floorplan_cmd(url, filename):
+      if not url or not filename:
+          return None
+      res = demisto.executeCommand("aruba-airwave-vrf-download-image", {
+          "image_url": url,
+          "filename": filename,
+          "using": AIRWAVE_INSTACE
+      })
+      if isError(res[0]):
+          err_msg = f'Error, failed to download Floorplan image from Aruba Airwave - {res[0].get("Contents")}'
+          raise Exception(err_msg)
+      return res
+
+  def download_vrf_floorplans(campuses):
+      file_data = []
+      floor_data = {}
+      count = 0
+      for campus in campuses:
+          buildings = campus.get("buildings")
+          if not buildings:
+              continue
+          if type(buildings) != list:
+              buildings = [buildings]
+          for building in buildings:
+              floors = building.get("floors")
+              if not floors:
+                  continue
+              if type(floors) != list:
+                  floors = [floors]
+              for floor in floors:
+                  image_data = floor.get("image_data")
+                  if not image_data:
+                      continue
+                  url = image_data.get("floor_image_url")
+                  filename = image_data.get("floor_image_name")
+                  count += 1
+                  image = download_vrf_floorplan_cmd(url, filename)
+                  return_results(image)
+
+      return {"Floorplans Downloaded": count}
+  ''' MAIN FUNCTION '''
+
+  def main():
+      try:
+          #Get campus.xml data from Aruba
+          campuses, op_data = get_aruba_vrf_location_data()
+          send_status_to_panw_iot_cloud("success", "Aruba AirWave Location Data Import in Progress")
+          # Send dictionary only to IoT
+          res = report_location_map_to_panw_iot(campuses)
+          # Download individual floor plans to context
+          download_vrf_floorplans(campuses)
+          results = res.get("result")
+          send_status_to_panw_iot_cloud("success", "Aruba AirWave Location Data Import Successfull")
+          if results == "success":
+              return_results(
+                  CommandResults(readable_output=tableToMarkdown(
+                      "Aruba AirWave VRF Metadata Import Summary:",
+                      op_data, removeNull=True),))
+          else:
+              msg = "Failed to upload Aruba AirWave VRF FloorPlan Campus data - " % res
+              return_results(msg)
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          err_msg = "Aruba AirWave Location Data Import Failed - %s" % str(ex)
+          send_status_to_panw_iot_cloud("error", err_msg)
+          return_error(f'Failed to execute SendArubaAirWaveVisualRFLocationDataToPANWIoT. Error: {str(ex)}')
+
+
+  ''' ENTRY POINT '''
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+
+  register_module_line('SendArubaAirWaveVisualRFLocationDataToPANWIoT', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
