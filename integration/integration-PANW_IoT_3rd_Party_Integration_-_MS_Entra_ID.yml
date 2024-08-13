@@ -1,0 +1,487 @@
+category: Authentication
+commonfields:
+  id: PANW IoT 3rd Party Integration - MS Entra ID
+  version: -1
+configuration:
+- additionalinfo: MS Graph API domain url to access it from integration
+  defaultvalue: graph.microsoft.com
+  display: Default URL
+  name: domain_url
+  required: true
+  type: 0
+- display: Tenant ID
+  name: tenant_id
+  required: true
+  type: 4
+- display: Client ID
+  name: client_id
+  required: true
+  type: 4
+- display: Client Secret
+  name: client_secret
+  required: true
+  type: 4
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: Microsoft Entra ID is a cloud-based identity and access management service
+  that your employees can use to access external resources. It can manage devices,
+  users, domains, and objects within a network.
+detaileddescription: "## MS Entra ID\n\n\nPlease configure the instance by providing
+  the following mandatory details:\n\nName of the instance\n- Domain base URL(Refer
+  section below for more information)\n- Client ID\n- Client Secret\n- Tenant ID\n\n\nDefault
+  domain URL of MS Graph API\n- https://graph.microsoft.com\n\nSteps that need to
+  be taken to access MS Entra ID API with application context:\n\n  - Sign in to the
+  MS Entra ID portal at **https://entra.microsoft.com** using the Global Administrator
+  role access credentials. This role is necessary for managing applications and accessing
+  resources.\n  - Navigate to the Microsoft Entra ID section and create a new application
+  registration for interacting with the Microsoft Graph API.\n  - After creating the
+  application, go to the **API permissions** section and grant the necessary permissions
+  to access Microsoft Graph APIs. [More Info](https://learn.microsoft.com/en-us/graph/api/intune-devices-manageddevice-get?view=graph-rest-1.0#permissions)\n
+  \ - In the **Certificates & secrets** section of the application registration, generate
+  a new client secret (secret key).\n  - Use the **tenant ID**, **client ID**, and
+  **client secret** (generated in the previous step) to authenticate the application
+  and obtain an access token.\n  - Use the token to access the MS Graph API.\n  -
+  \ For more information please click [here](https://learn.microsoft.com/en-us/graph/auth-v2-service?tabs=http).\n\nSteps
+  to Enabling Mobility (MDM) Policies to All Users for Microsoft Intune:-\n  - Go
+  to the Microsoft Entra admin center at **https://entra.microsoft.com** and sign
+  in with your admin account.\n  - Search for the Mobility (MDM and WIP). [More info](https://learn.microsoft.com/en-us/mem/intune/enrollment/quickstart-setup-auto-enrollment#set-up-automatic-enrollment)
+  \n  - Within Mobility (MDM and WIP), Select Microsoft Intune as your MDM authority.\n
+  \ - Navigate to MDM User Scope and then Choose to deploy MDM to **All** users and
+  save it.\n\n**Note:**  To enable Mobility (MDM) capabilities for the organization's
+  devices, an Intune license is required. [More info](https://learn.microsoft.com/en-us/mem/intune/fundamentals/mdm-authority-set#:~:text=If%20you%20want%20to%20start%20using%20Intune%2C%20you%27re%20required%20to%20purchase%20Intune%20licenses)\n\n\n##
+  Test Configuration\n\nAfter providing the mandatory details, please test the configuration
+  using the Test button."
+display: PANW IoT 3rd Party Integration - MS Entra ID
+image: data:image/png;base64,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
+name: PANW IoT 3rd Party Integration - MS Entra ID
+script:
+  commands:
+  - arguments: []
+    description: Generate API token to access MS Graph API.
+    name: ms-entra-id-generate-token
+  - arguments:
+    - description: Token to access API
+      name: token
+      required: true
+    - defaultValue: "1000"
+      description: Number of devices we are going to fetch at a time.
+      name: limit
+    - description: url link of the next page of results
+      name: next_page_link
+      type: textArea
+    description: Get list of the devices connected to MS Entra ID.
+    name: ms-entra-id-get-all-devices
+  dockerimage: demisto/panw-iot:1.0.0.79918
+  runonce: false
+  script: |
+    register_module_line('PANW IoT 3rd Party Integration - MS Entra ID', 'start', __line__())
+
+
+    #
+    import requests
+    import time
+    from datetime import datetime, timedelta
+    import json
+    import re
+
+    class MSEntraID:
+        """
+        Class MSEntraID, uses for accessing the MS Graph APIs
+        """
+
+        def __init__(self):
+            self.ms_domain_url = self.check_ms_entra_url()
+            self.tenant_id = demisto.params().get("tenant_id")
+            self.client_id = demisto.params().get("client_id")
+            self.client_secret = demisto.params().get("client_secret")
+
+        def check_ms_entra_url(self):
+            """
+            Function will check whether hostname/ip-address is valid or not.
+            """
+            ms_entra_domain_url = demisto.params().get("domain_url")
+            try:
+                if not ms_entra_domain_url.startswith('https://'):
+                    ms_entra_domain_url = 'https://'+ms_entra_domain_url
+            except Exception as ex:
+                demisto.error('Error while validating MS Entra Domain url' + str(ex))
+            return ms_entra_domain_url
+
+        def get_error_message(self, error_description, response):
+            """
+                This function will check the error description and return user friendly error message
+            """
+            if "Check to make sure you have the correct tenant ID" in error_description or "Specified tenant identifier" in error_description:
+                description = "Tenant ID is incorrect"
+            elif "Invalid client secret provided" in error_description:
+                description = "Invalid client secret"
+            elif "The resource principal named" in error_description:
+                description = "Domain url is incorrect"
+            elif "Application with identifier" in error_description:
+                description = "Client ID is incorrect"
+            else:
+                description = error_description
+            error_msg = {
+                "Error Code": response.status_code,
+                "Error Descriprion": description
+            }
+            return error_msg
+
+        def generate_access_token(self):
+            """
+                Function to generate access token.
+            """
+            demisto.debug(f"The generate token function has been initiated")
+            access_token = ""
+
+            try:
+                # Login URL to generate token
+                url = f"https://login.microsoftonline.com/{self.tenant_id}/oauth2/token"
+                body = {
+                    'resource': self.ms_domain_url,
+                    'client_id': self.client_id,
+                    'client_secret': self.client_secret,
+                    'grant_type': 'client_credentials'
+                }
+                response = requests.post(url, data=body)
+                jsonResponse = response.json()
+                if isinstance(jsonResponse, dict):
+                    if response.status_code == 200:
+                        access_token = jsonResponse.get("access_token")
+                        if demisto.command() == "ms-entra-id-generate-token":
+                            return jsonResponse
+
+                        if access_token:
+                            validate_api = self.get_all_devices(access_token, 1000, None, True)
+                            if validate_api and len(validate_api) != 0:
+                                return access_token
+                            else:
+                                return_error(f'Intune MDM policy is not enabled or Check Intune License.')
+                    else:
+                        error_msg = self.get_error_message(jsonResponse.get("error_description"), response)
+                        demisto.error(error_msg)
+                        return_error(error_msg)
+            except Exception as e:
+                error_msg = f"Error while generating access token :- {e}"
+                demisto.error(f'Exception while generating access token: {str(ex)}')
+                raise Exception(error_msg)
+            return access_token
+
+
+
+        def get_device_details(self,device_id, token):
+            """
+                Function will fetch specific device details from MS Graph API.
+            """
+            demisto.debug(f"get_device_details function has been initiated")
+            device_data = {}
+            url = self.ms_domain_url + f"/v1.0/deviceManagement/managedDevices/{device_id}"
+            headers = {
+                'authorization' : "Bearer " + token
+            }
+
+            try:
+                response = requests.request("GET", url, headers=headers)
+                jsonResponse = response.json()
+                if isinstance(jsonResponse, dict):
+                    if response.status_code == 200:
+                        device_data = jsonResponse
+                    else:
+                        description = jsonResponse.get("error").get("message")
+                        error_msg = {
+                            "Error Code": response.status_code,
+                            "Error Descriprion": description
+                        }
+                        demisto.error(error_msg)
+                        return_error(error_msg)
+
+            except Exception as ex:
+                error_msg = f"Error while getting device details:- {ex}"
+                demisto.error(f'Exception while getting device details: {str(ex)}')
+                demisto.error(traceback.format_exc())
+                raise Exception(error_msg)
+            demisto.debug(f"Got the device details successfully")
+            return device_data
+
+
+        def format_device_list(self, device_list, validate_api):
+            """
+                Function will map the device fields according to PAN IoT.
+            """
+            demisto.debug("Format device list function has been initiated")
+            device_data = []
+            utils = Utils()
+            try:
+                if device_list:
+                    for device in device_list:
+                        data = {}
+
+                        deviceEnrollmentType = device.get("deviceEnrollmentType", "")
+                        if not "AzureADJoin" in deviceEnrollmentType:
+                            continue
+
+                        mac_address = device.get("ethernetMacAddress", None) or device.get("wiFiMacAddress", None)
+
+                        if mac_address:
+                            if validate_api:
+                                return True
+                            mac_address = utils.get_formated_mac(mac_address)
+
+                        if mac_address:
+                            data["MAC"] = mac_address.lower()
+                            data["deviceid"] = mac_address.lower()
+
+                            hostname = device.get("deviceName", "")
+                            if hostname:
+                                data["display_hostname"] = hostname
+
+                            display_osGroup = device.get("operatingSystem", "")
+                            if display_osGroup:
+                                data["display_osGroup"] = display_osGroup
+
+                            display_osVer = device.get("osVersion", "")
+                            if display_osVer:
+                                display_osVer = utils.extract_major_version(display_osVer)
+                                data["display_osVer"] = display_osVer
+
+                            if "AzureADJoin" in deviceEnrollmentType:
+                                data["display_ad_join_status"] = True
+
+                            model = device.get("model", "")
+                            if model:
+                                data["display_model"] = model
+
+                            manufacturer = device.get("manufacturer", "")
+                            if manufacturer:
+                                data["display_vendor"] = manufacturer
+
+                            serialNumber = device.get("serialNumber", "")
+                            if serialNumber:
+                                data["display_sn"] = serialNumber
+
+                            userPrincipalName = device.get("userPrincipalName", "")
+                            if userPrincipalName:
+                                last_ad_realm = utils.get_domain_name(userPrincipalName)
+                                data["last_ad_realm"] = last_ad_realm
+
+                            emailAddress = device.get("emailAddress", "")
+                            if emailAddress:
+                                data["display_ad_username"] = emailAddress
+
+                            os_build_version = device.get("osVersion", "")
+                            if os_build_version:
+                                os_build_version = utils.extract_build_version(os_build_version)
+                                data["os_build"] = os_build_version
+
+                            device_data.append(data)
+            except Exception as ex:
+                demisto.error("Error while formatting device data" + str(ex))
+            demisto.debug(f"Successfully mapped all the device attributes as per the PAN IoT.")
+            return device_data
+
+        def get_all_devices(self, token, limit, next_page_link, validate_api=False):
+            """
+                fetch all devices data using Graph API.
+            """
+            demisto.debug(f"Get all devices function has been initiated")
+            device_data = {}
+            url = self.ms_domain_url + "/v1.0/deviceManagement/managedDevices"
+            headers = {
+                'authorization' : "Bearer " + token
+            }
+            query_params = {
+                "$top": limit
+                }
+
+            try:
+                if next_page_link:
+                    response = requests.request("GET", next_page_link, headers=headers)
+                else:
+                    response = requests.request("GET", url, params=query_params, headers=headers)
+
+                jsonResponse = response.json()
+                next_page_link = jsonResponse.get("@odata.nextLink",None)
+                if isinstance(jsonResponse, dict):
+                    if response.status_code == 200:
+                        device_list = jsonResponse.get("value")
+                    else:
+                        description = jsonResponse.get("error").get("message")
+                        error_msg = {
+                            "Error Code": response.status_code,
+                            "Error Descriprion": description
+                        }
+                        demisto.error(error_msg)
+                        return_error(error_msg)
+
+                ## Fetch devices data one by one and put it into 'all_device_details' list
+                all_device_details = []
+                for device in device_list:
+                    device_id = device.get("id")
+                    device_details = self.get_device_details(device_id, token)
+                    all_device_details.append(device_details)
+
+                all_device_details = self.format_device_list(all_device_details, validate_api)
+                device_data.update({"data": all_device_details,"next_page_link":next_page_link})
+            except Exception as ex:
+                error_msg = f"Error while getting all devices:- {ex}"
+                demisto.error(f'Exception while getting all devices: {str(ex)}')
+                demisto.error(traceback.format_exc())
+                raise Exception(error_msg)
+            demisto.debug(f"Successfully get all the devices from MS Graph API.")
+            return device_data
+
+
+    class Utils:
+        """
+        This function contains common reusable functions
+
+        """
+
+        def get_formated_mac(self, mac_data):
+            """
+            Convert the mac address as per the PAN IOT mac address
+            Example: '080027f82487' -> '08:00:27:f8:24:87'
+            """
+            formatted_mac_address = ""
+
+            try:
+                if len(mac_data) == 12:
+                    mac_list = re.findall('..',mac_data)
+                    formatted_mac_address = ":".join(mac_list)
+                    if formatted_mac_address:
+                        check_mac_address = self.is_mac_address(formatted_mac_address)
+                        if check_mac_address:
+                            return formatted_mac_address
+                    demisto.debug(f"mac address is the {formatted_mac_address}")
+                else:
+                    demisto.error(f"mac address lenth is not 12, MAC len: {len(mac_data)}")
+
+            except Exception as ex:
+                demisto.error("Error while getting mac address" + str(ex))
+
+
+
+        def is_mac_address(self, mac):
+            """
+            Test for valid mac address
+
+            :type mac: ``str``
+            :param mac: MAC address in the form of AA:BB:CC:00:11:22
+
+            :return: True/False
+            :rtype: ``bool``
+            """
+
+            if re.search(r'([0-9A-F]{2}[:]){5}([0-9A-F]){2}', mac.upper()) is not None:
+                return True
+            else:
+                return False
+
+
+        def is_ip_address(self, ip):
+            """
+            Test for valid ip address
+
+            :type ip: ``str``
+            :param ip: IP address in the form of 192.168.0.1
+
+            :return: True/False
+            :rtype: ``bool``
+            """
+            ip_regex = r"^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$"
+            if(re.search(ip_regex, ip)):
+                return True
+            else:
+                return False
+
+        def get_domain_name(self, userPrincipalName):
+            """
+            This function parse the domain name from userPrincipalName
+            Ex. - example@fack.domain.com -> fack.domain.com
+            """
+            domain_name = ""
+            if userPrincipalName:
+                pattern = r'@([\w\.-]+)'
+                match = re.search(pattern, userPrincipalName)
+                if match:
+                    domain_name = match.group(1)
+            return domain_name
+
+
+        def extract_major_version(self,os_ver):
+            """
+            extracts the major version number from Os_ver
+            Ex. 10.0.22631.3737 -> 10
+            """
+            pattern = r'(\d+)\.'
+            match = re.match(pattern, os_ver)
+            if match:
+                major_version = match.group(1)
+            else:
+                major_version = None
+            return major_version
+
+        def extract_build_version(self,os_ver):
+            """
+            extracts the build version number from Os_ver
+            Ex. 10.0.22631.3737 -> 22631
+            """
+            pattern = r'\d+\.\d+\.(\d+)\.\d+'
+            match = re.search(pattern, os_ver)
+            if match:
+                build_version = match.group(1)
+            else:
+                build_version = os_ver
+            return build_version
+
+
+
+
+
+
+    def main():
+        demisto.debug(f"Command being called is {demisto.command()}")
+        test_res = ""
+        api_login = MSEntraID()
+        try:
+            if demisto.command() == "test-module":
+                try:
+                    test_res = api_login.generate_access_token()
+                    if isinstance(test_res, str):
+                        return_results('ok')
+                    else:
+                        return_results(test_res)
+                except Exception as e:
+                    return_error("MSEntraID got exception: %s" % str(e))
+            elif demisto.command() == "ms-entra-id-generate-token":
+                test_res = api_login.generate_access_token()
+                return_results(test_res)
+            elif demisto.command() == "ms-entra-id-get-all-devices":
+                token = demisto.args().get("token")
+                limit = int(demisto.args().get("limit"))
+                next_page_link = demisto.args().get("next_page_link")
+                res = api_login.get_all_devices(token, limit, next_page_link)
+                return_results(res)
+
+        except Exception as e:
+            return_error(f"Failed to execute {demisto.command()} command.\nError:\n{str(e)}")
+
+
+    if __name__ in ("__main__", "__builtin__", "builtins"):
+        main()
+
+    #
+
+    register_module_line('PANW IoT 3rd Party Integration - MS Entra ID', 'end', __line__())
+  subtype: python3
+  type: python
+sourcemoduleid: MS Entra ID
