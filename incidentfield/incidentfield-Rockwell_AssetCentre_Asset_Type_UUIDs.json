@@ -1,0 +1,117 @@
+{
+	"XDRBuiltInField": false,
+	"XsiamIncidentFieldExtraData": null,
+	"aliasTo": "",
+	"aliases": null,
+	"associatedToAll": true,
+	"associatedTypes": [],
+	"autoCompleteTags": null,
+	"breachScript": "",
+	"cacheVersn": 0,
+	"caseInsensitive": true,
+	"cliName": "rockwellassetcentreassettypeuuids",
+	"closeForm": false,
+	"columns": [
+		{
+			"displayName": "Rockwell Asset Type",
+			"fieldCalcScript": "",
+			"isDefault": true,
+			"isReadOnly": true,
+			"key": "rockwellassettype",
+			"orgType": "shortText",
+			"required": false,
+			"script": "",
+			"selectValues": null,
+			"type": "shortText",
+			"width": 238
+		},
+		{
+			"displayName": "Rockwell Asset Type UUID",
+			"fieldCalcScript": "",
+			"isDefault": true,
+			"isReadOnly": false,
+			"key": "rockwellassettypeuuid",
+			"orgType": "shortText",
+			"required": true,
+			"script": "",
+			"selectValues": null,
+			"type": "shortText",
+			"width": 150
+		}
+	],
+	"content": false,
+	"defaultRows": [
+		{
+			"rockwellassettype": "RA_Drive",
+			"rockwellassettypeuuid": "C364C4DA-94BB-47B0-8875-1F4B8B6796F8"
+		},
+		{
+			"rockwellassettype": "PanelView",
+			"rockwellassettypeuuid": "1A3EE562-0EE3-44D3-B04F-597ECB5C9B63"
+		},
+		{
+			"rockwellassettype": "PLC_5_Processor",
+			"rockwellassettypeuuid": "F7216710-DC6D-4154-AA34-297F102C8D1D"
+		},
+		{
+			"rockwellassettype": "PanelView_Plus",
+			"rockwellassettypeuuid": "5BF22931-31B7-4C23-B0BF-61F304287BEC"
+		},
+		{
+			"rockwellassettype": "Logix5000_Controller",
+			"rockwellassettypeuuid": "5332B6E0-AFC1-42B4-BCBF-695C4AE23479"
+		},
+		{
+			"rockwellassettype": "SLC_500_Processor",
+			"rockwellassettypeuuid": "B808B5A0-6DAE-47B3-BE09-9F28F6AAE6FC"
+		},
+		{
+			"rockwellassettype": "MicroLogix_Processor",
+			"rockwellassettypeuuid": "9E02BEE1-442C-49B5-935C-D079BE07BD4C"
+		}
+	],
+	"definitionId": "",
+	"description": "This table is to get UUIDs for asset types.",
+	"editForm": true,
+	"fieldCalcScript": "",
+	"fromServerVersion": "",
+	"group": 0,
+	"hidden": false,
+	"id": "incident_rockwellassetcentreassettypeuuids",
+	"ipVersion": "",
+	"isReadOnly": false,
+	"itemVersion": "",
+	"locked": false,
+	"mergeStrategy": "",
+	"name": "Rockwell AssetCentre Asset Type UUIDs",
+	"neverSetAsRequired": false,
+	"openEnded": false,
+	"orgType": "grid",
+	"ownerOnly": false,
+	"packID": "",
+	"packName": "",
+	"placeholder": "",
+	"pretty_name": "",
+	"propagationLabels": [
+		"all"
+	],
+	"required": false,
+	"runScriptAfterUpdate": false,
+	"script": "",
+	"selectValues": [],
+	"selectValuesMap": null,
+	"sla": 0,
+	"system": false,
+	"systemAssociatedTypes": null,
+	"template": "",
+	"threshold": 72,
+	"toServerVersion": "",
+	"type": "grid",
+	"unmapped": false,
+	"unsearchable": false,
+	"useAsKpi": false,
+	"validatedError": "",
+	"validationRegex": "",
+	"version": -1,
+	"x2_fields": ""
+}
