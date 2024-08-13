@@ -1,0 +1,171 @@
+comment: This script is used to generate and download the reports.
+commonfields:
+  id: PANWIoTGenerateReportForTenable
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: PANWIoTGenerateReportForTenable
+outputs:
+- contextPath: PANWIoTCloud.numGeneratedReports
+  description: Number of generated reports
+- contextPath: PANWIoTCloud.failedReportErrors
+  description: List of failed reports
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('PANWIoTGenerateReportForTenable', 'start', __line__())
+
+
+
+
+  ''' IMPORTS '''
+
+  import json
+  import traceback
+
+  def get_cache_scan_list():
+      list_name = 'TenableLaunchedScans'
+      res = demisto.executeCommand('getList', { 'listName': list_name })
+      if (
+          not isinstance(res, list)
+          or 'Contents' not in res[0]
+          or not isinstance(res[0]['Contents'], str)
+          or 'Item not found (8)' in res[0]['Contents']
+          or not res[0]['Contents']
+      ):
+          demisto.setContext('PANWIoTCloud.numGeneratedReports', 0)
+          demisto.setContext('PANWIoTCloud.failedReportErrors', [])
+          return 'Scan Cache TenableLaunchedScans is Empty'
+
+      scan_refs = res[0]['Contents']
+      scan_refs_list = [line.split(',') for line in scan_refs.split('\n')]
+      return get_finished_scan_list(scan_refs_list[0])
+
+  def get_finished_scan_list(launched_scan_list):
+      finished_reports = []
+      failed_reports = []
+
+      for entry in launched_scan_list:
+          if '_' in entry:
+              print('getting finished scan list for ' + entry)
+              scan_id = entry.split('_')[0]
+              try:
+                  res = demisto.executeCommand('tenable-io-get-scan-status', { 'scanId': scan_id })
+                  if res[0]['Contents']['Status'] == 'completed':
+                      finished_reports.append(entry)
+              except Exception as e:
+                  failed_reports.append('Exception when getting scan status for entry ' + entry + ': ' + str(e))
+                  print('Exception when getting scan status for entry ' + entry + ': ' + str(e))
+
+      demisto.setContext('PANWIoTCloud.failedReportErrors', failed_reports)
+      return launch_reports_for_finished_scans(finished_reports, failed_reports)
+
+  def launch_reports_for_finished_scans(scan_list, failed_reports):
+      generated_reports = []
+      result_list = []
+      for entry in scan_list:
+          scan_id, scan_uuid, scan_ip, scan_job = entry.split('_')
+          try:
+              res = demisto.executeCommand("tenable-io-fetch-assetID", {"IP": scan_ip })
+              if isError(res[0]):
+                  print('Warning: Unable to find Tenable Asset ID for IP ' + scan_ip + '. Skipping this report for now.')
+                  continue
+              asset_id = res[0]['Contents']
+              res = demisto.executeCommand("tenable-io-generate-report",
+                                           {"scanUUID": scan_uuid,
+                                            "assetID": asset_id,
+                                            "format": 'pdf'
+                                            })
+              if isError(res):
+                  print('Warning: Error when executing command tenable-io-generate-report (pdf) on Scan UUID ' + str(scan_uuid) + ' and asset id ' + str(asset_id) + '. Skipping this entry')
+                  print(res[0]['Contents'])
+                  continue
+
+              pdf_report_id = res[0]['Contents']
+              result_list.append('scan finished for %s - %s, PDF report launched with ID %s' % (scan_ip, scan_id, pdf_report_id))
+              time.sleep(2)
+              res = demisto.executeCommand("tenable-io-generate-report",
+                                           {"scanUUID": scan_uuid,
+                                            "assetID": asset_id,
+                                            "format": 'csv'
+                                            })
+              if isError(res):
+                  print('Warning: Error when executing command tenable-io-generate-report (csv) on Scan UUID ' + scan_uuid + ' and asset id ' + asset_id + '. Skipping this entry')
+                  print(res[0]['Contents'])
+                  continue
+              csv_report_id = res[0]['Contents']
+              result_list.append('scan finished for %s - %s, CSV report launched with ID %s' % (scan_ip, scan_id, csv_report_id))
+              time.sleep(2)
+
+              # At this point, if we have both PDF and CSV report IDs, then we can remove items from the TenableLaunchedScans list and add to TenableLaunchedReports list
+              if pdf_report_id and csv_report_id:
+                  print('We have launched both PDF and CSV reports for Scan UUID ' + scan_uuid + ' and asset id ' + asset_id)
+
+                  # Remove item from TenableLaunchedScans list
+                  demisto.executeCommand("PANWIoTLaunchedVulnerabilityScanCacheOperationsForTenable",
+                                      { "name": "TenableLaunchedScans", "operation": "delete", "value": entry })
+
+
+                  # Insert PDF into TenableLaunchedReports list
+                  demisto.executeCommand("PANWIoTLaunchedVulnerabilityScanCacheOperationsForTenable",
+                      {"name":"TenableLaunchedReports","operation":"insert",
+                       "value":pdf_report_id+"_"+scan_uuid+"_"+scan_ip+"_"+scan_job+"_pdf"})
+
+                  # Insert CSV into TenableLaunchedReports list
+                  demisto.executeCommand("PANWIoTLaunchedVulnerabilityScanCacheOperationsForTenable",
+                      {"name":"TenableLaunchedReports","operation":"insert",
+                       "value":csv_report_id+"_"+scan_uuid+"_"+scan_ip+"_"+scan_job+"_csv"})
+                  generated_reports.append(scan_id)
+
+          except Exception as e:
+              failed_reports.append('Exception when downloading reports for ' + entry + ': ' + str(e))
+              print("Error when launching Tenable report " + str(e))
+
+      demisto.setContext('PANWIoTCloud.failedReportErrors', failed_reports)
+      demisto.setContext('PANWIoTCloud.numGeneratedReports', len(generated_reports))
+
+      return result_list
+
+  def main():
+
+      res = {}
+      try:
+          res = get_cache_scan_list()
+          report_summary = {'Generated Report List': res}
+
+          results = CommandResults(
+                      readable_output=tableToMarkdown("Asset Report Summary:", report_summary, removeNull=True),
+                      outputs_prefix="Tenable.generatedReports",
+                      outputs=res
+              )
+
+          return_results(results)
+      except Exception as ex:
+          demisto.error(traceback.format_exc())  # print the traceback
+          return_error(f'Error when generating reports for tenable. Error: ' + str(ex))
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+
+
+  register_module_line('PANWIoTGenerateReportForTenable', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags: []
+timeout: 100800h0m0s
+type: python
