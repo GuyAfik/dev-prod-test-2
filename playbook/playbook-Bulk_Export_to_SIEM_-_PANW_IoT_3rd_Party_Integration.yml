@@ -1,0 +1,732 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: 6.0.0
+    itemVersion: 2.0.16
+    packID: ""
+    packName: Palo Alto Networks IoT 3rd Party Integrations
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: This playbook gets all available assets ( alerts, vulnerabilities and
+  devices) and send then to configured PANW third-party integration SIEM server.
+dirtyInputs: true
+id: Bulk Export to SIEM - PANW IoT 3rd Party Integration
+inputs: []
+name: Bulk Export to SIEM - PANW IoT 3rd Party Integration
+outputs: []
+sourceplaybookid: Bulk Export to SIEM - PANW IoT 3rd Party Integration
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 20106896-2580-463a-8a7e-5080c4fd953c
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 20106896-2580-463a-8a7e-5080c4fd953c
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 1100,
+          "y": -510
+        }
+      }
+  "2":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: siem
+      message:
+        simple: Syslog Sender (SIEM) instance is not enabled
+      playbook_name:
+        simple: Bulk Export to SIEM - PANW IoT 3rd Party Integration
+      status:
+        simple: disabled
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 021abf67-1ed2-4c88-8aac-f9c0557396bf
+      iscommand: true
+      name: Send disabled status to PANW IoT cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 021abf67-1ed2-4c88-8aac-f9c0557396bf
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2240,
+          "y": 590
+        }
+      }
+  "3":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      execution-timeout:
+        simple: "864000"
+      panw_iot_3rd_party_instance:
+        simple: PANW IoT 3rd Party Integration Instance
+      run_once:
+        simple: ${incident.runonce}
+      sites:
+        simple: ${incident.sitenames}
+      syslog_sender_instance:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: This automation retrieves all specified assets from the PANW IoT
+        cloud and send them to the SIEM server.
+      id: 7789e44c-09b7-43b4-8d91-4403a3a38baa
+      iscommand: false
+      name: Send all PANW IoT devices to SIEM
+      script: SendAllPANWIoTAssetsToSIEM
+      type: regular
+      version: -1
+    taskid: 7789e44c-09b7-43b4-8d91-4403a3a38baa
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 140,
+          "y": 590
+        }
+      }
+  "4":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: alert
+      execution-timeout:
+        simple: "864000"
+      panw_iot_3rd_party_instance:
+        simple: PANW IoT 3rd Party Integration Instance
+      run_once:
+        simple: ${incident.runonce}
+      sites:
+        simple: ${incident.sitenames}
+      syslog_sender_instance:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: This automation retrieves all specified assets from the PANW IoT
+        cloud and send them to the SIEM server.
+      id: d220787c-8619-48f4-80f5-1a2a5138dac8
+      iscommand: false
+      name: Send all PANW IoT alerts to SIEM
+      script: SendAllPANWIoTAssetsToSIEM
+      type: regular
+      version: -1
+    taskid: d220787c-8619-48f4-80f5-1a2a5138dac8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 540,
+          "y": 590
+        }
+      }
+  "5":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: vulnerability
+      execution-timeout:
+        simple: "864000"
+      panw_iot_3rd_party_instance:
+        simple: PANW IoT 3rd Party Integration Instance
+      run_once:
+        simple: ${incident.runonce}
+      sites:
+        simple: ${incident.sitenames}
+      syslog_sender_instance:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: This automation retrieves all specified assets from the PANW IoT
+        cloud and sends them to the SIEM server.
+      id: c46359f5-66f1-4acc-8e70-b8c5b1c7f0c3
+      iscommand: false
+      name: Send all PANW IoT vulnerabilities to SIEM
+      script: SendAllPANWIoTAssetsToSIEM
+      type: regular
+      version: -1
+    taskid: c46359f5-66f1-4acc-8e70-b8c5b1c7f0c3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 950,
+          "y": 590
+        }
+      }
+  "6":
+    continueonerrortype: ""
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 8b4d1665-c770-4bcf-8006-57796c1464b4
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 8b4d1665-c770-4bcf-8006-57796c1464b4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1210,
+          "y": 790
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "8"
+      "no":
+      - "9"
+      "yes":
+      - "18"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - Syslog Sender
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: f5de0e77-4123-47c2-8176-0528c08ce2b3
+      iscommand: false
+      name: is License Available?
+      script: CheckPANWIoTIntegrationLicense
+      type: condition
+      version: -1
+    taskid: f5de0e77-4123-47c2-8176-0528c08ce2b3
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1460,
+          "y": -40
+        }
+      }
+  "8":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: siem
+      message:
+        simple: Failed to get License
+      playbook_name:
+        simple: Bulk Export to SIEM - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: f748f166-5d4d-437a-8550-88e2cdfbfc03
+      iscommand: true
+      name: Failed to get License. Report Error to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: f748f166-5d4d-437a-8550-88e2cdfbfc03
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1430,
+          "y": 590
+        }
+      }
+  "9":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: siem
+      message:
+        simple: License Limit Exceeded
+      playbook_name:
+        simple: Bulk Export to SIEM - PANW IoT 3rd Party Integration
+      status:
+        simple: license_limit_exceeded
+      using:
+        simple: PANW IoT 3rd Party Integration Instance
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends a status message back to PANW IOT cloud.
+      id: 1f509938-d597-46b0-8bc5-7d54282b6f04
+      iscommand: true
+      name: License Limited Exceed. Report status to PANW IoT Cloud
+      script: '|||panw-iot-3rd-party-report-status-to-panw'
+      type: regular
+      version: -1
+    taskid: 1f509938-d597-46b0-8bc5-7d54282b6f04
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1840,
+          "y": 590
+        }
+      }
+  "10":
+    continueonerrortype: ""
+    defaultassigneecomplex:
+      simple: ${incident.integrationinstancename}
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "11"
+      "yes":
+      - "12"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: 61dad8d8-e40a-4a62-8925-5bdf146fe296
+      iscommand: false
+      name: Is Syslog(SIEM) Integration Instance Available
+      script: Exists
+      type: condition
+      version: -1
+    taskid: 61dad8d8-e40a-4a62-8925-5bdf146fe296
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1100,
+          "y": -390
+        }
+      }
+  "11":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      asset_type:
+        simple: device
+      integration_name:
+        simple: PANW IoT 3rd Party Integration - Syslog Sender
+      message:
+        simple: No Syslog  Integration instance passed
+      playbook_name:
+        simple: Incremental Export to SIEM - PANW IoT 3rd Party Integration
+      status:
+        simple: error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Palo Alto Networks IoT 3rd Party
+      description: Sends a status message back to PANW IOT cloud.
+      id: b3100d3b-d452-4112-8087-c4a03183c78c
+      iscommand: true
+      name: No Instance passed to this Playbook. Reporting Error
+      script: Palo Alto Networks IoT 3rd Party|||panw-iot-3rd-party-report-status-to-panw
+      type: regular
+      version: -1
+    taskid: b3100d3b-d452-4112-8087-c4a03183c78c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 630,
+          "y": -220
+        }
+      }
+  "12":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "2"
+      "yes":
+      - "7"
+    note: false
+    quietmode: 0
+    results:
+    - brandInstances
+    scriptarguments:
+      brandname:
+        simple: PANW IoT 3rd Party Integration - Syslog Sender
+      instancename:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if integration brand is available and provided instance
+        is Active. Otherwise returns 'no'.
+      id: 0b185888-0c97-402a-8bd1-331ad0725a75
+      iscommand: false
+      name: Is Syslog (SIEM)  Integration Enabled?
+      script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+      type: condition
+      version: -1
+    taskid: 0b185888-0c97-402a-8bd1-331ad0725a75
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1580,
+          "y": -220
+        }
+      }
+  "13":
+    continueonerrortype: ""
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 8d1c0e83-1f4b-4c20-8f96-9575a93163e7
+      iscommand: true
+      name: closeInvestigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 8d1c0e83-1f4b-4c20-8f96-9575a93163e7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 630,
+          "y": -40
+        }
+      }
+  "18":
+    continueonerror: true
+    continueonerrortype: ""
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "19"
+      - "21"
+      - "20"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      instance_name:
+        simple: ${incident.integrationinstancename}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 1d142b07-6ae5-485f-8cf1-b6e11cb1d9c9
+      iscommand: false
+      name: 'Retrieve Configured SIEM Asset Types '
+      script: CheckConfiguredSIEMAssetTypes
+      type: regular
+      version: -1
+    taskid: 1d142b07-6ae5-485f-8cf1-b6e11cb1d9c9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 840,
+          "y": 130
+        }
+      }
+  "19":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: asset.device
+          operator: isEqualString
+          right:
+            value:
+              simple: "yes"
+      label: DEVICE
+    continueonerrortype: ""
+    id: "19"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "6"
+      DEVICE:
+      - "3"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 4a9de8bd-a218-49d7-8ed8-93bfb146134d
+      iscommand: false
+      name: Device Type Selected?
+      type: condition
+      version: -1
+    taskid: 4a9de8bd-a218-49d7-8ed8-93bfb146134d
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 200,
+          "y": 340
+        }
+      }
+  "20":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: asset.alert
+          operator: isEqualString
+          right:
+            value:
+              simple: "yes"
+      label: ALERT
+    continueonerrortype: ""
+    id: "20"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "6"
+      ALERT:
+      - "4"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: f3b0f4cf-ec4d-4141-8c09-66b5ac13d5c2
+      iscommand: false
+      name: Alert Type Selected?
+      type: condition
+      version: -1
+    taskid: f3b0f4cf-ec4d-4141-8c09-66b5ac13d5c2
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 650,
+          "y": 340
+        }
+      }
+  "21":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: asset.vulnerability
+          operator: isEqualString
+          right:
+            value:
+              simple: "yes"
+      label: VULNERABILITY
+    continueonerrortype: ""
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "6"
+      VULNERABILITY:
+      - "5"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 458cee07-e8ec-436b-8682-a4c7a9630420
+      iscommand: false
+      name: Vulnerability Type Selected?
+      type: condition
+      version: -1
+    taskid: 458cee07-e8ec-436b-8682-a4c7a9630420
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1120,
+          "y": 340
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1395,
+        "width": 2480,
+        "x": 140,
+        "y": -510
+      }
+    }
+  }
