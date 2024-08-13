@@ -1,0 +1,103 @@
+{
+	"XDRBuiltInField": false,
+	"XsiamIncidentFieldExtraData": null,
+	"aliasTo": "",
+	"aliases": null,
+	"associatedToAll": true,
+	"associatedTypes": [],
+	"autoCompleteTags": null,
+	"breachScript": "",
+	"cacheVersn": 0,
+	"caseInsensitive": true,
+	"cliName": "networkdiscoveryskipneighbordiscoverypatterns",
+	"closeForm": false,
+	"columns": [
+		{
+			"displayName": "Field Name",
+			"fieldCalcScript": "",
+			"isDefault": true,
+			"isReadOnly": true,
+			"key": "fieldname",
+			"orgType": "",
+			"required": false,
+			"script": "",
+			"selectValues": null,
+			"type": "shortText",
+			"width": 150
+		},
+		{
+			"displayName": "Field Values",
+			"fieldCalcScript": "",
+			"isDefault": true,
+			"isReadOnly": false,
+			"key": "fieldvalues",
+			"orgType": "",
+			"required": false,
+			"script": "",
+			"selectValues": [],
+			"type": "longText",
+			"width": 474
+		}
+	],
+	"content": false,
+	"defaultRows": [
+		{
+			"fieldname": "Device Version",
+			"fieldvalues": "Polycom,Revolabs FLX_UC,Ubuntu,RHEL,Centos,Debian"
+		},
+		{
+			"fieldname": "Device Description",
+			"fieldvalues": "Polycom,Revolabs FLX_UC,Ubuntu,RHEL,Centos,Debian"
+		},
+		{
+			"fieldname": "Device ID"
+		},
+		{
+			"fieldname": "Device Platform"
+		}
+	],
+	"definitionId": "",
+	"description": "Skips the neighbors discovery based on the patterns defined",
+	"editForm": true,
+	"fieldCalcScript": "",
+	"fromServerVersion": "",
+	"group": 0,
+	"hidden": false,
+	"id": "incident_networkdiscoveryskipneighbordiscoverypatterns",
+	"ipVersion": "",
+	"isReadOnly": false,
+	"itemVersion": "",
+	"locked": false,
+	"mergeStrategy": "",
+	"name": "Network Discovery Skip Neighbor Discovery Patterns",
+	"neverSetAsRequired": false,
+	"openEnded": false,
+	"orgType": "",
+	"ownerOnly": false,
+	"packID": "",
+	"packName": "",
+	"placeholder": "",
+	"pretty_name": "",
+	"propagationLabels": [
+		"all"
+	],
+	"required": false,
+	"runScriptAfterUpdate": false,
+	"script": "",
+	"selectValues": [],
+	"selectValuesMap": null,
+	"sla": 0,
+	"system": false,
+	"systemAssociatedTypes": null,
+	"template": "",
+	"threshold": 72,
+	"toServerVersion": "",
+	"type": "grid",
+	"unmapped": false,
+	"unsearchable": false,
+	"useAsKpi": false,
+	"validatedError": "",
+	"validationRegex": "",
+	"version": -1,
+	"x2_fields": ""
+}
