@@ -61,11 +61,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 27ab8b50-f479-4bf4-8290-d18a289c4b24
+      id: ee9aea95-896a-44c4-8f00-a30d997689dc
       iscommand: false
       name: ""
       version: -1
-    taskid: 27ab8b50-f479-4bf4-8290-d18a289c4b24
+    taskid: ee9aea95-896a-44c4-8f00-a30d997689dc
     timertriggers: []
     type: start
     view: |-
@@ -102,13 +102,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: 942c8753-9647-435c-894e-e7804d71af76
+      id: 2c1f330d-b698-4dc8-8e91-138e62694221
       iscommand: false
       name: Is Asset Attribute Polling integration enabled?
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: 942c8753-9647-435c-894e-e7804d71af76
+    taskid: 2c1f330d-b698-4dc8-8e91-138e62694221
     timertriggers: []
     type: condition
     view: |-
@@ -149,13 +149,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: a3289e0c-a68f-4bbc-8de3-7c782bc6647a
+      id: fc860ac5-2932-4e67-8a42-9bea73701a58
       iscommand: true
       name: Report disabled status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: a3289e0c-a68f-4bbc-8de3-7c782bc6647a
+    taskid: fc860ac5-2932-4e67-8a42-9bea73701a58
     timertriggers: []
     type: regular
     view: |-
@@ -188,13 +188,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 964228aa-9d54-4851-8625-1a49b0926148
+      id: ff5be59d-acbc-483d-8569-9ae88cf868c5
       iscommand: false
       name: Fetch Asset Attribute Polling info and Send to PANW IoT Cloud
       script: AssetAttributePollingFetchDeviceInfoAndSendToPANWIoTCloud
       type: regular
       version: -1
-    taskid: 964228aa-9d54-4851-8625-1a49b0926148
+    taskid: ff5be59d-acbc-483d-8569-9ae88cf868c5
     timertriggers: []
     type: regular
     view: |-
@@ -228,13 +228,13 @@ tasks:
       description: Check whether given entry/entries returned an error. Use ${lastCompletedTaskEntries}
         to check the previous task entries. If array is provided, will return yes
         if one of the entries returned an error.
-      id: 66c079a2-3b2f-4e8c-80fd-526ecf7882f2
+      id: 0b0e31b5-f307-4d84-85be-781bd45da9bf
       iscommand: false
       name: Was there any error ?
       script: isError
       type: condition
       version: -1
-    taskid: 66c079a2-3b2f-4e8c-80fd-526ecf7882f2
+    taskid: 0b0e31b5-f307-4d84-85be-781bd45da9bf
     timertriggers: []
     type: condition
     view: |-
@@ -275,13 +275,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 14bd53c3-39de-45b8-821e-65a58feb32a6
+      id: 8875819d-99eb-4dce-8055-a717d35e3421
       iscommand: true
       name: Report error status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 14bd53c3-39de-45b8-821e-65a58feb32a6
+    taskid: 8875819d-99eb-4dce-8055-a717d35e3421
     timertriggers: []
     type: regular
     view: |-
@@ -322,13 +322,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 3a9926b4-bac8-49b4-8284-a970cc4ee90d
+      id: 057c4591-a600-4555-80bf-f0ace2a115cc
       iscommand: true
       name: Report Success status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 3a9926b4-bac8-49b4-8284-a970cc4ee90d
+    taskid: 057c4591-a600-4555-80bf-f0ace2a115cc
     timertriggers: []
     type: regular
     view: |-
@@ -352,13 +352,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: b652fa25-f8a1-4449-83c6-dbc03aa61882
+      id: 65095c45-ecb3-4804-84fb-147e0c9425fa
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: b652fa25-f8a1-4449-83c6-dbc03aa61882
+    taskid: 65095c45-ecb3-4804-84fb-147e0c9425fa
     timertriggers: []
     type: regular
     view: |-
@@ -391,13 +391,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 19eac38b-5ec4-4bac-8bb3-164352ad7ff0
+      id: cb12befd-41f8-4f33-82ba-d5e16ade730e
       iscommand: false
       name: Is Asset Attribute Polling Integration Instance available?
       script: Exists
       type: condition
       version: -1
-    taskid: 19eac38b-5ec4-4bac-8bb3-164352ad7ff0
+    taskid: cb12befd-41f8-4f33-82ba-d5e16ade730e
     timertriggers: []
     type: condition
     view: |-
@@ -438,13 +438,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 181aec4e-8339-4aad-88ea-337e4d77487e
+      id: 54a619e5-744c-4fc6-8c36-428af67f2ee2
       iscommand: true
       name: No Instance passed to this Playbook. Reporting Error
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 181aec4e-8339-4aad-88ea-337e4d77487e
+    taskid: 54a619e5-744c-4fc6-8c36-428af67f2ee2
     timertriggers: []
     type: regular
     view: |-
@@ -468,13 +468,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 6bfcdb75-eb6d-4b74-8471-76db24fe0ac5
+      id: 5fb8123b-14d3-4c8e-803b-83715d979fdd
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 6bfcdb75-eb6d-4b74-8471-76db24fe0ac5
+    taskid: 5fb8123b-14d3-4c8e-803b-83715d979fdd
     timertriggers: []
     type: regular
     view: |-
@@ -506,13 +506,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 010c6208-3286-45f1-8aa9-af6da27fa013
+      id: 38ded4b8-2748-41fc-87ef-1766782c3af1
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 010c6208-3286-45f1-8aa9-af6da27fa013
+    taskid: 38ded4b8-2748-41fc-87ef-1766782c3af1
     timertriggers: []
     type: condition
     view: |-
@@ -552,13 +552,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 2fd50e71-544e-49f2-8ac9-753d82b79dc7
+      id: ab66c8b7-858f-4ea0-89e1-ceb4a5dfc38d
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 2fd50e71-544e-49f2-8ac9-753d82b79dc7
+    taskid: ab66c8b7-858f-4ea0-89e1-ceb4a5dfc38d
     timertriggers: []
     type: regular
     view: |-
@@ -598,13 +598,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: c122f4ed-ec63-4b5d-8b8a-a425155f1ff9
+      id: 887742d8-b2fd-4c75-8529-0aaefc33d9ba
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: c122f4ed-ec63-4b5d-8b8a-a425155f1ff9
+    taskid: 887742d8-b2fd-4c75-8529-0aaefc33d9ba
     timertriggers: []
     type: regular
     view: |-
@@ -637,13 +637,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: d086049f-9424-455f-890c-13fba58c6192
+      id: d1baa144-4fc6-4565-8258-2472713e03ab
       iscommand: false
       name: Is Asset Attribute Polling IP/Subnet available?
       script: Exists
       type: condition
       version: -1
-    taskid: d086049f-9424-455f-890c-13fba58c6192
+    taskid: d1baa144-4fc6-4565-8258-2472713e03ab
     timertriggers: []
     type: condition
     view: |-
@@ -684,13 +684,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: becfe871-82d9-47fd-8d2d-c67af6023d9b
+      id: 700b36cc-58bc-4e13-8592-679d9c9069b2
       iscommand: true
       name: No Asset Attribute IP/Subnet passed to this Playbook. Reporting Error
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: becfe871-82d9-47fd-8d2d-c67af6023d9b
+    taskid: 700b36cc-58bc-4e13-8592-679d9c9069b2
     timertriggers: []
     type: regular
     view: |-
