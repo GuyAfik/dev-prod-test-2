@@ -1,0 +1,64 @@
+args:
+- description: Integration's brand name to query
+  name: brandname
+  required: true
+- description: Instance name to check
+  name: instancename
+  required: true
+comment: Returns 'yes' if integration brand is available and provided instance is
+  Active. Otherwise returns 'no'.
+commonfields:
+  id: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/panw-iot:1.0.0.79918
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: isIntegrationInstanceAvailable
+outputs:
+- contextPath: "yes"
+  description: If integration is available and provided instance is active
+- contextPath: "no"
+  description: If the integration is unavailable or provided instance is not active
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('isIntegrationInstanceAvailable', 'start', __line__())
+
+
+
+
+  brandName = demisto.get(demisto.args(), 'brandname')
+  instanceName = demisto.get(demisto.args(), 'instancename')
+  allInstances = demisto.getModules()
+  brandInstances = [instanceName for instanceName in allInstances if allInstances[instanceName]['brand'].lower(
+  ) == brandName.lower() and demisto.get(allInstances[instanceName], 'state') and allInstances[instanceName]['state'] == 'active']
+  if brandInstances:
+      if instanceName in brandInstances:
+          demisto.setContext('brandInstances', [instanceName])
+          demisto.results('yes')
+      else:
+          demisto.results('no')
+  else:
+      demisto.results('no')
+
+  register_module_line('isIntegrationInstanceAvailable', 'end', __line__())
+scripttarget: 0
+subtype: python3
+tags:
+- infra
+- Condition
+timeout: 3m0s
+type: python
