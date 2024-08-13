@@ -31,11 +31,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 67f0df45-5233-4240-8b41-dca366ccf6df
+      id: f4bbc6d3-bd38-4c7f-892e-9882150a01f9
       iscommand: false
       name: ""
       version: -1
-    taskid: 67f0df45-5233-4240-8b41-dca366ccf6df
+    taskid: f4bbc6d3-bd38-4c7f-892e-9882150a01f9
     timertriggers: []
     type: start
     view: |-
@@ -68,13 +68,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 008c6548-569d-425b-84bd-1f491f1a49ab
+      id: f6ca2b2f-3f17-460e-8823-24348aed1ed9
       iscommand: false
       name: Get Last 30 Days DateTime
       script: GetLastDateTime
       type: regular
       version: -1
-    taskid: 008c6548-569d-425b-84bd-1f491f1a49ab
+    taskid: f6ca2b2f-3f17-460e-8823-24348aed1ed9
     timertriggers: []
     type: regular
     view: |-
@@ -107,13 +107,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: da850739-b00b-4661-8724-211743c62f2e
+      id: 95a42fe3-1376-47cd-8c5c-6b780a34e220
       iscommand: false
       name: Launch Rapid7 reports for finished scans
       script: GetRapid7FinishedScansAndGenerateReportV2
       type: regular
       version: -1
-    taskid: da850739-b00b-4661-8724-211743c62f2e
+    taskid: 95a42fe3-1376-47cd-8c5c-6b780a34e220
     timertriggers: []
     type: regular
     view: |-
@@ -149,13 +149,13 @@ tasks:
       brand: ""
       description: Checks for errors in a given task. If found, write it to the path
         provided as an argument.
-      id: eac36634-3571-427d-82f7-3eb647bedb01
+      id: 39a65ce4-f5d9-41b6-8259-442023ee0cfd
       iscommand: false
       name: Did the Report Launch Fail?
       script: ea2fa025-47c1-420b-895b-d5b62cfab9b3
       type: condition
       version: -1
-    taskid: eac36634-3571-427d-82f7-3eb647bedb01
+    taskid: 39a65ce4-f5d9-41b6-8259-442023ee0cfd
     timertriggers: []
     type: condition
     view: |-
@@ -189,13 +189,13 @@ tasks:
     task:
       brand: ""
       description: Upload reports (PDF + XML) for specified scan to IoT Cloud
-      id: 1ee57085-a43c-4ad7-8296-624aff0103f7
+      id: f742a7b1-0b2e-40db-8f1a-98e565867da8
       iscommand: true
       name: Report Launch Error as Event
       script: '|||panw-iot-3rd-party-upload-vulnerability-scan-report'
       type: regular
       version: -1
-    taskid: 1ee57085-a43c-4ad7-8296-624aff0103f7
+    taskid: f742a7b1-0b2e-40db-8f1a-98e565867da8
     timertriggers: []
     type: regular
     view: |-
@@ -235,13 +235,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: bb92150a-2ab1-40be-8568-fdb9a33d10e1
+      id: d0aba33e-17b6-4d6b-893f-22c800adf66b
       iscommand: true
       name: Report Launch Errors to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: bb92150a-2ab1-40be-8568-fdb9a33d10e1
+    taskid: d0aba33e-17b6-4d6b-893f-22c800adf66b
     timertriggers: []
     type: regular
     view: |-
@@ -271,13 +271,13 @@ tasks:
     task:
       brand: ""
       description: Sleep for X seconds
-      id: 8c733409-cef5-4393-8965-f94bc1929511
+      id: 9f90d2f3-d407-4d73-8586-7c4555ffd945
       iscommand: false
       name: Wait 5 minute for the reports to finish
       script: Sleep
       type: regular
       version: -1
-    taskid: 8c733409-cef5-4393-8965-f94bc1929511
+    taskid: 9f90d2f3-d407-4d73-8586-7c4555ffd945
     timertriggers: []
     type: regular
     view: |-
@@ -308,13 +308,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 80f825a2-ad31-4f48-899b-3b822f3ecf3a
+      id: cc6cf5a9-f371-4df9-87fe-e78577f76615
       iscommand: false
       name: Preparing Download Finished Rapid7 Scan Reports
       script: DownloadFinishedRapid7ScanReportsForPANWIoTCloudV2
       type: regular
       version: -1
-    taskid: 80f825a2-ad31-4f48-899b-3b822f3ecf3a
+    taskid: cc6cf5a9-f371-4df9-87fe-e78577f76615
     timertriggers: []
     type: regular
     view: |-
@@ -350,13 +350,13 @@ tasks:
       brand: ""
       description: Checks for errors in a given task. If found, write it to the path
         provided as an argument.
-      id: 24568fce-ce05-45e0-8f52-cfc1bb032d67
+      id: 77890c71-94df-4309-8c45-c3ccc4acaa68
       iscommand: false
       name: Did the Report Download Fail?
       script: ea2fa025-47c1-420b-895b-d5b62cfab9b3
       type: condition
       version: -1
-    taskid: 24568fce-ce05-45e0-8f52-cfc1bb032d67
+    taskid: 77890c71-94df-4309-8c45-c3ccc4acaa68
     timertriggers: []
     type: condition
     view: |-
@@ -390,13 +390,13 @@ tasks:
     task:
       brand: ""
       description: Upload reports (PDF + XML) for specified scan to IoT Cloud
-      id: c16d73ce-af44-4f4f-8d60-85c96cac6d5c
+      id: 6f4a2c2d-6b19-4228-8804-897919cf820d
       iscommand: true
       name: Report Download Error as Event
       script: '|||panw-iot-3rd-party-upload-vulnerability-scan-report'
       type: regular
       version: -1
-    taskid: c16d73ce-af44-4f4f-8d60-85c96cac6d5c
+    taskid: 6f4a2c2d-6b19-4228-8804-897919cf820d
     timertriggers: []
     type: regular
     view: |-
@@ -436,13 +436,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: c1d80f7c-ed54-4678-813c-16abfbbcdacc
+      id: f9f36b43-80c8-4111-8ad3-c210ee3c7026
       iscommand: true
       name: Report Download Errors to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: c1d80f7c-ed54-4678-813c-16abfbbcdacc
+    taskid: f9f36b43-80c8-4111-8ad3-c210ee3c7026
     timertriggers: []
     type: regular
     view: |-
@@ -475,13 +475,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 779fd793-40a2-4e70-8ebf-e88e74793aec
+      id: f45cd2f6-12a1-4e22-83ea-706f575077a0
       iscommand: false
       name: Check if there are any available reports to upload
       script: Exists
       type: condition
       version: -1
-    taskid: 779fd793-40a2-4e70-8ebf-e88e74793aec
+    taskid: f45cd2f6-12a1-4e22-83ea-706f575077a0
     timertriggers: []
     type: condition
     view: |-
@@ -512,13 +512,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: fefda47a-0562-4cff-8019-cc19424f0df5
+      id: fb8b91e8-5a0c-41df-89db-2d8e309f877a
       iscommand: false
       name: Upload Files to PANW IoT Cloud
       script: UploadFinishedRapid7ScanReportstoPANWIoTCloudV2
       type: regular
       version: -1
-    taskid: fefda47a-0562-4cff-8019-cc19424f0df5
+    taskid: fb8b91e8-5a0c-41df-89db-2d8e309f877a
     timertriggers: []
     type: regular
     view: |-
@@ -554,13 +554,13 @@ tasks:
       brand: ""
       description: Checks for errors in a given task. If found, write it to the path
         provided as an argument.
-      id: 49cbbc49-19ac-4768-8ca4-4c4edc5b2809
+      id: a52a1922-2b92-491f-891d-189df9e5140c
       iscommand: false
       name: Did the Report Uploads Fail?
       script: ea2fa025-47c1-420b-895b-d5b62cfab9b3
       type: condition
       version: -1
-    taskid: 49cbbc49-19ac-4768-8ca4-4c4edc5b2809
+    taskid: a52a1922-2b92-491f-891d-189df9e5140c
     timertriggers: []
     type: condition
     view: |-
@@ -583,13 +583,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: ba3cf427-3ac9-46a4-8068-7370331ecbad
+      id: 8196995e-636e-4219-8d35-a67d58236e7b
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: ba3cf427-3ac9-46a4-8068-7370331ecbad
+    taskid: 8196995e-636e-4219-8d35-a67d58236e7b
     timertriggers: []
     type: regular
     view: |-
@@ -629,13 +629,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 7a6f7874-8e8a-4e8e-8a06-b50a0e84c5f1
+      id: 0a19c9ee-e52b-4e34-87e1-5635ae9d5992
       iscommand: true
       name: Report Upload Success to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 7a6f7874-8e8a-4e8e-8a06-b50a0e84c5f1
+    taskid: 0a19c9ee-e52b-4e34-87e1-5635ae9d5992
     timertriggers: []
     type: regular
     view: |-
@@ -675,13 +675,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 4761b8dd-f007-466e-84a3-e2f74a76a3e0
+      id: cbde7d6e-adf7-43e3-88f6-53de790ae356
       iscommand: true
       name: Report Upload Errors to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 4761b8dd-f007-466e-84a3-e2f74a76a3e0
+    taskid: cbde7d6e-adf7-43e3-88f6-53de790ae356
     timertriggers: []
     type: regular
     view: |-
@@ -721,13 +721,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: c873b23f-2813-4906-8fff-3f13247de36f
+      id: afe4ad03-29c8-48ac-8211-4b19d67deafa
       iscommand: true
       name: Report Upload Error as Event
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: c873b23f-2813-4906-8fff-3f13247de36f
+    taskid: afe4ad03-29c8-48ac-8211-4b19d67deafa
     timertriggers: []
     type: regular
     view: |-
@@ -767,13 +767,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 5c767571-dd03-4071-8847-762ba977eac8
+      id: 9f3008b0-e6ad-475a-8fe4-f389ee585dc4
       iscommand: true
       name: Report status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 5c767571-dd03-4071-8847-762ba977eac8
+    taskid: 9f3008b0-e6ad-475a-8fe4-f389ee585dc4
     timertriggers: []
     type: regular
     view: |-
@@ -813,13 +813,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: a3b0036c-1611-4834-88bd-5e3bb2671c3f
+      id: 741605b5-851a-493d-849e-7c19545bb6e9
       iscommand: true
       name: Report disabled status to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: a3b0036c-1611-4834-88bd-5e3bb2671c3f
+    taskid: 741605b5-851a-493d-849e-7c19545bb6e9
     timertriggers: []
     type: regular
     view: |-
@@ -842,13 +842,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 1f308edf-827e-499a-861c-3a58c57c7376
+      id: 67bfc3f2-e9d3-4ea6-8d90-df77b046f5c9
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 1f308edf-827e-499a-861c-3a58c57c7376
+    taskid: 67bfc3f2-e9d3-4ea6-8d90-df77b046f5c9
     timertriggers: []
     type: regular
     view: |-
@@ -871,13 +871,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: f14b74bd-1004-4f57-8374-7988bbadbfff
+      id: a5981d19-e38d-4174-8308-51c41e76f6bb
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: f14b74bd-1004-4f57-8374-7988bbadbfff
+    taskid: a5981d19-e38d-4174-8308-51c41e76f6bb
     timertriggers: []
     type: regular
     view: |-
@@ -906,13 +906,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 792e6950-69df-419f-8317-a28883c59971
+      id: bf01e44c-f0e8-4f60-8caa-0f0454d594d2
       iscommand: true
       name: Download Reports
       script: '|||nexpose-get-file-reports'
       type: regular
       version: -1
-    taskid: 792e6950-69df-419f-8317-a28883c59971
+    taskid: bf01e44c-f0e8-4f60-8caa-0f0454d594d2
     timertriggers: []
     type: regular
     view: |-
@@ -945,13 +945,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: efe26b9e-827c-40ff-8100-e13046a507bb
+      id: 28d0a8a7-9cd8-4c31-82b5-e5d723f9c255
       iscommand: false
       name: Check if there are any available reports infos
       script: Exists
       type: condition
       version: -1
-    taskid: efe26b9e-827c-40ff-8100-e13046a507bb
+    taskid: 28d0a8a7-9cd8-4c31-82b5-e5d723f9c255
     timertriggers: []
     type: condition
     view: |-
@@ -982,13 +982,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: ab2e3642-98f2-461e-8d38-cb441500ed7a
+      id: 393ca70d-3bd2-4d3d-8efa-c3d5c5c77949
       iscommand: false
       name: Delete Reports
       script: DeleteFinishedRapid7ScanReportsV2
       type: regular
       version: -1
-    taskid: ab2e3642-98f2-461e-8d38-cb441500ed7a
+    taskid: 393ca70d-3bd2-4d3d-8efa-c3d5c5c77949
     timertriggers: []
     type: regular
     view: |-
@@ -1021,13 +1021,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 79ca4704-0d31-44eb-8a9b-57acd57b1df0
+      id: 126f3411-ec21-4e6c-8c06-7d11cf04709c
       iscommand: false
       name: Is License Available?
       script: CheckPANWIoTIntegrationLicense
       type: condition
       version: -1
-    taskid: 79ca4704-0d31-44eb-8a9b-57acd57b1df0
+    taskid: 126f3411-ec21-4e6c-8c06-7d11cf04709c
     timertriggers: []
     type: condition
     view: |-
@@ -1067,13 +1067,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 64a6c64f-3e4d-4db7-8afd-e237293b7e8e
+      id: 461ce916-ae81-458a-880d-2a00c5269e00
       iscommand: true
       name: Failed to get License. Report Error to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 64a6c64f-3e4d-4db7-8afd-e237293b7e8e
+    taskid: 461ce916-ae81-458a-880d-2a00c5269e00
     timertriggers: []
     type: regular
     view: |-
@@ -1113,13 +1113,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: fcb70270-d5e9-46f5-83c3-1a2395da03ac
+      id: 04b223f7-2b3a-4755-8160-563cdd388b51
       iscommand: true
       name: License Limited Exceed. Report status to PANW IoT Cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: fcb70270-d5e9-46f5-83c3-1a2395da03ac
+    taskid: 04b223f7-2b3a-4755-8160-563cdd388b51
     timertriggers: []
     type: regular
     view: |-
@@ -1156,13 +1156,13 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available and provided instance
         is Active. Otherwise returns 'no'.
-      id: abca5a4a-331a-4b48-870c-7a40f20087b8
+      id: 6a982656-d508-433c-8e53-9a1722ca1546
       iscommand: false
       name: isIntegrationInstanceAvailable
       script: 366ccb9c-4c22-4ebb-8a47-18faef8f67ec
       type: condition
       version: -1
-    taskid: abca5a4a-331a-4b48-870c-7a40f20087b8
+    taskid: 6a982656-d508-433c-8e53-9a1722ca1546
     timertriggers: []
     type: condition
     view: |-
@@ -1185,13 +1185,13 @@ tasks:
     task:
       brand: Builtin
       description: Close the current incident
-      id: 42813335-1be1-40a5-8838-72af3972b715
+      id: c2b8f422-e307-4bf3-89af-388e8ced43cb
       iscommand: true
       name: closeInvestigation
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: 42813335-1be1-40a5-8838-72af3972b715
+    taskid: c2b8f422-e307-4bf3-89af-388e8ced43cb
     timertriggers: []
     type: regular
     view: |-
@@ -1224,13 +1224,13 @@ tasks:
       brand: ""
       description: Check if a given value exists in the context. Will return 'no'
         for empty empty arrays. To be used mostly with DQ and selectors.
-      id: 06629ca7-8b2d-4dfb-8b84-59a722536484
+      id: 86d8290e-85ec-4168-8c45-424e381beaa8
       iscommand: false
       name: Scans present to download?
       script: Exists
       type: condition
       version: -1
-    taskid: 06629ca7-8b2d-4dfb-8b84-59a722536484
+    taskid: 86d8290e-85ec-4168-8c45-424e381beaa8
     timertriggers: []
     type: condition
     view: |-
@@ -1270,13 +1270,13 @@ tasks:
     task:
       brand: ""
       description: Sends a status message back to PANW IOT cloud.
-      id: 27b7f1f9-ec38-448c-8957-369f38454a75
+      id: 5fe5284a-ad2b-4712-8f04-af98aefb60b1
       iscommand: true
       name: Report Scans not present to PANW IoT cloud
       script: '|||panw-iot-3rd-party-report-status-to-panw'
       type: regular
       version: -1
-    taskid: 27b7f1f9-ec38-448c-8957-369f38454a75
+    taskid: 5fe5284a-ad2b-4712-8f04-af98aefb60b1
     timertriggers: []
     type: regular
     view: |-
