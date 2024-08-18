@@ -355,6 +355,10 @@
 					{
 						"fieldId": "incident_attachment",
 						"isVisible": true
+					},
+					{
+						"fieldId": "incident_bbbbb",
+						"isVisible": true
 					}
 				],
 				"isVisible": true,
@@ -1524,7 +1528,11 @@
 						"isVisible": true
 					},
 					{
-						"fieldId": "incident_zzzzzzzzz",
+						"fieldId": "incident_bbbbb",
+						"isVisible": true
+					},
+					{
+						"fieldId": "incident_bbbbb",
 						"isVisible": true
 					}
 				],
