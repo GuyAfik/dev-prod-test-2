@@ -41,7 +41,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "AS Owner",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
