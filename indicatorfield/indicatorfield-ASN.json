@@ -42,7 +42,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "ASN",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
