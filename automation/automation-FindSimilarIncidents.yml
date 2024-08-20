@@ -80,7 +80,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.44
+    itemVersion: 1.15.53
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -95,6 +95,7 @@ engineinfo: {}
 mainengineinfo: {}
 name: FindSimilarIncidents
 nativeimage:
+- "8.7"
 - "8.6"
 outputs:
 - contextPath: similarIncident.rawId
@@ -114,9 +115,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('FindSimilarIncidents', 'start', __line__())
-  ### pack version: 1.15.44
-  # type: ignore
-
+  ### pack version: 1.15.53
 
   from dateutil import parser  # type: ignore[import]
 
