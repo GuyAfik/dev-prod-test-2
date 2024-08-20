@@ -47,7 +47,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.44
+    itemVersion: 1.15.53
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -55,13 +55,11 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/parse-emails:1.0.0.106927
+dockerimage: demisto/parse-emails:1.0.0.108364
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
 name: ParseEmailFilesV2
-nativeimage:
-- "8.6"
 outputs:
 - contextPath: Email.To
   description: This shows to whom the message was addressed, but may not contain the
@@ -148,7 +146,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('ParseEmailFilesV2', 'start', __line__())
-  ### pack version: 1.15.44
+  ### pack version: 1.15.53
 
 
   from parse_emails.parse_emails import EmailParser
