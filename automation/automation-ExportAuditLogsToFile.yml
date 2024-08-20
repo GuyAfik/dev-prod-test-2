@@ -24,7 +24,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.15.44
+    itemVersion: 1.15.53
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -41,13 +41,14 @@ engineinfo: {}
 mainengineinfo: {}
 name: ExportAuditLogsToFile
 nativeimage:
+- "8.7"
 - "8.6"
 pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('ExportAuditLogsToFile', 'start', __line__())
-  ### pack version: 1.15.44
+  ### pack version: 1.15.53
 
 
   import csv
