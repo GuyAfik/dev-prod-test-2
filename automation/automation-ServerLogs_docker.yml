@@ -6,7 +6,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 1.15.44
+    itemVersion: 1.15.53
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -20,13 +20,14 @@ engineinfo: {}
 mainengineinfo: {}
 name: ServerLogs_docker
 nativeimage:
+- "8.7"
 - "8.6"
 pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('ServerLogs_docker', 'start', __line__())
-  ### pack version: 1.15.44
+  ### pack version: 1.15.53
 
 
 
