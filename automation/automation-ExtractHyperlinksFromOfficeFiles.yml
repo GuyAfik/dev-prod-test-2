@@ -11,7 +11,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.15.44
+    itemVersion: 1.15.53
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -19,11 +19,12 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/office-utils:2.0.0.96781
+dockerimage: demisto/office-utils:2.0.0.107687
 engineinfo: {}
 mainengineinfo: {}
 name: ExtractHyperlinksFromOfficeFiles
 nativeimage:
+- "8.7"
 - "8.6"
 outputs:
 - contextPath: ExtractedHyperLink.URL
@@ -37,7 +38,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('ExtractHyperlinksFromOfficeFiles', 'start', __line__())
-  ### pack version: 1.15.44
+  ### pack version: 1.15.53
 
 
   import openpyxl
