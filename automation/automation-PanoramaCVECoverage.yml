@@ -21,7 +21,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.32
+    itemVersion: 2.1.34
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -35,6 +35,7 @@ engineinfo: {}
 mainengineinfo: {}
 name: PanoramaCVECoverage
 nativeimage:
+- "8.7"
 - "8.6"
 outputs:
 - contextPath: Panorama.CVECoverage.CVE
@@ -60,7 +61,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('PanoramaCVECoverage', 'start', __line__())
-  ### pack version: 2.1.32
+  ### pack version: 2.1.34
 
 
 
