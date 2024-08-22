@@ -14,7 +14,7 @@
 	"formatScript": "",
 	"fromServerVersion": "5.5.0",
 	"id": "Campaign",
-	"itemVersion": "3.5.12",
+	"itemVersion": "3.5.13",
 	"layout": "Campaign",
 	"legacyNames": null,
 	"locked": false,
