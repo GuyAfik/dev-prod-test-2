@@ -84,7 +84,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.49
+    itemVersion: 2.1.50
     packID: Palo_Alto_Networks_WildFire
     packName: WildFire by Palo Alto Networks
     packPropagationLabels:
@@ -1324,11 +1324,12 @@ script:
       type: string
   dockerimage: demisto/python3:3.10.14.99865
   nativeimage:
+  - "8.7"
   - "8.6"
   runonce: false
   script: |
     register_module_line('WildFire-v2', 'start', __line__())
-    ### pack version: 2.1.49
+    ### pack version: 2.1.50
     import contextlib
 
 
