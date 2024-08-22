@@ -14,7 +14,7 @@
 	"formatScript": "",
 	"fromServerVersion": "5.0.0",
 	"id": "Onion Address",
-	"itemVersion": "3.5.12",
+	"itemVersion": "3.5.13",
 	"layout": "domainRepUnified",
 	"legacyNames": null,
 	"locked": false,
