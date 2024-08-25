@@ -41,7 +41,7 @@
 	"ipVersion": "",
 	"isOverridable": false,
 	"isReadOnly": false,
-	"itemVersion": "3.5.12",
+	"itemVersion": "3.5.13",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Report Object References",
@@ -55,7 +55,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Report Object References",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
