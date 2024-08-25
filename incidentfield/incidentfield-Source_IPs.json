@@ -34,7 +34,7 @@
 	"ipVersion": "",
 	"isOverridable": false,
 	"isReadOnly": false,
-	"itemVersion": "3.5.12",
+	"itemVersion": "3.5.13",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Source IPs",
@@ -48,7 +48,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Source IPs",
 	"propagationLabels": [
 		"all"
 	],
