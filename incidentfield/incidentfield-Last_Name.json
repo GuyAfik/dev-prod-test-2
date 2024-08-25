@@ -4,9 +4,7 @@
 	"aliasTo": "",
 	"aliases": null,
 	"associatedToAll": true,
-	"associatedTypes": [
-		""
-	],
+	"associatedTypes": null,
 	"autoCompleteTags": null,
 	"breachScript": "",
 	"cacheVersn": 0,
@@ -27,7 +25,7 @@
 	"ipVersion": "",
 	"isOverridable": false,
 	"isReadOnly": false,
-	"itemVersion": "3.5.12",
+	"itemVersion": "3.5.13",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Last Name",
@@ -41,7 +39,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Last Name",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
