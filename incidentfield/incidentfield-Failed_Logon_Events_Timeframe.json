@@ -25,7 +25,7 @@
 	"ipVersion": "",
 	"isOverridable": false,
 	"isReadOnly": false,
-	"itemVersion": "3.5.12",
+	"itemVersion": "3.5.13",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Failed Logon Events Timeframe",
@@ -39,7 +39,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Failed Logon Events Timeframe",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
