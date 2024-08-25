@@ -1,0 +1,93 @@
+{
+	"author": "Cortex XSOAR",
+	"authorImage": "content/packs/Base/Author_image.png",
+	"beta": false,
+	"cacheVersn": 0,
+	"categories": [
+		"Analytics \u0026 SIEM"
+	],
+	"certification": "certified",
+	"contentItemTypes": [
+		"incidentfield"
+	],
+	"contentItems": {
+		"automation": null,
+		"casefield": null,
+		"classifier": null,
+		"dashboard": null,
+		"genericfield": null,
+		"generictype": null,
+		"incidentfield": [
+			{
+				"description": "",
+				"name": "Microsoft Sentinel Alert Count2",
+				"type": "shortText"
+			}
+		],
+		"incidenttype": null,
+		"indicatorfield": null,
+		"integration": null,
+		"layoutscontainer": null,
+		"list": null,
+		"playbook": null,
+		"report": null,
+		"reputation": null,
+		"widget": null,
+		"wizard": null
+	},
+	"created": "2020-03-28T12:58:02Z",
+	"currentVersion": "1.5.45",
+	"defaultDataSource": {
+		"id": "",
+		"name": ""
+	},
+	"definitionId": "",
+	"dependencies": {},
+	"deprecated": false,
+	"description": "Microsoft Sentinel is a cloud-native security information and event manager (SIEM) platform that uses built-in AI to help analyze large volumes of data across an enterprise.",
+	"downloads": 0,
+	"eulaLink": "https://github.com/demisto/content/blob/master/LICENSE",
+	"fromServerVersion": "6.0.0",
+	"general": [
+		"generalFieldCertified",
+		"generalFieldByCortexXSOAR",
+		"generalFieldFree",
+		"generalFieldSupportIncluded"
+	],
+	"hybrid": false,
+	"id": "AzureSentinel2",
+	"installMessage": "",
+	"integrations": [],
+	"itemVersion": "1.5.45",
+	"keywords": [],
+	"legacy": true,
+	"modules": [],
+	"name": "Microsoft Sentinel",
+	"packID": "AzureSentinel2",
+	"packName": "",
+	"premium": false,
+	"previewOnly": false,
+	"price": 0,
+	"propagationLabels": [
+		"all"
+	],
+	"rawKeywords": null,
+	"rawTags": null,
+	"rawUseCases": null,
+	"readme": "Use the Azure Sentinel integration to get and manage incidents and get related entity information for incidents.\n​\n\n## What does this pack do?\n\n- Gets a single incident or a list of incidents from Azure Sentinel.\n- Gets a list of watchlists from Azure Sentinel.\n- Creates, updates, or deletes a watchlist in Azure Sentinel.\n- Updates or deletes a single incident in Azure Sentinel.\n- Gets, adds, or deletes the comments of an incident from Azure Sentinel.\n- Gets a list of an incident's related entities from Azure Sentinel.\n- Gets a list of an incident's entities from Azure Sentinel.\n- Gets a list of an incident's alerts from Azure Sentinel.\n- Get a single watchlist item or list of watchlist items.\n- Creates, updates, deletes a watchlist item.\n- Returns a list of threat indicators.\n- Returns a list of threat indicators with specific entities.\n- Creates, updates, or deletes a threat indicator.\n- Appends new tags to an existing indicator.\n- Replaces the tags of a given indicator.",
+	"searchRank": 0,
+	"serverMaxVersion": "",
+	"serverMinVersion": "6.0.0",
+	"support": "xsoar",
+	"supportDetails": {
+		"email": "",
+		"url": "https://www.paloaltonetworks.com/cortex"
+	},
+	"tags": [],
+	"toServerVersion": "",
+	"updated": "2024-08-05T13:43:18Z",
+	"useCases": [],
+	"version": -1,
+	"versionInfo": "",
+	"videos": []
+}
