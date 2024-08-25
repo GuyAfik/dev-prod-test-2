@@ -29,7 +29,7 @@
 	"ipVersion": "",
 	"isOverridable": false,
 	"isReadOnly": false,
-	"itemVersion": "3.5.12",
+	"itemVersion": "3.5.13",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Src OS",
@@ -43,7 +43,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Src OS",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
