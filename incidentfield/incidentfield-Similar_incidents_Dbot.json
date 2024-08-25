@@ -119,7 +119,7 @@
 	"ipVersion": "",
 	"isOverridable": false,
 	"isReadOnly": false,
-	"itemVersion": "3.5.12",
+	"itemVersion": "3.5.13",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Similar incidents Dbot",
@@ -133,7 +133,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Similar incidents Dbot",
 	"propagationLabels": [
 		"all"
 	],
