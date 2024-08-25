@@ -86,7 +86,7 @@
 	"ipVersion": "",
 	"isOverridable": false,
 	"isReadOnly": false,
-	"itemVersion": "3.5.12",
+	"itemVersion": "3.5.13",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Issuer",
@@ -100,7 +100,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Issuer",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
