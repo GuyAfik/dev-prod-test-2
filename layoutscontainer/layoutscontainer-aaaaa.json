@@ -1355,6 +1355,10 @@
 					{
 						"fieldId": "incident_vulnerableproduct",
 						"isVisible": true
+					},
+					{
+						"fieldId": "incident_aaaaaa",
+						"isVisible": true
 					}
 				],
 				"isVisible": true,
