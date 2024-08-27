@@ -15,7 +15,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.9.0
-    itemVersion: 1.15.53
+    itemVersion: 1.15.54
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -39,7 +39,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('BMCTool', 'start', __line__())
-  ### pack version: 1.15.53
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
   from typing import AnyStr, Generic
 
 
