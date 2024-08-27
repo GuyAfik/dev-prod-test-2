@@ -22,7 +22,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.2.76
+    itemVersion: 1.2.77
     packID: FiltersAndTransformers
     packName: Filters And Transformers
     packPropagationLabels:
@@ -36,13 +36,14 @@ engineinfo: {}
 mainengineinfo: {}
 name: JsonToTable
 nativeimage:
+- "8.7"
 - "8.6"
 pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('JsonToTable', 'start', __line__())
-  ### pack version: 1.2.76
+  demisto.debug('pack name = Filters And Transformers, pack version = 1.2.77')
 
 
   import json
