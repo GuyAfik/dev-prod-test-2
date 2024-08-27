@@ -46,7 +46,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.53
+    itemVersion: 1.15.54
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -54,7 +54,7 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.10.13.89009
+dockerimage: demisto/python3:3.11.9.107902
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
@@ -67,7 +67,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('ScheduleGenericPolling', 'start', __line__())
-  ### pack version: 1.15.53
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
 
 
   import uuid
@@ -149,8 +149,9 @@ script: |
                 pendingIds="{}" interval="{}" timeout="{}" tag="{}" additionalPollingCommandArgNames="{}" \
                 additionalPollingCommandArgValues="{}"'''.format(ids.replace('"', r'\"'), pollingCommand,
                                                                  pollingCommandArgName, playbookId,
-                                                                 dt.replace('"', r'\"'), interval, timeout,
-                                                                 tag, args_names, args_values)
+                                                                 dt.replace('"', r'\"'), interval, timeout, tag,
+                                                                 args_names.replace('"', r'\"'),
+                                                                 args_values.replace('"', r'\"'),)
       if extract_mode:
           command_string += f" auto-extract={extract_mode} extractMode={extract_mode}"
 
