@@ -45,7 +45,7 @@
 	"ipVersion": "",
 	"isOverridable": false,
 	"isReadOnly": false,
-	"itemVersion": "1.15.53",
+	"itemVersion": "1.15.54",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Residents Email Address",
@@ -59,7 +59,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Residents Email Address",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
