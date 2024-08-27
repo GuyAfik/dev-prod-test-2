@@ -17,7 +17,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.53
+    itemVersion: 1.15.54
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -38,7 +38,7 @@ runas: DBotRole
 runonce: false
 script: |
   register_module_line('ExtractIndicatorsFromWordFile', 'start', __line__())
-  ### pack version: 1.15.53
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
 
 
 
