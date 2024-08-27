@@ -62,7 +62,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.34.34
+    itemVersion: 1.34.35
     packID: Base
     packName: Base
     packPropagationLabels:
@@ -75,6 +75,7 @@ engineinfo: {}
 mainengineinfo: {}
 name: GetIncidentsByQuery
 nativeimage:
+- "8.7"
 - "8.6"
 outputs:
 - contextPath: GetIncidentsByQuery.Filename
@@ -88,7 +89,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('GetIncidentsByQuery', 'start', __line__())
-  ### pack version: 1.34.34
+  demisto.debug('pack name = Base, pack version = 1.34.35')
 
 
   import pickle
