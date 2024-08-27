@@ -27,7 +27,7 @@
 	"ipVersion": "",
 	"isOverridable": false,
 	"isReadOnly": false,
-	"itemVersion": "1.15.53",
+	"itemVersion": "1.15.54",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Is the Data Subject to DPIA",
@@ -41,7 +41,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Is the Data Subject to DPIA",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
