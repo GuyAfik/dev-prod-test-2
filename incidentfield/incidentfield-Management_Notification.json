@@ -28,7 +28,7 @@
 	"ipVersion": "",
 	"isOverridable": false,
 	"isReadOnly": false,
-	"itemVersion": "1.15.53",
+	"itemVersion": "1.15.54",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Management Notification",
@@ -42,7 +42,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Management Notification",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
