@@ -27,7 +27,7 @@
 	"ipVersion": "",
 	"isOverridable": false,
 	"isReadOnly": false,
-	"itemVersion": "1.15.53",
+	"itemVersion": "1.15.54",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Unique biometric data breached",
@@ -41,7 +41,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Unique biometric data breached",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
