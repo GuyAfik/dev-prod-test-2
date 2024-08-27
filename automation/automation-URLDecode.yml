@@ -15,7 +15,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.2.76
+    itemVersion: 1.2.77
     packID: FiltersAndTransformers
     packName: Filters And Transformers
     packPropagationLabels:
@@ -29,6 +29,7 @@ engineinfo: {}
 mainengineinfo: {}
 name: URLDecode
 nativeimage:
+- "8.7"
 - "8.6"
 outputs:
 - contextPath: DecodedURL
@@ -39,7 +40,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('URLDecode', 'start', __line__())
-  ### pack version: 1.2.76
+  demisto.debug('pack name = Filters And Transformers, pack version = 1.2.77')
 
 
 
