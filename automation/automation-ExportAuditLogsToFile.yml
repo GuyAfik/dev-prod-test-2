@@ -19,13 +19,13 @@ comment: Uses the Core REST API integration to query the server audit trail logs
   and return back a CSV or JSON file.
 commonfields:
   id: ExportAuditLogsToFile
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -49,7 +49,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('ExportAuditLogsToFile', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
   import csv
