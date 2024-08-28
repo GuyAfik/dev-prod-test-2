@@ -11,13 +11,13 @@ comment: |
   Deprecated. Use FileCreateAndUploadV2 instead. Will create a file (using the given data input or entry ID) and upload it to current investigation war room.
 commonfields:
   id: FileCreateAndUpload
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -34,7 +34,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  // pack version: 1.15.54
+  // pack version: 1.15.55
   if (!args.data && !args.entryId) {
       return { ContentsFormat: formats.text, Type: entryTypes.error, Contents: 'Either data or entryId arguments need to be provided.' };
   }
