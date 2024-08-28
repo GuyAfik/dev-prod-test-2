@@ -6,13 +6,13 @@ args:
 comment: Sleep for X seconds.
 commonfields:
   id: Sleep
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -29,7 +29,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  // pack version: 1.15.54
+  // pack version: 1.15.55
   if (isDemistoVersionGE('8.0.0')) {
       pollingThreshold = 300;
       if (isDemistoVersionGE('8.4.0', 649563)) {
