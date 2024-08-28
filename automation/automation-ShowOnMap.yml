@@ -10,13 +10,13 @@ comment: Returns a map entry with a marker on the given coordinates (lat,lng), o
   address (requires a configured GoogleMaps instance).
 commonfields:
   id: ShowOnMap
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -32,7 +32,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  // pack version: 1.15.54
+  // pack version: 1.15.55
   var lat = parseFloat(args.lat); var lng = parseFloat(args.lng); var address = args.address;
   if (isNaN(lat) || isNaN(lng)) {
     if (!address || address.trim().length === 0){
