@@ -12,13 +12,13 @@ args:
 comment: Generate report summaries for the passed incidents.
 commonfields:
   id: GenerateSummaryReports
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -47,7 +47,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  // pack version: 1.15.54
+  // pack version: 1.15.55
   var res = [];
   var ids = argToList(args.ids);
   if(!Array.isArray(ids)) {
