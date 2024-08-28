@@ -8,13 +8,13 @@ comment: Verifies if the supplied JSON string is valid and optionally verifies a
   a provided schema. The script utilizes Powershell's Test-JSON cmdlet.
 commonfields:
   id: VerifyJSON
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -34,7 +34,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  ### pack version: 1.15.54
+  ### pack version: 1.15.55
 
 
   function Main() {
