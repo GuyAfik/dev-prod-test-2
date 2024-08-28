@@ -14,13 +14,13 @@ comment: |-
   Note: You can use this script in an incident Layout button to allow tags to be added to indicators through the incident.
 commonfields:
   id: AppendindicatorFieldWrapper
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.2.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -40,7 +40,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('AppendindicatorFieldWrapper', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
   """
