@@ -9,13 +9,13 @@ comment: Check whether given entry/entries returned an error. Use ${lastComplete
   of the entries returned an error.
 commonfields:
   id: isError
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -36,7 +36,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  // pack version: 1.15.54
+  // pack version: 1.15.55
   entryIds = (Array.isArray(args.entryId)) ? args.entryId : [args.entryId];
   for(var entryIdx=0; entryIdx < entryIds.length; ++entryIdx) {
       res = executeCommand("getEntry", {"id":entryIds[entryIdx]});
