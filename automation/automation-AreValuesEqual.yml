@@ -8,13 +8,13 @@ comment: Check whether the values provided in arguments are equal. If either of 
   arguments are missing, no is returned.
 commonfields:
   id: AreValuesEqual
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -34,7 +34,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  // pack version: 1.15.54
+  // pack version: 1.15.55
   if (args.left === undefined || args.right === undefined) {
       return 'no';
   }
