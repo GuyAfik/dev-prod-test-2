@@ -1,13 +1,13 @@
 comment: Gets all currently enabled integration instances.
 commonfields:
   id: GetEnabledInstances
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -31,7 +31,7 @@ runas: DBotRole
 runonce: false
 script: |
   register_module_line('GetEnabledInstances', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
 
