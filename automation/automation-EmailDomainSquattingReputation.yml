@@ -14,13 +14,13 @@ comment: Check if an email address's domain is trying to squat other domain usin
   Levenshtein distance algorithm.
 commonfields:
   id: EmailDomainSquattingReputation
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -70,7 +70,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  // pack version: 1.15.54
+  // pack version: 1.15.55
   function levenshtein(str1, str2) {
       const len1 = str1.length;
       const len2 = str2.length;
