@@ -6,13 +6,13 @@ comment: This is only an example script, to showcase how to use and write JavaSc
   scripts
 commonfields:
   id: ExampleJSScript
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -27,7 +27,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  // pack version: 1.15.54
+  // pack version: 1.15.55
   // This is an Example server-side script that shows how to use and create JavaScript scripts in the Cortex XSOAR server
   // The log function allows you to print data during script execution
   log('Hello World');
