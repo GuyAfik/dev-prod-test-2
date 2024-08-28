@@ -16,13 +16,13 @@ args:
 comment: Deprecated. Use the **MatchRegexV2** script instead.
 commonfields:
   id: MatchRegex
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -43,7 +43,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  // pack version: 1.15.54
+  // pack version: 1.15.55
   var data = (typeof args.data) === 'string' ? args.data : JSON.stringify(args.data);
   var flags = args.flags ? args.flags : 'gim';
   var r = new RegExp(args.regex, flags);
