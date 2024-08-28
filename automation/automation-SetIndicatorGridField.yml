@@ -24,13 +24,13 @@ comment: This script updates an indicator's grid field in Cortex XSOAR with prov
   row data. You can input the rows directly or extract them from the context.
 commonfields:
   id: SetIndicatorGridField
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.10.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -51,7 +51,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('SetIndicatorGridField', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
 
