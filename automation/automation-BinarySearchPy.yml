@@ -2,13 +2,13 @@ comment: Deprecated. No available replacement. Search for a binary on an endpoin
   using Carbon Black
 commonfields:
   id: BinarySearchPy
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
