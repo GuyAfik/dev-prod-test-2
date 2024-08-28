@@ -79,13 +79,13 @@ comment: |-
   `!GridFieldSetup keys=ip,src,timestamp val1=${AWS.EC2.Instances.NetworkInterfaces.PrivateIpAddress} val2="AWS" val3="TIMESTAMP" gridfiled="gridfield"`.
 commonfields:
   id: GridFieldSetup
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -106,7 +106,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('GridFieldSetup', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
 
