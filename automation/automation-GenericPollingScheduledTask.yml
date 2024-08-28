@@ -42,13 +42,13 @@ comment: Runs the polling command repeatedly, completes a blocking manual task w
   polling is done.
 commonfields:
   id: GenericPollingScheduledTask
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -64,7 +64,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |-
-  // pack version: 1.15.54
+  // pack version: 1.15.55
   /**
    * GenericPollingScheduledTask
    *   This task is ment to be scheduled by the ScheduleGenericPolling automation
