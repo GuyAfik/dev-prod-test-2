@@ -18,13 +18,13 @@ comment: |-
   In addition to ranges, it's also possible to add specific IP addresses to the list. You may also tag IPs or IP ranges by adding a comma after the IP or range, and then adding the tag that you want to tag the corresponding IP indicators with.
 commonfields:
   id: IsIPPrivate
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -57,7 +57,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('IsIPPrivate', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
   from ipaddress import IPv4Address, IPv4Network
