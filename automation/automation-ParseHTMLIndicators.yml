@@ -21,13 +21,13 @@ comment: This script will extract indicators from given HTML and will handle bad
   domains to avoid false positives caused by file extensions.
 commonfields:
   id: ParseHTMLIndicators
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -50,7 +50,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('ParseHTMLIndicators', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
   import re
