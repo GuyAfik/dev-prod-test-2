@@ -8,13 +8,13 @@ comment: aquatone-discover will find the targets nameservers and shuffle DNS loo
   will fall back to using Google public DNS servers to maximize discovery.
 commonfields:
   id: AquatoneDiscoverV2
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -35,7 +35,7 @@ runas: DBotWeakRole
 runonce: true
 script: |
   register_module_line('AquatoneDiscoverV2', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
 
