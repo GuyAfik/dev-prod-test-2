@@ -40,13 +40,13 @@ args:
 comment: Called by the GenericPolling playbook, schedules the polling task.
 commonfields:
   id: ScheduleGenericPolling
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -67,7 +67,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('ScheduleGenericPolling', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
   import uuid
@@ -176,10 +176,8 @@ script: |
       if interval <= 0 or timeout <= 0:
           return_error("Interval and timeout must be positive numbers")
 
-      args_names = args.get('additionalPollingCommandArgNames').strip() \
-          if args.get('additionalPollingCommandArgNames') else None
-      args_values = args.get('additionalPollingCommandArgValues').strip() \
-          if args.get('additionalPollingCommandArgValues') else None
+      args_names = (args.get('additionalPollingCommandArgNames', '') or '').strip()
+      args_values = (args.get('additionalPollingCommandArgValues', '') or '').strip()
 
       # Verify correct dt path (does not verify condition!)
       if not demisto.dt(demisto.context(), dt):
