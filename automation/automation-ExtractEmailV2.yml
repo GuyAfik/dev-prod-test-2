@@ -7,13 +7,13 @@ comment: Verifies that an email address is valid and only returns the address if
   is valid.
 commonfields:
   id: ExtractEmailV2
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -34,7 +34,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('ExtractEmailV2', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
 
