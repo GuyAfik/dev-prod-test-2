@@ -8,13 +8,13 @@ comment: Strips, unquotes and unescapes URLs. If the URL is a Proofpoint or ATP 
   separator must be a pipe ("|").
 commonfields:
   id: FormatURL
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -38,7 +38,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('FormatURL', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
 
