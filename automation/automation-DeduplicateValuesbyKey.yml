@@ -21,13 +21,13 @@ comment: 'Given a list of objects and a key found in each of those objects, retu
   do not contain the key of interest. '
 commonfields:
   id: DeduplicateValuesbyKey
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -51,7 +51,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('DeduplicateValuesbyKey', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
 
