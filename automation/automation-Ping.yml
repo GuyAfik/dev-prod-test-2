@@ -7,13 +7,13 @@ comment: Pings an IP or url address, to verify it's up. Note - On Cortex XSOAR 8
   Cortex XSIAM, the script can run only on a custom engine.
 commonfields:
   id: Ping
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -53,7 +53,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('Ping', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
   import subprocess
