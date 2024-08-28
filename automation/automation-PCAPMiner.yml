@@ -13,13 +13,13 @@ comment: Deprecated. Use PCAPMinerV2 instead. PCAPMiner is a tool to parse PCAP 
   To get the entry id click on the link on the top right hand corner of a file attachment.
 commonfields:
   id: PCAPMiner
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
