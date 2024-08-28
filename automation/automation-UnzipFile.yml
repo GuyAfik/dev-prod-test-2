@@ -23,13 +23,13 @@ comment: Unzip a file using fileName or entryID to specify a file. Unzipped file
   will be loaded to the War Room and names will be put into the context.
 commonfields:
   id: UnzipFile
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -54,7 +54,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('UnzipFile', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
 
