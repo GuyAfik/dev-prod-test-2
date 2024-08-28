@@ -16,13 +16,13 @@ comment: This automation calculates the similarity ratio between every string in
   are identical, and 0.0 if they don't have anything in common).
 commonfields:
   id: StringSimilarity
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.9.0
-    itemVersion: 1.15.54
+    isoverridable: false
+    itemVersion: 1.15.55
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -47,7 +47,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('StringSimilarity', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.54')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
 
 
   import difflib
