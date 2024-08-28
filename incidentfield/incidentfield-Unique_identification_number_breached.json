@@ -1,4 +1,5 @@
 {
+	"IsOverridable": false,
 	"XDRBuiltInField": false,
 	"XsiamIncidentFieldExtraData": null,
 	"aliasTo": "",
@@ -25,9 +26,8 @@
 	"hidden": false,
 	"id": "incident_uniqueidentificationnumberbreached",
 	"ipVersion": "",
-	"isOverridable": false,
 	"isReadOnly": false,
-	"itemVersion": "1.15.54",
+	"itemVersion": "1.15.55",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Unique identification number breached",
