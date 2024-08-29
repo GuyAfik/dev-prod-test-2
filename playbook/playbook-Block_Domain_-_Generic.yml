@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -35,6 +34,7 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
+isOverridable: false
 name: Block Domain - Generic
 outputs: []
 starttaskid: "0"
@@ -60,6 +60,7 @@ tasks:
     task:
       brand: ""
       id: aa69480c-0a5e-4e81-86c2-b80a2fc7c10d
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -98,6 +99,7 @@ tasks:
     task:
       brand: ""
       id: 97beb953-6513-4650-8c99-b66cb37e24cc
+      isOverridable: false
       iscommand: false
       name: Block Domain - Symantec Messaging Gateway
       playbookName: Block Domain - Symantec Messaging Gateway
@@ -138,6 +140,7 @@ tasks:
     task:
       brand: ""
       id: f9253412-d3de-4e67-821b-e501fd7dd69e
+      isOverridable: false
       iscommand: false
       name: Block Domain - FireEye Email Security
       playbookName: Block Domain - FireEye Email Security
@@ -178,6 +181,7 @@ tasks:
     task:
       brand: ""
       id: 549d870d-c306-4283-8b5e-8e503693daf1
+      isOverridable: false
       iscommand: false
       name: Block Domain - Zscaler
       playbookName: Block Domain - Zscaler
@@ -206,6 +210,7 @@ tasks:
     task:
       brand: ""
       id: 56106ad2-8509-4c5b-89a6-8c8cc10223c5
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -245,6 +250,7 @@ tasks:
     task:
       brand: ""
       id: c657a3e5-d9ec-449d-8feb-7651fc58598d
+      isOverridable: false
       iscommand: false
       name: Block Domain - Trend Micro Apex One
       playbookName: Block Domain - Trend Micro Apex One
@@ -288,6 +294,7 @@ tasks:
     task:
       brand: ""
       id: aa0604fa-2059-484a-8498-ecfc54afe2d7
+      isOverridable: false
       iscommand: false
       name: Block Domain - Proofpoint Threat Response
       playbookName: Block Domain - Proofpoint Threat Response
