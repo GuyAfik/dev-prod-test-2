@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.9.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -57,7 +58,6 @@ inputs:
   required: true
   value:
     simple: "False"
-isOverridable: false
 name: PAN-OS - Extract IPs From Traffic Logs To Sinkhole
 outputs:
 - contextPath: DetectedIPsFromSinkhole
@@ -207,7 +207,6 @@ tasks:
     task:
       brand: ""
       id: f5e8c7ff-cfec-4e23-8a73-354b6c1dd7d5
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -237,7 +236,6 @@ tasks:
     task:
       brand: ""
       id: 1165898b-be5e-4426-8f67-c05d78318e7b
-      isOverridable: false
       iscommand: false
       name: Query Traffic Logs
       type: title
@@ -291,7 +289,6 @@ tasks:
       brand: ""
       description: The query logs in Panorama.
       id: 884b2741-4e9b-4656-8ed8-268539ed8bae
-      isOverridable: false
       iscommand: true
       name: Retrieve full traffic logs for denied requests to sinkhole
       script: '|||pan-os-query-logs'
@@ -339,7 +336,6 @@ tasks:
       description: Checks if full traffic logs should be outputted, or only the source
         IP addresses which are the IPs of the infected systems.
       id: ca732608-62bd-4a8a-836e-ed0a9e50d2a8
-      isOverridable: false
       iscommand: false
       name: Output extended logs?
       type: condition
@@ -376,7 +372,6 @@ tasks:
       description: Waits for the hosts to attempt to connect to the sinkholed domains,
         thus creating traffic logs and revealing their IP addresses.
       id: 2f7174d6-9755-468e-8a48-3a6c840cc4d4
-      isOverridable: false
       iscommand: false
       name: Wait for traffic to be made to the sinkhole
       script: Sleep
@@ -405,7 +400,6 @@ tasks:
     task:
       brand: ""
       id: 0acacc94-1156-48a2-861b-6435fb7249de
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -463,7 +457,6 @@ tasks:
       brand: ""
       description: The query logs in Panorama.
       id: 2688899c-a918-480c-8e2c-bdea84e79512
-      isOverridable: false
       iscommand: true
       name: Retrieve only IPs from denied requests to sinkhole
       script: '|||pan-os-query-logs'
@@ -504,7 +497,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 2faf5424-b910-4eb7-8539-d46f8dffa8d4
-      isOverridable: false
       iscommand: false
       name: Is PAN-OS enabled?
       script: IsIntegrationAvailable
@@ -557,7 +549,6 @@ tasks:
         packets are dropped anyway, the search also looks for allow rules too. This
         is done because the goal is to log traffic to it, so the action is irrelevant.
       id: b65e1e67-a89b-4e0f-8e2f-3cc18739d279
-      isOverridable: false
       iscommand: true
       name: Search for existing rule denying traffic to sinkhole
       script: '|||pan-os-list-rules'
@@ -604,7 +595,6 @@ tasks:
       description: Checks whether the name of the rule that denies traffic to the
         sinkhole address was specified.
       id: e7a491a7-8cb1-4033-888d-6f0bc92a7cc1
-      isOverridable: false
       iscommand: false
       name: Was a rule name specified?
       type: condition
@@ -648,7 +638,6 @@ tasks:
       brand: ""
       description: Checks whether a rule for traffic to the sinkhole address was found.
       id: bc85e87e-286e-4a3f-8127-97d823ce2195
-      isOverridable: false
       iscommand: false
       name: Was a rule found?
       type: condition
@@ -680,7 +669,6 @@ tasks:
       brand: ""
       description: Returns a list of addresses.
       id: 35626ba8-4575-4525-8483-c52ac8ce24ee
-      isOverridable: false
       iscommand: true
       name: Get all the address objects
       script: '|||pan-os-list-addresses'
@@ -737,7 +725,6 @@ tasks:
       description: Checks whether there is an existing address object with the FQDN
         of sinkhole.paloaltonetworks.com.
       id: a32b5b94-d235-4b88-87ce-d645530aa8e2
-      isOverridable: false
       iscommand: false
       name: Is there an address object for the sinkhole address?
       type: condition
@@ -786,7 +773,6 @@ tasks:
       brand: ""
       description: Saves the name of the sinkhole address object.
       id: b29c24e3-4d69-4342-8391-425983e53ab3
-      isOverridable: false
       iscommand: false
       name: Save the name of the address object
       script: Set
@@ -818,7 +804,6 @@ tasks:
     task:
       brand: ""
       id: 0936621d-001a-47e0-8bc0-4b362153de27
-      isOverridable: false
       iscommand: false
       name: Missing Configuration
       type: title
@@ -849,7 +834,6 @@ tasks:
     task:
       brand: ""
       id: 219cfe7c-35fa-47b4-830f-dbff1ce846c7
-      isOverridable: false
       iscommand: false
       name: Find Sinkhole Address Object
       type: title
@@ -897,7 +881,6 @@ tasks:
       description: Checks whether to return an error if the configuration needed before
         querying the logs is incomplete
       id: c57a5a51-f502-4670-806a-a6c55e8cd29b
-      isOverridable: false
       iscommand: false
       name: Return error for missing configuration?
       type: condition
@@ -934,7 +917,6 @@ tasks:
       brand: ""
       description: Prints an error entry with a given message
       id: 6859e227-3e67-4992-82be-c930b0b5b934
-      isOverridable: false
       iscommand: false
       name: Error - missing configuration
       script: PrintErrorEntry
