@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -22,6 +21,7 @@ inputs:
   value:
     complex:
       root: DBotScore
+isOverridable: false
 name: Calculate Severity - Indicators DBotScore
 outputs:
 - contextPath: Severity
@@ -46,6 +46,7 @@ tasks:
     task:
       brand: ""
       id: 3eded69b-617e-4212-86b7-2537474285f3
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -139,6 +140,7 @@ tasks:
         * Medium = 2
         * Low = 1
       id: 82b8a6ea-cf8a-4637-84ac-392ea9461a05
+      isOverridable: false
       iscommand: false
       name: Assign severity level based on indicators DBotScore
       type: condition
@@ -175,6 +177,7 @@ tasks:
       brand: Builtin
       description: Set the severity level to High (indicator had a malicious reputation).
       id: aaf529b9-0621-40db-8b44-4894fb2acab2
+      isOverridable: false
       iscommand: false
       name: 'Set severity to "High" '
       script: Set
@@ -203,6 +206,7 @@ tasks:
     task:
       brand: ""
       id: 483350d5-ab17-44cd-87b3-0e2360ce3577
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -239,6 +243,7 @@ tasks:
       brand: Builtin
       description: Set the severity level to Medium (indicator had a suspicious reputation).
       id: d3642b7d-204b-4a95-853f-3fe3957dcf6a
+      isOverridable: false
       iscommand: false
       name: 'Set severity to "Medium" '
       script: Set
@@ -276,6 +281,7 @@ tasks:
       brand: Builtin
       description: Set the severity level to Low (indicator had a good reputation).
       id: 63d15a24-dfb3-45f6-8782-b8e54d1c5b16
+      isOverridable: false
       iscommand: false
       name: 'Set severity to "Low" '
       script: Set
@@ -315,6 +321,7 @@ tasks:
       description: |
         Set the DBotsScore into context.
       id: 5943c193-e53b-4399-8408-f402c98f7c7e
+      isOverridable: false
       iscommand: false
       name: Set context
       script: Set
@@ -357,6 +364,7 @@ tasks:
       brand: ""
       description: Check if there is a “DBotScore” in the playbook inputs.
       id: bc537b91-59eb-4e1d-84c5-06ee46cc72c8
+      isOverridable: false
       iscommand: false
       name: Is there a DBotScore?
       type: condition
