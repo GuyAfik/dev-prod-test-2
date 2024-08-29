@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -113,6 +112,7 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
+isOverridable: false
 name: Threat Hunting - Generic
 outputs:
 - contextPath: Splunk.DetectedUsers
@@ -294,6 +294,7 @@ tasks:
     task:
       brand: ""
       id: f7b21d57-eb4c-4233-8725-51010d27db08
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -368,6 +369,7 @@ tasks:
         IP addresses, domains, or URLs. It returns detected users, IP addresses, and
         hostnames related to the indicators.
       id: faee0e93-b767-4148-8d8f-b1762d1e1039
+      isOverridable: false
       iscommand: false
       name: Splunk Indicator Hunting
       playbookName: Splunk Indicator Hunting
@@ -437,6 +439,7 @@ tasks:
         playbook facilitates pivoting searches for possibly affected IP addresses
         or users."
       id: 41273c47-6b21-49dd-869a-35e115202d0a
+      isOverridable: false
       iscommand: false
       name: Palo Alto Networks - Hunting And Threat Detection
       playbookName: Palo Alto Networks - Hunting And Threat Detection
@@ -465,6 +468,7 @@ tasks:
     task:
       brand: ""
       id: 68569c89-2090-4873-8dbc-aede46966200
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -530,6 +534,7 @@ tasks:
       description: 'This playbook queries the QRadar SIEM for indicators such as file
         hashes, IP addresses, domains, or URLs. '
       id: 6f545ba4-aeb9-4c82-87d0-4e3a1f0b5826
+      isOverridable: false
       iscommand: false
       name: QRadar Indicator Hunting V2
       playbookName: QRadar Indicator Hunting V2
@@ -596,6 +601,7 @@ tasks:
 
         Please read the playbooks descriptions in order to get the full details.
       id: 7bf5bd95-cefc-4259-81aa-e5f187e015c8
+      isOverridable: false
       iscommand: false
       name: Microsoft 365 Defender - Threat Hunting Generic
       playbookName: Microsoft 365 Defender - Threat Hunting Generic
