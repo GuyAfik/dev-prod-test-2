@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.2.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -30,7 +31,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: PAN-OS Query Logs For Indicators
 outputs:
 - contextPath: Panorama.Monitor
@@ -201,7 +201,6 @@ tasks:
       brand: ""
       description: Start
       id: 4c6e6664-2b4a-436c-83fa-3e379c606404
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -264,7 +263,6 @@ tasks:
       description: Checks if there is a valid instance of the Palo Alto Networks PAN-OS.
         integration enabled.
       id: 46712325-47fc-42d4-8934-37612d712661
-      isOverridable: false
       iscommand: false
       name: Is Palo Alto Networks PAN-OS enabled?
       type: condition
@@ -304,7 +302,6 @@ tasks:
       brand: ""
       description: Query logs.
       id: 3a72fc10-d362-4036-8912-4d03828cc863
-      isOverridable: false
       iscommand: true
       name: Panorama query traffic logs
       script: '|||pan-os-query-logs'
@@ -334,7 +331,6 @@ tasks:
       brand: ""
       description: Header
       id: d69222cb-a986-4d52-8f73-f020b67ef103
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -374,7 +370,6 @@ tasks:
       brand: ""
       description: Query logs
       id: 1997c25a-56ad-4648-870d-3f9687ef7c3d
-      isOverridable: false
       iscommand: true
       name: Panorama query threat logs
       script: '|||pan-os-query-logs'
@@ -407,7 +402,6 @@ tasks:
       brand: ""
       description: Header
       id: f0295d6d-ca7b-4da7-84e2-6a4534187c98
-      isOverridable: false
       iscommand: false
       name: IP search
       type: title
@@ -453,7 +447,6 @@ tasks:
       brand: ""
       description: Is there an IP?
       id: 1a8ee268-d796-4441-87f3-6d39648ab2f1
-      isOverridable: false
       iscommand: false
       name: Is there an IP address?
       type: condition
@@ -493,7 +486,6 @@ tasks:
       brand: ""
       description: Query logs.
       id: 13876f73-0e2c-4331-85a0-e81ecf17bd6a
-      isOverridable: false
       iscommand: true
       name: Panorama query wildfire logs
       script: '|||pan-os-query-logs'
@@ -534,7 +526,6 @@ tasks:
       brand: ""
       description: Query logs.
       id: c57dc9bd-13b7-4a3f-8dc8-86ec5ddf4570
-      isOverridable: false
       iscommand: true
       name: Panorama query data logs
       script: '|||pan-os-query-logs'
@@ -575,7 +566,6 @@ tasks:
       brand: ""
       description: Query logs
       id: 3f931dd2-9f60-4889-8cba-2a1be49a7b8c
-      isOverridable: false
       iscommand: true
       name: Panorama query url logs
       script: '|||pan-os-query-logs'
@@ -608,7 +598,6 @@ tasks:
       brand: ""
       description: Header
       id: cee28744-b9b4-498c-86d4-080aae03e0d7
-      isOverridable: false
       iscommand: false
       name: Hash Search
       type: title
@@ -650,7 +639,6 @@ tasks:
       brand: ""
       description: Is there a hash?
       id: 3e4145cb-b2cb-4055-841f-cd0f9aebfeda
-      isOverridable: false
       iscommand: false
       name: Is there a hash?
       type: condition
@@ -690,7 +678,6 @@ tasks:
       brand: ""
       description: Query logs
       id: 9903cdd2-6896-4936-8dc4-fb397d046000
-      isOverridable: false
       iscommand: true
       name: Panorama query wildfire logs
       script: '|||pan-os-query-logs'
@@ -723,7 +710,6 @@ tasks:
       brand: ""
       description: Header
       id: d931076b-f81a-4714-8d4a-d6dea69249ff
-      isOverridable: false
       iscommand: false
       name: Url search
       type: title
@@ -767,7 +753,6 @@ tasks:
       brand: ""
       description: Is there a url?
       id: b9be6fea-a396-4e1c-8fdd-adc32ad3c1ca
-      isOverridable: false
       iscommand: false
       name: Is there a url?
       type: condition
@@ -807,7 +792,6 @@ tasks:
       brand: ""
       description: Query logs
       id: abaf43ab-272a-485c-88a7-95ef5e352794
-      isOverridable: false
       iscommand: true
       name: Panorama query threat logs
       script: '|||pan-os-query-logs'
@@ -848,7 +832,6 @@ tasks:
       brand: ""
       description: Query logs.
       id: 121e065b-b639-4b16-8569-c6b79d4201fc
-      isOverridable: false
       iscommand: true
       name: Panorama query data logs
       script: '|||pan-os-query-logs'
@@ -889,7 +872,6 @@ tasks:
       brand: ""
       description: Query logs.
       id: ca130c36-c309-4b73-8bee-174a13a5a55a
-      isOverridable: false
       iscommand: true
       name: Panorama query url logs
       script: '|||pan-os-query-logs'
