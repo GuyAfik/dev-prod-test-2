@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -48,6 +47,7 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
+isOverridable: false
 name: Get File Sample From Path - Generic V2
 outputs:
 - contextPath: File.Size
@@ -102,6 +102,7 @@ tasks:
     task:
       brand: ""
       id: 5d887731-fb71-4226-872c-a9e8dbddac42
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -148,8 +149,9 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Yes if we want to use D2 agent to get the file
+      description: Yes, if we want to use the D2 agent to get the file.
       id: 8adb1ff3-5400-4f88-8a2b-4511ae8303f5
+      isOverridable: false
       iscommand: false
       name: Use D2 agent?
       type: condition
@@ -177,6 +179,7 @@ tasks:
     task:
       brand: ""
       id: f81d6908-8ce9-452b-8dde-689f44256933
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -226,6 +229,7 @@ tasks:
         * ${Endpoint.Hostname} - deploy agent on target endpoint
         * ${File.Path} - file's path to collect
       id: acf75e5f-0da0-483e-82e2-2dbf09a0362c
+      isOverridable: false
       iscommand: false
       name: Get File Sample From Path - D2
       playbookName: Get File Sample From Path - D2
@@ -257,6 +261,7 @@ tasks:
     task:
       brand: ""
       id: 906138a1-e3ee-4711-889a-4ebcc8c2a1c6
+      isOverridable: false
       iscommand: false
       name: Use VMware Carbon Black EDR (Live Response API)
       type: title
@@ -302,6 +307,7 @@ tasks:
         This playbook retrieves a file from a path on an endpoint using VMware Carbon Black EDR (Live Response API).
         Make sure to provide the Carbon Black sensor ID of the endpoint from which you want to retrieve the file.
       id: 03fe6fe7-8aa7-4329-8c0b-6cf3847128d7
+      isOverridable: false
       iscommand: false
       name: Get File Sample From Path - VMware Carbon Black EDR - Live Response API
       playbookName: Get File Sample From Path - VMware Carbon Black EDR - Live Response
