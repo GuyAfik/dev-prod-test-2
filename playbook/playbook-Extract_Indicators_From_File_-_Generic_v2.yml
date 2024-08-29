@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -77,7 +78,6 @@ inputs:
   required: false
   value:
     simple: "10"
-isOverridable: false
 name: Extract Indicators From File - Generic v2
 outputs:
 - contextPath: Domain.Name
@@ -321,7 +321,6 @@ tasks:
     task:
       brand: ""
       id: c33ca9eb-1ff3-450a-8c2d-b9aa72f7f771
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -365,7 +364,6 @@ tasks:
       description: |
         Checks if there is a file in the playbook input.
       id: ea98aae7-5a6e-4eab-8348-4cb62716a5f7
-      isOverridable: false
       iscommand: false
       name: Is there a file?
       type: condition
@@ -393,7 +391,6 @@ tasks:
     task:
       brand: ""
       id: 7cbad10d-b188-4999-8c0f-aad2a33000b3
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -431,7 +428,6 @@ tasks:
     task:
       brand: ""
       id: 7697255d-fcab-4619-8a3d-bfa51bc758d9
-      isOverridable: false
       iscommand: false
       name: Extract Indicators From Files
       type: title
@@ -599,7 +595,6 @@ tasks:
       description: Checks if there is a text-based file in context. Skips MSG and
         EML files.
       id: b3bc875f-d706-4180-802b-238c7d29381e
-      isOverridable: false
       iscommand: false
       name: Is there a text-based file?
       type: condition
@@ -750,7 +745,6 @@ tasks:
       brand: ""
       description: Extracts indicators from text-based files.
       id: 4ba573d4-5094-4e80-883b-a3b84ed21791
-      isOverridable: false
       iscommand: false
       name: Extract indicators from text-based file
       script: ExtractIndicatorsFromTextFile
@@ -819,7 +813,6 @@ tasks:
       brand: ""
       description: Checks if there is a PDF file in context.
       id: 0e5716b4-d88b-45dc-8aa4-c68a6dbf2df6
-      isOverridable: false
       iscommand: false
       name: Is there a PDF file?
       type: condition
@@ -888,7 +881,6 @@ tasks:
       brand: ""
       description: Load a PDF file's content and metadata into context.
       id: da76292f-3f94-4097-857d-1ddc6d3828d4
-      isOverridable: false
       iscommand: false
       name: Extract indicators from PDF file
       script: ReadPDFFileV2
@@ -1104,7 +1096,6 @@ tasks:
       brand: ""
       description: Checks if there is a Word file (DOC, DOCX) in context.
       id: 884b6c9a-7e2f-467c-8b05-5f711bf59686
-      isOverridable: false
       iscommand: false
       name: Is there a Word file?
       type: condition
@@ -1135,7 +1126,6 @@ tasks:
     task:
       brand: ""
       id: bd5234cd-bca5-49c3-844e-478ec0e69f2a
-      isOverridable: false
       iscommand: false
       name: No File To Parse
       type: title
@@ -1309,7 +1299,6 @@ tasks:
       brand: ""
       description: Extracts indicators from word files (DOC, DOCX).
       id: b2cbcfd1-04a0-43cb-88ed-712c131d53e5
-      isOverridable: false
       iscommand: false
       name: Extract indicators from Word file
       script: ExtractIndicatorsFromWordFile
@@ -1363,7 +1352,6 @@ tasks:
       description: Checks whether there is an active instance of the Image OCR integration.
         enabled.
       id: fc037219-4b91-402f-8ad8-dc099bc2e67b
-      isOverridable: false
       iscommand: false
       name: Is Image OCR enabled?
       type: condition
@@ -1441,7 +1429,6 @@ tasks:
       description: Extracts text from PNG, JPEG, and GIF image files, and uses auto-extract
         to get reputation for indicators.
       id: 67aa8abc-03b8-4df4-8d81-75ba4b4f0521
-      isOverridable: false
       iscommand: true
       name: Extract text from images
       script: '|||image-ocr-extract-text'
@@ -1594,7 +1581,6 @@ tasks:
         - XLSX
         - XML
       id: fe69f8c7-5257-4b62-8ddd-a82a514bdc44
-      isOverridable: false
       iscommand: false
       name: Is there another supported document type?
       type: condition
@@ -1733,7 +1719,6 @@ tasks:
         - XLSX
         - XML
       id: 7f3736b6-092c-4c5d-878d-1d1fb71ae749
-      isOverridable: false
       iscommand: false
       name: Convert a document to PDF
       script: ConvertFile
@@ -1777,7 +1762,6 @@ tasks:
         Extracts URLs from files and stores them under the "ExtractedURLsFromFiles" key in the playbook output.
         Parent playbooks can use this key to indicate which URLs were extracted.
       id: feb4ec48-681e-44c1-8c02-4226ce97de5f
-      isOverridable: false
       iscommand: false
       name: Set ExtractedURLsFromFiles
       script: SetAndHandleEmpty
@@ -1833,7 +1817,6 @@ tasks:
         oleobj - Extract embedded objects from OLE files.
         olevba - Extract and analyze VBA Macro source code from MS Office documents (OLE and OpenXML).
       id: 31a1d53b-2b50-490f-8bb7-1d6f112ac92f
-      isOverridable: false
       iscommand: false
       name: Microsoft Office File Enrichment - Oletools
       playbookName: Microsoft Office File Enrichment - Oletools
@@ -1919,7 +1902,6 @@ tasks:
       brand: ""
       description: Checks if the uploaded file is a valid image file.
       id: f561dd7e-9772-489e-8be2-af2e0d87844f
-      isOverridable: false
       iscommand: false
       name: Is there an image file?
       type: condition
@@ -1987,7 +1969,6 @@ tasks:
       brand: ""
       description: Extracts indicators from word files (DOC, DOCX).
       id: a9713787-fe05-4ba6-8b99-b8980598b0dd
-      isOverridable: false
       iscommand: false
       name: Extract indicators from docx file
       script: ExtractIndicatorsFromWordFile
@@ -2064,7 +2045,6 @@ tasks:
       brand: ""
       description: Checks if there is a Word file (DOC, DOCX) in context.
       id: 6a194cfc-0af6-4776-8290-28b7deb60579
-      isOverridable: false
       iscommand: false
       name: Is there a Word docx file?
       type: condition
@@ -2128,7 +2108,6 @@ tasks:
         the output of the script "extractIndicators" run on the text extracted from
         the QR code.
       id: 4ee7917b-6813-4e61-8612-5f7116bd30eb
-      isOverridable: false
       iscommand: false
       name: Extract Text from QR Code
       script: ReadQRCode
@@ -2199,7 +2178,6 @@ tasks:
       brand: ""
       description: Converts a PDF file to an image file.
       id: 35ed31ed-41e9-4108-8580-e94786764ae8
-      isOverridable: false
       iscommand: true
       name: Convert PDF to Image
       script: '|||rasterize-pdf'
@@ -2294,7 +2272,6 @@ tasks:
       brand: ""
       description: Checks if there is a PowerPoint or Excel file (PPTX/XSLX) in context.
       id: 608bdaf3-5ea5-4ea7-85bc-0343f8535b0d
-      isOverridable: false
       iscommand: false
       name: Is there a PPTX/XSLX file?
       type: condition
@@ -2381,7 +2358,6 @@ tasks:
       description: 'Extracts hyperlinks from Office files. Supported file types are:
         xlsx, docx, pptx.'
       id: eefbac0c-db14-4ba0-85f7-fbb67a0f40b3
-      isOverridable: false
       iscommand: false
       name: Extract Hyper-Links from Office Files
       script: ExtractHyperlinksFromOfficeFiles
