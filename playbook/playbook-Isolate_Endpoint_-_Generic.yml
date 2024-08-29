@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -47,7 +48,6 @@ inputs:
     complex:
       accessor: Address
       root: IP
-isOverridable: false
 name: Isolate Endpoint - Generic
 outputs:
 - contextPath: CbResponse.Sensors.CbSensorID
@@ -106,7 +106,6 @@ tasks:
     task:
       brand: ""
       id: 20f01f93-7b37-4f3f-8c17-a466dac351ef
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -133,7 +132,6 @@ tasks:
     task:
       brand: ""
       id: 050d36dd-0ec3-4490-827e-e210ac5e9a04
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -175,7 +173,6 @@ tasks:
     task:
       brand: ""
       id: 33a00cbb-bc23-47d0-8062-81dbcc134d25
-      isOverridable: false
       iscommand: false
       name: Traps Isolate Endpoint
       playbookName: Traps Isolate Endpoint
@@ -219,7 +216,6 @@ tasks:
       brand: ""
       description: Isolate Endpoint - Cybereason
       id: 0342c5df-d2ff-448e-8ef1-3f4674c42bff
-      isOverridable: false
       iscommand: false
       name: Isolate Endpoint - Cybereason
       playbookName: Isolate Endpoint - Cybereason
@@ -272,7 +268,6 @@ tasks:
     task:
       brand: ""
       id: 8045389b-6e5f-406f-834d-98fc70d8421a
-      isOverridable: false
       iscommand: false
       name: Cortex XDR - Isolate Endpoint
       playbookName: Cortex XDR - Isolate Endpoint
@@ -313,7 +308,6 @@ tasks:
     task:
       brand: ""
       id: ed275240-5110-4452-88ba-66244c7a914a
-      isOverridable: false
       iscommand: false
       name: Block Endpoint - Carbon Black Response
       playbookName: Block Endpoint - Carbon Black Response
