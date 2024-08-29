@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -37,7 +38,6 @@ inputs:
     complex:
       accessor: SHA1
       root: File
-isOverridable: false
 name: File Enrichment - File reputation
 outputs:
 - contextPath: File
@@ -89,7 +89,6 @@ tasks:
     task:
       brand: ""
       id: 214ebf34-1312-43ec-873d-41d45094ba22
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -121,7 +120,6 @@ tasks:
     task:
       brand: ""
       id: 4b42764c-31bd-4097-8721-159b73534347
-      isOverridable: false
       iscommand: false
       name: Get file hash reputation
       type: title
@@ -159,7 +157,6 @@ tasks:
       description: Get the MD5 hash reputation from every integration that supports
         the `!file` command.
       id: 61a4a533-980d-4b46-816e-75bbf2550d0a
-      isOverridable: false
       iscommand: false
       name: Get MD5 reputation
       script: FileReputation
@@ -188,7 +185,6 @@ tasks:
     task:
       brand: ""
       id: 66d74bf4-438c-40a8-840f-58052c181d0f
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -234,7 +230,6 @@ tasks:
       brand: ""
       description: Check if there is an MD5 hash in context.
       id: 63bff973-38e4-490f-830e-b9d68f2791ad
-      isOverridable: false
       iscommand: false
       name: Is there an MD5 hash?
       type: condition
@@ -280,7 +275,6 @@ tasks:
       brand: ""
       description: Check if there is a SHA-256 hash in context.
       id: 8e16c355-ee0c-4b2b-86b1-0d2f5916430f
-      isOverridable: false
       iscommand: false
       name: Is there a SHA-256 hash?
       type: condition
@@ -318,7 +312,6 @@ tasks:
       description: Get the SHA-256 hash reputation from every integration that supports
         the `!file` command.
       id: 092a1e7e-b7d8-4d50-8f6e-021c31701974
-      isOverridable: false
       iscommand: false
       name: Get SHA-256 reputation
       script: FileReputation
@@ -365,7 +358,6 @@ tasks:
       brand: ""
       description: Check if there is a SHA-1 hash in context.
       id: ceddfccc-685c-4392-8955-2c116297ca5f
-      isOverridable: false
       iscommand: false
       name: Is there a SHA-1 hash?
       type: condition
@@ -403,7 +395,6 @@ tasks:
       description: Get the SHA-1 hash reputation from every integration that supports
         the `!file` command.
       id: 9cd10068-c589-4c05-8a22-7ec3528b89de
-      isOverridable: false
       iscommand: false
       name: Get SHA-1 reputation
       script: FileReputation
