@@ -41,7 +41,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Target Firewall Version",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
