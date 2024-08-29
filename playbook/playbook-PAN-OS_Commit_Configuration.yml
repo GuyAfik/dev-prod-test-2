@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -19,7 +20,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: PAN-OS Commit Configuration
 outputs:
 - contextPath: Panorama.Commit.Warnings
@@ -47,7 +47,6 @@ tasks:
       brand: ""
       description: '-'
       id: 72f6ac89-7d29-48cd-8fc8-a87a469d368e
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -108,7 +107,6 @@ tasks:
       description: Verify that there is a valid instance of Palo Alto Networks PAN-OS
         enabled.
       id: 3cdca23e-0cc3-4d3f-8f27-aef7c980e40d
-      isOverridable: false
       iscommand: false
       name: Is Palo Alto Networks PAN-OS enabled?
       type: condition
@@ -140,7 +138,6 @@ tasks:
       brand: ""
       description: Commit Palo Alto Firewall or Panorama
       id: 589c547f-febf-4966-8f03-92b3510be974
-      isOverridable: false
       iscommand: true
       name: Commit to Panorama
       script: '|||pan-os-commit'
@@ -209,7 +206,6 @@ tasks:
         2. Poll to check if the operation completed.
         3. (optional) Get the results of the operation.
       id: 16b55e1b-edf4-4495-8acd-ec822793a904
-      isOverridable: false
       iscommand: false
       name: GenericPolling
       playbookId: GenericPolling
@@ -239,7 +235,6 @@ tasks:
       brand: ""
       description: '-'
       id: 952b0224-dd79-4eca-8721-d93bd8edd76a
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -275,7 +270,6 @@ tasks:
       description: Push rules from Palo Alto Panorama to the Palo Alto configured
         device group.
       id: 73cbf069-2f98-42f8-8ed2-7780618b954c
-      isOverridable: false
       iscommand: true
       name: Push rules to the Panorama device group
       script: '|||pan-os-push-to-device-group'
@@ -344,7 +338,6 @@ tasks:
         2. Poll to check if the operation completed.
         3. (optional) Get the results of the operation.
       id: d7c1b22b-2529-494e-8959-dd33edd07e6e
-      isOverridable: false
       iscommand: false
       name: GenericPolling
       playbookId: GenericPolling
@@ -382,7 +375,6 @@ tasks:
       brand: ""
       description: Get commit status
       id: 589fe169-faf7-4986-806f-51eecdb7246c
-      isOverridable: false
       iscommand: true
       name: Get Panorama commit status
       script: '|||pan-os-commit-status'
@@ -420,7 +412,6 @@ tasks:
       brand: ""
       description: Get push status
       id: f3cb81ed-446f-4a55-87ed-866a5acc3be0
-      isOverridable: false
       iscommand: true
       name: Get Panorama push status
       script: '|||pan-os-push-status'
@@ -463,7 +454,6 @@ tasks:
       brand: ""
       description: Filter JobID to validate only new push configuration JobIDs.
       id: 9af18cb1-8e90-40a7-88aa-30ee4ef8a796
-      isOverridable: false
       iscommand: false
       name: Filter JobID
       type: condition
@@ -505,7 +495,6 @@ tasks:
       brand: ""
       description: Filters by JobID to validate only the new push configuration JobIDs.
       id: 3123d9ad-2650-478e-8746-3401631faa14
-      isOverridable: false
       iscommand: false
       name: Filter JobID
       type: condition
@@ -544,7 +533,6 @@ tasks:
       brand: Panorama
       description: Run any command supported in the API.
       id: b319325d-4649-4d0a-85b6-ca86878fe32f
-      isOverridable: false
       iscommand: true
       name: Fetch instance info
       script: Panorama|||pan-os
@@ -590,7 +578,6 @@ tasks:
       brand: ""
       description: Automatically detects the product (Panorama/Firewall).
       id: 831a19ea-d385-4c53-8cc0-c6f871658a0d
-      isOverridable: false
       iscommand: false
       name: Identify the instance type
       type: condition
@@ -635,7 +622,6 @@ tasks:
       brand: ""
       description: '-'
       id: 658af397-af4e-4589-8cc5-e5d22d67fb7b
-      isOverridable: false
       iscommand: false
       name: Was Panorama commit successful?
       type: condition
@@ -680,7 +666,6 @@ tasks:
       brand: ""
       description: '-'
       id: e5e51f27-0ef7-4603-8ff4-6f29c327187f
-      isOverridable: false
       iscommand: false
       name: Was Panorama push successful?
       type: condition
@@ -716,7 +701,6 @@ tasks:
       brand: ""
       description: Prints an error entry with a given message
       id: 1312dacc-0f37-48ba-884d-e8fa9697e965
-      isOverridable: false
       iscommand: false
       name: Print Commit Error
       script: PrintErrorEntry
@@ -753,7 +737,6 @@ tasks:
       brand: ""
       description: Prints an error entry with a given message
       id: 0de2ff3e-cdac-4477-8939-cc6722a78b99
-      isOverridable: false
       iscommand: false
       name: Print Push Error
       script: PrintErrorEntry
@@ -786,7 +769,6 @@ tasks:
       brand: ""
       description: '-'
       id: 3e46d493-9404-476d-8d95-68b8ad017a84
-      isOverridable: false
       iscommand: false
       name: Fix errors and commit manually
       type: regular
@@ -818,7 +800,6 @@ tasks:
       brand: ""
       description: '-'
       id: c1b6bfd6-729d-4c47-8f96-f9a7527b3c9b
-      isOverridable: false
       iscommand: false
       name: Fix errors and push manually
       type: regular
