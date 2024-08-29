@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -31,7 +32,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Unisolate Endpoint - Generic
 outputs:
 - contextPath: MicrosoftATP.MachineAction.ID
@@ -76,7 +76,6 @@ tasks:
     task:
       brand: ""
       id: 2a0f3a1c-748a-4019-87d4-87a90fbe5bfb
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -119,7 +118,6 @@ tasks:
       description: This playbook unisolates sensors according to the sensor ID that
         is provided in the playbook input.
       id: c878cab8-cdaa-407d-8b39-6cd26b7361b0
-      isOverridable: false
       iscommand: false
       name: Carbon Black Response - Unisolate Endpoint
       playbookName: Carbon Black Response - Unisolate Endpoint
@@ -174,7 +172,6 @@ tasks:
       description: This playbook unisolates endpoints according to the endpoint ID
         that is provided in the playbook input.
       id: 712259a3-c95a-423f-8639-431fb8d514c7
-      isOverridable: false
       iscommand: false
       name: Cortex XDR - Unisolate Endpoint
       playbookName: Cortex XDR - Unisolate Endpoint
@@ -203,7 +200,6 @@ tasks:
     task:
       brand: ""
       id: a42fe062-acbe-448c-82c4-f7cdfdf15b82
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -247,7 +243,6 @@ tasks:
       description: This playbook unisolates devices according to the device ID that
         is provided in the playbook input.
       id: c62a1b36-38d0-4069-854c-8c5e6bdae135
-      isOverridable: false
       iscommand: false
       name: Crowdstrike Falcon - Unisolate Endpoint
       playbookName: Crowdstrike Falcon - Unisolate Endpoint
@@ -291,7 +286,6 @@ tasks:
       description: This playbook unisolates endpoints according to the hostname/endpoint
         ID that is provided by the playbook input.
       id: 80b6c790-1aef-4d56-8d48-8b0446ac6e31
-      isOverridable: false
       iscommand: false
       name: FireEye HX - Unisolate Endpoint
       playbookName: FireEye HX - Unisolate Endpoint
@@ -335,7 +329,6 @@ tasks:
       brand: ""
       description: This playbook unisolates a machine based on the hostname provided.
       id: b4313ff8-dec2-4f6e-8fc9-31f06e13fbc9
-      isOverridable: false
       iscommand: false
       name: Unisolate Endpoint - Cybereason
       playbookName: Unisolate Endpoint - Cybereason
@@ -390,7 +383,6 @@ tasks:
       description: This playbook accepts an endpoint ID, IP, or host name and unisolates
         it using the Microsoft Defender For Endpoint integration.
       id: 1ecf253b-6e06-4b5e-8a05-00161e93be16
-      isOverridable: false
       iscommand: false
       name: Microsoft Defender For Endpoint - Unisolate Endpoint
       playbookName: Microsoft Defender For Endpoint - Unisolate Endpoint
