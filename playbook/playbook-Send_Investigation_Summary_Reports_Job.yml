@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -18,7 +19,6 @@ description: 'You should run this playbook as a scheduled job, whicn should run 
   Investigation Summary". Reports.'
 id: Send Investigation Summary Reports Job
 inputs: []
-isOverridable: false
 name: Send Investigation Summary Reports Job
 outputs: []
 starttaskid: "0"
@@ -40,7 +40,6 @@ tasks:
     task:
       brand: ""
       id: 3e73293a-7cab-422a-85ea-490384fe3c88
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -74,7 +73,6 @@ tasks:
       brand: ""
       description: Deletes a field from context.
       id: ee47ccea-fdc2-4982-8b8e-77cc37a36129
-      isOverridable: false
       iscommand: false
       name: Clear Context
       script: DeleteContext
@@ -104,7 +102,6 @@ tasks:
       brand: Builtin
       description: commands.local.cmd.close.inv
       id: 7a0c8546-6aad-4d2a-80fc-7da070c87824
-      isOverridable: false
       iscommand: true
       name: Close Incident
       script: Builtin|||closeInvestigation
@@ -136,7 +133,6 @@ tasks:
     task:
       brand: ""
       id: cf10b50c-b332-4c19-8961-c5ba96381228
-      isOverridable: false
       iscommand: false
       name: Send Investigation Summary Reports
       playbookId: Send Investigation Summary Reports
