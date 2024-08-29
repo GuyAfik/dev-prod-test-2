@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -23,6 +22,7 @@ inputs:
   value:
     complex:
       root: File
+isOverridable: false
 name: Detonate and Analyze File - Generic
 outputs:
 - contextPath: csfalconx.resource.tags
@@ -200,6 +200,7 @@ tasks:
     task:
       brand: ""
       id: 218725c8-5f2a-438c-8b00-39eb76656d1f
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -258,6 +259,7 @@ tasks:
       description: This playbook uploads, detonates, and analyzes files for the CrowdStrike
         Falcon Intelligence Sandbox.
       id: 1efe544b-f18b-467c-8a8c-de784c146ef9
+      isOverridable: false
       iscommand: false
       name: CrowdStrike Falcon Intelligence Sandbox Detonate and Analyze File
       playbookName: CrowdStrike Falcon Intelligence Sandbox Detonate and Analyze File
@@ -300,6 +302,7 @@ tasks:
       description: |
         This playbook uploads, detonates, and analyzes files for the Wildfire sandbox.
       id: 215ed959-df27-4580-8ed0-a95b3246f65d
+      isOverridable: false
       iscommand: false
       name: Wildfire Detonate and Analyze File
       playbookId: Wildfire Detonate and Analyze File
@@ -328,6 +331,7 @@ tasks:
     task:
       brand: ""
       id: bd46d172-dfb1-43e4-8904-643571582a5d
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -367,6 +371,7 @@ tasks:
       description: Returns 'yes' if the CrowdStrike Falcon Intelligence Sandbox integration
         is available.
       id: 1e2efc1c-d878-46c7-835f-ea5c802dd878
+      isOverridable: false
       iscommand: false
       name: Is CrowdStrike Falcon Intelligence Sandbox enabled?
       script: IsIntegrationAvailable
@@ -413,6 +418,7 @@ tasks:
       brand: ""
       description: Is there a file?
       id: 5257b87f-910c-4b92-814a-5a478d777ae8
+      isOverridable: false
       iscommand: false
       name: Is there a file?
       type: condition
@@ -451,6 +457,7 @@ tasks:
       brand: ""
       description: Returns 'yes' if the WildFire integration is available.
       id: e64d0590-3e6c-4b99-8ded-da01909d2195
+      isOverridable: false
       iscommand: false
       name: Is Wildfire enabled?
       script: IsIntegrationAvailable
@@ -502,6 +509,7 @@ tasks:
       brand: ""
       description: Are there MITRE findings?
       id: 50b29f08-f3b1-4b2b-8722-20a7656c61ef
+      isOverridable: false
       iscommand: false
       name: Are there MITRE findings?
       type: condition
@@ -557,6 +565,7 @@ tasks:
         This playbook accepts as input MITRE techniques IDs.
         It returns the MITRE technique name and full technique data using the MITRE integration.
       id: 93344bc1-a4e8-4997-8879-3ecb04041bd1
+      isOverridable: false
       iscommand: false
       name: Mitre Attack - Extract Technique Information From ID
       playbookId: Mitre Attack - Extract Technique Information From ID
@@ -597,6 +606,7 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'.
       id: e0390fd8-4e73-42bc-8fdb-8480bf9af4d9
+      isOverridable: false
       iscommand: false
       name: Is JoeSecurity sandbox enabled?
       script: IsIntegrationAvailable
@@ -644,6 +654,7 @@ tasks:
         report, dropped binaries, etc. See integration README for the full supported
         report types.
       id: 723d2bf6-e92a-4ac9-851c-c1227ce3b386
+      isOverridable: false
       iscommand: true
       name: Get a full report from Joe Sandbox - JSON
       script: '|||joe-download-report'
@@ -691,6 +702,7 @@ tasks:
       brand: ""
       description: Any results from the Joe search?
       id: 4924f70b-3356-41b7-8264-8f944bfc2585
+      isOverridable: false
       iscommand: false
       name: Any results from the Joe search?
       type: condition
@@ -737,6 +749,7 @@ tasks:
         report, dropped binaries, etc. See integration README for the full supported
         report types.
       id: 0176d511-3e34-44ea-8f79-518314ddca71
+      isOverridable: false
       iscommand: true
       name: Get a full report from Joe Sandbox - PDF
       script: '|||joe-download-report'
@@ -790,6 +803,7 @@ tasks:
       brand: ""
       description: Converts a PDF file to an image file.
       id: 3ef64df5-ef9a-4a40-8fd8-ee5a4e3e9274
+      isOverridable: false
       iscommand: true
       name: Rasterize PDF
       script: '|||rasterize-pdf'
@@ -839,6 +853,7 @@ tasks:
       brand: Builtin
       description: commands.local.cmd.extract.indicators
       id: d4b713f1-b7b9-4689-8964-f70d44dec5dd
+      isOverridable: false
       iscommand: true
       name: Extract Indicators from the Report
       script: Builtin|||extractIndicators
@@ -884,6 +899,7 @@ tasks:
       brand: ""
       description: Looks up the reputation of the indicator.
       id: 0a8ff382-630f-486b-8daf-a9d9dd9521a1
+      isOverridable: false
       iscommand: true
       name: Enrich Mitre Attack Techniques information.
       script: '|||attack-pattern'
@@ -935,6 +951,7 @@ tasks:
       brand: ""
       description: Are there MITRE findings?
       id: baac5ee9-b37f-4ad7-80fe-b7021e116faf
+      isOverridable: false
       iscommand: false
       name: Are there MITRE findings?
       type: condition
@@ -986,6 +1003,7 @@ tasks:
         is designed to be swift, efficient, and secure, providing users with valuable
         insights into potential threats and vulnerabilities within their files.
       id: 9bdf9a41-2a91-4582-8640-d40a3401e20d
+      isOverridable: false
       iscommand: false
       name: Detonate File - JoeSecurity V2
       playbookName: Detonate File - JoeSecurity V2
