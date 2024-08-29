@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -443,7 +444,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Block Indicators - Generic v3
 outputs:
 - contextPath: CheckpointFWRule.Domain
@@ -525,7 +525,6 @@ tasks:
     task:
       brand: ""
       id: be855f8e-b0d6-4b33-8898-954bf9ba99cc
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -555,7 +554,6 @@ tasks:
     task:
       brand: ""
       id: c155d55d-f7f3-4af2-8739-3cb6143e0e81
-      isOverridable: false
       iscommand: false
       name: Tag Indicators
       type: title
@@ -591,7 +589,6 @@ tasks:
     task:
       brand: ""
       id: 15d43128-6c48-4deb-8ed0-044d0454fa7b
-      isOverridable: false
       iscommand: false
       name: Block indicators
       type: title
@@ -669,7 +666,6 @@ tasks:
         Traps\n- Palo Alto Networks Cortex XDR\n- Cybereason\n- Carbon Black Enterprise
         Response\n- Cylance Protect v2\n"
       id: 97b85f3e-e339-490d-8f4c-7a188cfc0f25
-      isOverridable: false
       iscommand: false
       name: Block File - Generic v2
       playbookId: Block File - Generic v2
@@ -792,7 +788,6 @@ tasks:
         Cisco ASA\n* Akamai WAF\n* F5 SilverLine\n* ThreatX\n* Signal Sciences WAF\n*
         Sophos Firewall\n\n"
       id: 53c7faa6-ec4b-46c0-8322-71972e65dad0
-      isOverridable: false
       iscommand: false
       name: Block IP - Generic v3
       playbookId: Block IP - Generic v3
@@ -821,7 +816,6 @@ tasks:
     task:
       brand: ""
       id: 22f0eb38-c4d3-4e67-889b-6abbff216ab8
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -871,7 +865,6 @@ tasks:
       brand: Builtin
       description: commands.local.cmd.add.values.to.indicator.multi.select.field
       id: 8e6165ed-cc2e-4820-8ae4-c73fd82a3088
-      isOverridable: false
       iscommand: true
       name: Tag bad indicators
       script: Builtin|||appendIndicatorField
@@ -959,7 +952,6 @@ tasks:
         * ExceedLMS IAM
         * Okta
       id: f12b6207-b78c-4cde-8f3d-2cbd8c3e0d56
-      isOverridable: false
       iscommand: false
       name: Block Account - Generic v2
       playbookId: Block Account - Generic v2
@@ -1055,7 +1047,6 @@ tasks:
     task:
       brand: ""
       id: ac24ec10-63b4-46ed-8c10-ae50147ac064
-      isOverridable: false
       iscommand: false
       name: Block URL - Generic v2
       playbookId: Block URL - Generic v2
@@ -1227,7 +1218,6 @@ tasks:
       brand: ""
       description: Select which indicators to block.
       id: 0d20c35f-5bdf-4b27-8b63-f5334f9342f5
-      isOverridable: false
       iscommand: false
       name: Which indicators would you like to block?
       type: collection
@@ -1274,7 +1264,6 @@ tasks:
       brand: ""
       description: Checks whether the AutoBlockIndicators input is set to 'True'
       id: 8a156613-e43b-4bf2-857c-159220291b3b
-      isOverridable: false
       iscommand: false
       name: Block Indicators Automatically?
       type: condition
@@ -1352,7 +1341,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: ca92498f-ebc4-4e68-81e9-44e1c6907d9d
-      isOverridable: false
       iscommand: false
       name: Set indicators to block - Manual
       script: Set
@@ -1442,7 +1430,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: 6cabb94a-1422-4d97-89ee-5b35b328c70b
-      isOverridable: false
       iscommand: false
       name: Set indicators to block - Auto
       script: Set
@@ -1488,7 +1475,6 @@ tasks:
       brand: ""
       description: Checks whether there are indicators to block.
       id: 92a68f14-96ed-4e6f-880f-dde5980b1fc2
-      isOverridable: false
       iscommand: false
       name: Has indicators to block?
       type: condition
@@ -1559,7 +1545,6 @@ tasks:
     task:
       brand: ""
       id: 8be5d5f6-b142-415a-8669-90965b645964
-      isOverridable: false
       iscommand: false
       name: Block Domain - Generic v2
       playbookId: Block Domain - Generic v2
@@ -1628,7 +1613,6 @@ tasks:
     task:
       brand: ""
       id: eb042e15-af15-4142-8fa9-f05d0d283499
-      isOverridable: false
       iscommand: false
       name: Block Email - Generic v2
       playbookId: Block Email - Generic v2
@@ -1672,7 +1656,6 @@ tasks:
       brand: ""
       description: Checks whether a tag for blocked indicators was specified.
       id: ee795eae-1fc0-4458-864b-91b2f224db89
-      isOverridable: false
       iscommand: false
       name: Tag received from inputs?
       type: condition
@@ -1756,7 +1739,6 @@ tasks:
     task:
       brand: ""
       id: 4b64da5f-53b9-4fdd-8e65-5a133c6700d6
-      isOverridable: false
       iscommand: false
       name: Are there indicators to block?
       type: condition
@@ -1784,7 +1766,6 @@ tasks:
     task:
       brand: ""
       id: f0a6c388-3821-4ad0-8720-6660caa31997
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
