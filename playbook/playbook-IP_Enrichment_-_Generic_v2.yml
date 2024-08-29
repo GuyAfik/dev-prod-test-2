@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -106,7 +107,6 @@ inputs:
   required: false
   value:
     simple: "True"
-isOverridable: false
 name: IP Enrichment - Generic v2
 outputs:
 - contextPath: IP
@@ -693,7 +693,6 @@ tasks:
     task:
       brand: ""
       id: af133db3-bee0-4542-8d41-042900b926fc
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -720,7 +719,6 @@ tasks:
     task:
       brand: ""
       id: 7ae24ea0-00d1-4459-8c71-f2cfbaea117f
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -816,7 +814,6 @@ tasks:
         - IP address reputation using !ip command.
         - Separate internal and external addresses.
       id: d6e505bb-5266-4b41-8f70-e47d9b7024fc
-      isOverridable: false
       iscommand: false
       name: IP Enrichment - External - Generic v2
       playbookId: IP Enrichment - External - Generic v2
@@ -924,7 +921,6 @@ tasks:
         - Separate internal and external IP addresses
         - Get host information for IP addresses
       id: 2d760e89-be66-4b36-8254-47a1825c7486
-      isOverridable: false
       iscommand: false
       name: IP Enrichment - Internal - Generic v2
       playbookId: IP Enrichment - Internal - Generic v2
@@ -969,7 +965,6 @@ tasks:
         internal, sets the \"InRange\" attribute to \"yes\".\nIf external, sets the
         \"InRange\" attribute to \"no\". "
       id: 4b707093-e557-49e6-8825-f7b23c1f12a6
-      isOverridable: false
       iscommand: false
       name: Determine whether the IP address is internal or external
       script: IsIPInRanges
@@ -1035,7 +1030,6 @@ tasks:
         the classification of IP addresses to ranges and resolving them should be
         executed in the main (parent) enrichment playbook, instead of in the sub-playbooks.
       id: 6c306aba-243f-4d13-888c-a142fcf86737
-      isOverridable: false
       iscommand: false
       name: Can common logic be executed from the parent playbook?
       type: condition
@@ -1066,7 +1060,6 @@ tasks:
     task:
       brand: ""
       id: be9d391d-3019-40bc-85da-e72e9e6813a8
-      isOverridable: false
       iscommand: false
       name: Resolve IPs
       type: title
@@ -1112,7 +1105,6 @@ tasks:
       brand: ""
       description: Checks whether the ResolveIP parameter is set to "True".
       id: e63254e7-c97e-4b24-8850-4221197dfc53
-      isOverridable: false
       iscommand: false
       name: Resolve the IP addresses?
       type: condition
@@ -1151,7 +1143,6 @@ tasks:
       brand: ""
       description: Convert the IP address to a hostname using DNS query.
       id: d3b5a8f2-eb21-415c-8a11-321370c1d054
-      isOverridable: false
       iscommand: false
       name: IP to Hostname (DNS)
       script: IPToHost
@@ -1184,7 +1175,6 @@ tasks:
     task:
       brand: ""
       id: 1acf343e-137c-4d5e-89e8-dcb88b2ba060
-      isOverridable: false
       iscommand: false
       name: Classify & Resolve IPs
       type: title
@@ -1216,7 +1206,6 @@ tasks:
     task:
       brand: ""
       id: 3d2c6283-7577-44b8-845f-9c3612c37711
-      isOverridable: false
       iscommand: false
       name: Execute Sub-playbooks
       type: title
