@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -19,7 +20,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Get Email From Email Gateway - Generic
 outputs:
 - contextPath: File
@@ -46,7 +46,6 @@ tasks:
     task:
       brand: ""
       id: 4601bd5d-21a9-4f61-8148-7efbd545c017
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -73,7 +72,6 @@ tasks:
     task:
       brand: ""
       id: 0be9c4cd-925c-4085-8451-c5a948407d97
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -114,7 +112,6 @@ tasks:
       description: This playbook retrieves a specified EML/MSG file directly from
         FireEye Email Security or Central Management.
       id: b32916b5-8000-4c43-80d6-fc491edfedd6
-      isOverridable: false
       iscommand: false
       name: Get Email From Email Gateway - FireEye
       playbookName: Get Email From Email Gateway - FireEye
@@ -152,7 +149,6 @@ tasks:
       description: This playbook retrieves a specified EML/MSG file directly from
         Mimecast.
       id: 3415ba42-7642-4fd4-8b5c-85e1b3b7004c
-      isOverridable: false
       iscommand: false
       name: Get Email From Email Gateway - Mimecast
       playbookName: Get Email From Email Gateway - Mimecast
@@ -190,7 +186,6 @@ tasks:
       description: This playbook retrieves a specified EML/MSG file directly from
         the Proofpoint Protection Server.
       id: 8c2ce613-3539-48f2-84a9-fecf1d7c0ee3
-      isOverridable: false
       iscommand: false
       name: Get Email From Email Gateway - Proofpoint Protection Server
       playbookName: Get Email From Email Gateway - Proofpoint Protection Server
