@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -201,7 +202,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Cloud Response - Generic
 outputs: []
 starttaskid: "0"
@@ -223,7 +223,6 @@ tasks:
     task:
       brand: ""
       id: f73af578-0487-4572-8c79-7645e59b2dd0
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -296,7 +295,6 @@ tasks:
       brand: ""
       description: Checks the cloud provider.
       id: a13921ba-40b3-489c-88b5-329c60394f8b
-      isOverridable: false
       iscommand: false
       name: Select cloud provider
       type: condition
@@ -327,7 +325,6 @@ tasks:
     task:
       brand: ""
       id: 70d956d1-eef8-4a5e-8619-1954322fe6f5
-      isOverridable: false
       iscommand: false
       name: AWS
       type: title
@@ -358,7 +355,6 @@ tasks:
     task:
       brand: ""
       id: 583984bc-19d6-43cd-8529-c1c01d32bf55
-      isOverridable: false
       iscommand: false
       name: Azure
       type: title
@@ -443,7 +439,6 @@ tasks:
                 - Delete the access key
             - Block indicators
       id: bfd028c8-874a-4700-82e6-2e55a7038880
-      isOverridable: false
       iscommand: false
       name: Cloud Response - AWS
       playbookName: Cloud Response - AWS
@@ -514,7 +509,6 @@ tasks:
         password (Default password should be set in the playbook's inputs)\n    -
         Block indicators"
       id: 2bde4ff2-2d22-4a58-8a80-923e6b253f52
-      isOverridable: false
       iscommand: false
       name: Cloud Response - Azure
       playbookName: Cloud Response - Azure
@@ -543,7 +537,6 @@ tasks:
     task:
       brand: ""
       id: a6297810-76e2-479e-8ded-e644a7480cf8
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -574,7 +567,6 @@ tasks:
     task:
       brand: ""
       id: 807c2785-80c1-4d45-8e95-b41a0a06a692
-      isOverridable: false
       iscommand: false
       name: GCP
       type: title
@@ -665,7 +657,6 @@ tasks:
                 - Delete the access key
             - Block indicators
       id: dfbdc384-d698-46a4-89eb-8dacc0300422
-      isOverridable: false
       iscommand: false
       name: Cloud Response - GCP
       playbookName: Cloud Response - GCP
@@ -744,7 +735,6 @@ tasks:
       brand: ""
       description: Select which cloud provider XSOAR should handle this incident.
       id: d22ac09b-779f-424b-8a75-44095a40c450
-      isOverridable: false
       iscommand: false
       name: Choose manually the cloud provider
       type: collection
@@ -816,7 +806,6 @@ tasks:
       brand: ""
       description: Which Cloud provider was selected
       id: 12e4a818-0377-4886-8f78-9462202ede0a
-      isOverridable: false
       iscommand: false
       name: Which Cloud provider was selected
       type: condition
@@ -848,7 +837,6 @@ tasks:
       brand: ""
       description: No cloud provider was selected
       id: 1906fc40-41a9-42e6-8315-5ce64fd2a493
-      isOverridable: false
       iscommand: false
       name: No cloud provider was selected
       type: title
