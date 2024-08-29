@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -18,7 +19,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Search Endpoint by CVE - Generic
 outputs:
 - contextPath: Kenna.Assets
@@ -49,7 +49,6 @@ tasks:
     task:
       brand: ""
       id: 3cc9f67a-3dcb-4793-8ac2-fbbeac13430c
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -91,7 +90,6 @@ tasks:
       brand: ""
       description: Checks if there is a CVE in the playbook input
       id: fe3f943e-ee9d-4e14-8d38-acd5029ebbb9
-      isOverridable: false
       iscommand: false
       name: Is there CVE?
       type: condition
@@ -124,7 +122,6 @@ tasks:
     task:
       brand: ""
       id: 5c6efc1c-e322-4f05-875b-e1e9410adf25
-      isOverridable: false
       iscommand: false
       name: Search CVE
       type: title
@@ -155,7 +152,6 @@ tasks:
     task:
       brand: ""
       id: 776c24cb-8546-4e9c-81f7-cfd2dc6c4727
-      isOverridable: false
       iscommand: false
       name: Rapid7 Nexpose
       type: title
@@ -213,7 +209,6 @@ tasks:
       brand: ""
       description: 'Checks if Rapid7 Nexpose is enabled '
       id: 70b1a735-db7c-4d65-8b8f-ac8f1eaa212f
-      isOverridable: false
       iscommand: false
       name: Is Rapid7 Nexpose enabled?
       type: condition
@@ -264,7 +259,6 @@ tasks:
       description: Search and return all assets matching specific filters. Returns
         only assets the user has access to.
       id: 14333e5c-cb15-4a68-8445-2b05472229e1
-      isOverridable: false
       iscommand: true
       name: 'Search CVE with Rapid7 Nexpose '
       script: '|||nexpose-search-assets'
@@ -325,7 +319,6 @@ tasks:
       brand: ""
       description: 'Checks if KennaV2 is enabled '
       id: 3314e9aa-4546-49ca-809a-e441b344f5f2
-      isOverridable: false
       iscommand: false
       name: Is Kennav2 enabled?
       type: condition
@@ -356,7 +349,6 @@ tasks:
     task:
       brand: ""
       id: 4dcb3885-0d0e-4dd8-8a6d-744a3c57b9b8
-      isOverridable: false
       iscommand: false
       name: Kennav2
       type: title
@@ -392,7 +384,6 @@ tasks:
       brand: ""
       description: Searches for vulnerabilities in Kenna.
       id: 8a816485-5157-4566-8336-291b4f7fa4d0
-      isOverridable: false
       iscommand: true
       name: Search CVE with Kenna
       script: '|||kenna-search-vulnerabilities'
@@ -423,7 +414,6 @@ tasks:
     task:
       brand: ""
       id: ae99de5a-7c26-4cf6-87fc-d004af1cb212
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -467,7 +457,6 @@ tasks:
       brand: ""
       description: If found Assets with the given CVE
       id: cffb6924-0a75-4ed9-89d3-33944c6d31b2
-      isOverridable: false
       iscommand: false
       name: Found results?
       type: condition
@@ -510,7 +499,6 @@ tasks:
       brand: ""
       description: Searches for assets.
       id: 5dc657f4-1a09-4466-87e0-c4e6aa568d3c
-      isOverridable: false
       iscommand: true
       name: Get hostname from assetID
       script: '|||kenna-search-assets'
@@ -542,7 +530,6 @@ tasks:
     task:
       brand: ""
       id: 536cbf27-e426-49ec-8746-d74a6912cf81
-      isOverridable: false
       iscommand: false
       name: RiskSense
       type: title
@@ -600,7 +587,6 @@ tasks:
       brand: ""
       description: 'Checks if RiskSense is enabled '
       id: 44395589-60e0-4dd1-893b-15b0aad442c3
-      isOverridable: false
       iscommand: false
       name: 'Is RiskSense Enabled? '
       type: condition
@@ -642,7 +628,6 @@ tasks:
     task:
       brand: ""
       id: 126fda72-2bab-4baf-8d62-6995d6b9a270
-      isOverridable: false
       iscommand: false
       name: CVE Exposure - RiskSense
       playbookName: CVE Exposure - RiskSense
@@ -691,7 +676,6 @@ tasks:
       description: Set a value in context under the key you entered. If no value is
         entered, the script doesn't do anything.
       id: 38fa22d3-111a-4edb-8e4b-407af0cc699b
-      isOverridable: false
       iscommand: false
       name: Set results to Endpoint context
       script: SetAndHandleEmpty
@@ -734,7 +718,6 @@ tasks:
       description: Set a value in context under the key you entered. If no value is
         entered, the script doesn't do anything.
       id: 97583f7a-e6b3-4662-86be-7e267e2539ac
-      isOverridable: false
       iscommand: false
       name: Set results to Endpoint context
       script: SetAndHandleEmpty
