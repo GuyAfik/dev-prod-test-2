@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -58,7 +59,6 @@ inputs:
   required: false
   value:
     simple: "True"
-isOverridable: false
 name: Block Account - Generic v2
 outputs:
 - contextPath: Blocklist.Final
@@ -83,7 +83,6 @@ tasks:
     task:
       brand: ""
       id: cc38d57c-1f3a-4616-8fc3-b3d5b2beefb3
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -110,7 +109,6 @@ tasks:
     task:
       brand: ""
       id: 78bcaa68-2a3d-4805-8e25-1bee31249d8f
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -158,7 +156,6 @@ tasks:
     task:
       brand: ""
       id: df7e57df-4f26-4b41-8552-0d4068792d13
-      isOverridable: false
       iscommand: false
       name: Block accounts
       type: title
@@ -201,7 +198,6 @@ tasks:
       description: Verify that the playbook input includes at least one username to
         block.
       id: 84a222c3-d83f-4d9c-8f75-605f9c1cd233
-      isOverridable: false
       iscommand: false
       name: Is there a username to block?
       type: condition
@@ -242,7 +238,6 @@ tasks:
       description: Registers users to a tag. This command is only available for PAN-OS
         version 9.x and above.
       id: d50b5c24-46e7-4b68-8082-632feb18733d
-      isOverridable: false
       iscommand: true
       name: PAN-OS - Register Tag to User
       script: '|||pan-os-register-user-tag'
@@ -286,7 +281,6 @@ tasks:
       description: Verify that the playbook input includes at least one tag to apply
         to the user.
       id: 134ffe20-63fc-486a-8a79-685e3d206ae8
-      isOverridable: false
       iscommand: false
       name: Is there a Tag name to register?
       type: condition
@@ -317,7 +311,6 @@ tasks:
     task:
       brand: ""
       id: dd28a21a-8e77-4e94-8ebd-6b4dd2a40907
-      isOverridable: false
       iscommand: false
       name: OKTA
       type: title
@@ -348,7 +341,6 @@ tasks:
     task:
       brand: ""
       id: 253e9206-6499-4698-81bc-4f6b405723e9
-      isOverridable: false
       iscommand: false
       name: SailPoint
       type: title
@@ -379,7 +371,6 @@ tasks:
     task:
       brand: ""
       id: 4665f43b-c357-46ab-8658-1f5307d73e34
-      isOverridable: false
       iscommand: false
       name: AWS IAM
       type: title
@@ -410,7 +401,6 @@ tasks:
     task:
       brand: ""
       id: 9f3e4789-ef65-4d8b-8142-b931aca2d1b8
-      isOverridable: false
       iscommand: false
       name: PingOne
       type: title
@@ -441,7 +431,6 @@ tasks:
     task:
       brand: ""
       id: 5af0265d-f69a-47ef-8fdd-8be726ab8812
-      isOverridable: false
       iscommand: false
       name: Clarizen IAM
       type: title
@@ -472,7 +461,6 @@ tasks:
     task:
       brand: ""
       id: 8170d464-f524-484a-8578-d2d5c6b44c24
-      isOverridable: false
       iscommand: false
       name: Envoy IAM
       type: title
@@ -503,7 +491,6 @@ tasks:
     task:
       brand: ""
       id: 9426248c-bc57-4e2a-898c-333c705fe7c9
-      isOverridable: false
       iscommand: false
       name: ExceedLMS IAM
       type: title
@@ -534,7 +521,6 @@ tasks:
     task:
       brand: ""
       id: e3d46f19-bf96-4280-887d-c746b0e95976
-      isOverridable: false
       iscommand: false
       name: PAN-OS
       type: title
@@ -565,7 +551,6 @@ tasks:
     task:
       brand: ""
       id: 00761e97-8a6e-48f4-85fb-d894509a2c17
-      isOverridable: false
       iscommand: false
       name: Microsoft Active Directory
       type: title
@@ -605,7 +590,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: ca29fc92-0b56-4eca-8fb4-285bf732a419
-      isOverridable: false
       iscommand: false
       name: Is OKTA Integration Enabled?
       script: IsIntegrationAvailable
@@ -646,7 +630,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 692fc977-5dff-49fa-8ef9-4c0c53979786
-      isOverridable: false
       iscommand: false
       name: Is SailPoint Integration Enabled?
       script: IsIntegrationAvailable
@@ -687,7 +670,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: c00031c8-63dc-447a-8064-458b8b89c0b9
-      isOverridable: false
       iscommand: false
       name: Is AWS IAM Integration Enabled?
       script: IsIntegrationAvailable
@@ -728,7 +710,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 1dfdb5b5-b388-49f8-8778-b631675b5228
-      isOverridable: false
       iscommand: false
       name: Is PingOne Integration Enabled
       script: IsIntegrationAvailable
@@ -769,7 +750,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 1e40e759-f2e0-46f7-8c4c-e6c305ada2fe
-      isOverridable: false
       iscommand: false
       name: Is ClarizenIAM Integration Enabled?
       script: IsIntegrationAvailable
@@ -810,7 +790,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: e69ec334-a883-4519-8b53-2d12a380819d
-      isOverridable: false
       iscommand: false
       name: Is Envoy IAM Integration Enabled?
       script: IsIntegrationAvailable
@@ -851,7 +830,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: d7750a59-552e-4fbe-8d72-6a0dbf2c50b2
-      isOverridable: false
       iscommand: false
       name: Is ExceedLMS IAM Integration Enabled?
       script: IsIntegrationAvailable
@@ -887,7 +865,6 @@ tasks:
       brand: ""
       description: Disable an active user.
       id: 85bde384-178d-44b1-8c73-5899e51cf664
-      isOverridable: false
       iscommand: true
       name: IAM Disable User
       script: '|||iam-disable-user'
@@ -925,7 +902,6 @@ tasks:
       brand: ""
       description: Deactivate a user's account.
       id: 08d5ce28-f0dd-4a81-889a-383591a50ad5
-      isOverridable: false
       iscommand: true
       name: PingOne - Deactivate user
       script: '|||pingone-deactivate-user'
@@ -963,7 +939,6 @@ tasks:
       brand: ""
       description: Disable account's active status by id using IdentityIQ SCIM API's.
       id: 50b2030e-e402-47f1-86df-5b5f4e8e7077
-      isOverridable: false
       iscommand: true
       name: SailPoint-Disable account
       script: '|||identityiq-disable-account'
@@ -1004,7 +979,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 90a2adf8-4f57-4b53-896d-44bddd4d064c
-      isOverridable: false
       iscommand: false
       name: Is PAN-OS/Panorama Integration Enabled?
       script: IsIntegrationAvailable
@@ -1045,7 +1019,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: e31ad79c-5806-41f0-839b-f896c860d3cc
-      isOverridable: false
       iscommand: false
       name: Is Active Directory Integration Enabled?
       script: IsIntegrationAvailable
@@ -1092,7 +1065,6 @@ tasks:
       brand: ""
       description: Check if manual verification is required before block
       id: c34085c0-1974-4153-8f36-fb22e4ba0c4e
-      isOverridable: false
       iscommand: false
       name: Is User Verification Required?
       type: condition
@@ -1123,7 +1095,6 @@ tasks:
     task:
       brand: ""
       id: eda8a397-b0f5-4cb8-85a6-804bbbf59244
-      isOverridable: false
       iscommand: false
       name: No User to be blocked
       type: title
@@ -1181,7 +1152,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: 90c4e379-c164-495b-8bd0-74e807433506
-      isOverridable: false
       iscommand: false
       name: Set Naming Convention to a key
       script: SetAndHandleEmpty
@@ -1237,7 +1207,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: 603550b4-89d3-4df1-84d9-1eb2951e0871
-      isOverridable: false
       iscommand: false
       name: Identify Potential Sensitive Users
       script: SetAndHandleEmpty
@@ -1287,7 +1256,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: 93dc1c23-81e4-40fd-8f62-9f4290882421
-      isOverridable: false
       iscommand: false
       name: Set User to a potential block list
       script: SetAndHandleEmpty
@@ -1330,7 +1298,6 @@ tasks:
       brand: ""
       description: Check if there are any sensitive users to block
       id: 39b3cf6c-5757-447b-8188-9ead6e21a445
-      isOverridable: false
       iscommand: false
       name: Check if there are any sensitive users to block
       type: condition
@@ -1412,7 +1379,6 @@ tasks:
         Please note that in this form there are serval accounts that are listed as "Sensitive Accounts":
         ${User.Sensetive}
       id: 6ab46eeb-8460-44ab-8b96-0c6a35e38581
-      isOverridable: false
       iscommand: false
       name: Ask the user for verification [Sensitive Users]
       type: collection
@@ -1494,7 +1460,6 @@ tasks:
         Please note that in this form there are serval accounts that are listed as "Sensitive Accounts":
         ${User.Sensetive}
       id: 4d484404-eefc-4cf6-8f56-abdae89d61e6
-      isOverridable: false
       iscommand: false
       name: Ask the user for verification [without Sensitive Users]
       type: collection
@@ -1549,7 +1514,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: 9e174bd8-73a8-46ef-8a56-138a1cac0b61
-      isOverridable: false
       iscommand: false
       name: Set the final accounts list to be blocked
       script: SetAndHandleEmpty
@@ -1595,7 +1559,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: f97632fd-1653-4fda-8222-e8dbe5c36646
-      isOverridable: false
       iscommand: false
       name: Set the final accounts list to be blocked
       script: SetAndHandleEmpty
@@ -1632,7 +1595,6 @@ tasks:
       brand: Active Directory Query v2
       description: Disables an Active Directory user account.
       id: f9188978-a51d-4e86-8420-1749db9f1d3b
-      isOverridable: false
       iscommand: true
       name: Active Directory - Disable Account
       script: Active Directory Query v2|||ad-disable-account
@@ -1684,7 +1646,6 @@ tasks:
       brand: ""
       description: Check if the analyst selected any users to block
       id: 64ddf917-048c-444b-8fea-b9529a3ad0b3
-      isOverridable: false
       iscommand: false
       name: Is Username selected?
       type: condition
@@ -1724,7 +1685,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 8791822e-5e1e-4b28-82d9-a822aa17108d
-      isOverridable: false
       iscommand: false
       name: Is Slack IAM Integration Enabled?
       script: IsIntegrationAvailable
@@ -1756,7 +1716,6 @@ tasks:
     task:
       brand: ""
       id: e2aaa6e8-de1f-4399-8e89-2321fe4fa030
-      isOverridable: false
       iscommand: false
       name: Slack IAM
       type: title
@@ -1796,7 +1755,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: e8b7f7a8-2b9c-44ef-8eff-ceb494799432
-      isOverridable: false
       iscommand: false
       name: Is ServiceNow IAM Integration Enabled?
       script: IsIntegrationAvailable
@@ -1828,7 +1786,6 @@ tasks:
     task:
       brand: ""
       id: 6a694bcc-610d-46c4-8d22-dec644076b78
-      isOverridable: false
       iscommand: false
       name: ServiceNow IAM
       type: title
@@ -1868,7 +1825,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 6345f42c-51a8-401f-8099-ecea5a0403c4
-      isOverridable: false
       iscommand: false
       name: Is Salesforce IAM Integration Enabled?
       script: IsIntegrationAvailable
@@ -1900,7 +1856,6 @@ tasks:
     task:
       brand: ""
       id: dba2b9c1-cb47-41a9-8386-1de15a47de2d
-      isOverridable: false
       iscommand: false
       name: Salesforce IAM
       type: title
@@ -1940,7 +1895,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: c6cb894b-65a5-4e85-87f4-debe4d8cdbfe
-      isOverridable: false
       iscommand: false
       name: Is PrismaCloud IAM Integration Enabled?
       script: IsIntegrationAvailable
@@ -1972,7 +1926,6 @@ tasks:
     task:
       brand: ""
       id: de7c1b4f-0ecc-4782-8346-50b679dac66b
-      isOverridable: false
       iscommand: false
       name: PrismaCloud IAM
       type: title
@@ -2012,7 +1965,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 1a19cd62-eafa-4b66-80aa-b397a439f52c
-      isOverridable: false
       iscommand: false
       name: Is Microsoft Graph User Integration Enabled?
       script: IsIntegrationAvailable
@@ -2044,7 +1996,6 @@ tasks:
     task:
       brand: ""
       id: 31d15f37-d89d-4d09-8009-2a60c76d0b5e
-      isOverridable: false
       iscommand: false
       name: Microsoft Graph User
       type: title
@@ -2084,7 +2035,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 31592372-486c-4648-8376-8889941df6c8
-      isOverridable: false
       iscommand: false
       name: Is Zoom IAM Integration Enabled?
       script: IsIntegrationAvailable
@@ -2116,7 +2066,6 @@ tasks:
     task:
       brand: ""
       id: b98574a0-93fc-423b-87e1-bf888db3881a
-      isOverridable: false
       iscommand: false
       name: Zoom IAM
       type: title
@@ -2156,7 +2105,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: deb7235b-0e73-4aa7-8e3e-2b07ad73daf9
-      isOverridable: false
       iscommand: false
       name: Is Atlassian IAM Integration Enabled?
       script: IsIntegrationAvailable
@@ -2188,7 +2136,6 @@ tasks:
     task:
       brand: ""
       id: 5e5c6e1e-8c3a-42b8-85bd-3646e9b01531
-      isOverridable: false
       iscommand: false
       name: Atlassian IAM
       type: title
@@ -2227,7 +2174,6 @@ tasks:
         but does not terminate an existing session. Supported only in a self deployed app flow with the
         Permission: Directory.AccessAsUser.All(Delegated)
       id: 909d3b40-e606-4225-8d09-a83ebdd33b79
-      isOverridable: false
       iscommand: true
       name: Microsoft Graph User - Disable Account
       script: '|||msgraph-user-account-disable'
@@ -2268,7 +2214,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 909312b6-5f6e-451c-83dd-a00e31c49197
-      isOverridable: false
       iscommand: false
       name: Is GitHub IAM Integration Enabled?
       script: IsIntegrationAvailable
@@ -2300,7 +2245,6 @@ tasks:
     task:
       brand: ""
       id: 4f6321ef-dfb9-41fd-8a72-61bea5cff007
-      isOverridable: false
       iscommand: false
       name: GitHub IAM
       type: title
@@ -2340,7 +2284,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: a274143d-2455-4679-8064-41a6cc01e1be
-      isOverridable: false
       iscommand: false
       name: Is Google Workspace Admin Integration Enabled?
       script: IsIntegrationAvailable
@@ -2372,7 +2315,6 @@ tasks:
     task:
       brand: ""
       id: fa1e6574-7969-4b44-8593-b2244060cebe
-      isOverridable: false
       iscommand: false
       name: Google Workspace Admin
       type: title
@@ -2411,7 +2353,6 @@ tasks:
       brand: ""
       description: Updates a user.
       id: 128ca043-fa17-4ebf-82e1-ce3b4812de86
-      isOverridable: false
       iscommand: true
       name: Google Workspace Admin - Disable Account
       script: '|||gsuite-user-update'
@@ -2451,7 +2392,6 @@ tasks:
         native_identity, last_target_agg, identity_name & application_name) using
         IdentityIQ SCIM APIs.
       id: 4ebe9bf0-210f-4752-83d0-bb2e2a03262a
-      isOverridable: false
       iscommand: true
       name: Get Account IDs From SailPoint
       script: '|||identityiq-get-accounts'
@@ -2495,7 +2435,6 @@ tasks:
         be specified by name, email address, or as an Active Directory Distinguished
         Name (DN). If no filter is specified, all users are returned.
       id: da02de44-c739-4db1-85bc-3c053f8aa183
-      isOverridable: false
       iscommand: true
       name: Active Directory - Get User
       script: '|||ad-get-user'
@@ -2540,7 +2479,6 @@ tasks:
       brand: ""
       description: Verify that the user exists.
       id: 419df6f0-2416-4a48-8124-eb64ce5da93a
-      isOverridable: false
       iscommand: false
       name: Does the username exist?
       type: condition
@@ -2583,7 +2521,6 @@ tasks:
         Retrieves the properties and relationships of a user object. For more information, visit: https://docs.microsoft.com/en-us/graph/api/user-update?view=graph-rest-1.0.
         Permissions: - User.Read (Delegated) - User.Read.All (Application).
       id: e56d753f-ac0c-417d-83b3-1eec253d740b
-      isOverridable: false
       iscommand: true
       name: Microsoft Graph User - Get User
       script: '|||msgraph-user-get'
@@ -2628,7 +2565,6 @@ tasks:
       brand: ""
       description: Verify that the user exists.
       id: 6a4ebfcb-e506-4333-81b5-8889065e2fbe
-      isOverridable: false
       iscommand: false
       name: Does the username exist?
       type: condition
