@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -34,6 +33,7 @@ inputs:
     complex:
       accessor: SHA256
       root: File
+isOverridable: false
 name: Get File Sample By Hash - Generic v2
 outputs:
 - contextPath: File
@@ -59,6 +59,7 @@ tasks:
     task:
       brand: ""
       id: e1c3bf5a-d7ba-4062-8877-ad2799d1db03
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -95,6 +96,7 @@ tasks:
       description: Returns to the war-room a file sample correlating to MD5 hashes
         in the input using Carbon Black Enterprise Response integration
       id: 09f337a9-fb19-48ce-8b0f-902e0dc9f047
+      isOverridable: false
       iscommand: false
       name: Get File Sample By Hash - Carbon Black Enterprise Response
       playbookName: Get File Sample By Hash - Carbon Black Enterprise Response
@@ -123,6 +125,7 @@ tasks:
     task:
       brand: ""
       id: b5e5705d-8e32-41bb-8c3b-63c78bd2d14f
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -160,6 +163,7 @@ tasks:
       description: This playbook returns a file sample to the war-room given the file's
         SHA256 hash, using Cylance Protect v2 integration.
       id: 3a3ab19d-7b69-4631-847b-27eb7f7f80ee
+      isOverridable: false
       iscommand: false
       name: Get File Sample By Hash - Cylance Protect v2
       playbookName: Get File Sample By Hash - Cylance Protect v2
