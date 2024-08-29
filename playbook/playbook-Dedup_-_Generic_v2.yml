@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -84,7 +85,6 @@ inputs:
   required: false
   value:
     simple: name,type,details
-isOverridable: false
 name: Dedup - Generic v2
 outputs:
 - contextPath: isSimilarIncidentFound
@@ -112,7 +112,6 @@ tasks:
     task:
       brand: ""
       id: 4bb4cba3-1da4-4356-831e-87ca6523087a
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -189,11 +188,10 @@ tasks:
       brand: ""
       description: |-
         Select one of the following methods to identify duplicate incidents in Cortex XSOAR.
-        - ml: Machine learning model, which is trained mostly on phishing incidents.
-        -rules: Rules help identify duplicate incidents when the logic is well defined, for example, same label or custom fields.
-        -text: Statistics algorithm that compares text, which is generally useful for phishing incidents.
+        - ml: Machine learning model that is trained mostly on phishing incidents.
+        - rules: Rules help identify duplicate incidents when the logic is well defined, for example, same label or custom fields.
+        - text: Statistics algorithm that compares text, which is generally useful for phishing incidents.
       id: 48f0cedf-fad2-47db-81fd-348b062f41fe
-      isOverridable: false
       iscommand: false
       name: Select method to identify duplicates
       type: condition
@@ -241,7 +239,6 @@ tasks:
     task:
       brand: ""
       id: 14149636-c0cc-41de-88dd-4b91a49b87ce
-      isOverridable: false
       iscommand: false
       name: Identify duplicates by text
       script: FindSimilarIncidentsByText
@@ -284,7 +281,6 @@ tasks:
       brand: ""
       description: Checks if any duplicate incidents were found.
       id: b6bd2e9d-c6ca-401c-87f5-7dd2b6355bb3
-      isOverridable: false
       iscommand: false
       name: Check if duplicates were found
       type: condition
@@ -336,7 +332,6 @@ tasks:
         It's highly recommended to use incident keys if possible (e.g., "type" for the same incident type).
         For best performance, it's recommended to avoid using context keys if possible (for example, if the value also appears in a label key, use the label).
       id: c5bb7095-cdc3-4a83-8ae4-ed792366f468
-      isOverridable: false
       iscommand: false
       name: Identify similar incidents using rules
       script: FindSimilarIncidents
@@ -382,7 +377,6 @@ tasks:
     task:
       brand: ""
       id: 8cbb827c-a410-4f16-8a98-41026ce58f81
-      isOverridable: false
       iscommand: false
       name: Identify duplicates using ML
       script: GetDuplicatesMlv2
@@ -418,10 +412,9 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Closes the investigation as a duplicate to one of the incidents
+      description: Closes the investigation as a duplicate to one of the incidents.
         identified.
       id: 821fea71-8442-4647-8281-52c916a04b43
-      isOverridable: false
       iscommand: false
       name: Close investigation as duplicate
       script: CloseInvestigationAsDuplicate
@@ -450,7 +443,6 @@ tasks:
     task:
       brand: ""
       id: c1f06a79-d539-4853-8140-f1f879a8f137
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -481,7 +473,6 @@ tasks:
     task:
       brand: ""
       id: 31571cc9-8aed-458c-8ea2-f1cb69acb262
-      isOverridable: false
       iscommand: false
       name: Text
       type: title
@@ -512,7 +503,6 @@ tasks:
     task:
       brand: ""
       id: 4072604a-379d-4c5b-8e9f-b74b0e4d0184
-      isOverridable: false
       iscommand: false
       name: ML
       type: title
@@ -543,7 +533,6 @@ tasks:
     task:
       brand: ""
       id: 58c2edb1-ada1-4220-844d-805f1da22ae9
-      isOverridable: false
       iscommand: false
       name: Rules
       type: title
@@ -590,7 +579,6 @@ tasks:
     task:
       brand: ""
       id: 0eaa279f-7d04-469d-8bcd-0ca1f7942c88
-      isOverridable: false
       iscommand: false
       name: Close duplicates?
       type: condition
@@ -627,7 +615,6 @@ tasks:
       brand: Builtin
       description: Links similar incidents.
       id: 2f6d5087-c0f1-47e3-8065-06cc25ced46a
-      isOverridable: false
       iscommand: true
       name: Link similar incidents
       script: Builtin|||linkIncidents
@@ -688,7 +675,6 @@ tasks:
       brand: ""
       description: Checks whether the Core REST API integration is enabled.
       id: 04d3848d-57da-47ab-827d-8950c9063c32
-      isOverridable: false
       iscommand: false
       name: Is Core REST API enabled?
       type: condition
