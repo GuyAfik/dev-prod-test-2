@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -31,6 +30,7 @@ inputs:
     complex:
       accessor: Asset.Vulnerability.Severity
       root: Nexpose
+isOverridable: false
 name: Calculate Severity - 3rd-party integrations
 outputs:
 - contextPath: Severity
@@ -56,6 +56,7 @@ tasks:
     task:
       brand: ""
       id: 3eded69b-617e-4212-86b7-2537474285f3
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -91,6 +92,7 @@ tasks:
       brand: Builtin
       description: Set the severity level to High.
       id: 5f92bc72-085f-4c03-8404-82f83dac6c62
+      isOverridable: false
       iscommand: false
       name: Set severity to "High"
       script: Set
@@ -119,6 +121,7 @@ tasks:
     task:
       brand: ""
       id: 483350d5-ab17-44cd-87b3-0e2360ce3577
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -161,6 +164,7 @@ tasks:
       brand: ""
       description: Check if there is a “QualysSeverity” in the playbook inputs.
       id: a91ad8e7-d063-4466-8137-711519c902f2
+      isOverridable: false
       iscommand: false
       name: Is there a Qualys severity?
       type: condition
@@ -261,6 +265,7 @@ tasks:
         * Medium = 2-3
         * Low = 1
       id: 52fae7c2-b907-4877-8a6a-ed1fbf0ad988
+      isOverridable: false
       iscommand: false
       name: Assign severity level based on Qualys vulnerability score
       type: condition
@@ -297,6 +302,7 @@ tasks:
       brand: Builtin
       description: Set the severity level to Medium.
       id: 89c78898-8fef-4807-8a3d-1c4f042c4eb2
+      isOverridable: false
       iscommand: false
       name: Set severity to "Medium"
       script: Set
@@ -334,6 +340,7 @@ tasks:
       brand: Builtin
       description: Set the severity level to Low.
       id: 84f71501-bcb9-481c-85d5-2efa59f1c1a4
+      isOverridable: false
       iscommand: false
       name: Set severity to "Low"
       script: Set
@@ -365,6 +372,7 @@ tasks:
     task:
       brand: ""
       id: 1487586f-f1f8-4136-8d7e-444a34750493
+      isOverridable: false
       iscommand: false
       name: Calculate using Qualys Vulnerability Management
       type: title
@@ -395,6 +403,7 @@ tasks:
     task:
       brand: ""
       id: aa7b1201-afbc-4d7b-89f5-e21011257699
+      isOverridable: false
       iscommand: false
       name: Calculate using Nexpose Vulnerability Management
       type: title
@@ -437,6 +446,7 @@ tasks:
       brand: ""
       description: Check if there is a “NexposeSeverity” in the playbook inputs.
       id: 9712ee01-9cb9-4dfa-80b3-aa3beadf990c
+      isOverridable: false
       iscommand: false
       name: Is there a Nexpose severity?
       type: condition
@@ -532,6 +542,7 @@ tasks:
         * Medium = Severe
         * Low = Moderate
       id: d5f43287-75c2-4799-8374-95677a68c876
+      isOverridable: false
       iscommand: false
       name: Assign severity level based on Nexpose vulnerability score
       type: condition
