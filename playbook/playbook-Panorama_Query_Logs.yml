@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.2.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -82,7 +83,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Panorama Query Logs
 outputs:
 - contextPath: Panorama.Monitor
@@ -255,7 +255,6 @@ tasks:
     task:
       brand: ""
       id: a0d6fdde-6ca0-4bfb-8fe1-b107ef3e0781
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -316,7 +315,6 @@ tasks:
       description: Checks if there is a valid instance of the Palo Alto Networks PAN-OS
         integration enabled.
       id: 8cc99b6c-6607-4ad3-8581-5526974c4bef
-      isOverridable: false
       iscommand: false
       name: Is Palo Alto Networks PAN-OS enabled?
       type: condition
@@ -390,7 +388,6 @@ tasks:
       brand: ""
       description: Query logs
       id: e5880426-a2ca-4286-807c-23641388b07e
-      isOverridable: false
       iscommand: true
       name: Panorama Query Logs
       script: '|||pan-os-query-logs'
@@ -419,7 +416,6 @@ tasks:
     task:
       brand: ""
       id: 58850584-2a54-4ac5-80ec-268f5ed17c1a
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
