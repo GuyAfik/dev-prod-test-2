@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -36,7 +37,6 @@ inputs:
   required: true
   value:
     simple: "False"
-isOverridable: false
 name: Domain Enrichment - Generic v2
 outputs:
 - contextPath: Domain
@@ -153,7 +153,6 @@ tasks:
     task:
       brand: ""
       id: 3f6b8522-c653-4608-800d-f7da232392fb
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -198,7 +197,6 @@ tasks:
       description: Checks whether the playbook's input contains at least one domain
         name to enrich.
       id: 86e8324e-34fa-4726-8cc0-2f61e6de5395
-      isOverridable: false
       iscommand: false
       name: Is there a domain to enrich?
       type: condition
@@ -226,7 +224,6 @@ tasks:
     task:
       brand: ""
       id: f6da103d-6baa-4afb-8b7d-65740714dcf2
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -266,7 +263,6 @@ tasks:
       description: Gets the category of the domain as found in Cisco Umbrella Investigation
         records.
       id: 7b77b6ff-906f-46cc-8e96-fd9d02778d63
-      isOverridable: false
       iscommand: true
       name: Get domain category
       script: '|||umbrella-domain-categorization'
@@ -333,7 +329,6 @@ tasks:
       description: Checks if there is an active instance of the Cisco Umbrella Investigate
         integration enabled.
       id: ec9764d9-3eea-44d8-8da7-538766ac0670
-      isOverridable: false
       iscommand: false
       name: Is Cisco Umbrella Investigate enabled?
       type: condition
@@ -364,7 +359,6 @@ tasks:
     task:
       brand: ""
       id: 230be3d0-b15b-446e-8e9e-5eaf8aa47c2b
-      isOverridable: false
       iscommand: false
       name: Domain Reputation
       type: title
@@ -395,7 +389,6 @@ tasks:
     task:
       brand: ""
       id: 1dd7328d-b062-4a7c-8b80-55acc42bb92b
-      isOverridable: false
       iscommand: false
       name: Cisco Umbrella enrichment
       type: title
@@ -442,7 +435,6 @@ tasks:
       brand: ""
       description: Check whether to run domain reputation command.
       id: 5b429a1c-ec97-4f6a-877b-0e5dbff30e9f
-      isOverridable: false
       iscommand: false
       name: Should use !domain command?
       type: condition
@@ -478,7 +470,6 @@ tasks:
       brand: ""
       description: Checks the reputation of a domain.
       id: 6feef606-9d2b-4ce9-8aa7-024b49568b13
-      isOverridable: false
       iscommand: true
       name: Check Reputation
       script: '|||domain'
