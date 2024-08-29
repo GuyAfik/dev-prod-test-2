@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.9.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -64,7 +65,6 @@ inputs:
   required: false
   value:
     simple: "False"
-isOverridable: false
 name: PAN-OS - Job - Add Malicious Domains To Sinkhole
 outputs: []
 quiet: true
@@ -92,7 +92,6 @@ tasks:
     task:
       brand: ""
       id: 9d9d8637-a6b6-4b84-8419-a17c24bb6cbb
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -148,7 +147,6 @@ tasks:
       brand: ""
       description: Checks whether to enrich unknown or suspicious domains.
       id: 4f5db42a-566e-4942-80e1-e22b509c1cca
-      isOverridable: false
       iscommand: false
       name: Enrich domains with inconclusive verdict?
       type: condition
@@ -179,7 +177,6 @@ tasks:
     task:
       brand: ""
       id: c28fefe5-54d5-4992-8187-e8f6c47f8c1d
-      isOverridable: false
       iscommand: false
       name: Review Evidence
       type: title
@@ -243,7 +240,6 @@ tasks:
       description: Tags the malicious domains with a sinkhole tag to export them to
         an EDL using the Generic Export Indicators Service.
       id: c7e98784-57a4-4135-8245-787d6bdcbabc
-      isOverridable: false
       iscommand: true
       name: Add sinkhole tag (exports to EDL)
       script: Builtin|||appendIndicatorField
@@ -345,7 +341,6 @@ tasks:
       description: Saves domains that have a "c2", "c&c" or "command and control"
         tag, in a separate context key.
       id: 4a600ff4-a8c9-4641-8b1a-2bc7a7a2bb65
-      isOverridable: false
       iscommand: false
       name: Save domains with tags
       script: SetAndHandleEmpty
@@ -379,7 +374,6 @@ tasks:
     task:
       brand: ""
       id: f44e61a7-9bb5-416e-858a-31eb8ba2a445
-      isOverridable: false
       iscommand: false
       name: Check Domains
       type: title
@@ -434,7 +428,6 @@ tasks:
       brand: ""
       description: Checks whether there are domains with a score of 2 (suspicious).
       id: 24318345-a6a8-471a-809e-381c6f5e0df3
-      isOverridable: false
       iscommand: false
       name: Are there suspicious domains?
       type: condition
@@ -489,7 +482,6 @@ tasks:
       brand: ""
       description: Checks whether there are domains with a score of 0 (unknown).
       id: 1aa825ef-89e2-4462-898a-4fae4ea7dada
-      isOverridable: false
       iscommand: false
       name: Are there unknown domains?
       type: condition
@@ -537,7 +529,6 @@ tasks:
       description: Checks whether domains with a score of 0 (unknown) should be enriched,
         according to the playbook inputs.
       id: 0916bfab-a760-49c1-80d0-60d083652675
-      isOverridable: false
       iscommand: false
       name: Enrich unknown domains?
       type: condition
@@ -585,7 +576,6 @@ tasks:
       brand: Builtin
       description: Enriches domains with a score of 0.
       id: 8f7c32a7-aa3f-463d-81ea-37cdf67bc84d
-      isOverridable: false
       iscommand: true
       name: Enrich unknown domains
       script: Builtin|||enrichIndicators
@@ -634,7 +624,6 @@ tasks:
       brand: Builtin
       description: Enriches domains with a score of 2.
       id: 8b2768fa-0314-49dc-8519-1929a7a6cf5f
-      isOverridable: false
       iscommand: true
       name: Enrich suspicious domains
       script: Builtin|||enrichIndicators
@@ -667,7 +656,6 @@ tasks:
     task:
       brand: ""
       id: 1fe0d61d-484d-4240-83db-e351d48cc50c
-      isOverridable: false
       iscommand: false
       name: Domain Enrichment
       type: title
@@ -715,7 +703,6 @@ tasks:
       description: Checks whether domains with a score of 2 (suspicious) should be
         enriched, according to the playbook inputs.
       id: a4654cde-af5b-49ae-84e8-89392e42ea29
-      isOverridable: false
       iscommand: false
       name: Enrich suspicious domains?
       type: condition
@@ -775,7 +762,6 @@ tasks:
       description: Checks whether any domains should be sinkholed according to the
         tags and relationships.
       id: 74c8c67d-5934-496c-869b-dd9e6242c732
-      isOverridable: false
       iscommand: false
       name: Any domains to sinkhole?
       type: condition
@@ -803,7 +789,6 @@ tasks:
     task:
       brand: ""
       id: eb2a3ed3-53d9-4380-8ac0-a125c7e507df
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -850,7 +835,6 @@ tasks:
       description: Checks whether there are new domains to check for whether they
         should be sinkholed.
       id: c3d17149-69cf-4860-897b-420823294552
-      isOverridable: false
       iscommand: false
       name: Are there domains to check?
       type: condition
@@ -881,7 +865,6 @@ tasks:
     task:
       brand: ""
       id: 9d7ecc51-3594-48f6-87db-49fc0297ecf5
-      isOverridable: false
       iscommand: false
       name: No Domains
       type: title
@@ -925,7 +908,6 @@ tasks:
       description: Searches the relationships of the domains to check if any of them
         resolves to a malicious IP address.
       id: 89f224e9-5579-4c4b-8f1a-f1cbff179416
-      isOverridable: false
       iscommand: false
       name: Check for resolved IPs
       script: SearchIndicatorRelationships
@@ -971,7 +953,6 @@ tasks:
       description: Checks whether any IP addresses that the domains resolve to were
         found.
       id: d6a02cf5-a9ed-40d5-837a-8f3bf0c52d96
-      isOverridable: false
       iscommand: false
       name: Any IPs found?
       type: condition
@@ -1011,7 +992,6 @@ tasks:
       description: Gets the DBotScores of the IP addresses that the domains resolve
         to.
       id: 236a5077-cf02-4331-8964-77c441c179fa
-      isOverridable: false
       iscommand: false
       name: Get IP scores
       script: GetIndicatorDBotScoreFromCache
@@ -1067,7 +1047,6 @@ tasks:
       brand: ""
       description: Checks whether any IP found is malicious.
       id: c732f3b0-c0b2-4650-81b9-f463c8d68f58
-      isOverridable: false
       iscommand: false
       name: Any malicious IPs?
       type: condition
@@ -1116,7 +1095,6 @@ tasks:
       brand: ""
       description: Saves the domains that resolved to the malicious IPs in a new key.
       id: f0844f55-7269-48ce-8368-306957b45da7
-      isOverridable: false
       iscommand: false
       name: Save their corresponding domains in a new key
       script: Set
@@ -1167,7 +1145,6 @@ tasks:
       brand: ""
       description: Saves the malicious IPs in a new key.
       id: ecdcf14b-afbf-480d-80be-8ab3586e5e93
-      isOverridable: false
       iscommand: false
       name: Save malicious IPs in a new key
       script: Set
@@ -1199,7 +1176,6 @@ tasks:
     task:
       brand: ""
       id: de617776-2de6-43b8-841b-c91b9010ffc9
-      isOverridable: false
       iscommand: false
       name: Check Resolution to Malicious IPs
       type: title
@@ -1243,7 +1219,6 @@ tasks:
       brand: ""
       description: Searches the domains for relationships with threat actors or campaigns.
       id: ec96c0d0-95fa-436b-8334-d74cacdcb475
-      isOverridable: false
       iscommand: false
       name: 'Check for related threat actors / campaigns '
       script: SearchIndicatorRelationships
@@ -1275,7 +1250,6 @@ tasks:
     task:
       brand: ""
       id: 38c32ca9-470f-47be-8973-c21e004ae23e
-      isOverridable: false
       iscommand: false
       name: Check Domain Tags
       type: title
@@ -1306,7 +1280,6 @@ tasks:
     task:
       brand: ""
       id: 30a42f79-4e4f-4ac5-8966-af9095bcd943
-      isOverridable: false
       iscommand: false
       name: Check Relation To Threat Actors / Campaigns
       type: title
@@ -1362,7 +1335,6 @@ tasks:
       brand: ""
       description: Checks whether any relationships to campaigns were found.
       id: 40407e32-a7d7-4695-856b-1cc103213827
-      isOverridable: false
       iscommand: false
       name: Any campaigns found?
       type: condition
@@ -1412,7 +1384,6 @@ tasks:
       description: Saves the domains that have relationships to campaigns in a new
         key.
       id: b4d7e5ad-3c4c-49f1-80f8-db5550640f8e
-      isOverridable: false
       iscommand: false
       name: Save their corresponding domains in a new key
       script: Set
@@ -1469,7 +1440,6 @@ tasks:
       brand: ""
       description: Checks whether any relationships to threat actors were found.
       id: da487d6f-a8b1-4f7a-8c79-e1e7caac3da9
-      isOverridable: false
       iscommand: false
       name: Any threat actors found?
       type: condition
@@ -1519,7 +1489,6 @@ tasks:
       description: Saves the domains that have relationships to threat actors in a
         new key.
       id: 666a7f2c-1788-4595-8b56-04f9da182103
-      isOverridable: false
       iscommand: false
       name: Save their corresponding domains in a new key
       script: Set
