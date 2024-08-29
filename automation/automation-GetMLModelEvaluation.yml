@@ -25,13 +25,13 @@ args:
 comment: Finds a threshold for ML model, and performs an evaluation based on it.
 commonfields:
   id: GetMLModelEvaluation
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.34.35
+    isoverridable: false
+    itemVersion: 1.34.36
     packID: Base
     packName: Base
     packPropagationLabels:
@@ -60,7 +60,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('GetMLModelEvaluation', 'start', __line__())
-  demisto.debug('pack name = Base, pack version = 1.34.35')
+  demisto.debug('pack name = Base, pack version = 1.34.36')
   import numpy as np
   import pandas as pd
   from sklearn.metrics import precision_score, recall_score, precision_recall_curve
