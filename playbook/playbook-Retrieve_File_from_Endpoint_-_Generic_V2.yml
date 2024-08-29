@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -54,7 +55,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Retrieve File from Endpoint - Generic V2
 outputs:
 - contextPath: File.Size
@@ -110,7 +110,6 @@ tasks:
     task:
       brand: ""
       id: aafd2bad-97ae-4462-85cb-8ef1cad54fc5
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -137,7 +136,6 @@ tasks:
     task:
       brand: ""
       id: 21df4e3f-565e-48ca-8937-7106ed312e6e
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -180,11 +178,10 @@ tasks:
     task:
       brand: ""
       description: |-
-        'This playbook returns a file sample from a specified path and host that you input in the following playbooks:'
+        'This playbook returns a file sample correlating to a hash in the War Room using the following sub-playbooks:'
         - Get binary file by MD5 hash from Carbon Black telemetry data - VMware Carbon Black EDR v2.
         - Get the threat (file) attached to a specific SHA256 hash - Cylance Protect v2.
       id: 912761f3-e299-4ff5-86f2-33e81bb75178
-      isOverridable: false
       iscommand: false
       name: Get File Sample By Hash - Generic v3
       playbookId: Get File Sample By Hash - Generic v3
@@ -239,7 +236,6 @@ tasks:
         1) Get File Sample From Path - D2.
         2) Get File Sample From Path - VMware Carbon Black EDR (Live Response API).
       id: 9f97e611-7310-4635-88ca-f80e9342e0fa
-      isOverridable: false
       iscommand: false
       name: Get File Sample From Path - Generic V2
       playbookId: Get File Sample From Path - Generic V2
