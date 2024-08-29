@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -45,6 +44,7 @@ inputs:
   value:
     complex:
       root: File
+isOverridable: false
 name: Detonate File - Generic
 outputs:
 - contextPath: Joe.Analysis.Status
@@ -1007,6 +1007,7 @@ tasks:
       brand: ""
       description: Playbook start point
       id: bfe472b6-a9fd-40d6-846c-6219d9a54e72
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -1034,6 +1035,7 @@ tasks:
       brand: ""
       description: Done
       id: b0feb039-1a24-4bcb-8a2c-e9124b61cfa0
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -1096,6 +1098,7 @@ tasks:
         Other file types
         cmd, ace, bat, arj, vbs, chm, xml, lnk, url, mof, htm, ocx, html, potm, eml, potx, msg, ps1, vb, reg, vba, wsc, vbe, wsf, vbs, wsh
       id: 053c6544-8faa-447a-893b-069da330da1e
+      isOverridable: false
       iscommand: false
       name: ATD - Detonate File
       playbookName: ATD - Detonate File
@@ -1144,6 +1147,7 @@ tasks:
         Lastline supports the following file types:
         EXE, SYS, DLL, COM, SCR, CPL, OCX, CGI, DOC, DOTM, DOCX, DOTX, XLS, PPAM, XSLX, PPS, XLSB, PPSX, XLSM, PPSM, PPT, PPTX, PPTM, RTF, SHS, XLTM, SLDM, XLTX, SLDX, XLAM, THMX, DOCM, XAR, JTD, JTDC, PDF, SWF, GZ, 7Z, TGZ, MSI, ZIP, LZH, CAB, LZMA, APK, JAR, CLASS, JPEG, PNG, GIF, CMD, ACE, BAT, ARJ, VBS, CHM, XML, LNK, URL, MOF, HTM, OCX, HTML, POTM, EML, POTX, MSG, PS, |VB, REG, VBA, WSC, VBE, WSF, VBS, WSH
       id: 13d629fd-83d1-4096-8e89-4d8ca6b4322e
+      isOverridable: false
       iscommand: false
       name: Detonate File - Lastline v2
       playbookName: Detonate File - Lastline v2
@@ -1189,6 +1193,7 @@ tasks:
       brand: ""
       description: Detonates a file using Cuckoo sandbox
       id: d8ff24bf-a089-4590-89f1-6640c60c44ea
+      isOverridable: false
       iscommand: false
       name: Detonate File - Cuckoo
       playbookName: Detonate File - Cuckoo
@@ -1232,6 +1237,7 @@ tasks:
         Returns relevant reports to the War Room and file reputations to the context data.
         All file types are supported.
       id: b8ddd535-06ef-401d-8981-a4abfae80dbf
+      isOverridable: false
       iscommand: false
       name: Detonate File - ANYRUN
       playbookName: Detonate File - ANYRUN
@@ -1282,6 +1288,7 @@ tasks:
         XZ, GZ, BZ2, TAR, MHTML, SWF, LNK, URL, MSI, JTD, JTT, JTDC, JTTC, HWP, HWT,
         HWPX, BAT, HTA, PS1, VBS, WSF, JSE, VBE, CHM, JPG, JPEG, GIF, PNG, XLSX
       id: 1b28b735-33ac-4ddd-8649-6f05613db05d
+      isOverridable: false
       iscommand: false
       name: Detonate File - FireEye AX
       playbookName: Detonate File - FireEye AX
@@ -1329,6 +1336,7 @@ tasks:
       brand: ""
       description: Detonates a file using VMRay
       id: 9d20f56a-244d-4697-8d0a-f8453eb7e638
+      isOverridable: false
       iscommand: false
       name: Detonate File - VMRay
       playbookName: Detonate File - VMRay
@@ -1378,6 +1386,7 @@ tasks:
         .tbz2, tgz, tlz, txz, tzo, txt, url, uue, vbe, vbs, wsf, xar, xls, xlsb, xlsm,
         xlsx, xml, xz, z*, zip.'
       id: fd1dbf17-5b12-4369-86c7-8082f714df31
+      isOverridable: false
       iscommand: false
       name: Detonate File - Group-IB TDS Polygon
       playbookName: Detonate File - Group-IB TDS Polygon
@@ -1411,6 +1420,7 @@ tasks:
       description: Detonates a file using the SecneurX Analysis Integration. Returns
         relevant reports to the War Room and file reputations to the context data.
       id: c28803a1-9938-4fa0-8994-4f1d01f7e800
+      isOverridable: false
       iscommand: false
       name: Detonate File - SecneurX Analysis
       playbookName: Detonate File - SecneurX Analysis
@@ -1459,6 +1469,7 @@ tasks:
         is designed to be swift, efficient, and secure, providing users with valuable
         insights into potential threats and vulnerabilities within their files.
       id: f19de2c0-c4f0-4e34-8922-c319d40a1781
+      isOverridable: false
       iscommand: false
       name: Detonate File - JoeSecurity V2
       playbookName: Detonate File - JoeSecurity V2
@@ -1505,6 +1516,7 @@ tasks:
       brand: ""
       description: Checks if the entry ID for the file to be detonated exists.
       id: 65920250-c97e-4ff7-8f34-4d409f651a2c
+      isOverridable: false
       iscommand: false
       name: Check if EntryID exists
       type: condition
@@ -1544,6 +1556,7 @@ tasks:
       description: Detonates a file using the MetaDefender Sandbox Integration. Returns
         relevant reports to the War Room and file reputations to the context data.
       id: 4643aaf7-5f3b-4851-8773-b74b87e18603
+      isOverridable: false
       iscommand: true
       name: Detonate File - MetaDefender Sandbox
       script: metadefender-sandbox-scan-file
@@ -1589,6 +1602,7 @@ tasks:
       brand: ""
       description: Detonates a File using CrowdStrike Falcon sandbox.
       id: 8febf391-f313-4539-89c1-bd4df099dc51
+      isOverridable: false
       iscommand: false
       name: Detonate file - CrowdStrike Falcon Sandbox v2
       playbookName: Detonate file - CrowdStrike Falcon Sandbox v2
@@ -1639,6 +1653,7 @@ tasks:
         GZ, BZ2, TAR, MHTML, SWF, LNK, URL, MSI, JTD, JTT, JTDC, JTTC, HWP, HWT, HWPX,
         BAT, HTA, PS1, VBS, WSF, JSE, VBE, CHM.
       id: 3136d7d0-e7cc-49e2-8a83-8ff39ee4c834
+      isOverridable: false
       iscommand: false
       name: Detonate File - ThreatGrid v2
       playbookName: Detonate File - ThreatGrid v2
@@ -1711,6 +1726,7 @@ tasks:
         Linux ELF executables
         Email files: MIME RFC 822 .eml, Outlook .msg.
       id: b52cc619-b027-4886-8a06-a0975dbc61a9
+      isOverridable: false
       iscommand: false
       name: Detonate File - CrowdStrike Falcon Intelligence Sandbox v2
       playbookName: Detonate File - CrowdStrike Falcon Intelligence Sandbox v2
@@ -1757,6 +1773,7 @@ tasks:
     task:
       brand: ""
       id: 18f66f67-79fe-416e-86aa-f68470eacfac
+      isOverridable: false
       iscommand: false
       name: WildFire - Detonate file v2
       playbookId: WildFire - Detonate file v2
