@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -30,7 +31,6 @@ inputs:
   required: false
   value:
     simple: "False"
-isOverridable: false
 name: Email Headers Check - Generic
 outputs:
 - contextPath: Email.AuthenticityCheck
@@ -64,7 +64,6 @@ tasks:
     task:
       brand: ""
       id: 8a051d0a-d5f5-4124-8880-075daac9dba2
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -119,7 +118,6 @@ tasks:
         This checks whether "AuthenticateEmail" output is set to "True" and whether
         there are headers from an email to authenticate.
       id: 092d94ca-e418-4245-88d5-a1f35d256a5e
-      isOverridable: false
       iscommand: false
       name: Should the email be authenticated?
       type: condition
@@ -150,7 +148,6 @@ tasks:
     task:
       brand: ""
       id: bfdfc6d8-8402-4e48-8cec-697ff2279d0c
-      isOverridable: false
       iscommand: false
       name: Email Authenticity Check
       type: title
@@ -191,11 +188,9 @@ tasks:
       description: Checks the authenticity of an email based on the email's SPF, DMARC,
         and DKIM.
       id: 09550a3e-968f-410f-8da9-a42da68c2bb7
-      isOverridable: false
       iscommand: false
       name: Authenticate email
       script: CheckEmailAuthenticity
-      scriptName: CheckEmailAuthenticity
       type: regular
       version: -1
     taskid: 09550a3e-968f-410f-8da9-a42da68c2bb7
@@ -269,7 +264,6 @@ tasks:
       description: Save the verdict regarding the authenticity of the email in an
         incident field.
       id: f79d35d3-f80d-4fe2-86d6-dc0c8fa63815
-      isOverridable: false
       iscommand: true
       name: Save authenticity check result to incident field
       script: Builtin|||setIncident
@@ -301,7 +295,6 @@ tasks:
     task:
       brand: ""
       id: 58182459-633c-410d-864e-3109d4a89a04
-      isOverridable: false
       iscommand: false
       name: Microsoft's Headers Check
       type: title
@@ -348,7 +341,6 @@ tasks:
       brand: ""
       description: Whether to check for Microsoft headers
       id: 9a63beaa-ee45-413f-8709-b6ea855a0a1a
-      isOverridable: false
       iscommand: false
       name: Check Microsoft's Headers?
       type: condition
@@ -402,7 +394,6 @@ tasks:
 
         https://docs.microsoft.com/en-us/exchange/antispam-and-antimalware/antispam-protection/antispam-stamps?view=exchserver-2019
       id: 6b3d9368-e148-4eb1-828b-347102b51815
-      isOverridable: false
       iscommand: false
       name: Process Microsoft's Anti-Spam Headers
       playbookName: Process Microsoft's Anti-Spam Headers
@@ -431,7 +422,6 @@ tasks:
     task:
       brand: ""
       id: 12fb0802-bbe5-44be-8c53-2aa07ccf9dc6
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
