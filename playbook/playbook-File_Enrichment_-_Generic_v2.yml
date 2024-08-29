@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -57,6 +56,7 @@ inputs:
   required: true
   value:
     simple: "False"
+isOverridable: false
 name: File Enrichment - Generic v2
 outputs:
 - contextPath: DBotScore.Indicator
@@ -366,6 +366,7 @@ tasks:
     task:
       brand: ""
       id: 90f7ce25-c27c-4ca9-8fe6-2168349b0702
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -392,6 +393,7 @@ tasks:
     task:
       brand: ""
       id: be10b4ea-fb5e-478c-8614-ae684debb82f
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -439,6 +441,7 @@ tasks:
       brand: ""
       description: Verify whether there is a SHA256 hash to enrich.
       id: 049989d4-fe3f-4a96-8f17-ad155ed74362
+      isOverridable: false
       iscommand: false
       name: Is there a SHA256 hash?
       type: condition
@@ -502,6 +505,7 @@ tasks:
       description: Checks if there is an active instance of the Cylance Protect v2
         integration enabled.
       id: 27539369-ccb3-441c-89d9-001a4fc03093
+      isOverridable: false
       iscommand: false
       name: Is Cylance Protect v2 enabled?
       type: condition
@@ -540,6 +544,7 @@ tasks:
       brand: ""
       description: Requests threat details for a specific threat.
       id: 6721f439-f2ce-4dec-8bff-5eedf90921c9
+      isOverridable: false
       iscommand: true
       name: Get threat information from Cylance Protect v2
       script: '|||cylance-protect-get-threat'
@@ -594,6 +599,7 @@ tasks:
       brand: ""
       description: Get file information using the Virus Total API integration.
       id: f5488926-c247-4181-8824-1c81eac47049
+      isOverridable: false
       iscommand: false
       name: File Enrichment - Virus Total (API v3)
       playbookId: File Enrichment - Virus Total (API v3)
@@ -656,6 +662,7 @@ tasks:
       brand: ""
       description: Ensure that there are file hashes to enrich.
       id: de42fb75-e635-43b3-8696-a867fe55e70b
+      isOverridable: false
       iscommand: false
       name: Is there a file hash?
       type: condition
@@ -687,6 +694,7 @@ tasks:
     task:
       brand: ""
       id: aa3b5462-64fd-4033-8812-9d952347a79d
+      isOverridable: false
       iscommand: false
       name: Check Reputation Using All Available Integrations
       type: title
@@ -733,6 +741,7 @@ tasks:
       brand: ""
       description: Check whether the file reputation command should be run.
       id: 331e3147-e6bc-4db8-8fe9-5a1d56cd4e3a
+      isOverridable: false
       iscommand: false
       name: Should use !file command?
       type: condition
@@ -782,6 +791,7 @@ tasks:
       brand: ""
       description: Checks the file reputation of the specified hash.
       id: 0e956788-b597-4a77-8ffd-01b39d718d17
+      isOverridable: false
       iscommand: true
       name: Check Reputation
       script: '|||file'
@@ -813,6 +823,7 @@ tasks:
     task:
       brand: ""
       id: 4d022016-e7a4-454b-85d5-fad65548649c
+      isOverridable: false
       iscommand: false
       name: Virus Total enrichment
       type: title
@@ -843,6 +854,7 @@ tasks:
     task:
       brand: ""
       id: 601042e3-6757-4e60-8293-6c026caba2d1
+      isOverridable: false
       iscommand: false
       name: Cylance Protect enrichment
       type: title
