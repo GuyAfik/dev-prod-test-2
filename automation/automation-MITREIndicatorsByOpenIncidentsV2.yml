@@ -7,13 +7,13 @@ comment: This is a widget script returning MITRE indicators information for top 
   shown in incidents.
 commonfields:
   id: MITREIndicatorsByOpenIncidentsV2
-  isOverridable: false
   version: -1
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.1.39
+    isoverridable: false
+    itemVersion: 1.1.40
     packID: FeedMitreAttackv2
     packName: MITRE ATT&CK
     packPropagationLabels:
@@ -27,13 +27,14 @@ engineinfo: {}
 mainengineinfo: {}
 name: MITREIndicatorsByOpenIncidentsV2
 nativeimage:
+- "8.7"
 - "8.6"
 pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('MITREIndicatorsByOpenIncidentsV2', 'start', __line__())
-  ### pack version: 1.1.39
+  demisto.debug('pack name = MITRE ATT&CK, pack version = 1.1.40')
 
 
   import traceback
