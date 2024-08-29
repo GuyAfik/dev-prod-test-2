@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -45,7 +46,6 @@ inputs:
   required: false
   value:
     simple: "No"
-isOverridable: false
 name: PAN-OS - Block IP - Custom Block Rule
 outputs: []
 starttaskid: "0"
@@ -67,7 +67,6 @@ tasks:
     task:
       brand: ""
       id: 49a9b9d3-a97b-4473-8119-70300c0c01ed
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -126,7 +125,6 @@ tasks:
     task:
       brand: ""
       id: 957428b9-9a0c-4ae3-8917-83ae0a83de43
-      isOverridable: false
       iscommand: false
       name: Palo Alto Networks PAN-OS enabled?
       type: condition
@@ -177,7 +175,6 @@ tasks:
       brand: ""
       description: Creates a custom block policy rule in Panorama.
       id: ab705923-4389-4dd6-875a-a506594ecd3a
-      isOverridable: false
       iscommand: true
       name: Panorama - Create custom block rule
       script: '|||pan-os-custom-block-rule'
@@ -206,7 +203,6 @@ tasks:
     task:
       brand: ""
       id: da771405-12fa-4cf0-8e22-1ecfd2393812
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -248,7 +244,6 @@ tasks:
     task:
       brand: ""
       id: 5ff56401-a29c-41a7-8eac-9843d50337c2
-      isOverridable: false
       iscommand: false
       name: Is there an IP to block?
       type: condition
@@ -286,7 +281,6 @@ tasks:
       brand: ""
       description: Creates an address object
       id: 487327fa-0151-4546-8cd2-e8d0bc710b29
-      isOverridable: false
       iscommand: true
       name: PAN-OS - Create address object
       script: '|||pan-os-create-address'
@@ -318,7 +312,6 @@ tasks:
     task:
       brand: ""
       id: 9d6211c7-b4b6-44c5-8c2f-a37c977fa8ed
-      isOverridable: false
       iscommand: false
       name: PAN-OS Commit Configuration
       playbookId: PAN-OS Commit Configuration
@@ -350,7 +343,6 @@ tasks:
     task:
       brand: ""
       id: e5e66a23-4540-41c9-8a59-f163ea1305e8
-      isOverridable: false
       iscommand: false
       name: PAN-OS Commit Configuration
       playbookId: PAN-OS Commit Configuration
@@ -396,7 +388,6 @@ tasks:
     task:
       brand: ""
       id: 4d41a27f-1818-4f90-8bba-39b3881a4af3
-      isOverridable: false
       iscommand: false
       name: AutoCommit defined?
       type: condition
@@ -427,7 +418,6 @@ tasks:
     task:
       brand: ""
       id: 5df6d93f-8c45-4a3b-840f-cd0a24cc7ae6
-      isOverridable: false
       iscommand: false
       name: Commit PAN-OS Instance manually
       type: regular
@@ -478,7 +468,6 @@ tasks:
       brand: ""
       description: Creates a custom block policy rule in Panorama.
       id: a208b4df-bc52-4e61-823f-fa5f79954086
-      isOverridable: false
       iscommand: true
       name: Panorama - Create custom block rule
       script: '|||pan-os-custom-block-rule'
@@ -510,7 +499,6 @@ tasks:
     task:
       brand: ""
       id: a1caf43e-5771-4591-8b0f-1653b0fd201a
-      isOverridable: false
       iscommand: false
       name: Commit PAN-OS Instance manually
       type: regular
