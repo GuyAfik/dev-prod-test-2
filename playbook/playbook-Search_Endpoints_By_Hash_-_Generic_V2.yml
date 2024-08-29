@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -37,7 +38,6 @@ inputs:
     complex:
       accessor: SHA256
       root: File
-isOverridable: false
 name: Search Endpoints By Hash - Generic V2
 outputs:
 - contextPath: Endpoint.Hostname
@@ -66,7 +66,6 @@ tasks:
     task:
       brand: ""
       id: 92368958-9a49-4dcc-8db9-b15d29c87e29
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -111,7 +110,6 @@ tasks:
         This playbook searches across the organization for other endpoints associated
         with a specific SHA256 hash.
       id: b66537ca-cc94-4509-8985-3bb247c163a9
-      isOverridable: false
       iscommand: false
       name: CrowdStrike Falcon - Search Endpoints By Hash
       playbookName: CrowdStrike Falcon - Search Endpoints By Hash
@@ -155,7 +153,6 @@ tasks:
       description: Hunt for endpoint activity involving hash IOCs, using Carbon Black
         Protection.
       id: 481954b9-682a-4722-8790-1547663edb81
-      isOverridable: false
       iscommand: false
       name: Search Endpoints By Hash - Carbon Black Protection
       playbookName: Search Endpoints By Hash - Carbon Black Protection
@@ -187,7 +184,6 @@ tasks:
     task:
       brand: ""
       id: eab5a3b4-3b54-401c-82f9-afbb033b2de3
-      isOverridable: false
       iscommand: false
       name: MD5 Only
       type: title
@@ -220,7 +216,6 @@ tasks:
     task:
       brand: ""
       id: b4804466-0b8c-4c96-89e7-3bbed13670ad
-      isOverridable: false
       iscommand: false
       name: MD5 / SHA1 / SHA256
       type: title
@@ -265,7 +260,6 @@ tasks:
       brand: ""
       description: Is MD5 hash?
       id: d6de96ed-bf55-40bb-887a-3821358bf89c
-      isOverridable: false
       iscommand: false
       name: Is MD5 hash?
       type: condition
@@ -293,7 +287,6 @@ tasks:
     task:
       brand: ""
       id: 4b3639ac-2625-446f-8f8a-a534ee676494
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -342,7 +335,6 @@ tasks:
         * All agents that files with "Hash" has been executed on (TIE)
         * Enrich Agents info from ePO
       id: 9a79dca5-a826-494e-8444-87f03331bbe4
-      isOverridable: false
       iscommand: false
       name: Search Endpoints By Hash - TIE
       playbookName: Search Endpoints By Hash - TIE
@@ -387,7 +379,6 @@ tasks:
       brand: ""
       description: Hunt for endpoint activity involving hash, using Cybereason.
       id: 96ea4595-3ac2-41be-85f1-9ffe6ac7df6c
-      isOverridable: false
       iscommand: false
       name: Search Endpoints By Hash - Cybereason
       playbookName: Search Endpoints By Hash - Cybereason
@@ -429,7 +420,6 @@ tasks:
       brand: ""
       description: Hunt for malicious indicators using Carbon Black
       id: 54f36ae2-15fa-42cb-8b77-62e48c8e50c4
-      isOverridable: false
       iscommand: false
       name: Search Endpoints By Hash - Carbon Black Response V2
       playbookName: Search Endpoints By Hash - Carbon Black Response V2
@@ -472,7 +462,6 @@ tasks:
     task:
       brand: ""
       id: 58684e15-2a09-47d2-879c-c374af670aa7
-      isOverridable: false
       iscommand: false
       name: Is SHA256 hash?
       type: condition
