@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.8.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -44,7 +45,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Cloud Compute Enrichment - Generic
 outputs:
 - contextPath: AWS.EC2.Instances
@@ -149,7 +149,6 @@ tasks:
     task:
       brand: ""
       id: 3f8e7f67-8491-49fb-89db-2727f1841b18
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -366,7 +365,6 @@ tasks:
       brand: ""
       description: Checks the cloud provider.
       id: ae4cee68-df82-4603-87cb-e79445256411
-      isOverridable: false
       iscommand: false
       name: Select cloud provider
       type: condition
@@ -397,7 +395,6 @@ tasks:
     task:
       brand: ""
       id: 1439edfd-f3a0-4047-871b-1f1d48d53728
-      isOverridable: false
       iscommand: false
       name: 'Azure Enrichment '
       type: title
@@ -428,7 +425,6 @@ tasks:
     task:
       brand: ""
       id: 5c4e9bb3-a12e-441f-8f45-3af3f4ed10ce
-      isOverridable: false
       iscommand: false
       name: AWS Enrichment
       type: title
@@ -459,7 +455,6 @@ tasks:
     task:
       brand: ""
       id: eab4ac86-7bbd-415d-820b-d2bd7d6a502c
-      isOverridable: false
       iscommand: false
       name: GCP Enrichment
       type: title
@@ -498,7 +493,6 @@ tasks:
       brand: ""
       description: Describes one or more of your instances.
       id: d24e7a76-18aa-49e5-8190-de87e42077ec
-      isOverridable: false
       iscommand: true
       name: Get instance details
       script: '|||aws-ec2-describe-instances'
@@ -539,7 +533,6 @@ tasks:
       description: Returns the specified Instance resource. Gets a list of available
         instances by making a list() request.
       id: f16ac6d2-41ab-4b1e-8929-03d9b58302ac
-      isOverridable: false
       iscommand: true
       name: Get instance details
       script: '|||gcp-compute-get-instance'
@@ -579,7 +572,6 @@ tasks:
       brand: ""
       description: Gets the properties of a given virtual machine.
       id: 8432e791-c422-43da-8a8b-19ee2d20a26c
-      isOverridable: false
       iscommand: true
       name: Get instance details
       script: '|||azure-vm-get-instance-details'
@@ -608,7 +600,6 @@ tasks:
     task:
       brand: ""
       id: 223fe0e9-f4d8-473f-8eb5-2144fe1d244e
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
