@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -227,7 +228,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Block Indicators - Generic v2
 outputs:
 - contextPath: CheckpointFWRule.Domain
@@ -306,7 +306,6 @@ tasks:
     task:
       brand: ""
       id: d3ee8477-b8eb-4b83-88e8-1a3f5e4f26ca
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -333,7 +332,6 @@ tasks:
     task:
       brand: ""
       id: 3ce0d3d2-cd32-467f-801d-8b6b43f5ce2a
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -383,7 +381,6 @@ tasks:
         * Palo Alto Networks PAN-OS
         * Zscaler
       id: 4cfbb153-ee02-4ec5-85e0-a56993f6b1fa
-      isOverridable: false
       iscommand: false
       name: Block URL - Generic
       playbookId: block_url_-_generic
@@ -430,7 +427,6 @@ tasks:
         * Active Directory
         * PAN-OS - This requires PAN-OS 9.1 or higher.
       id: bd1529d5-9110-4c59-8757-77ec2be78cb7
-      isOverridable: false
       iscommand: false
       name: Block Account - Generic
       playbookId: block_account_-_generic
@@ -467,7 +463,6 @@ tasks:
     task:
       brand: ""
       id: 76aa6efb-02f5-48ef-8136-ce462c1488e4
-      isOverridable: false
       iscommand: false
       name: Block indicators
       type: title
@@ -539,7 +534,6 @@ tasks:
         * Palo Alto Networks PAN-OS
         * Zscaler
       id: 4c576d9c-c844-4005-8cbc-a48d4d7317b0
-      isOverridable: false
       iscommand: false
       name: Block IP - Generic v2
       playbookId: Block IP - Generic v2
@@ -587,7 +581,6 @@ tasks:
         Traps\n- Cybereason\n- Carbon Black Enterprise Response\n- Cylance Protect
         v2\n"
       id: 97c787e9-d72a-4c27-861e-f09f6c63723e
-      isOverridable: false
       iscommand: false
       name: Block File - Generic v2
       playbookId: Block File - Generic v2
@@ -627,7 +620,6 @@ tasks:
     task:
       brand: ""
       id: 162fc17e-709c-4896-8c47-32d03b660de2
-      isOverridable: false
       iscommand: false
       name: Block Email - Generic
       playbookId: Block Email - Generic
@@ -680,7 +672,6 @@ tasks:
         * Trend Micro Apex One
         * Proofpoint Threat Response
       id: f94181cb-559a-455c-8ced-b2a41e486b5d
-      isOverridable: false
       iscommand: false
       name: Block Domain - Generic
       playbookId: Block Domain - Generic
