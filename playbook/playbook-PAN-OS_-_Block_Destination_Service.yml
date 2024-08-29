@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -90,7 +91,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: PAN-OS - Block Destination Service
 outputs: []
 starttaskid: "0"
@@ -112,7 +112,6 @@ tasks:
     task:
       brand: ""
       id: 005aa0e7-2fdc-44c6-8121-592ba45ac1f0
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -172,7 +171,6 @@ tasks:
       brand: ""
       description: Check whether PAN-OS integration is enabled.
       id: 930de9d7-f0b5-432f-8bc3-9312671c0544
-      isOverridable: false
       iscommand: false
       name: Palo Alto Networks PAN-OS enabled?
       type: condition
@@ -238,7 +236,6 @@ tasks:
       brand: ""
       description: Creates a policy rule.
       id: 684389af-e828-4088-85f1-0f8eb7223bc3
-      isOverridable: false
       iscommand: true
       name: Panorama - Create custom block rule
       script: '|||pan-os-create-rule'
@@ -267,7 +264,6 @@ tasks:
     task:
       brand: ""
       id: d936a766-4d24-4de6-89dc-dec0c66fa629
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -316,7 +312,6 @@ tasks:
       brand: ""
       description: Creates an address object
       id: c68b90a0-a448-4e1f-81f6-063efc5b8242
-      isOverridable: false
       iscommand: true
       name: PAN-OS - Create address object
       script: '|||pan-os-create-address'
@@ -360,7 +355,6 @@ tasks:
         as Panorama, it also pushes the policies to the specified device group in
         the instance.
       id: 41890197-ea43-4d94-8746-6221d39b4d83
-      isOverridable: false
       iscommand: false
       name: PAN-OS Commit Configuration
       playbookId: PAN-OS Commit Configuration
@@ -408,7 +402,6 @@ tasks:
       brand: ""
       description: Check whether auto-commit is enabled.
       id: c40550d4-c929-49c9-84c9-62a18bcdb285
-      isOverridable: false
       iscommand: false
       name: AutoCommit defined?
       type: condition
@@ -440,7 +433,6 @@ tasks:
       brand: ""
       description: Commit manually on PAN-OS.
       id: b4e03523-eb69-4680-83fd-2ef3fdb63cac
-      isOverridable: false
       iscommand: false
       name: Commit PAN-OS Instance manually
       type: regular
@@ -495,7 +487,6 @@ tasks:
       brand: ""
       description: Check whether there is an IP/Service/Port to block.
       id: 33c3588e-276a-4cb3-884f-b0a0a406c797
-      isOverridable: false
       iscommand: false
       name: Is there an IP/Service/Port to block?
       type: condition
@@ -531,7 +522,6 @@ tasks:
       brand: ""
       description: Returns a list of addresses.
       id: b7e39257-2d04-4b00-8efe-2a0c0f96feb3
-      isOverridable: false
       iscommand: true
       name: List Panorama Services
       script: '|||pan-os-list-services'
@@ -606,7 +596,6 @@ tasks:
       description: Set a value in context under the key you entered. If no value is
         entered, the script doesn't do anything.
       id: 97a5a32c-62ae-4957-8954-c7a072e4c7b1
-      isOverridable: false
       iscommand: false
       name: Find Panorama Service
       script: SetAndHandleEmpty
@@ -650,7 +639,6 @@ tasks:
       brand: ""
       description: Check whether the service exists in PAN-OS.
       id: 278d5df2-14c7-4b6c-84cb-5a54153537bc
-      isOverridable: false
       iscommand: false
       name: Is there an existing Service?
       type: condition
@@ -696,7 +684,6 @@ tasks:
       brand: ""
       description: Creates a service.
       id: ab77f3d4-51b4-49c9-8b66-d03156e47013
-      isOverridable: false
       iscommand: true
       name: Create Panorama Service
       script: '|||pan-os-create-service'
@@ -734,7 +721,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: 9b8629d6-9077-4ede-8f74-5e5fb6cf5463
-      isOverridable: false
       iscommand: false
       name: Set Service Name
       script: Set
@@ -801,7 +787,6 @@ tasks:
       brand: ""
       description: Creates a policy rule.
       id: 98acab2e-5ff7-482d-88d9-f6adb811f278
-      isOverridable: false
       iscommand: true
       name: Panorama - Create custom block rule
       script: '|||pan-os-create-rule'
@@ -847,7 +832,6 @@ tasks:
       brand: ""
       description: Check whether the service exists in PAN-OS.
       id: 2dfca826-2d99-4424-8086-321cea3bf0ea
-      isOverridable: false
       iscommand: false
       name: Is there an existing Address?
       type: condition
@@ -879,7 +863,6 @@ tasks:
       brand: Panorama
       description: Returns a list of addresses.
       id: f00ead84-3a3a-408a-8d0c-7b56d59f3573
-      isOverridable: false
       iscommand: true
       name: List Panorama Addresses
       script: Panorama|||pan-os-list-addresses
@@ -944,7 +927,6 @@ tasks:
       description: Set a value in context under the key you entered. If no value is
         entered, the script doesn't do anything.
       id: 359d953c-0d9a-485d-806b-af1ef1959c47
-      isOverridable: false
       iscommand: false
       name: Find Panorama Address
       script: SetAndHandleEmpty
@@ -990,7 +972,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: 705cbce1-bd94-44e8-89fa-bf45694bd8a0
-      isOverridable: false
       iscommand: false
       name: Set Address Name
       script: Set
@@ -1028,7 +1009,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: 81671bd8-cd23-4dad-8c8b-56d192bb4cf5
-      isOverridable: false
       iscommand: false
       name: Set Address Name
       script: Set
@@ -1077,7 +1057,6 @@ tasks:
       description: Checks if the device group is "shared", because in that case we
         need to push to the actual device-groups that reference firewalls.
       id: 93958d7c-611a-412f-8e50-52f0e98b3db7
-      isOverridable: false
       iscommand: false
       name: Is device-group "shared"?
       type: condition
@@ -1120,7 +1099,6 @@ tasks:
         as Panorama, it also pushes the policies to the specified device group in
         the instance.
       id: 19d7b705-1fdb-481a-8bf4-affaff21c091
-      isOverridable: false
       iscommand: false
       name: PAN-OS Commit Configuration
       playbookId: PAN-OS Commit Configuration
