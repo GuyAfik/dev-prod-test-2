@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -25,7 +26,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Block Email - Generic v2
 outputs: []
 starttaskid: "0"
@@ -47,7 +47,6 @@ tasks:
     task:
       brand: ""
       id: d583e596-e160-4401-8bbf-544e34372f9e
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -74,7 +73,6 @@ tasks:
     task:
       brand: ""
       id: 2a7524dc-dfcd-4dce-8978-5bbb1ba94a67
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -114,7 +112,6 @@ tasks:
     task:
       brand: ""
       id: f2f94ec5-a4ef-4963-8382-9e334fc350c7
-      isOverridable: false
       iscommand: false
       name: Symantec block Email
       playbookName: Symantec block Email
@@ -155,7 +152,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 2c065c72-23f4-41d6-8391-027a43640107
-      isOverridable: false
       iscommand: false
       name: Is FireEye Email Security (EX) Available?
       script: IsIntegrationAvailable
@@ -196,7 +192,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 75132291-3638-4f49-8d91-26b4021a87a7
-      isOverridable: false
       iscommand: false
       name: Is Mimecast v2 Available?
       script: IsIntegrationAvailable
@@ -235,7 +230,6 @@ tasks:
       brand: ""
       description: Updates the blocked sender domain.
       id: 3615eb04-9998-4341-86ab-6c3494a4c876
-      isOverridable: false
       iscommand: true
       name: FireEye Update Blocklist
       script: '|||fireeye-ex-update-blockedlist'
@@ -280,7 +274,6 @@ tasks:
       brand: ""
       description: Create a Blocked Sender Policy
       id: a3e0c8d9-1eff-4556-8233-4d21f09fc465
-      isOverridable: false
       iscommand: true
       name: Mimecast - Block Sender Policy
       script: '|||mimecast-create-policy'
@@ -312,7 +305,6 @@ tasks:
     task:
       brand: ""
       id: ba2daa5c-96f8-462d-8a50-86c84d4d80e8
-      isOverridable: false
       iscommand: false
       name: Mimecast
       type: title
@@ -343,7 +335,6 @@ tasks:
     task:
       brand: ""
       id: e38a8e79-0254-4d88-8e98-8d023766523d
-      isOverridable: false
       iscommand: false
       name: FireEye Email Security (EX)
       type: title
@@ -374,7 +365,6 @@ tasks:
     task:
       brand: ""
       id: 45e2cbf1-08bc-4085-8d3e-a0fe2fd4553e
-      isOverridable: false
       iscommand: false
       name: Symantec Email Security
       type: title
@@ -405,7 +395,6 @@ tasks:
     task:
       brand: ""
       id: ebbab30d-ccb0-4d3b-8eba-9c953cb7bdb3
-      isOverridable: false
       iscommand: false
       name: Cisco Security Management Appliance
       type: title
@@ -469,7 +458,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'.
       id: 614bc2e7-b289-44d7-8350-5bc69ace90fa
-      isOverridable: false
       iscommand: false
       name: Is Cisco Security Management Appliance Available?
       type: condition
@@ -509,7 +497,6 @@ tasks:
       brand: ""
       description: Append spam quarantine blocklist/safelist entry.
       id: 3b643c94-60a0-4902-8490-e575b2f9ea9b
-      isOverridable: false
       iscommand: true
       name: Cisco SMA - Append to Blocklist
       script: '|||cisco-sma-list-entry-append'
@@ -555,7 +542,6 @@ tasks:
     task:
       brand: ""
       id: 9e4f3f09-0897-4f18-86ce-22dd8a09b18c
-      isOverridable: false
       iscommand: false
       name: Has emails to block?
       type: condition
