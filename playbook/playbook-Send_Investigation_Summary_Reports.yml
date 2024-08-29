@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -38,7 +39,6 @@ inputs:
   required: false
   value:
     simple: -category:job status:closed closed:>="1 hour ago"
-isOverridable: false
 name: Send Investigation Summary Reports
 outputs: []
 starttaskid: "0"
@@ -60,7 +60,6 @@ tasks:
     task:
       brand: ""
       id: efefff28-b722-4f90-86cf-da4636ecf7f6
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -95,7 +94,6 @@ tasks:
       brand: ""
       description: Searches Demisto incidents to identify closed incidents.
       id: 22f91f1b-ad02-4439-85de-444c9cc9165c
-      isOverridable: false
       iscommand: false
       name: Find Closed Incidents
       script: SearchIncidentsV2
@@ -137,7 +135,6 @@ tasks:
       brand: Builtin
       description: Generates report summaries for the passed incidents.
       id: b28d0033-ac09-4d02-84fc-c6d363d80f51
-      isOverridable: false
       iscommand: false
       name: Generate Summary Report
       script: GenerateSummaryReports
@@ -179,7 +176,6 @@ tasks:
       brand: ""
       description: Send an email
       id: d7525c1a-713e-446c-89d3-f43963155023
-      isOverridable: false
       iscommand: true
       name: Email Reports
       script: '|||send-mail'
@@ -217,7 +213,6 @@ tasks:
       brand: Builtin
       description: commands.local.cmd.set.incident
       id: 93763170-619f-46dc-8b98-4036b015019d
-      isOverridable: false
       iscommand: true
       name: Set Report Done Label
       script: Builtin|||setIncident
@@ -246,7 +241,6 @@ tasks:
     task:
       brand: ""
       id: a5d10443-87fb-403d-893a-05723bbc93c5
-      isOverridable: false
       iscommand: false
       name: Complete
       type: title
@@ -286,7 +280,6 @@ tasks:
         Note that the same DT of this task is used in the "Generate Summary Report"
         task.
       id: 58e69d68-ff03-4356-8b8f-d61f60346c81
-      isOverridable: false
       iscommand: false
       name: Are there relevant closed incidents?
       script: Exists
