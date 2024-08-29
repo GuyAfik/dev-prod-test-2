@@ -1,4 +1,5 @@
 {
+	"IsOverridable": false,
 	"cacheVersn": 0,
 	"close": null,
 	"definitionId": "",
@@ -264,8 +265,7 @@
 	"id": "Panorama Threat Coverage Layout",
 	"indicatorsDetails": null,
 	"indicatorsQuickView": null,
-	"isOverridable": false,
-	"itemVersion": "2.1.34",
+	"itemVersion": "2.1.35",
 	"locked": false,
 	"mobile": null,
 	"name": "Panorama Threat Coverage Layout",
