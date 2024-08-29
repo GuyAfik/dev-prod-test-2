@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -30,7 +31,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Block Email - Generic
 outputs: []
 starttaskid: "0"
@@ -53,7 +53,6 @@ tasks:
     task:
       brand: ""
       id: e4cf2a65-fab2-48c9-8d52-479632660700
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -80,7 +79,6 @@ tasks:
     task:
       brand: ""
       id: 335f96a3-ea62-4a3f-8808-873c57caa695
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -116,7 +114,6 @@ tasks:
     task:
       brand: ""
       id: 3ba3c401-b5ae-4213-83a4-1d9b0f3de689
-      isOverridable: false
       iscommand: false
       name: Symantec block Email
       playbookName: Symantec block Email
@@ -163,7 +160,6 @@ tasks:
     task:
       brand: ""
       id: bae7d267-da68-49d4-8e25-be3f454c8608
-      isOverridable: false
       iscommand: false
       name: Mimecast - Block Sender Email
       playbookName: Mimecast - Block Sender Email
