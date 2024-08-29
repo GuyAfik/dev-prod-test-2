@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -40,7 +41,6 @@ inputs:
     complex:
       accessor: MD5
       root: File
-isOverridable: false
 name: Convert file hash to corresponding hashes
 outputs:
 - contextPath: File.SHA256
@@ -76,7 +76,6 @@ tasks:
       brand: ""
       description: Start
       id: f3d44d02-1482-4dd0-8055-34128346e4ec
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -104,7 +103,6 @@ tasks:
       brand: ""
       description: Done
       id: d0c581d2-789c-4a12-8940-37f17a47b4f6
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -147,7 +145,6 @@ tasks:
       brand: ""
       description: Does SHA256 hash exist?
       id: b797fdc7-1704-442a-8605-ee06bfb0bf54
-      isOverridable: false
       iscommand: false
       name: Does SHA256 hash exist?
       type: condition
@@ -190,7 +187,6 @@ tasks:
       brand: ""
       description: Does MD5 hash exist?
       id: f7142eb2-9483-4546-8d07-a828d636d0ad
-      isOverridable: false
       iscommand: false
       name: Does MD5 hash exist?
       type: condition
@@ -235,7 +231,6 @@ tasks:
       brand: ""
       description: Does SHA1 hash exist?
       id: eff5d9b7-ea36-4310-8650-5e26fa38209e
-      isOverridable: false
       iscommand: false
       name: Does SHA1 hash exist?
       type: condition
@@ -274,7 +269,6 @@ tasks:
       description: Uses the SHA1 hash as a reference to check for other corresponding
         hashes of the same file.
       id: 65ff1c51-6bc1-4171-8bde-eb6ecb862f4e
-      isOverridable: false
       iscommand: true
       name: Get hashes by SHA1
       script: '|||file'
@@ -314,7 +308,6 @@ tasks:
       description: Uses the MD5 hash as a reference to check for other corresponding
         hashes of the same file.
       id: 9e3c8b51-dbc6-464a-8af7-f5d43b663bd4
-      isOverridable: false
       iscommand: true
       name: Get hashes by MD5
       script: '|||file'
@@ -354,7 +347,6 @@ tasks:
       description: Uses the SHA256 hash as a reference to check for other corresponding
         hashes of the same file.
       id: 29ef7703-de75-4ff3-844c-a852e333bdbe
-      isOverridable: false
       iscommand: true
       name: Get Hashes by SHA256
       script: '|||file'
@@ -387,7 +379,6 @@ tasks:
       brand: ""
       description: MD5
       id: fdfd1cd9-3095-455b-8481-072b140ee5de
-      isOverridable: false
       iscommand: false
       name: MD5
       type: title
@@ -419,7 +410,6 @@ tasks:
       brand: ""
       description: SHA1
       id: a75bc19c-d514-44ab-885d-fb6664dd0b29
-      isOverridable: false
       iscommand: false
       name: SHA1
       type: title
@@ -451,7 +441,6 @@ tasks:
       brand: ""
       description: SHA256
       id: a2d56e80-d468-46a0-891d-3792a6bf0bd9
-      isOverridable: false
       iscommand: false
       name: SHA256
       type: title
@@ -504,7 +493,6 @@ tasks:
     task:
       brand: ""
       id: 336d7e69-334b-490c-81c4-4b48788a56be
-      isOverridable: false
       iscommand: false
       name: Have the hashes been retrieved?
       type: condition
@@ -541,7 +529,6 @@ tasks:
       brand: Builtin
       description: commands.local.cmd.enrich.indicators
       id: 4cbe3c2a-dc3d-46fc-8b6a-b589accfdba3
-      isOverridable: false
       iscommand: true
       name: Enrich indicators
       script: Builtin|||enrichIndicators
@@ -582,7 +569,6 @@ tasks:
 
         You can add additional fields from the indicators using the add_field_to_context argument.
       id: b27dc11a-1b9f-4056-8288-776eaa57bd63
-      isOverridable: false
       iscommand: false
       name: Search indicators
       script: SearchIndicator
@@ -623,7 +609,6 @@ tasks:
 
         You can add additional fields from the indicators using the add_field_to_context argument.
       id: 1b49a035-86f4-4e1d-81ac-add593725d88
-      isOverridable: false
       iscommand: false
       name: Search indicators
       script: SearchIndicator
@@ -664,7 +649,6 @@ tasks:
 
         You can add additional fields from the indicators using the add_field_to_context argument.
       id: f9974076-074f-4bf4-82a5-0c804fb7875b
-      isOverridable: false
       iscommand: false
       name: Search indicators
       script: SearchIndicator
@@ -718,7 +702,6 @@ tasks:
     task:
       brand: ""
       id: 0161e3d5-ca7c-4e0e-86d4-f767f1c7b64c
-      isOverridable: false
       iscommand: false
       name: Have the hashes been retrieved?
       type: condition
@@ -771,7 +754,6 @@ tasks:
     task:
       brand: ""
       id: 9fb9988f-d614-4a30-8eb9-09c8a05ad461
-      isOverridable: false
       iscommand: false
       name: Have the hashes been retrieved?
       type: condition
@@ -808,7 +790,6 @@ tasks:
       brand: Builtin
       description: commands.local.cmd.enrich.indicators
       id: 620476dc-83d3-40fe-8d2f-8f978fcdfa23
-      isOverridable: false
       iscommand: true
       name: Enrich indicators
       script: Builtin|||enrichIndicators
@@ -846,7 +827,6 @@ tasks:
       brand: Builtin
       description: commands.local.cmd.enrich.indicators
       id: e4213b2e-29ba-40d3-8ae3-6deec5436549
-      isOverridable: false
       iscommand: true
       name: Enrich indicators
       script: Builtin|||enrichIndicators
