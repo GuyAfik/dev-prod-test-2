@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -34,7 +35,6 @@ inputs:
   required: false
   value:
     simple: "0.5"
-isOverridable: false
 name: Command-Line Analysis
 outputs:
 - contextPath: MatchRegex
@@ -101,7 +101,6 @@ tasks:
     task:
       brand: ""
       id: a2848830-3438-4bea-87eb-793c8026f1ef
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -132,7 +131,6 @@ tasks:
       brand: Builtin
       description: Extracts indicators from the command line.
       id: d0ba6b98-7de7-4621-8d6b-85a067f4f314
-      isOverridable: false
       iscommand: false
       name: Command-Line Indicator Extraction
       type: title
@@ -178,7 +176,6 @@ tasks:
       brand: ""
       description: Checks for a base64 string in the command line.
       id: 95c7a960-8b66-48f0-8510-ed22481ae4f2
-      isOverridable: false
       iscommand: false
       name: Is there a base64 string in the command-line?
       type: condition
@@ -217,7 +214,6 @@ tasks:
       brand: ""
       description: Decodes an input in Base64 format.
       id: 7c5def9c-5b0b-4c84-867e-43de7bfe984c
-      isOverridable: false
       iscommand: false
       name: Decode base64 string
       script: Base64Decode
@@ -252,7 +248,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: 81a7238c-3db0-43d4-89e3-5f4e7da0f2f7
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -294,7 +289,6 @@ tasks:
       description: Extracts regex data from the provided text. The script support
         groups and looping.
       id: 8a4fdd44-5f23-4285-8e9f-3219392329a5
-      isOverridable: false
       iscommand: false
       name: Check if base64 string exists in command-line
       script: MatchRegexV2
@@ -331,7 +325,6 @@ tasks:
     task:
       brand: ""
       id: 5610ad88-bc53-45a1-865c-6a6b607e1a98
-      isOverridable: false
       iscommand: false
       name: Command-Line Parameters
       type: title
@@ -368,7 +361,6 @@ tasks:
       brand: ""
       description: Sets a value in context from the key entered.
       id: b027e4bc-d481-4f58-842d-395bd7ef348f
-      isOverridable: false
       iscommand: false
       name: Set command line verdict of networkActivity
       script: Set
@@ -663,7 +655,6 @@ tasks:
       brand: ""
       description: Checks for suspicious parameters usage.
       id: 961ec942-dacf-4f4a-8b34-7e2847919a5e
-      isOverridable: false
       iscommand: false
       name: Check for suspicious parameters usage
       type: condition
@@ -741,7 +732,6 @@ tasks:
       brand: ""
       description: Checks for encoded command parameters.
       id: 4191d8a3-0ed7-4abd-8b4d-a2fe3af03fa4
-      isOverridable: false
       iscommand: false
       name: Check for encoded command parameters
       type: condition
@@ -832,7 +822,6 @@ tasks:
       brand: ""
       description: Checks for network activity parameters.
       id: 6f484473-7f55-4d72-8ce3-07361395169c
-      isOverridable: false
       iscommand: false
       name: Check for network activity parameters
       type: condition
@@ -1022,7 +1011,6 @@ tasks:
       brand: ""
       description: Checks for malicious tools usage.
       id: e3b1b82d-4b1c-4cd4-8273-f4b2b3f9477f
-      isOverridable: false
       iscommand: false
       name: Check for malicious tools usage
       type: condition
@@ -1163,7 +1151,6 @@ tasks:
       brand: ""
       description: Checks for AMSI evasion techniques.
       id: b355c8cd-9438-4d16-88cf-367aad8dc5a2
-      isOverridable: false
       iscommand: false
       name: Check for AMSI evasion techniques
       type: condition
@@ -1207,7 +1194,6 @@ tasks:
       brand: Builtin
       description: Extracts indicators from the command line.
       id: c56fef87-e77c-452f-850d-8a76d44d6e30
-      isOverridable: false
       iscommand: true
       name: Extract indicators from command-line
       script: Builtin|||extractIndicators
@@ -1270,7 +1256,6 @@ tasks:
       brand: ""
       description: Sets a value in context from the key entered.
       id: 4eb71ce1-0bd1-47e9-8679-293960d28e78
-      isOverridable: false
       iscommand: false
       name: Set decoded commandline
       script: Set
@@ -1308,7 +1293,6 @@ tasks:
       brand: ""
       description: Sets a value in context from the key entered.
       id: c89fbf52-da5f-4bab-836e-07a697e0fb71
-      isOverridable: false
       iscommand: false
       name: Set command line verdict of maliciousTools
       script: Set
@@ -1346,7 +1330,6 @@ tasks:
       brand: ""
       description: Sets a value in context from the key entered.
       id: b9b89f0b-8885-4908-8d0f-c785c90feddd
-      isOverridable: false
       iscommand: false
       name: Set command line verdict of suspiciousParameters
       script: Set
@@ -1384,7 +1367,6 @@ tasks:
       brand: ""
       description: Sets a value in context from the key entered.
       id: 0fbff6eb-dc6e-4a75-876a-7dcb37dffa6b
-      isOverridable: false
       iscommand: false
       name: Set command line verdict of AMSI
       script: Set
@@ -1422,7 +1404,6 @@ tasks:
       brand: ""
       description: Sets a value in context from the key entered.
       id: cb6662a9-4a56-48b9-8b2d-e375410b246d
-      isOverridable: false
       iscommand: false
       name: 'Set command line verdict '
       script: Set
@@ -1475,7 +1456,6 @@ tasks:
       brand: ""
       description: Checks if indicators exist in the command line.
       id: 7d374634-8e9f-42f4-821e-aae890e35f05
-      isOverridable: false
       iscommand: false
       name: Found indicators in the command-line?
       type: condition
@@ -1512,7 +1492,6 @@ tasks:
       brand: ""
       description: Sets a value in context from the key entered.
       id: 118d06f7-1309-4b4b-8b2d-6f56454411d9
-      isOverridable: false
       iscommand: false
       name: Set command line verdict of foundIndicators
       script: Set
@@ -1560,7 +1539,6 @@ tasks:
       brand: ""
       description: Sets a value in context from the key entered.
       id: 1bde910b-a975-4fc5-8a0d-e05230b3ecf6
-      isOverridable: false
       iscommand: false
       name: Set original commandline
       script: Set
@@ -1603,7 +1581,6 @@ tasks:
       brand: ""
       description: Is there a command line input?
       id: d02185ac-3059-4ac1-84df-388155f7bfee
-      isOverridable: false
       iscommand: false
       name: Is there a command line input?
       type: condition
@@ -1645,7 +1622,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: 0db44584-e9dc-435f-84d7-36315a8b5020
-      isOverridable: false
       iscommand: false
       name: Delete "Decode" Context
       script: DeleteContext
@@ -1678,7 +1654,6 @@ tasks:
     task:
       brand: ""
       id: 940e7968-93d7-4fcb-86cb-46b9e276e19e
-      isOverridable: false
       iscommand: false
       name: Suspicious LOLBIN Execution
       type: title
@@ -1760,7 +1735,6 @@ tasks:
       description: 'This playbook takes a process name and a command line from the
         alert and performs the following actions:'
       id: 38a7a83c-9784-45a3-84b8-105caba13f26
-      isOverridable: false
       iscommand: false
       name: Compare Process Execution Arguments To LOLBAS Patterns
       playbookName: Compare Process Execution Arguments To LOLBAS Patterns
@@ -1804,7 +1778,6 @@ tasks:
       brand: ""
       description: Found suspicious LOLBIN execution?
       id: 3212780f-1634-43cd-8a59-39af8883e672
-      isOverridable: false
       iscommand: false
       name: Found suspicious LOLBIN execution?
       type: condition
@@ -1841,7 +1814,6 @@ tasks:
       brand: ""
       description: Sets a value in context from the key entered.
       id: 0de2c957-6cf3-4552-8776-c49fe89e5d60
-      isOverridable: false
       iscommand: false
       name: Set command line verdict of SuspiciousLolbinExecution
       script: Set
