@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -49,7 +50,6 @@ inputs:
   required: false
   value:
     simple: ${File.SHA256}
-isOverridable: false
 name: DBot Indicator Enrichment - Generic
 outputs:
 - contextPath: DBotScore
@@ -89,7 +89,6 @@ tasks:
     task:
       brand: ""
       id: 5f144764-22dd-48bf-8179-b44b7576d050
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -130,7 +129,6 @@ tasks:
       brand: ""
       description: Checks if there's any MD5 indicators to enrich
       id: 5afc1cd3-d846-4353-8977-95adfe1c70a5
-      isOverridable: false
       iscommand: false
       name: Do we have MD5 hashes?
       type: condition
@@ -166,7 +164,6 @@ tasks:
       description: Query DBot for indicators' pre-existing reputation. If exist, the
         score will be added to the incident's context
       id: b1bed29a-6cbe-4238-8c4d-3203457bdc73
-      isOverridable: false
       iscommand: false
       name: Get MD5 internal Dbot score
       script: GetIndicatorDBotScore
@@ -195,7 +192,6 @@ tasks:
     task:
       brand: ""
       id: d1a4161a-90a1-4f74-8d55-8ec4919d5f56
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -237,7 +233,6 @@ tasks:
       brand: ""
       description: Checks if there's any Email indicators to enrich
       id: ca10b1e8-fb57-42ca-8443-df8e39f3630c
-      isOverridable: false
       iscommand: false
       name: Is there an Email address to check?
       type: condition
@@ -274,7 +269,6 @@ tasks:
       description: Query DBot for indicators' pre-existing reputation. If exist, the
         score will be added to the incident's context
       id: c84e302e-2844-414f-8b19-71f7b3e0fd18
-      isOverridable: false
       iscommand: false
       name: Get Email address internal Dbot score
       script: GetIndicatorDBotScore
@@ -317,7 +311,6 @@ tasks:
       brand: ""
       description: Checks if there's any URL indicators to enrich
       id: 236e4b6d-3833-4b6c-8b4b-760976caed6e
-      isOverridable: false
       iscommand: false
       name: Do we have URLs?
       type: condition
@@ -354,7 +347,6 @@ tasks:
       description: Query DBot for indicators' pre-existing reputation. If exist, the
         score will be added to the incident's context
       id: 47908ce9-33ad-4e39-835b-246f3cdfbe53
-      isOverridable: false
       iscommand: false
       name: Get URL internal Dbot score
       script: GetIndicatorDBotScore
@@ -397,7 +389,6 @@ tasks:
       brand: ""
       description: Checks if there's any IP indicators to enrich
       id: eb495689-5df3-44b3-8272-d2cc2dc36d51
-      isOverridable: false
       iscommand: false
       name: Do we have IP Addresses?
       type: condition
@@ -433,7 +424,6 @@ tasks:
       description: Query DBot for indicators' pre-existing reputation. If exist, the
         score will be added to the incident's context
       id: 2efb0c7e-9166-4646-8ad1-041fd257a55c
-      isOverridable: false
       iscommand: false
       name: Get IP internal Dbot score
       script: GetIndicatorDBotScore
@@ -467,7 +457,6 @@ tasks:
     task:
       brand: ""
       id: d510fe26-bf16-4596-8f67-51e37732383f
-      isOverridable: false
       iscommand: false
       name: File
       type: title
@@ -509,7 +498,6 @@ tasks:
       brand: ""
       description: Checks if there's any SHA256 indicators to enrich
       id: a6ee34a5-0587-4d40-8e83-752e3261bbd1
-      isOverridable: false
       iscommand: false
       name: Do we have SHA256 hashes?
       type: condition
@@ -546,7 +534,6 @@ tasks:
       description: Query DBot for indicators' pre-existing reputation. If exist, the
         score will be added to the incident's context
       id: 102eceb6-41fb-4b97-8279-c4ebfeb5bc63
-      isOverridable: false
       iscommand: false
       name: Get SHA256 internal Dbot score
       script: GetIndicatorDBotScore
@@ -589,7 +576,6 @@ tasks:
       brand: ""
       description: Checks if there's any SHA1 indicators to enrich
       id: 525d4fb2-26b9-4d8f-8960-b8c12362ee4f
-      isOverridable: false
       iscommand: false
       name: Do we have SHA1 hashes?
       type: condition
@@ -626,7 +612,6 @@ tasks:
       description: Query DBot for indicators' pre-existing reputation. If exist, the
         score will be added to the incident's context
       id: 4168a3e7-0f00-4e0a-8517-7dde46cf63db
-      isOverridable: false
       iscommand: false
       name: Get SHA256 internal Dbot score
       script: GetIndicatorDBotScore
