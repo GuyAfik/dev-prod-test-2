@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -106,6 +105,7 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
+isOverridable: false
 name: User Investigation - Generic
 outputs:
 - contextPath: NumOfSiemFailedLogon
@@ -177,6 +177,7 @@ tasks:
     task:
       brand: ""
       id: 12d19917-d85e-4a42-8e53-7ff1ab81aa09
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -206,6 +207,7 @@ tasks:
     task:
       brand: ""
       id: 93fe0ced-0cc0-4fe6-8d97-11b74243539b
+      isOverridable: false
       iscommand: false
       name: Failed Logon Search
       type: title
@@ -239,6 +241,7 @@ tasks:
     task:
       brand: ""
       id: 079af6ed-0728-4152-8b8f-6713b79c85bc
+      isOverridable: false
       iscommand: false
       name: Investigation
       type: title
@@ -266,6 +269,7 @@ tasks:
     task:
       brand: ""
       id: 73c894c8-fd7a-4ea0-8eba-dbfd2db37bcf
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -296,6 +300,7 @@ tasks:
     task:
       brand: ""
       id: b632202b-40e8-41aa-8de5-b98ddef463b2
+      isOverridable: false
       iscommand: false
       name: Threat Logs Search
       type: title
@@ -359,6 +364,7 @@ tasks:
       brand: ""
       description: Check if PAN-OS integration enabled and the user name is defined
       id: 2b777de0-64fc-408f-8ec7-b78a5ecb91d2
+      isOverridable: false
       iscommand: false
       name: Is PAN-OS integration enabled and the user name is defined?
       type: condition
@@ -397,6 +403,7 @@ tasks:
       brand: ""
       description: The query logs in Panorama.
       id: ea25e12c-7774-410a-8af8-77c6320c30ab
+      isOverridable: false
       iscommand: true
       name: PAN-OS query logs
       script: '|||pan-os-query-logs'
@@ -439,6 +446,7 @@ tasks:
       brand: ""
       description: Count an array size.
       id: 41b8ee9d-eecb-46a3-8946-778cc405d540
+      isOverridable: false
       iscommand: false
       name: Count Threat logs for the user from Panorama logs
       script: CountArraySize
@@ -477,6 +485,7 @@ tasks:
       brand: ""
       description: Retrieves the data of a log query.
       id: c2c8a7ad-704d-41a7-8e52-535b07ad9bac
+      isOverridable: false
       iscommand: true
       name: PAN-OS get logs
       script: '|||pan-os-get-logs'
@@ -508,6 +517,7 @@ tasks:
     task:
       brand: ""
       id: 1e94ed10-2733-4148-8982-a1b6f17c3bb6
+      isOverridable: false
       iscommand: false
       name: PAN-OS
       type: title
@@ -539,6 +549,7 @@ tasks:
     task:
       brand: ""
       id: 0506de8c-0534-4fae-8513-3c734bb4c00a
+      isOverridable: false
       iscommand: false
       name: Related alerts from XDR / Core
       type: title
@@ -585,6 +596,7 @@ tasks:
       brand: ""
       description: Check if the Input's value "SIEMFailedLogonSearch" is True.
       id: efacc27d-aec0-4f92-84dc-2d434f667eca
+      isOverridable: false
       iscommand: false
       name: Search for Failed logons from SIEM?
       type: condition
@@ -631,6 +643,7 @@ tasks:
       brand: ""
       description: Check if the Input's value "ThreatLogSearch" is True.
       id: 1b4ed81e-c512-469d-8d2f-a3cdd721c4bb
+      isOverridable: false
       iscommand: false
       name: Search for Threat logs?
       type: condition
@@ -677,6 +690,7 @@ tasks:
       brand: ""
       description: Check if the Input's value "XDRAlertSearch" is True.
       id: cabb7c6f-735f-4e80-8d09-06d124168d46
+      isOverridable: false
       iscommand: false
       name: Search for Related alerts from Cortex XDR?
       type: condition
@@ -722,6 +736,7 @@ tasks:
       brand: ""
       description: Check if there are results from PAN-OS
       id: 0ac486a0-4182-4bb8-8d03-7c9abc7f2e11
+      isOverridable: false
       iscommand: false
       name: Found results from PAN-OS?
       type: condition
@@ -803,6 +818,7 @@ tasks:
         This playbook is part of the Cortex XDR by Palo Alto Networks’ pack. This playbook searches alerts related to specific entities from Cortex XDR, on a given timeframe, based on MITRE tactics.
         Note: The playbook's inputs enable manipulating the execution flow. Read the input descriptions for details.
       id: 83835468-5432-4baa-8656-cfd7c05fecbe
+      isOverridable: false
       iscommand: false
       name: Cortex XDR - Get entity alerts by MITRE tactics
       playbookName: Cortex XDR - Get entity alerts by MITRE tactics
@@ -874,6 +890,7 @@ tasks:
       description: Checks if Cortex XDR integration is enabled and the user name is
         defined.
       id: 34e3a202-b333-4c2b-8e13-bb9d98121c96
+      isOverridable: false
       iscommand: false
       name: Is Cortex XDR integration enabled and user name is defined?
       type: condition
@@ -935,6 +952,7 @@ tasks:
         -Qradar
         -Azure Log Analytics
       id: 31f63fc0-feae-470f-88dc-2b0a38b958eb
+      isOverridable: false
       iscommand: false
       name: SIEM - Search for Failed logins
       playbookId: SIEM - Search for Failed logins
@@ -982,6 +1000,7 @@ tasks:
       brand: ""
       description: Check if the Input's value "OktaSearch" is True.
       id: 8afeebfc-2c1d-4e6d-84b0-3b566114764a
+      isOverridable: false
       iscommand: false
       name: Search for Okta logs?
       type: condition
@@ -1012,6 +1031,7 @@ tasks:
     task:
       brand: ""
       id: 70ac1d98-f750-49b2-84f0-1533328e6bdc
+      isOverridable: false
       iscommand: false
       name: Okta User Investigation
       type: title
@@ -1059,6 +1079,7 @@ tasks:
       description: This playbook performs an investigation on a specific user, using
         queries and logs from Okta.
       id: 04488cb1-1067-4a7a-8d91-5013b22d86aa
+      isOverridable: false
       iscommand: false
       name: Okta - User Investigation
       playbookName: Okta - User Investigation
@@ -1090,6 +1111,7 @@ tasks:
     task:
       brand: ""
       id: 03d8328e-95d5-49b2-83c8-c71eac96f6b0
+      isOverridable: false
       iscommand: false
       name: Cortex XDR
       type: title
@@ -1151,6 +1173,7 @@ tasks:
         Script will run the provided mathematical action on 2 provided values and produce a result.
         The result can be stored on the context using the contextKey argument
       id: 9faef5f8-cf67-4f6f-8419-6104cf012806
+      isOverridable: false
       iscommand: false
       name: Number Of Failed Logon
       script: MathUtil
@@ -1214,6 +1237,7 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: 8dd8d181-471d-40a0-8865-c25b043dec1f
+      isOverridable: false
       iscommand: false
       name: Set Number Of SIEM Failed Logon
       script: Set
@@ -1277,6 +1301,7 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: fdffde9f-b35c-4077-83ca-4d1d0bb93701
+      isOverridable: false
       iscommand: false
       name: Set Number Of Okta Failed Logon
       script: Set
@@ -1348,6 +1373,7 @@ tasks:
       description: Checks if Cortex XDR integration is enabled and the user name is
         defined.
       id: 3a2b054d-f7b4-4576-8d76-2bc32cf07f96
+      isOverridable: false
       iscommand: false
       name: Is Cortex Core integration enabled and user name is defined?
       type: condition
@@ -1378,6 +1404,7 @@ tasks:
     task:
       brand: ""
       id: 0adef6b2-c579-4948-8bbc-73f122ed38c6
+      isOverridable: false
       iscommand: false
       name: Cortex Core
       type: title
@@ -1459,6 +1486,7 @@ tasks:
         This playbook searches XDR alerts related to specific entities , on a given timeframe, based on MITRE tactics.
         Note: The playbook's inputs enable manipulating the execution flow. Read the input descriptions for details.
       id: 30f27e02-ece5-453a-8cc3-0b62510da975
+      isOverridable: false
       iscommand: false
       name: Get entity alerts by MITRE tactics
       playbookName: Get entity alerts by MITRE tactics
@@ -1510,6 +1538,7 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: 1fe16618-2b52-443d-891e-3705a9bd5d65
+      isOverridable: false
       iscommand: false
       name: Save split username
       script: SetAndHandleEmpty
