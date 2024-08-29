@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -51,7 +52,6 @@ inputs:
       root: Endpoint
       transformers:
       - operator: uniq
-isOverridable: false
 name: Calculate Severity - Critical Assets v2
 outputs:
 - contextPath: Severities.CriticalAssetsSeverity
@@ -93,7 +93,6 @@ tasks:
     task:
       brand: ""
       id: 3eded69b-617e-4212-86b7-2537474285f3
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -141,7 +140,6 @@ tasks:
       description: Checks whether there is at least one user involved in the incident
         and at least one user defined as a critical asset.
       id: 424aaa79-feb8-4351-8818-b15b2999b7a6
-      isOverridable: false
       iscommand: false
       name: Do required user inputs exist?
       type: condition
@@ -195,7 +193,6 @@ tasks:
       description: Checks if at least one of the usernames involved in the incident
         is listed in the "CriticalUsers" list.
       id: ae8f3642-3d2e-46e9-80e7-806b6cfbeca3
-      isOverridable: false
       iscommand: false
       name: Is a critical user involved in the incident?
       type: condition
@@ -223,7 +220,6 @@ tasks:
     task:
       brand: ""
       id: 3e771227-3718-4714-89ac-51e80b242f8b
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -277,7 +273,6 @@ tasks:
       description: Checks if at least one of the endpoints involved in the incident
         is listed in the "CriticalEndpoints" list.
       id: e94c9609-239f-4032-827a-8dc4b44b987a
-      isOverridable: false
       iscommand: false
       name: Is a critical endpoint involved in the incident?
       type: condition
@@ -308,7 +303,6 @@ tasks:
     task:
       brand: ""
       id: f62d3761-4856-44ee-80f1-668a0d53ce9d
-      isOverridable: false
       iscommand: false
       name: Critical Users
       type: title
@@ -339,7 +333,6 @@ tasks:
     task:
       brand: ""
       id: fd271425-66a0-48f9-8c71-fe1032820013
-      isOverridable: false
       iscommand: false
       name: Critical Endpoints
       type: title
@@ -370,7 +363,6 @@ tasks:
     task:
       brand: ""
       id: c59f6491-e15c-43aa-86ed-dad7d70cdf22
-      isOverridable: false
       iscommand: false
       name: Critical Groups
       type: title
@@ -443,7 +435,6 @@ tasks:
       brand: ""
       description: Sets all endpoint groups to the context, as a list.
       id: d199396a-b6cd-49e6-8eed-f8c40dbf6022
-      isOverridable: false
       iscommand: false
       name: Get all endpoint groups
       script: Set
@@ -498,7 +489,6 @@ tasks:
       description: Checks if at least one critical endpoint group is involved in the
         incident.
       id: 3f7ea2b9-d2c9-400c-8972-e64ec0ec7863
-      isOverridable: false
       iscommand: false
       name: Is a critical endpoint group involved in the incident?
       type: condition
@@ -542,7 +532,6 @@ tasks:
       brand: ""
       description: Checks if there is at least one user group involved in the incident.
       id: 7160e3e9-7200-4ba5-808f-ac28e7ef86f6
-      isOverridable: false
       iscommand: false
       name: Is there a user group?
       type: condition
@@ -586,7 +575,6 @@ tasks:
       brand: ""
       description: Checks whether there is at least one group for an involved endpoint.
       id: babf3f91-5d9c-47e8-870d-c236b9c68346
-      isOverridable: false
       iscommand: false
       name: Is there an endpoint group?
       type: condition
@@ -632,7 +620,6 @@ tasks:
       brand: ""
       description: Sets user-defined critical groups to context, as a list.
       id: a0e5a630-df39-4346-846b-d67653fee2ec
-      isOverridable: false
       iscommand: false
       name: Get all user-defined critical groups
       script: Set
@@ -676,7 +663,6 @@ tasks:
       description: Checks if there are any user-defined critical groups in the playbook
         inputs.
       id: f43d598e-ba8f-4dc0-8405-46fbbd12ec79
-      isOverridable: false
       iscommand: false
       name: Are there user-defined critical groups?
       type: condition
@@ -749,7 +735,6 @@ tasks:
       brand: ""
       description: Sets all user groups to the context, as a list.
       id: 80d01617-682f-4dbb-8e9a-5bb7660d03b7
-      isOverridable: false
       iscommand: false
       name: Get all user groups
       script: Set
@@ -803,7 +788,6 @@ tasks:
       brand: ""
       description: Checks whether at least one user group is involved in the incident.
       id: 09afd6ef-f9b2-4be1-80a6-f294243dc89a
-      isOverridable: false
       iscommand: false
       name: Is a critical user group involved in the incident?
       type: condition
@@ -845,7 +829,6 @@ tasks:
       brand: ""
       description: Sets all usernames involved in the incident to context.
       id: b93fb183-5e45-442b-8083-6706d301202c
-      isOverridable: false
       iscommand: false
       name: Get all usernames
       script: Set
@@ -877,7 +860,6 @@ tasks:
     task:
       brand: ""
       id: 53feba0a-5f2f-410c-882f-b95cbd9c5fbb
-      isOverridable: false
       iscommand: false
       name: Critical Endpoint Groups
       type: title
@@ -908,7 +890,6 @@ tasks:
     task:
       brand: ""
       id: 37f291a8-8336-412f-8f0f-26bfa0fa7e7d
-      isOverridable: false
       iscommand: false
       name: Critical User Groups
       type: title
@@ -959,7 +940,6 @@ tasks:
       description: Checks whether there is at least one endpoint involved in the incident
         and at least one hostname defined as a critical asset.
       id: d0e85e0c-9d5f-46a2-8f7d-37c5cccfb2af
-      isOverridable: false
       iscommand: false
       name: Do required endpoint inputs exist?
       type: condition
@@ -1001,7 +981,6 @@ tasks:
       brand: ""
       description: Sets all hostnames to context.
       id: 86e2054c-c8b2-4c83-8d2b-40afd339203a
-      isOverridable: false
       iscommand: false
       name: Get all hostnames
       script: Set
@@ -1033,7 +1012,6 @@ tasks:
     task:
       brand: ""
       id: fab539ae-ff25-486e-82b4-9c94f0426de4
-      isOverridable: false
       iscommand: false
       name: No Critical Endpoints
       type: title
@@ -1064,7 +1042,6 @@ tasks:
     task:
       brand: ""
       id: 33b118b1-2ecc-47bc-8eed-ce8e53b5a160
-      isOverridable: false
       iscommand: false
       name: No Critical Users
       type: title
@@ -1095,7 +1072,6 @@ tasks:
     task:
       brand: ""
       id: 008bea76-3889-4e55-894b-058dbb6dda36
-      isOverridable: false
       iscommand: false
       name: No Critical Groups
       type: title
@@ -1133,7 +1109,6 @@ tasks:
       brand: ""
       description: Sets the severity output of this playbook to "Critical".
       id: 7f151914-046a-4f0a-8594-90ac5447ddca
-      isOverridable: false
       iscommand: false
       name: Set severity to critical
       script: Set
@@ -1180,7 +1155,6 @@ tasks:
       brand: ""
       description: Sets all critical endpoints to context, as a list.
       id: 5a9cf941-59dd-4d46-8153-8b76a30c4168
-      isOverridable: false
       iscommand: false
       name: Get all critical endpoints
       script: Set
@@ -1227,7 +1201,6 @@ tasks:
       brand: ""
       description: Sets all critical usernames in context, as a list.
       id: 0db98f70-66d9-4ba3-8616-5af419630189
-      isOverridable: false
       iscommand: false
       name: Get all critical usernames
       script: Set
@@ -1280,7 +1253,6 @@ tasks:
       description: Sets the critical endpoints to the CriticalAssets.CriticalEndpoints
         context key, which is an output of this playbook.
       id: a680f6b3-2306-407d-8a2b-a8a7bf1a4df6
-      isOverridable: false
       iscommand: false
       name: Set critical endpoints to output
       script: Set
@@ -1333,7 +1305,6 @@ tasks:
       description: Sets the critical endpoint groups to the CriticalAssets.CriticalEndpointGroups
         context key, which is an output of this playbook.
       id: 7c4d5151-dc5e-40c3-8697-440b4e3e9cae
-      isOverridable: false
       iscommand: false
       name: Set critical endpoint groups to output
       script: Set
@@ -1385,7 +1356,6 @@ tasks:
       description: Sets the critical user groups to the CriticalAssets.CriticalUserGroups
         context key, which is an output of this playbook.
       id: 82bd69bb-ecc0-4438-8aa3-79626adf62a9
-      isOverridable: false
       iscommand: false
       name: Set critical user groups to output
       script: Set
@@ -1438,7 +1408,6 @@ tasks:
       description: Sets the critical users to the CriticalAssets.CriticalUsers context
         key, which is an output of this playbook.
       id: 40a52d56-8468-4161-8832-9f3a8edbdc20
-      isOverridable: false
       iscommand: false
       name: Set critical users to output
       script: Set
@@ -1479,7 +1448,6 @@ tasks:
       description: Sets the critical assets to an incident field which can be displayed
         in the incident layout.
       id: 9337a013-1493-4943-8d8f-42fe0feb437e
-      isOverridable: false
       iscommand: false
       name: Set critical assets to incident field
       script: PopulateCriticalAssets
