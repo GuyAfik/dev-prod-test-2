@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -173,6 +172,7 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
+isOverridable: false
 name: Entity Enrichment - Generic v3
 outputs:
 - contextPath: IP
@@ -450,6 +450,7 @@ tasks:
     task:
       brand: ""
       id: cdd6228a-7feb-4386-8ab1-7dfdf77d99c2
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -476,6 +477,7 @@ tasks:
     task:
       brand: ""
       id: 38007764-1687-47b1-8490-0f3cded9dc95
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -542,6 +544,7 @@ tasks:
         * IP reputation
         * For internal addresses, get host information
       id: afe0c443-753d-4633-89e1-0d77dc533447
+      isOverridable: false
       iscommand: false
       name: IP Enrichment - Generic v2
       playbookId: IP Enrichment - Generic v2
@@ -596,6 +599,7 @@ tasks:
     task:
       brand: ""
       id: 8189698a-475c-433b-8fbf-20275b3b2084
+      isOverridable: false
       iscommand: false
       name: File Enrichment - Generic v2
       playbookId: File Enrichment - Generic v2
@@ -654,6 +658,7 @@ tasks:
         * Providing of URL screenshots
         * URL Reputation using !url
       id: a80df9df-c0d4-4d25-88d1-39a974a9c2cb
+      isOverridable: false
       iscommand: false
       name: URL Enrichment - Generic v2
       playbookId: URL Enrichment - Generic v2
@@ -702,6 +707,7 @@ tasks:
         Domain enrichment includes:
         * Threat information
       id: 6245f7fc-b1cc-4120-81da-d3320f809b03
+      isOverridable: false
       iscommand: false
       name: Domain Enrichment - Generic v2
       playbookId: Domain Enrichment - Generic v2
@@ -757,6 +763,7 @@ tasks:
     task:
       brand: ""
       id: 0ba8dffe-9aac-40a7-8303-ff40de2d91f9
+      isOverridable: false
       iscommand: false
       name: Email Address Enrichment - Generic v2.1
       playbookId: Email Address Enrichment - Generic v2.1
@@ -818,6 +825,7 @@ tasks:
 
         Also, the playbook supports the generic command 'iam-get-user' (implemented in IAM integrations. For more information, visit https://xsoar.pan.dev/docs/integrations/iam-integrations.
       id: 3543872e-d47e-47a3-8456-39ff9ccfcabd
+      isOverridable: false
       iscommand: false
       name: Account Enrichment - Generic v2.1
       playbookId: Account Enrichment - Generic v2.1
@@ -860,6 +868,7 @@ tasks:
     task:
       brand: ""
       id: 473ab066-87e5-408d-8317-70e38ead40ca
+      isOverridable: false
       iscommand: false
       name: Endpoint Enrichment - Generic v2.1
       playbookId: Endpoint Enrichment - Generic v2.1
@@ -905,6 +914,7 @@ tasks:
         - CVE Search
         - IBM X-Force Exchange
       id: a9201fe9-18e4-47dc-8b45-c2c5111eea6a
+      isOverridable: false
       iscommand: false
       name: CVE Enrichment - Generic v2
       playbookId: CVE Enrichment - Generic v2
