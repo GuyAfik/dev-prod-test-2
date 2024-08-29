@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -25,7 +26,6 @@ inputs:
     complex:
       accessor: ID
       root: CVE
-isOverridable: false
 name: CVE Enrichment - Generic v2
 outputs:
 - contextPath: CVE
@@ -88,7 +88,6 @@ tasks:
     task:
       brand: ""
       id: 8a9b5f57-93dc-4f6e-847a-472c93c1af17
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -131,7 +130,6 @@ tasks:
       description: Verify that the playbook input includes at least one CVE ID to
         enrich.
       id: 4cfa2898-da16-4d61-839a-cc66e5492541
-      isOverridable: false
       iscommand: false
       name: Is there a CVE to enrich?
       type: condition
@@ -159,7 +157,6 @@ tasks:
     task:
       brand: ""
       id: 1c1df4a5-6a12-4724-8cf5-586f7743fc57
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -233,7 +230,6 @@ tasks:
       brand: ""
       description: Verify that there's a valid instance of XFE enabled.
       id: 842e273c-40ee-46c1-837d-f7e09bcefef0
-      isOverridable: false
       iscommand: false
       name: Is IBM X-Force Exchange integration enabled?
       type: condition
@@ -296,7 +292,6 @@ tasks:
       brand: ""
       description: Verify that there's a valid instance of "CVE Search" enabled.
       id: 8f3572d2-dbfc-4c4b-82af-94d06b99e727
-      isOverridable: false
       iscommand: false
       name: Is "CVE Search" integration enabled?
       type: condition
@@ -333,7 +328,6 @@ tasks:
       brand: CVE Search
       description: Returns CVE information by CVE ID.
       id: c08adb3a-b8c3-4a9b-8290-2f6dcda45d88
-      isOverridable: false
       iscommand: true
       name: Get CVE info from "CVE Search"
       script: '|||cve'
@@ -371,7 +365,6 @@ tasks:
       brand: ""
       description: Search for details about the given CVE.
       id: d2ff276a-dd81-4805-80c3-ee44976b4020
-      isOverridable: false
       iscommand: true
       name: Get CVE information from XFE
       script: '|||cve-search'
@@ -405,7 +398,6 @@ tasks:
     task:
       brand: ""
       id: 81a2e52a-0a2a-4791-8a55-e4249923b7b3
-      isOverridable: false
       iscommand: false
       name: CVE enrichment
       type: title
@@ -441,7 +433,6 @@ tasks:
       brand: VulnDB
       description: Returns full details about vulnerabilities, by CVE ID.
       id: bee9dcb2-a07f-4362-8e17-df1458d42051
-      isOverridable: false
       iscommand: true
       name: VulnDB - Get vulnerability details by CVE
       script: VulnDB|||vulndb-get-vuln-by-cve-id
@@ -473,7 +464,6 @@ tasks:
     task:
       brand: ""
       id: 2c6008cc-e42b-4976-86c8-92123558d6b6
-      isOverridable: false
       iscommand: false
       name: VulnDB
       type: title
@@ -504,7 +494,6 @@ tasks:
     task:
       brand: ""
       id: da54676a-2737-437d-8f74-cf90095e20b0
-      isOverridable: false
       iscommand: false
       name: CVE Search
       type: title
@@ -535,7 +524,6 @@ tasks:
     task:
       brand: ""
       id: 85a2fa30-ef67-4272-8867-18116129def3
-      isOverridable: false
       iscommand: false
       name: IBM X-Force Exchange
       type: title
@@ -598,7 +586,6 @@ tasks:
       brand: ""
       description: Verify that there's a valid instance of XFE enabled.
       id: 3b7877c8-6321-4a1c-8444-d2bd91aae191
-      isOverridable: false
       iscommand: false
       name: Is VulnDB integration enabled?
       type: condition
