@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.9.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -43,7 +44,6 @@ inputs:
   required: true
   value:
     simple: "False"
-isOverridable: false
 name: PAN-OS - Add Anti-Spyware Security Profile To Rule
 outputs:
 - contextPath: AntiSpywareProfileNameApplied
@@ -72,7 +72,6 @@ tasks:
     task:
       brand: ""
       id: 03fa6d8d-2cb3-459e-800d-4ab89475bc4d
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -176,7 +175,6 @@ tasks:
         3. It has a security profile group, and the anti-spyware profile specified can be added to that group.
         4. It has a security profile group, but the anti-spyware profile can be applied only if the group doesn't already have an anti spyware profile in it.
       id: 23837a9f-eb83-4e85-8dec-6fa7d71f43d6
-      isOverridable: false
       iscommand: false
       name: Can a new anti-spyware profile be applied?
       type: condition
@@ -222,7 +220,6 @@ tasks:
       description: Checks whether a rule to add the profile to was specified in the
         playbook inputs.
       id: f6aeed27-6fdd-4f51-823c-f6023d67c200
-      isOverridable: false
       iscommand: false
       name: Is there a rule input?
       type: condition
@@ -258,7 +255,6 @@ tasks:
       brand: ""
       description: Returns a list of predefined Security Rules.
       id: cf2d7fb4-3d5a-4241-8209-7b481032df34
-      isOverridable: false
       iscommand: true
       name: Get rule information
       script: '|||pan-os-list-rules'
@@ -303,7 +299,6 @@ tasks:
       brand: ""
       description: Checks whether a rule was found.
       id: 386fd178-e596-4999-8a5d-8f22b4456d49
-      isOverridable: false
       iscommand: false
       name: Was a rule found?
       type: condition
@@ -331,7 +326,6 @@ tasks:
     task:
       brand: ""
       id: 03d79fe8-1a4a-4ab6-8011-d296c4deab0b
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -365,7 +359,6 @@ tasks:
         security profile called ${inputs.SecurityProfileName}. If there's already
         an anti-spyware security profile configured there, please overwrite it.
       id: 345b0c42-ac77-4ffc-8b5e-1db0146cbbc0
-      isOverridable: false
       iscommand: false
       name: Overwrite with / Add our profile to the security profile group
       type: regular
@@ -407,7 +400,6 @@ tasks:
       description: Applies a security profile to specific rules or rules with a specific
         tag.
       id: 92d9b23c-c0a9-4db3-82e1-2e081a8fd02e
-      isOverridable: false
       iscommand: true
       name: Apply security profile to rule
       script: '|||pan-os-apply-security-profile'
@@ -439,7 +431,6 @@ tasks:
     task:
       brand: ""
       id: b9218ad4-b712-4a6a-8339-0569809cf8e1
-      isOverridable: false
       iscommand: false
       name: Apply Profile
       type: title
@@ -475,7 +466,6 @@ tasks:
       brand: ""
       description: Creates an Anti-Spyware best practice profile.
       id: f36c5e96-35f7-4966-8682-b7e762838e8f
-      isOverridable: false
       iscommand: true
       name: Create new anti-spyware security profile
       script: '|||pan-os-create-anti-spyware-best-practice-profile'
@@ -511,7 +501,6 @@ tasks:
       brand: ""
       description: Gets information for the specified security profile.
       id: 5f9b1397-3912-4fcd-8ea1-2ca1925f2434
-      isOverridable: false
       iscommand: true
       name: Get existing anti-spyware profiles
       script: '|||pan-os-get-security-profiles'
@@ -568,7 +557,6 @@ tasks:
       description: Checks whether the profile we want to apply already exists or needs
         to be created.
       id: b7663e7d-ba72-409c-8cfb-6be52619e5f1
-      isOverridable: false
       iscommand: false
       name: Does the profile we are applying already exist?
       type: condition
@@ -599,7 +587,6 @@ tasks:
     task:
       brand: ""
       id: 0902b5c4-5a83-42ec-8ca6-b1902ec58d54
-      isOverridable: false
       iscommand: false
       name: Do Nothing
       type: title
@@ -630,7 +617,6 @@ tasks:
     task:
       brand: ""
       id: e4d61cca-500e-4b11-8a57-68cfcef10d32
-      isOverridable: false
       iscommand: false
       name: Apply Profile
       type: title
@@ -666,7 +652,6 @@ tasks:
       brand: ""
       description: Creates an Anti-Spyware best practice profile.
       id: c9079b3c-d507-4899-8bfc-858a775d12ee
-      isOverridable: false
       iscommand: true
       name: Create new anti-spyware security profile
       script: '|||pan-os-create-anti-spyware-best-practice-profile'
@@ -702,7 +687,6 @@ tasks:
       brand: ""
       description: Gets information for the specified security profile.
       id: 0dec981d-ff76-4e43-859f-37d806eaef19
-      isOverridable: false
       iscommand: true
       name: Get existing anti-spyware profiles
       script: '|||pan-os-get-security-profiles'
@@ -759,7 +743,6 @@ tasks:
       description: Checks whether the profile we want to apply already exists or needs
         to be created.
       id: 37bf8e38-7218-42cd-8ab3-36615c3aa051
-      isOverridable: false
       iscommand: false
       name: Does the profile we are applying already exist?
       type: condition
@@ -802,7 +785,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: 58454e43-1836-4f61-88af-5efbcd950336
-      isOverridable: false
       iscommand: false
       name: Save the input profile to outputs
       script: SetAndHandleEmpty
@@ -875,7 +857,6 @@ tasks:
         your PAN-OS firewall instance which is configured in XSOAR, and answer the
         question.
       id: d5aa2d6b-bcb1-4a4f-8fce-98bd7dba3894
-      isOverridable: false
       iscommand: false
       name: Provide the name of the existing anti-spyware profile
       type: collection
@@ -911,7 +892,6 @@ tasks:
         in your PAN-OS firewall instance and see whether it has an anti-spyware security
         profile at the moment.
       id: a38481ee-42bc-49eb-8a90-2d79dbc86d87
-      isOverridable: false
       iscommand: false
       name: Check if the group has an anti-spyware profile
       type: condition
@@ -955,7 +935,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: 28f54f2d-4730-4237-8262-45e47586db1a
-      isOverridable: false
       iscommand: false
       name: Save the existing profile to outputs
       script: SetAndHandleEmpty
@@ -999,7 +978,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: d74566b1-bcfb-406e-8779-d17292b2c83d
-      isOverridable: false
       iscommand: false
       name: Save the input profile to outputs
       script: SetAndHandleEmpty
@@ -1044,7 +1022,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: d7d0bdf1-e375-4e69-867c-795283ff7fdf
-      isOverridable: false
       iscommand: false
       name: Save the existing profile to outputs
       script: SetAndHandleEmpty
