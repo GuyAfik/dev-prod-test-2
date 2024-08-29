@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -45,7 +46,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Account Enrichment - Generic v2.1
 outputs:
 - contextPath: Account
@@ -520,7 +520,6 @@ tasks:
     task:
       brand: ""
       id: a6743119-6f7b-4ad2-86f8-d7e6f17415a3
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -573,7 +572,6 @@ tasks:
       brand: ""
       description: Checks if there is at least one username to enrich.
       id: 7d3036d6-80da-4b4f-8534-c634c6264f50
-      isOverridable: false
       iscommand: false
       name: Is there an account to enrich (without domain prefix)?
       type: condition
@@ -601,7 +599,6 @@ tasks:
     task:
       brand: ""
       id: b5a047e4-ca2a-4881-8a80-de3d0886ea64
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -662,7 +659,6 @@ tasks:
       description: Checks if there’s an active instance of the Active Directory Query
         v2 integration enabled.
       id: 9b07e7c9-ff70-410d-881c-02389fbf4c1e
-      isOverridable: false
       iscommand: false
       name: Is Active Directory Query v2 enabled?
       type: condition
@@ -702,7 +698,6 @@ tasks:
       description: Queries Active Directory and returns information for the specified
         username.
       id: ae51230d-7996-44fd-821c-44f995a48545
-      isOverridable: false
       iscommand: true
       name: Get account info from Active Directory
       script: '|||ad-get-user'
@@ -734,7 +729,6 @@ tasks:
     task:
       brand: ""
       id: 148faf68-5ced-41f4-82c0-f98fa9d82037
-      isOverridable: false
       iscommand: false
       name: SailPoint IdentityIQ
       type: title
@@ -765,7 +759,6 @@ tasks:
     task:
       brand: ""
       id: 58620334-72c1-4be6-87a2-84ed544c4a8a
-      isOverridable: false
       iscommand: false
       name: PingOne
       type: title
@@ -796,7 +789,6 @@ tasks:
     task:
       brand: ""
       id: b5887cbc-9c89-47ba-8802-86c66ed0c85a
-      isOverridable: false
       iscommand: false
       name: Microsoft Active Directory
       type: title
@@ -836,7 +828,6 @@ tasks:
       description: Returns 'yes' if the integration brand is available. Otherwise
         returns 'no'
       id: 93b0d852-2215-4504-8179-64a62951fbcc
-      isOverridable: false
       iscommand: false
       name: Is SailPoint IdentityIQ Integration Enabled?
       script: IsIntegrationAvailable
@@ -877,7 +868,6 @@ tasks:
       description: Returns 'yes' if the integration brand is available. Otherwise
         returns 'no'
       id: 82adaccd-d799-44ae-85ec-ee4ca516aab6
-      isOverridable: false
       iscommand: false
       name: Is PingOne Integration Enabled
       script: IsIntegrationAvailable
@@ -917,7 +907,6 @@ tasks:
       description: Search identities by search/filter parameters (ID, email, risk
         & active) using IdentityIQ SCIM APIs.
       id: 296fe8d2-4c2e-496b-86d2-8b9d2ca169ac
-      isOverridable: false
       iscommand: true
       name: Get account info from IdentityIQ
       script: '|||identityiq-search-identities'
@@ -957,7 +946,6 @@ tasks:
       description: Returns a PingOne user. One of the following has to be given -
         username or userId.
       id: 4e0dd7fd-7f65-42b4-8f6b-c0eeb9dbd070
-      isOverridable: false
       iscommand: true
       name: Get account info from PingOne
       script: '|||pingone-get-user'
@@ -989,7 +977,6 @@ tasks:
     task:
       brand: ""
       id: 4e5ba461-1f35-4898-8f03-940b3e3dd950
-      isOverridable: false
       iscommand: false
       name: OKTA
       type: title
@@ -1029,7 +1016,6 @@ tasks:
       description: Returns 'yes' if the integration brand is available. Otherwise
         returns 'no'
       id: e0b7f17c-70f7-4330-8f06-c3729e226adb
-      isOverridable: false
       iscommand: false
       name: Is OKTA v2 integration enabled?
       script: IsIntegrationAvailable
@@ -1069,7 +1055,6 @@ tasks:
       description: Fetches information for a single user. You must enter one or more
         parameters for the command to run.
       id: 81e880c5-cf32-42f0-8871-2077a475a674
-      isOverridable: false
       iscommand: true
       name: Get account info from OKTA v2
       script: '|||okta-get-user'
@@ -1101,7 +1086,6 @@ tasks:
     task:
       brand: ""
       id: ced5695a-76e7-4f6a-81b8-598925a8ea9d
-      isOverridable: false
       iscommand: false
       name: AWS
       type: title
@@ -1141,7 +1125,6 @@ tasks:
       description: Returns 'yes' if the integration brand is available. Otherwise
         returns 'no'
       id: 0f630de1-9988-461a-883a-6113d3dd6d2a
-      isOverridable: false
       iscommand: false
       name: Is AWS integration enabled?
       script: IsIntegrationAvailable
@@ -1181,7 +1164,6 @@ tasks:
       description: Retrieves information about the specified IAM user, including the
         user's creation date, path, unique ID, and ARN.
       id: 8f66273e-887a-4da9-86aa-d793012b15d1
-      isOverridable: false
       iscommand: true
       name: Get account info from AWS
       script: '|||aws-iam-get-user'
@@ -1213,7 +1195,6 @@ tasks:
     task:
       brand: ""
       id: 4f4d3e42-0ec6-4b22-89b2-0b275eedc3c5
-      isOverridable: false
       iscommand: false
       name: IAM
       type: title
@@ -1244,7 +1225,6 @@ tasks:
     task:
       brand: ""
       id: 61ad53d6-a0fd-4e1e-8608-1c8a9596d965
-      isOverridable: false
       iscommand: false
       name: SailPoint IdentityNow
       type: title
@@ -1284,7 +1264,6 @@ tasks:
       description: Returns 'yes' if the integration brand is available. Otherwise
         returns 'no'
       id: 21d70bb7-8b40-4f49-80ca-b78cb05b24aa
-      isOverridable: false
       iscommand: false
       name: Is SailPoint IdentityNow integration enabled?
       script: IsIntegrationAvailable
@@ -1323,7 +1302,6 @@ tasks:
       brand: ""
       description: Get accounts by search/filter parameters (ID, name, native_identity).
       id: c3570a06-c795-4b8b-81e7-b66d4ac5bd43
-      isOverridable: false
       iscommand: true
       name: Get account info from IdentityNow
       script: '|||identitynow-get-accounts'
@@ -1368,7 +1346,6 @@ tasks:
       brand: ""
       description: Is there a manager?
       id: f1700d16-6e63-4a56-8157-42cecfc24657
-      isOverridable: false
       iscommand: false
       name: Is there a manager?
       type: condition
@@ -1421,7 +1398,6 @@ tasks:
       description: Takes an email address or a username of a user account in Active
         Directory, and returns the email address of the user's manager.
       id: 82a4d18b-fcb9-416a-87e9-0c1b07255560
-      isOverridable: false
       iscommand: false
       name: Active Directory - Get User Manager Details
       playbookName: Active Directory - Get User Manager Details
@@ -1453,7 +1429,6 @@ tasks:
     task:
       brand: ""
       id: 285753ae-d884-4485-881c-3a99f77be4d0
-      isOverridable: false
       iscommand: false
       name: MSGraph Users
       type: title
@@ -1493,7 +1468,6 @@ tasks:
       description: Returns 'yes' if the integration brand is available. Otherwise
         returns 'no'.
       id: be533930-e327-4945-8fb7-c47ada329a2f
-      isOverridable: false
       iscommand: false
       name: Is Azure Active Directory Users integration enabled?
       script: IsIntegrationAvailable
@@ -1532,7 +1506,6 @@ tasks:
         Retrieves the properties and relationships of a user object. For more information, visit: https://docs.microsoft.com/en-us/graph/api/user-update?view=graph-rest-1.0).
         Permissions: - User.Read (Delegated) - User.Read.All (Application)
       id: da04f484-d65e-40a4-82da-e5e1f4afd88b
-      isOverridable: false
       iscommand: true
       name: Get account info from Azure Active Directory
       script: '|||msgraph-user-get'
@@ -1582,7 +1555,6 @@ tasks:
       brand: ""
       description: Is there a manager?
       id: 56bea608-c34d-4914-8b16-594603971e22
-      isOverridable: false
       iscommand: false
       name: Is there a manager?
       type: condition
@@ -1619,7 +1591,6 @@ tasks:
       brand: ""
       description: Retrieves the properties from the manager of a user.
       id: e5aab025-d489-4bc6-89d8-ffde4c23ac36
-      isOverridable: false
       iscommand: true
       name: Azure Active Directory - Get manager details
       script: '|||msgraph-user-get-manager'
@@ -1659,7 +1630,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: 83d6879d-694b-4091-84cd-6445167b9c75
-      isOverridable: false
       iscommand: false
       name: Set manager email address to context
       script: Set
@@ -1719,7 +1689,6 @@ tasks:
       brand: ""
       description: Retrieves a single user resource.
       id: 87b28b4e-4452-4597-8b4e-ab63aff6ae0c
-      isOverridable: false
       iscommand: true
       name: IAM Get User - Without specifying a domain
       script: '|||iam-get-user'
@@ -1787,7 +1756,6 @@ tasks:
       brand: ""
       description: Retrieves a single user resource.
       id: 3792ff2c-ca86-4767-8af5-0e50db675f53
-      isOverridable: false
       iscommand: true
       name: IAM Get User - with a domain
       script: '|||iam-get-user'
@@ -1832,7 +1800,6 @@ tasks:
       brand: ""
       description: Was a domain provided?
       id: e3d4077b-a586-494b-86b3-65e1f408c83a
-      isOverridable: false
       iscommand: false
       name: Was a domain provided?
       type: condition
@@ -1863,7 +1830,6 @@ tasks:
     task:
       brand: ""
       id: 30472917-7825-4a09-89d8-b531bf61958c
-      isOverridable: false
       iscommand: false
       name: Cortex XDR
       type: title
@@ -1903,7 +1869,6 @@ tasks:
       description: Returns 'yes' if the integration brand is available. Otherwise
         returns 'no'
       id: ed860996-40a3-4e32-8c7d-e4a961c6b7d5
-      isOverridable: false
       iscommand: false
       name: Is Cortex XDR - IR integration enabled?
       script: IsIntegrationAvailable
@@ -1951,7 +1916,6 @@ tasks:
         the highest risk score in the environment along with the reason affecting
         each score.
       id: b2c55827-8a8d-4e30-8662-383fbfdb55d0
-      isOverridable: false
       iscommand: true
       name: Get account risk score
       script: '|||xdr-list-risky-users'
@@ -2012,7 +1976,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: 7212ec41-fb6c-4d2b-86c1-140108b79c04
-      isOverridable: false
       iscommand: false
       name: Save account usernames
       script: SetAndHandleEmpty
@@ -2067,7 +2030,6 @@ tasks:
       brand: ""
       description: Checks if there is at least one username to enrich.
       id: 2524ddf8-40ab-4b7e-8019-8fdf102afc08
-      isOverridable: false
       iscommand: false
       name: Is there an account to enrich (with domain prefix)?
       type: condition
@@ -2119,7 +2081,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: 59883712-8f94-4316-870e-21a76ae75517
-      isOverridable: false
       iscommand: false
       name: Save account usernames with domains
       script: SetAndHandleEmpty
