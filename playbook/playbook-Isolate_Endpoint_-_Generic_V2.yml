@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.8.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -30,7 +31,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Isolate Endpoint - Generic V2
 outputs:
 - contextPath: Endpoint
@@ -113,7 +113,6 @@ tasks:
     task:
       brand: ""
       id: 20f01f93-7b37-4f3f-8c17-a466dac351ef
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -140,7 +139,6 @@ tasks:
     task:
       brand: ""
       id: 050d36dd-0ec3-4490-827e-e210ac5e9a04
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -181,7 +179,6 @@ tasks:
       brand: ""
       description: This playbook isolates an endpoint based on the hostname provided.
       id: 31a268a0-3862-4dcb-8549-b55d0ad936a0
-      isOverridable: false
       iscommand: false
       name: Isolate Endpoint - Cybereason
       playbookName: Isolate Endpoint - Cybereason
@@ -230,7 +227,6 @@ tasks:
       description: This playbook accepts an XDR endpoint ID and isolates it using
         the 'Palo Alto Networks Cortex XDR - Investigation and Response' integration.
       id: 46562ad2-14ed-4064-8ce8-9adfb791d660
-      isOverridable: false
       iscommand: false
       name: Cortex XDR - Isolate Endpoint
       playbookName: Cortex XDR - Isolate Endpoint
@@ -273,7 +269,6 @@ tasks:
       description: This playbook will auto isolate endpoints by the device ID that
         was provided in the playbook.
       id: 2604374d-9538-4451-8064-2f5bb5c6dd81
-      isOverridable: false
       iscommand: false
       name: Crowdstrike Falcon - Isolate Endpoint
       playbookId: Crowdstrike Falcon - Isolate Endpoint
@@ -319,7 +314,6 @@ tasks:
       description: This playbook will auto isolate endpoints by the endpoint ID that
         was provided in the playbook.
       id: 48226108-0787-44b0-80f6-cf333758b5e8
-      isOverridable: false
       iscommand: false
       name: FireEye HX - Isolate Endpoint
       playbookName: FireEye HX - Isolate Endpoint
@@ -366,7 +360,6 @@ tasks:
     task:
       brand: ""
       id: d438379a-5602-49f9-8d6d-404f9dbe3919
-      isOverridable: false
       iscommand: false
       name: Microsoft Defender For Endpoint - Isolate Endpoint
       playbookId: Microsoft Defender For Endpoint - Isolate Endpoint
@@ -403,7 +396,6 @@ tasks:
       brand: ""
       description: Isolates the specified endpoint.
       id: 6288e7cc-1f1c-4132-834c-02efaf383aee
-      isOverridable: false
       iscommand: true
       name: Core - Isolate Endpoint
       script: '|||core-isolate-endpoint'
@@ -448,7 +440,6 @@ tasks:
       brand: ""
       description: Carbon Black Response - isolates an endpoint for a given hostname.
       id: 73a03b52-b75a-4d47-8220-376956270c68
-      isOverridable: false
       iscommand: false
       name: Block Endpoint - Carbon Black Response V2.1
       playbookName: Block Endpoint - Carbon Black Response V2.1
