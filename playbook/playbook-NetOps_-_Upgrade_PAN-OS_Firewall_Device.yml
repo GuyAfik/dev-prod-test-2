@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -21,7 +22,6 @@ inputs:
   playbookInputQuery: null
   required: true
   value: {}
-isOverridable: false
 name: NetOps - Upgrade PAN-OS Firewall Device
 outputs: []
 starttaskid: "0"
@@ -43,7 +43,6 @@ tasks:
     task:
       brand: ""
       id: ad1b6cae-2f83-4d07-8dba-6fb036ac4ae9
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -85,7 +84,6 @@ tasks:
       brand: Panorama
       description: Shows firewall device software version
       id: cec94b27-c3e0-4792-8f62-ec5c6704c884
-      isOverridable: false
       iscommand: true
       name: Show Current Device Version
       script: Panorama|||pan-os-show-device-version
@@ -123,7 +121,6 @@ tasks:
       brand: ""
       description: Runs the NetOps - Firewall Version and Content Upgrade playbook.
       id: da298286-0c26-42e1-81ca-0ec9a67b952e
-      isOverridable: false
       iscommand: false
       name: Trigger NetOps - Firewall Version and Content Upgrade Playbook
       playbookId: NetOps - Firewall Version and Content Upgrade
@@ -153,7 +150,6 @@ tasks:
       brand: ""
       description: An Engineer should manually review PAN-OS.
       id: 5cb04387-365a-4c01-8fa9-0f0e31cbb2a8
-      isOverridable: false
       iscommand: false
       name: Engineer Review
       type: regular
