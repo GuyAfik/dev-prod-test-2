@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -22,7 +23,6 @@ inputs:
     complex:
       accessor: targetfirewallversion
       root: incident
-isOverridable: false
 name: NetOps - Firewall Version and Content Upgrade
 outputs: []
 starttaskid: "0"
@@ -44,7 +44,6 @@ tasks:
     task:
       brand: ""
       id: b7fe4fdf-e359-4010-89e6-60b4c288f797
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -76,7 +75,6 @@ tasks:
       brand: Panorama
       description: Downloads the latest content update.
       id: e540b70a-08b7-4979-8266-aa503a1e3500
-      isOverridable: false
       iscommand: true
       name: Download the latest content update
       script: Panorama|||pan-os-download-latest-content-update
@@ -115,7 +113,6 @@ tasks:
       brand: Panorama
       description: Checks content update download status.
       id: dac55564-0c88-4e85-80e0-74af6b9b4990
-      isOverridable: false
       iscommand: true
       name: Check on the content download status
       script: Panorama|||pan-os-content-update-download-status
@@ -149,7 +146,6 @@ tasks:
       brand: Panorama
       description: Installs the latest content update.
       id: b28debf8-d54b-42b3-841c-5ebfad3cfde6
-      isOverridable: false
       iscommand: true
       name: Install the latest content update
       script: Panorama|||pan-os-install-latest-content-update
@@ -188,7 +184,6 @@ tasks:
       brand: Panorama
       description: Checks on the content update install status.
       id: c342a8fd-a87d-4057-8edb-35ecc623ff88
-      isOverridable: false
       iscommand: true
       name: Check on the content installation status
       script: Panorama|||pan-os-content-update-install-status
@@ -221,7 +216,6 @@ tasks:
       brand: Panorama
       description: Checks the PAN-OS software version from the repository.
       id: 5f5091be-db9d-4914-80ff-5b4b151a1400
-      isOverridable: false
       iscommand: true
       name: Check for the latest PAN-OS software
       script: Panorama|||pan-os-check-latest-panos-software
@@ -258,7 +252,6 @@ tasks:
       brand: Panorama
       description: Downloads target PAN-OS version to be installed.
       id: 90d3c358-46d3-4ea6-8508-2cddf6e962e5
-      isOverridable: false
       iscommand: true
       name: Download the latest PAN-OS software update
       script: Panorama|||pan-os-download-panos-version
@@ -295,7 +288,6 @@ tasks:
       brand: Panorama
       description: Installs the target PAN-OS version.
       id: 4f33c545-4fd5-485e-8b92-cc3e4689412e
-      isOverridable: false
       iscommand: true
       name: Install the latest PAN-OS software update
       script: Panorama|||pan-os-install-panos-version
@@ -333,7 +325,6 @@ tasks:
       brand: Panorama
       description: Checks the PAN-OS installation status.
       id: 28a4fb31-0ae2-40e4-804d-692bd0aca523
-      isOverridable: false
       iscommand: true
       name: Check on the PAN-OS software installation status
       script: Panorama|||pan-os-install-panos-status
@@ -363,7 +354,6 @@ tasks:
       brand: Panorama
       description: Reboots the Firewall device.
       id: ebcba4bf-20e6-40f5-87b5-410847e31c04
-      isOverridable: false
       iscommand: true
       name: Reboot the firewall
       script: Panorama|||pan-os-device-reboot
@@ -423,7 +413,6 @@ tasks:
         2. Poll to check if the operation completed.
         3. (optional) Get the results of the operation.
       id: 14794c89-6d30-463a-812c-9e93b4e5f710
-      isOverridable: false
       iscommand: false
       name: GenericPolling
       playbookId: GenericPolling
@@ -484,7 +473,6 @@ tasks:
         2. Poll to check if the operation completed.
         3. (optional) Get the results of the operation.
       id: 6ed771e0-1ce5-47b4-89ea-15635a0cf374
-      isOverridable: false
       iscommand: false
       name: GenericPolling
       playbookId: GenericPolling
@@ -522,7 +510,6 @@ tasks:
       brand: Panorama
       description: PAN-OS download status
       id: 33afd485-aeef-49c6-83fb-23250779f58e
-      isOverridable: false
       iscommand: true
       name: Download PAN-OS Status
       script: Panorama|||pan-os-download-panos-status
@@ -583,7 +570,6 @@ tasks:
         2. Poll to check if the operation completed.
         3. (optional) Get the results of the operation.
       id: c74d8f1c-3dbd-49f9-8b94-59a9007a0a1c
-      isOverridable: false
       iscommand: false
       name: GenericPolling
       playbookId: GenericPolling
@@ -644,7 +630,6 @@ tasks:
         2. Poll to check if the operation completed.
         3. (optional) Get the results of the operation.
       id: cafe7cfd-7bb9-4caf-8cd5-dd6aaab69dd5
-      isOverridable: false
       iscommand: false
       name: GenericPolling
       playbookId: GenericPolling
