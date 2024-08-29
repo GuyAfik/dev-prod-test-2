@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -56,7 +57,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: SIEM - Search for Failed logins
 outputs:
 - contextPath: NumOfSiemFailedLogon
@@ -90,7 +90,6 @@ tasks:
     task:
       brand: ""
       id: ffe1835b-ae14-4728-88fb-2feb4bbfcf2c
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -120,7 +119,6 @@ tasks:
     task:
       brand: ""
       id: db1d4f2f-0320-4836-8f7b-9bc2af367ca3
-      isOverridable: false
       iscommand: false
       name: Splunk
       type: title
@@ -151,7 +149,6 @@ tasks:
     task:
       brand: ""
       id: a56e6b38-5c88-4401-83b8-56fa0c6c1fb7
-      isOverridable: false
       iscommand: false
       name: QRadar
       type: title
@@ -276,7 +273,6 @@ tasks:
       description: Returns 'yes' if integration brand is available and the user name
         is defined. Otherwise returns 'no'
       id: a5b9a9a6-679c-4513-89a8-3d9b2e4c735c
-      isOverridable: false
       iscommand: false
       name: Is SIEM enabled and the user name is defined?
       type: condition
@@ -324,7 +320,6 @@ tasks:
       brand: ""
       description: Search for failed logon events
       id: 945c3b67-2b94-4ac9-8c41-91e440bc38be
-      isOverridable: false
       iscommand: true
       name: Search for failed logon attempts using Splunk
       script: '|||splunk-search'
@@ -356,7 +351,6 @@ tasks:
     task:
       brand: ""
       id: 60e4a74a-763f-41bf-8720-28b90269be6b
-      isOverridable: false
       iscommand: false
       name: Azure Log Analytics
       type: title
@@ -399,7 +393,6 @@ tasks:
       brand: ""
       description: Executes an Analytics query for failed logon events.
       id: b701829c-66f0-4962-8b7f-c681f482d7ac
-      isOverridable: false
       iscommand: true
       name: Search for failed logon attempts using Azure Log Analytics
       script: '|||azure-log-analytics-execute-query'
@@ -442,7 +435,6 @@ tasks:
       brand: ""
       description: Count an array size
       id: a48173f0-6482-4f1e-8105-decc6ce27ba7
-      isOverridable: false
       iscommand: false
       name: Count failed logon from Azure Log Analytics logs
       script: CountArraySize
@@ -487,7 +479,6 @@ tasks:
       brand: ""
       description: Count an array size
       id: 925c94af-5475-4dae-8405-3a05818c4780
-      isOverridable: false
       iscommand: false
       name: Count failed logon from QRadar logs
       script: CountArraySize
@@ -529,7 +520,6 @@ tasks:
       brand: ""
       description: Count an array size
       id: 5e96a88c-e9aa-45ff-8c6b-e0f346d34f83
-      isOverridable: false
       iscommand: false
       name: Count failed logon from Splunk logs
       script: CountArraySize
@@ -576,7 +566,6 @@ tasks:
       brand: ""
       description: Check if there are results from QRadar
       id: 7d988d75-6a3d-4e33-8702-aaa6219d0cb8
-      isOverridable: false
       iscommand: false
       name: Found results from QRadar?
       type: condition
@@ -622,7 +611,6 @@ tasks:
       brand: ""
       description: Check if there are results from Splunk
       id: 0a3cbbfa-f864-4557-87e4-58461a1e96ff
-      isOverridable: false
       iscommand: false
       name: Found results from Splunk?
       type: condition
@@ -668,7 +656,6 @@ tasks:
       brand: ""
       description: Check if there are results from Azure Log Analytics
       id: 7229fa12-5d3d-4287-83d4-e641a9773069
-      isOverridable: false
       iscommand: false
       name: Found results from Azure Log Analytics?
       type: condition
@@ -696,7 +683,6 @@ tasks:
     task:
       brand: ""
       id: 3f65bbaf-fa67-4cc7-84a7-49d625b95bef
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -733,7 +719,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: 97dd0ada-f3d2-4dd8-8152-3d8349706c7d
-      isOverridable: false
       iscommand: false
       name: Set Number Of SIEM Failed Logon to Zero
       script: Set
@@ -774,7 +759,6 @@ tasks:
       brand: ""
       description: Polling command to search for events of a specific offense.
       id: f8fa6689-2d97-4d84-895d-5c923b1b6751
-      isOverridable: false
       iscommand: true
       name: Run Qradar Search
       script: '|||qradar-search-retrieve-events'
