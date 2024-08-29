@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.8.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -76,7 +77,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Cloud Enrichment - Generic
 outputs:
 - contextPath: AWS.EC2.Instances
@@ -174,7 +174,6 @@ tasks:
     task:
       brand: ""
       id: 22defffa-e0d3-4818-88f0-f06649899f77
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -228,7 +227,6 @@ tasks:
     task:
       brand: ""
       id: cb7ff971-4a63-4338-8fd0-0e3c6b383627
-      isOverridable: false
       iscommand: false
       name: Cloud Compute Enrichment - Generic
       playbookId: Cloud Compute Enrichment - Generic
@@ -257,7 +255,6 @@ tasks:
     task:
       brand: ""
       id: ca18fe4c-e928-4db8-8fb5-a00f434242ba
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -309,7 +306,6 @@ tasks:
         on Identity Access Management (IAM) in cloud environments (AWS, Azure, and
         GCP).
       id: 6112c304-54e5-4954-85d2-44b1e4e9ab75
-      isOverridable: false
       iscommand: false
       name: Cloud IAM Enrichment - Generic
       playbookId: Cloud IAM Enrichment - Generic
