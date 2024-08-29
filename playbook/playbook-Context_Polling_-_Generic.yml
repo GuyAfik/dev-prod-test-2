@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -38,7 +39,6 @@ inputs:
   required: true
   value:
     simple: "10"
-isOverridable: false
 name: Context Polling - Generic
 outputs: []
 starttaskid: "0"
@@ -60,7 +60,6 @@ tasks:
     task:
       brand: ""
       id: d66a3885-27e3-439d-8855-b5522c6dde35
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -124,7 +123,6 @@ tasks:
         2. Poll to check if the operation completed.
         3. (optional) Get the results of the operation.
       id: f6f1f1f8-71bb-4f9f-8929-9995b0574393
-      isOverridable: false
       iscommand: false
       name: GenericPolling
       playbookId: GenericPolling
@@ -153,7 +151,6 @@ tasks:
     task:
       brand: ""
       id: 4652f620-ec05-47da-800c-76426f68efab
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
