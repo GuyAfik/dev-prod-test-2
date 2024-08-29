@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.8.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -34,7 +35,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Cloud IAM Enrichment - Generic
 outputs:
 - contextPath: AWS.IAM.Users
@@ -137,7 +137,6 @@ tasks:
     task:
       brand: ""
       id: 9de5923c-c321-4257-8432-398d992279fd
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -167,7 +166,6 @@ tasks:
     task:
       brand: ""
       id: 422b1bd0-3778-47d8-8d30-c9418c3b9a35
-      isOverridable: false
       iscommand: false
       name: Azure Enrichment Done
       type: title
@@ -382,7 +380,6 @@ tasks:
       brand: ""
       description: Checks the cloud provider.
       id: b8926391-3158-4b4e-880e-4c25beb4752f
-      isOverridable: false
       iscommand: false
       name: Select cloud provider
       type: condition
@@ -420,7 +417,6 @@ tasks:
         Retrieves the properties and relationships of a user object. For more information, visit: https://docs.microsoft.com/en-us/graph/api/user-update?view=graph-rest-1.0).
         Permissions: - User.Read (Delegated) - User.Read.All (Application)
       id: f80c87c9-d081-4fb9-8902-ed4688b60faf
-      isOverridable: false
       iscommand: true
       name: Azure IAM - Get user information
       script: '|||msgraph-user-get'
@@ -458,7 +454,6 @@ tasks:
       brand: ""
       description: Retrieve the risky users history in active directory.
       id: ac99bbcf-26f3-4810-891c-bbf7df66a649
-      isOverridable: false
       iscommand: true
       name: Azure IAM - List risky user history
       script: '|||msgraph-identity-protection-risky-user-history-list'
@@ -494,7 +489,6 @@ tasks:
       brand: ""
       description: Provides a list of groups.
       id: 9ba1aabc-8faa-46ec-80c2-20f99ae5faac
-      isOverridable: false
       iscommand: true
       name: Azure IAM - List user groups
       script: '|||msgraph-groups-list-groups'
@@ -541,7 +535,6 @@ tasks:
       brand: ""
       description: Checks if MSGraph User ID exists.
       id: 817df662-98b0-4a53-809b-2bd38f28f289
-      isOverridable: false
       iscommand: false
       name: MSGraph User ID exists?
       type: condition
@@ -573,7 +566,6 @@ tasks:
     task:
       brand: ""
       id: 81c59164-eb19-4eec-815c-87a7378443f5
-      isOverridable: false
       iscommand: false
       name: 'Azure Enrichment '
       type: title
@@ -611,7 +603,6 @@ tasks:
       description: Retrieves information about the specified IAM user, including the
         user's creation date, path, unique ID, and ARN.
       id: d9ef2f89-4ea7-4552-8afd-b4daf0d04743
-      isOverridable: false
       iscommand: true
       name: AWS IAM - Get user information
       script: AWS - IAM|||aws-iam-get-user
@@ -650,7 +641,6 @@ tasks:
       description: Returns information about the access key IDs associated with the
         specified IAM user.
       id: 219490f3-8185-4975-880b-0ea73d998606
-      isOverridable: false
       iscommand: true
       name: AWS IAM - List user access keys
       script: AWS - IAM|||aws-iam-list-access-keys-for-user
@@ -688,7 +678,6 @@ tasks:
       brand: ""
       description: Lists the IAM groups that the specified IAM user belongs to.
       id: 8f0c652a-c419-4890-8b38-5916aba00faf
-      isOverridable: false
       iscommand: true
       name: AWS IAM - List user groups
       script: '|||aws-iam-list-groups-for-user'
@@ -727,7 +716,6 @@ tasks:
       description: Lists all managed policies that are attached to the specified IAM
         user.
       id: b0d79051-aeee-4d78-8ea1-7ed02bbe01ab
-      isOverridable: false
       iscommand: true
       name: AWS IAM - List user attached policies
       script: '|||aws-iam-list-attached-user-policies'
@@ -766,7 +754,6 @@ tasks:
       description: Lists the names of the inline policies embedded in the specified
         IAM user.
       id: e558a2a4-a714-4a0b-8790-77ad50c1bf23
-      isOverridable: false
       iscommand: true
       name: AWS IAM - List user inline policies
       script: '|||aws-iam-list-user-policies'
@@ -798,7 +785,6 @@ tasks:
     task:
       brand: ""
       id: 74b022cf-4364-4577-8b6c-86ea90f2c84a
-      isOverridable: false
       iscommand: false
       name: AWS Enrichment
       type: title
@@ -829,7 +815,6 @@ tasks:
     task:
       brand: ""
       id: 9a3e648b-2540-41b8-8c66-61fab9915c09
-      isOverridable: false
       iscommand: false
       name: AWS Enrichment Done
       type: title
@@ -860,7 +845,6 @@ tasks:
     task:
       brand: ""
       id: 656df064-9845-4858-8437-546c2fc64cd5
-      isOverridable: false
       iscommand: false
       name: GCP Enrichment
       type: title
@@ -917,7 +901,6 @@ tasks:
       brand: ""
       description: Checks the user type.
       id: 140c8bf9-6f93-4f30-8a67-0e4e5340abcd
-      isOverridable: false
       iscommand: false
       name: Check the user type
       type: condition
@@ -953,7 +936,6 @@ tasks:
       brand: ""
       description: Retrieve a user's details given a user key.
       id: 661bcee9-5e78-4ff6-819f-cc35c64d6a9f
-      isOverridable: false
       iscommand: true
       name: G Suite - Get user information
       script: '|||gsuite-user-get'
@@ -995,7 +977,6 @@ tasks:
       brand: ""
       description: Retrieves a paginated list of all role assignments.
       id: fb11e5f3-52e7-4198-8317-b7899c9d117c
-      isOverridable: false
       iscommand: true
       name: G Suite - List user role assinments
       script: '|||gsuite-role-assignment-list'
@@ -1037,7 +1018,6 @@ tasks:
         account information. One of the arguments: ''service_account_name'' or ''project_name''  must
         be provided.'
       id: 7cf34b5f-d865-46ae-82bd-1d5e0e28c48e
-      isOverridable: false
       iscommand: true
       name: GCP IAM - Get service account information
       script: '|||gcp-iam-service-accounts-get'
@@ -1075,7 +1055,6 @@ tasks:
       brand: ""
       description: Lists a project custom roles.
       id: e6c9ee87-eca1-4da1-8709-83a3cc50cb8d
-      isOverridable: false
       iscommand: true
       name: GCP IAM - List roles for the user's project ID
       script: '|||gcp-iam-project-role-list'
@@ -1114,7 +1093,6 @@ tasks:
         key information. One of the arguments: ''service_account_name'' or ''key_name''  must
         be provided.'
       id: b92b83a2-fcdf-41f4-81e2-a38139eadac7
-      isOverridable: false
       iscommand: true
       name: GCP IAM - List service account access keys
       script: '|||gcp-iam-service-account-keys-get'
@@ -1146,7 +1124,6 @@ tasks:
     task:
       brand: ""
       id: c638f8a0-715c-442f-8b9b-66d7457dc8d8
-      isOverridable: false
       iscommand: false
       name: GCP Enrichment Done
       type: title
@@ -1174,7 +1151,6 @@ tasks:
     task:
       brand: ""
       id: 4ecfc3d0-1868-466b-8805-ec13817e5c08
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -1220,7 +1196,6 @@ tasks:
       brand: ""
       description: Checks if the Gsuite Customer ID exists.
       id: 084173a0-9565-4d4e-899d-6c5cfc275d15
-      isOverridable: false
       iscommand: false
       name: Gsuite Customer ID exists?
       type: condition
