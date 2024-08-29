@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.1.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -105,7 +106,6 @@ inputs:
   required: false
   value:
     simple: "true"
-isOverridable: false
 name: Search And Delete Emails - Generic v2
 outputSections:
 - description: Generic group for outputs
@@ -131,7 +131,6 @@ tasks:
     task:
       brand: ""
       id: 808e9cce-8112-49d4-8624-907a6fbeb394
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -184,7 +183,6 @@ tasks:
       description: This playbook searches EWS to identify and delete emails with similar
         attributes of a malicious email.
       id: 0a7ca589-107b-48e4-8705-2becca697165
-      isOverridable: false
       iscommand: false
       name: Search And Delete Emails - EWS
       playbookName: Search And Delete Emails - EWS
@@ -213,7 +211,6 @@ tasks:
     task:
       brand: ""
       id: 88c58e53-8fe7-4ca2-8697-0ed3f67191fe
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -280,7 +277,6 @@ tasks:
         5. Gets the preview results, if specified.
         6. Deletes the search results (Hard/Soft).
       id: 86fc3213-5a75-41dc-8c9b-b924335c28a1
-      isOverridable: false
       iscommand: false
       name: O365 - Security And Compliance - Search And Delete
       playbookId: O365 - Security And Compliance - Search And Delete
@@ -686,7 +682,6 @@ tasks:
       description: Checks which integration and playbook should run the search and
         delete action, by checking the SearchAndDeleteIntegration playbook input.
       id: 421d875d-ff1a-4808-8451-228e23cd6605
-      isOverridable: false
       iscommand: false
       name: In what integration should emails be searched and deleted?
       type: condition
@@ -751,7 +746,6 @@ tasks:
       description: Checks whether a target to search and delete emails from was specified.
         Determined by the O365ExchangeLocation playbook input.
       id: 7db64c69-57c5-4457-8779-2363bcdd4714
-      isOverridable: false
       iscommand: false
       name: From where should emails be searched and deleted?
       type: condition
@@ -786,7 +780,6 @@ tasks:
       description: Allows the analyst to decide where to search for and delete the
         email - from the recipient's mailbox, or from all available mailboxes?
       id: 25801150-ef91-4ccc-8275-5ca5225fc857
-      isOverridable: false
       iscommand: false
       name: Manually decide where to search & delete the email
       type: condition
@@ -823,7 +816,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: d4e2df0d-57ad-45e8-8def-023393fdc1b3
-      isOverridable: false
       iscommand: false
       name: Set all mailboxes to be searched
       script: Set
@@ -870,7 +862,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: b1056daa-1e07-41e9-883b-19aa4fc847fa
-      isOverridable: false
       iscommand: false
       name: Set the "email to" as the mailbox to search
       script: Set
@@ -902,7 +893,6 @@ tasks:
     task:
       brand: ""
       id: eca8ae30-ebfa-4f62-82c9-5586e000e431
-      isOverridable: false
       iscommand: false
       name: Use EWS
       type: title
@@ -933,7 +923,6 @@ tasks:
     task:
       brand: ""
       id: 43de9303-2031-43bc-8c5c-0f88a25a78f4
-      isOverridable: false
       iscommand: false
       name: Use EWS
       type: title
@@ -964,7 +953,6 @@ tasks:
     task:
       brand: ""
       id: afe381a2-655b-4dd3-8b22-2561451fcee2
-      isOverridable: false
       iscommand: false
       name: Use O365
       type: title
@@ -995,7 +983,6 @@ tasks:
     task:
       brand: ""
       id: 60128cf4-a622-4411-87b3-1bb25b0b14d2
-      isOverridable: false
       iscommand: false
       name: Use O365
       type: title
@@ -1026,7 +1013,6 @@ tasks:
     task:
       brand: ""
       id: 86139d40-fef3-485f-86e9-fc99d4203c7b
-      isOverridable: false
       iscommand: false
       name: Use Gmail
       type: title
@@ -1079,7 +1065,6 @@ tasks:
     task:
       brand: ""
       id: d46dc80f-b44e-4a16-8c42-0e0645017299
-      isOverridable: false
       iscommand: false
       name: Search And Delete Emails - Gmail
       playbookId: Search And Delete Emails - Gmail
@@ -1111,7 +1096,6 @@ tasks:
     task:
       brand: ""
       id: bfa45743-9c08-4aba-8df6-cbff71d46bed
-      isOverridable: false
       iscommand: false
       name: Agari Phishing Defense
       type: title
@@ -1150,7 +1134,6 @@ tasks:
       brand: Agari Phishing Defense
       description: Remediates the suspected message.
       id: b622809c-289a-413c-8019-3d5bafda95cc
-      isOverridable: false
       iscommand: true
       name: Search And Delete Emails - Agari Phishing Defense
       script: Agari Phishing Defense|||apd-remediate-message
@@ -1193,7 +1176,6 @@ tasks:
       description: |
         Retrieves the current date and time.
       id: 0cf3ef64-05e3-4b66-8fab-3cb76afff41b
-      isOverridable: false
       iscommand: false
       name: Get time 7 days ago
       script: GetTime
@@ -1231,7 +1213,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: 868ccba1-d67f-4118-8f01-1f8cedc910ee
-      isOverridable: false
       iscommand: false
       name: Create KQL query - provided query + search last 7 days
       script: Set
@@ -1288,7 +1269,6 @@ tasks:
         provided KQL query is not already time-bounded (it does not already contain
         LastModifiedTime).
       id: 027d5ff5-7e8e-41c0-8184-b33789251d51
-      isOverridable: false
       iscommand: false
       name: Search this week only and query not already time-bounded?
       type: condition
@@ -1325,7 +1305,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: 5cbef4d7-8839-469e-8021-6e1d73ffa07e
-      isOverridable: false
       iscommand: false
       name: Set the non-modified KQL query
       script: Set
@@ -1368,7 +1347,6 @@ tasks:
       brand: ""
       description: Checks whether a KQL query is provided or not.
       id: ab3b6a6c-20f1-47c4-8bfd-68fa86a7c5a2
-      isOverridable: false
       iscommand: false
       name: KQL query provided?
       type: condition
@@ -1405,7 +1383,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: b631cc61-9aae-45ae-8e63-1fc6cba0af2a
-      isOverridable: false
       iscommand: false
       name: Create KQL query - search last 7 days
       script: Set
