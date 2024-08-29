@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -74,7 +75,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Get File Sample - Generic
 outputs:
 - contextPath: File
@@ -137,7 +137,6 @@ tasks:
     task:
       brand: ""
       id: 2f9db3d3-0254-4d38-8bce-aa2325da9194
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -187,7 +186,6 @@ tasks:
         - Get File Sample By Hash - Cylance Protect v2
         - Code42 File Download
       id: 7456030a-675f-4c46-8231-7820167addc6
-      isOverridable: false
       iscommand: false
       name: Get File Sample By Hash - Generic v3
       playbookId: Get File Sample By Hash - Generic v3
@@ -238,7 +236,6 @@ tasks:
         - PS Remote Get File Sample From Path
         - Get File Sample From Path - VMware Carbon Black EDR - Live Response API
       id: 5759c2d5-753c-4591-86f6-ff7d4647f306
-      isOverridable: false
       iscommand: false
       name: Get File Sample From Path - Generic V3
       playbookId: Get File Sample From Path - Generic V3
@@ -287,7 +284,6 @@ tasks:
       description: This playbook checks whether a file has an extension that supports
         unzipping, and unzips the file.
       id: 0de5f36a-ceca-4ef5-8fc5-8f3268aed0fe
-      isOverridable: false
       iscommand: false
       name: Unzip File
       playbookId: Unzip File
@@ -336,7 +332,6 @@ tasks:
       description: Checks whether retrieved files should be unzipped according to
         the playbook inputs.
       id: 0ef94b0c-f547-471f-8af9-2e75834b30ba
-      isOverridable: false
       iscommand: false
       name: Should files be unzipped?
       type: condition
@@ -364,7 +359,6 @@ tasks:
     task:
       brand: ""
       id: 76635ebc-b129-40a7-804a-6519ff1b15dc
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
