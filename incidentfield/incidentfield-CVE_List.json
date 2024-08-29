@@ -41,7 +41,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "CVE List",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
