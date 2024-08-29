@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -40,6 +39,7 @@ inputs:
     complex:
       accessor: attachmentname
       root: incident
+isOverridable: false
 name: Search And Delete Emails - Generic
 outputs: []
 starttaskid: "0"
@@ -61,6 +61,7 @@ tasks:
     task:
       brand: ""
       id: 808e9cce-8112-49d4-8624-907a6fbeb394
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -113,6 +114,7 @@ tasks:
       description: This playbook searches EWS to identify and delete emails with similar
         attributes of a malicious email.
       id: 2c636e7e-8de1-4535-8c36-454b2c36cc75
+      isOverridable: false
       iscommand: false
       name: Search And Delete Emails - EWS
       playbookName: Search And Delete Emails - EWS
@@ -141,6 +143,7 @@ tasks:
     task:
       brand: ""
       id: 88c58e53-8fe7-4ca2-8697-0ed3f67191fe
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
