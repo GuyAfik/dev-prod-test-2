@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -20,7 +21,6 @@ inputs:
   playbookInputQuery: null
   required: true
   value: {}
-isOverridable: false
 name: Wait Until Datetime
 outputs: []
 starttaskid: "0"
@@ -42,7 +42,6 @@ tasks:
     task:
       brand: ""
       id: 5fbf5212-c63a-4baa-8a87-2d92e2943aa0
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -84,7 +83,6 @@ tasks:
       brand: ""
       description: Checks whether the DateTimeToWaitUntil input was configured.
       id: d21be7af-0944-4dad-8329-76a247d3bcae
-      isOverridable: false
       iscommand: false
       name: Were a future date and time configured?
       type: condition
@@ -115,7 +113,6 @@ tasks:
     task:
       brand: ""
       id: cdcaeadb-f4d9-4faa-8b5a-3bf0ed91ff6d
-      isOverridable: false
       iscommand: false
       name: No Future Datetime
       type: title
@@ -164,7 +161,6 @@ tasks:
       description: Determines if the datetime to wait until is now, in the future
         or in the past.
       id: dfa02b41-5472-4879-8259-fec9aeacbe53
-      isOverridable: false
       iscommand: false
       name: For when is the datetime specified?
       type: condition
@@ -222,7 +218,6 @@ tasks:
       description: Calculates the amount of time, in minutes, to wait until the datetime
         is reached.
       id: bb5fa066-c4a9-40ab-8281-7b552f83ff4a
-      isOverridable: false
       iscommand: false
       name: Calculate time to wait
       script: CalculateTimeDifference
@@ -269,7 +264,6 @@ tasks:
       brand: ""
       description: Pauses the execution for the necessary amount of time.
       id: 4cb07489-19f4-4756-8c0b-e9fac2d97124
-      isOverridable: false
       iscommand: false
       name: Wait the time needed
       script: Sleep
@@ -298,7 +292,6 @@ tasks:
     task:
       brand: ""
       id: 72b956fc-c67d-49a2-8b74-faac5b59574c
-      isOverridable: false
       iscommand: false
       name: Continue
       type: title
@@ -334,7 +327,6 @@ tasks:
       brand: ""
       description: Retrieves the current date and time.
       id: 2a4b6cf6-c4fc-44dd-818f-b2f7d53ac3a1
-      isOverridable: false
       iscommand: false
       name: Get current time
       script: GetTime
@@ -373,7 +365,6 @@ tasks:
       brand: ""
       description: Saves the current time as the time to start waiting from.
       id: 250a61da-b6ee-4489-89b7-8a4e76495f05
-      isOverridable: false
       iscommand: false
       name: Set the from-time to the current time
       script: Set
