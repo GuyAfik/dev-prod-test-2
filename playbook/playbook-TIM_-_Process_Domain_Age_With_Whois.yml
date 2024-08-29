@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.5.15
+    isoverridable: false
+    itemVersion: 1.5.16
     packID: Whois
     packName: Whois
     packPropagationLabels:
@@ -44,7 +45,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: TIM - Process Domain Age With Whois
 outputs:
 - contextPath: NewDomains
@@ -80,7 +80,6 @@ tasks:
     task:
       brand: ""
       id: b5dcd092-6098-4462-8098-93767c879127
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -107,7 +106,6 @@ tasks:
     task:
       brand: ""
       id: 57efd3b2-b4d3-4d10-8cba-f34a35a35ea9
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -149,7 +147,6 @@ tasks:
       description: |
         Retrieves the current date and time.
       id: 855b93ac-bf59-4e64-869d-2a10ee19b6eb
-      isOverridable: false
       iscommand: false
       name: Calculate timestamp to compare
       script: GetTime
@@ -191,7 +188,6 @@ tasks:
     task:
       brand: ""
       id: f17738b2-b782-483d-8408-251a67da11be
-      isOverridable: false
       iscommand: false
       name: Was a domain value provided?
       type: condition
@@ -230,7 +226,6 @@ tasks:
       brand: ""
       description: Compare a single timestamp to a list of timestamps;
       id: 91fe3ce8-5148-4d26-8aab-a816ab33124f
-      isOverridable: false
       iscommand: false
       name: Compare domain creation time to input
       script: TimeStampCompare
@@ -275,7 +270,6 @@ tasks:
     task:
       brand: ""
       id: 5f8abed8-9254-4f70-82ab-04a8afd3394a
-      isOverridable: false
       iscommand: false
       name: Are there domains that were created after the tested time?
       type: condition
@@ -327,7 +321,6 @@ tasks:
       brand: ""
       description: Sets a value into the context with the given context key
       id: 3b540998-d0db-4efe-8eb1-932288102468
-      isOverridable: false
       iscommand: false
       name: Set new times
       script: Set
@@ -381,7 +374,6 @@ tasks:
       brand: ""
       description: Sets a value into the context with the given context key
       id: 2f57103b-e23c-4c72-8df1-f3fbfb4f570f
-      isOverridable: false
       iscommand: false
       name: Set new domains
       script: Set
@@ -421,7 +413,6 @@ tasks:
       brand: ""
       description: Sets a value into the context with the given context key
       id: 08d2ef21-b0b5-4283-8ef3-4063e69eaea8
-      isOverridable: false
       iscommand: false
       name: Set Results
       script: Set
@@ -482,7 +473,6 @@ tasks:
       brand: ""
       description: Sets a value into the context with the given context key
       id: 3d41f234-7930-4f05-802a-0f16e181ec7a
-      isOverridable: false
       iscommand: false
       name: Set not new times
       script: Set
@@ -535,7 +525,6 @@ tasks:
     task:
       brand: ""
       id: 9e3cae13-9835-4e9b-800c-22f26e4a9808
-      isOverridable: false
       iscommand: false
       name: Are there domains that were created before the tested time?
       type: condition
@@ -588,7 +577,6 @@ tasks:
       brand: ""
       description: Sets a value into the context with the given context key
       id: 5f3d2d17-849a-479a-8a67-c6a6acf578e0
-      isOverridable: false
       iscommand: false
       name: Set non new domains
       script: Set
@@ -620,7 +608,6 @@ tasks:
     task:
       brand: ""
       id: 9097f11d-3b16-4cc5-8ff2-4b9fc8270915
-      isOverridable: false
       iscommand: false
       name: New domains
       type: title
@@ -651,7 +638,6 @@ tasks:
     task:
       brand: ""
       id: c7c9f728-62d4-4025-8af8-4616331dbaaf
-      isOverridable: false
       iscommand: false
       name: Non new domains
       type: title
@@ -682,7 +668,6 @@ tasks:
     task:
       brand: ""
       id: 6933c0d3-3a96-4d85-8428-2ac937274f06
-      isOverridable: false
       iscommand: false
       name: Domain not resolved by Whois
       type: title
@@ -726,7 +711,6 @@ tasks:
     task:
       brand: ""
       id: 644f08f8-d551-46e2-8407-4f7166cbef3c
-      isOverridable: false
       iscommand: false
       name: Are there domains without Whois query results?
       type: condition
@@ -765,7 +749,6 @@ tasks:
       brand: Builtin
       description: Tag domains with no Whois result.
       id: 35ee6a01-47a6-45e6-80df-d32a91a8c5f8
-      isOverridable: false
       iscommand: true
       name: Tag domain with no Whois resolution
       script: Builtin|||appendIndicatorField
@@ -805,7 +788,6 @@ tasks:
       brand: Builtin
       description: Tag domain as new.
       id: e5feb9c4-141d-4674-8206-b4c7bf72895d
-      isOverridable: false
       iscommand: true
       name: Tag domain as new
       script: Builtin|||appendIndicatorField
@@ -858,7 +840,6 @@ tasks:
       brand: ""
       description: Sets a value into the context with the given context key
       id: 58ae4e3b-0ca4-4d7f-85ea-eafe95629a21
-      isOverridable: false
       iscommand: false
       name: Set domains without Whois results
       script: Set
@@ -910,7 +891,6 @@ tasks:
     task:
       brand: ""
       id: 0742873b-a508-4dc3-8f95-ca6a3214a257
-      isOverridable: false
       iscommand: false
       name: Was a time to compare value provided?
       type: condition
@@ -941,7 +921,6 @@ tasks:
     task:
       brand: ""
       id: 32b1cba2-a442-487d-8769-c5085340763a
-      isOverridable: false
       iscommand: false
       name: No compare time was provided
       type: title
@@ -984,7 +963,6 @@ tasks:
       brand: ""
       description: Sets a value into the context with the given context key
       id: c5039e71-fa41-43d1-8cc6-7dfd43ec42ca
-      isOverridable: false
       iscommand: false
       name: Set domains that couldnt be processed
       script: Set
