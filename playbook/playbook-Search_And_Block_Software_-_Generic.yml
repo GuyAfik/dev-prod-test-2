@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.9.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -34,7 +35,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Search And Block Software - Generic
 outputs: []
 starttaskid: "0"
@@ -56,7 +56,6 @@ tasks:
     task:
       brand: ""
       id: db561466-7b5a-4cea-8350-4a871a84518c
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -103,7 +102,6 @@ tasks:
     task:
       brand: ""
       id: c1f24703-cccd-4aa8-894a-24936aeccb8f
-      isOverridable: false
       iscommand: false
       name: Has filename and timeframe from inputs?
       type: condition
@@ -186,7 +184,6 @@ tasks:
     task:
       brand: ""
       id: 1d034069-83cc-4e4b-8d6c-d2faec53535a
-      isOverridable: false
       iscommand: false
       name: Please provide a software name to block and a timeframe
       type: collection
@@ -218,7 +215,6 @@ tasks:
     task:
       brand: ""
       id: 7b4a666f-b896-4219-81f5-6af0f8aed8f6
-      isOverridable: false
       iscommand: false
       name: Search And Block Software
       type: title
@@ -337,7 +333,6 @@ tasks:
         by a given image file name using Cortex XDR XQL Engine. The analyst can then
         choose the files to block.
       id: 51fcc25e-607e-43af-899b-d4e19570ddd0
-      isOverridable: false
       iscommand: false
       name: Cortex XDR - Search And Block Software - XQL Engine
       playbookName: Cortex XDR - Search And Block Software - XQL Engine
@@ -366,7 +361,6 @@ tasks:
     task:
       brand: ""
       id: 72d74415-fffc-4a35-88cc-2c11c3955b0c
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -490,7 +484,6 @@ tasks:
         by a given image file name using Microsoft Defender For Endpoint. The analyst
         can then choose the files to block.
       id: 6c6d4e63-db04-452b-8862-29e7093753f5
-      isOverridable: false
       iscommand: false
       name: MDE - Search And Block Software
       playbookName: MDE - Search And Block Software
@@ -531,7 +524,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: 11d21beb-8d7b-44c3-8b16-22a685bd134d
-      isOverridable: false
       iscommand: false
       name: Delete Context
       script: DeleteContext
