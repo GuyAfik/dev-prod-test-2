@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -31,7 +32,6 @@ inputs:
   required: true
   value:
     simple: "10"
-isOverridable: false
 name: Indicator Registration Polling - Generic
 outputs: []
 sourceplaybookid: Context Polling - Generic
@@ -54,7 +54,6 @@ tasks:
     task:
       brand: ""
       id: d66a3885-27e3-439d-8855-b5522c6dde35
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -120,7 +119,6 @@ tasks:
         2. Poll to check if the operation completed.
         3. (optional) Get the results of the operation.
       id: b848db18-f1ef-4c37-8341-f44c1fb2fa84
-      isOverridable: false
       iscommand: false
       name: Poll Indicators
       playbookId: GenericPolling
@@ -149,7 +147,6 @@ tasks:
     task:
       brand: ""
       id: 4652f620-ec05-47da-800c-76426f68efab
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
