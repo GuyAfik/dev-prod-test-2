@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.10.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -31,7 +32,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Get Cloud Account Owner - Generic
 outputs:
 - contextPath: CloudAccountOwner
@@ -56,7 +56,6 @@ tasks:
     task:
       brand: ""
       id: c935bfae-c976-43ee-8274-70156b9278f2
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -99,7 +98,6 @@ tasks:
     task:
       brand: ""
       id: dc9e08e9-916e-44d0-8432-9a604273de39
-      isOverridable: false
       iscommand: false
       name: Is there an account ID?
       type: condition
@@ -159,7 +157,6 @@ tasks:
     task:
       brand: ""
       id: c5fbe8bf-5366-4f91-8a7e-570e660ad593
-      isOverridable: false
       iscommand: false
       name: Check CSP
       type: condition
@@ -194,7 +191,6 @@ tasks:
       brand: ""
       description: Retrieves the IAM access control policy for the specified project.
       id: 812e2d22-75d6-4a66-8726-fc46b7964d9a
-      isOverridable: false
       iscommand: true
       name: GCP - get project's policy
       script: '|||gcp-iam-project-iam-policy-get'
@@ -248,7 +244,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.12/Cortex-XSOAR-Administrator-Guide/Automations
       id: 41bba9c6-e8d1-497f-87b3-3afb623c8204
-      isOverridable: false
       iscommand: false
       name: Set owner
       script: SetAndHandleEmpty
@@ -286,7 +281,6 @@ tasks:
         project''s information. One of the following arguments must be provided: "parent"
         or "project_name".'
       id: e1035ce5-63ee-4801-854b-8c9871d780b9
-      isOverridable: false
       iscommand: true
       name: Get project
       script: '|||gcp-iam-projects-get'
@@ -330,7 +324,6 @@ tasks:
     task:
       brand: ""
       id: 3ae5ad32-e46a-41a1-801a-ea32a2c5649d
-      isOverridable: false
       iscommand: false
       name: Project found?
       type: condition
@@ -358,7 +351,6 @@ tasks:
     task:
       brand: ""
       id: ebc83fc6-88ee-41df-84ca-c08567bd1214
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -397,7 +389,6 @@ tasks:
       brand: ""
       description: List accounts.
       id: afa1d5ed-0c22-4b0c-8914-441882478c02
-      isOverridable: false
       iscommand: true
       name: List Prisma Cloud Accounts
       script: '|||prisma-cloud-account-list'
@@ -445,7 +436,6 @@ tasks:
     task:
       brand: ""
       id: 8553270b-6049-4971-8b80-3de9702448e3
-      isOverridable: false
       iscommand: false
       name: Account found?
       type: condition
@@ -481,7 +471,6 @@ tasks:
       brand: ""
       description: Get the owners of the provided accounts.
       id: e5925130-f7d9-4042-8bc5-188d0a74cdc5
-      isOverridable: false
       iscommand: true
       name: Get account owner
       script: '|||prisma-cloud-account-owner-list'
@@ -526,7 +515,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.12/Cortex-XSOAR-Administrator-Guide/Automations
       id: 93e48465-cb9e-4f9f-87f8-12750dda30f3
-      isOverridable: false
       iscommand: false
       name: Set owner
       script: SetAndHandleEmpty
@@ -570,7 +558,6 @@ tasks:
     task:
       brand: ""
       id: 320b2294-4133-420c-844c-9fbce6c21bf7
-      isOverridable: false
       iscommand: false
       name: Is there a provider?
       type: condition
