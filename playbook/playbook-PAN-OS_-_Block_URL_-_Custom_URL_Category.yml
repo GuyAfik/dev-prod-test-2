@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -72,7 +73,6 @@ inputs:
   required: false
   value:
     simple: pre-rulebase
-isOverridable: false
 name: PAN-OS - Block URL - Custom URL Category
 outputs: []
 starttaskid: "0"
@@ -94,7 +94,6 @@ tasks:
     task:
       brand: ""
       id: b04e828c-66a7-4f40-8753-90ba9a20ccf2
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -153,7 +152,6 @@ tasks:
     task:
       brand: ""
       id: e12beb96-60f4-4279-8122-884f57440b1e
-      isOverridable: false
       iscommand: false
       name: Is Palo Alto Networks PAN-OS enabled?
       type: condition
@@ -195,7 +193,6 @@ tasks:
     task:
       brand: ""
       id: d8aa9ca9-1af0-4c39-81b4-46c18e53167b
-      isOverridable: false
       iscommand: false
       name: Is there a URL to block?
       type: condition
@@ -251,7 +248,6 @@ tasks:
       brand: ""
       description: Creates a custom URL category
       id: 2aeda206-4805-4701-8e03-baea02453361
-      isOverridable: false
       iscommand: true
       name: PAN-OS - Create Custom URL Category
       script: '|||pan-os-create-custom-url-category'
@@ -308,7 +304,6 @@ tasks:
       description: Creates a custom block policy rule to block communication to URLs
         in this category.
       id: a76fc659-c352-4025-88c6-1dff4bc36b6d
-      isOverridable: false
       iscommand: true
       name: PAN-OS - Block Malicious URL Category
       script: '|||pan-os-custom-block-rule'
@@ -337,7 +332,6 @@ tasks:
     task:
       brand: ""
       id: 4d893660-9b68-4b75-883f-6624620fb454
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -377,7 +371,6 @@ tasks:
       brand: ""
       description: Returns information for a specified custom URL category
       id: 287ee829-b825-42c7-8566-fe61135f7087
-      isOverridable: false
       iscommand: true
       name: PAN-OS - Get Custom URL Category
       script: '|||pan-os-get-custom-url-category'
@@ -423,7 +416,6 @@ tasks:
     task:
       brand: ""
       id: 0519c3cc-452b-4c33-8fc0-45e60f6edcb9
-      isOverridable: false
       iscommand: false
       name: Malicious URLs already exist in the Custom URL Category?
       type: condition
@@ -464,7 +456,6 @@ tasks:
     task:
       brand: ""
       id: 1d9d896f-0796-4e86-8dd9-d6072875a535
-      isOverridable: false
       iscommand: false
       name: Custom URL Category exists?
       type: condition
@@ -514,7 +505,6 @@ tasks:
       brand: ""
       description: Add sites to, or remove sites from, a custom URL category
       id: 54a0f680-1ec6-4843-8611-028d029f584c
-      isOverridable: false
       iscommand: true
       name: PAN-OS - Add malicious URLs to Custom URL Category
       script: '|||pan-os-edit-custom-url-category'
@@ -546,7 +536,6 @@ tasks:
     task:
       brand: ""
       id: 1a6f474c-5f1a-4408-8bbc-25d7e892933f
-      isOverridable: false
       iscommand: false
       name: PAN-OS Commit Configuration
       playbookId: PAN-OS Commit Configuration
@@ -578,7 +567,6 @@ tasks:
     task:
       brand: ""
       id: de76b9d7-bb2a-4757-89ee-9d906a278683
-      isOverridable: false
       iscommand: false
       name: PAN-OS Commit Configuration
       playbookId: PAN-OS Commit Configuration
@@ -624,7 +612,6 @@ tasks:
     task:
       brand: ""
       id: 80060245-606b-4c59-8baa-c985a309745f
-      isOverridable: false
       iscommand: false
       name: AutoCommit defined?
       type: condition
@@ -655,7 +642,6 @@ tasks:
     task:
       brand: ""
       id: bc336c13-48d4-4f99-8225-9a6a53af8861
-      isOverridable: false
       iscommand: false
       name: Commit PAN-OS Instance manually
       type: regular
@@ -700,7 +686,6 @@ tasks:
     task:
       brand: ""
       id: 3c782409-7469-45c5-80e0-c95308ad57bf
-      isOverridable: false
       iscommand: false
       name: AutoCommit defined?
       type: condition
@@ -731,7 +716,6 @@ tasks:
     task:
       brand: ""
       id: 73abf18f-a70f-4c67-81a3-3e9724cc9c5e
-      isOverridable: false
       iscommand: false
       name: Commit PAN-OS Instance manually
       type: regular
@@ -787,7 +771,6 @@ tasks:
       description: Creates a custom block policy rule to block communication to URLs
         in this category.
       id: 42127c8f-922d-4c5c-8b7a-4e428e6b2f11
-      isOverridable: false
       iscommand: true
       name: PAN-OS - Block Malicious URL Category
       script: '|||pan-os-custom-block-rule'
@@ -819,7 +802,6 @@ tasks:
     task:
       brand: ""
       id: ae0d8023-81e3-4c95-8ccb-08f02de687e7
-      isOverridable: false
       iscommand: false
       name: Commit PAN-OS Instance manually
       type: regular
@@ -853,7 +835,6 @@ tasks:
         as Panorama, will also push the Policies to the specified Device Group in
         the instance. "
       id: b20b0525-f692-4321-8b43-2e9f18de1073
-      isOverridable: false
       iscommand: false
       name: PAN-OS Commit Configuration
       playbookId: PAN-OS Commit Configuration
