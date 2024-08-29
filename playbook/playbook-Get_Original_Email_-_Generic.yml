@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -15,7 +16,6 @@ description: Deprecated. Use the "Get Original Email - Generic v2" playbook unde
   the "Phishing" pack instead.
 id: get_original_email_-_generic
 inputs: []
-isOverridable: false
 name: Get Original Email - Generic
 outputs:
 - contextPath: Email
@@ -70,7 +70,6 @@ tasks:
     task:
       brand: ""
       id: d7920fee-8ada-4d48-8197-2e08d19a54dc
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -97,7 +96,6 @@ tasks:
     task:
       brand: ""
       id: b52aade3-aa90-4343-8417-d4aa26803d62
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -168,7 +166,6 @@ tasks:
 
         You must have the necessary permissions in your Gmail service to execute global search: Google Apps Domain-Wide Delegation of Authority
       id: ff2153f9-61b9-43ed-8e5f-ca84225d8c1d
-      isOverridable: false
       iscommand: false
       name: Get Original Email - Gmail
       playbookName: Get Original Email - Gmail
@@ -222,7 +219,6 @@ tasks:
 
         You must have the necessary permissions in the EWS integration to execute global search: eDiscovery
       id: 5540bb6e-e237-464e-8d65-0ff7c98881f3
-      isOverridable: false
       iscommand: false
       name: Get Original Email - EWS
       playbookName: Get Original Email - EWS
