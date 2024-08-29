@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.5.15
+    isoverridable: false
+    itemVersion: 1.5.16
     packID: Whois
     packName: Whois
     packPropagationLabels:
@@ -28,7 +29,6 @@ inputs:
   required: false
   value:
     simple: "True"
-isOverridable: false
 name: TIM - Process Domains With Whois
 outputs:
 - contextPath: DomainsNotApproved
@@ -70,7 +70,6 @@ tasks:
     task:
       brand: ""
       id: 433dce95-7704-43e4-8a24-aab3ce6d0b7a
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -118,7 +117,6 @@ tasks:
     task:
       brand: ""
       id: 4377baae-b28b-4ed3-88eb-92739f774496
-      isOverridable: false
       iscommand: false
       name: Are there query results?
       type: condition
@@ -146,7 +144,6 @@ tasks:
     task:
       brand: ""
       id: 3e91d851-7939-4aae-8eaf-44824d0de234
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -198,7 +195,6 @@ tasks:
       brand: ""
       description: Enrich domains with data from the whois script.
       id: f20880ef-0dc5-48f0-8e4d-7b6f365ae65b
-      isOverridable: false
       iscommand: true
       name: Run Whois on domain indicators
       script: '|||whois'
@@ -243,7 +239,6 @@ tasks:
     task:
       brand: ""
       id: 96773908-372c-4daa-8d9e-15eddee6e4dc
-      isOverridable: false
       iscommand: false
       name: Was the registrant check enabled?
       type: condition
@@ -285,7 +280,6 @@ tasks:
         XSOAR list of approved registrants provided in the inputs. A registrant is
         the company or entity that owns the domain.
       id: 71774b85-6fd5-4762-8c28-bd64d3527b6a
-      isOverridable: false
       iscommand: false
       name: TIM - Process Domain Registrant With Whois
       playbookId: TIM - Process Domain Registrant With Whois
@@ -330,7 +324,6 @@ tasks:
     task:
       brand: ""
       id: ba4eea74-f034-4d54-8082-8279783819d6
-      isOverridable: false
       iscommand: false
       name: Was the domain creation date check enabled?
       type: condition
@@ -377,7 +370,6 @@ tasks:
         creation time value provided by Whois. The domains are outputted accordingly
         if they were created before or after the compared time, respectively.
       id: c3687b9a-158f-4fbe-89ec-3ae97d61a750
-      isOverridable: false
       iscommand: false
       name: TIM - Process Domain Age With Whois
       playbookId: TIM - Process Domain Age With Whois
@@ -438,7 +430,6 @@ tasks:
     task:
       brand: ""
       id: 73ce68b3-5868-401b-8d1d-f476272d3b0c
-      isOverridable: false
       iscommand: false
       name: Is Whois enabled?
       type: condition
