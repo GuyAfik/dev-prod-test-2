@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -93,7 +94,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: PAN-OS DAG Configuration
 outputs: []
 sourceplaybookid: PAN-OS DAG Configuration
@@ -116,7 +116,6 @@ tasks:
     task:
       brand: ""
       id: 5ee527a7-506f-4f02-88c0-c8a2701138cd
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -176,7 +175,6 @@ tasks:
       brand: ""
       description: Checks if there is an active instance of PAN-OS enabled.
       id: e016bd2c-ae83-4cd4-878b-097fd9462b86
-      isOverridable: false
       iscommand: false
       name: Is PAN-OS integration enabled?
       type: condition
@@ -208,7 +206,6 @@ tasks:
       brand: ""
       description: Lists all address groups in PAN-OS.
       id: 6abdb166-ece1-4eaf-8b41-f184c1f80352
-      isOverridable: false
       iscommand: true
       name: List Address Groups
       script: '|||pan-os-list-address-groups'
@@ -258,7 +255,6 @@ tasks:
       brand: ""
       description: Checks if the given tag exists in the address groups.
       id: 6523233b-4db1-4691-8ce8-51803456138b
-      isOverridable: false
       iscommand: false
       name: Check if tag exists in address groups
       type: condition
@@ -295,7 +291,6 @@ tasks:
       brand: ""
       description: Registers IP addresses to a tag.
       id: 08979ffd-bc11-4816-8464-78d1a3850280
-      isOverridable: false
       iscommand: true
       name: Register IP address to a tag
       script: '|||pan-os-register-ip-tag'
@@ -324,7 +319,6 @@ tasks:
     task:
       brand: ""
       id: 7686cb45-06bb-4891-8aeb-8ff9b29f1fbf
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -363,7 +357,6 @@ tasks:
       brand: ""
       description: Creates an address group. Can be "static" or "dynamic".
       id: 4fe7d7db-5a12-4db3-8e42-b97a9c615044
-      isOverridable: false
       iscommand: true
       name: Create Address Group
       script: '|||pan-os-create-address-group'
@@ -397,7 +390,6 @@ tasks:
       description: Allows the analyst to manually commit the changes. This will be
         operational if auto-commit is "false".
       id: ec9cdad5-afdf-46c8-8255-c3e6091753b5
-      isOverridable: false
       iscommand: false
       name: Manually commit
       type: regular
@@ -436,7 +428,6 @@ tasks:
         as Panorama, it also pushes the Policies to the specified Device Group in
         the instance.
       id: 26ba4584-16ba-48c3-8566-0a044ed15c60
-      isOverridable: false
       iscommand: false
       name: PAN-OS Commit Configuration
       playbookId: PAN-OS Commit Configuration
@@ -479,7 +470,6 @@ tasks:
       description: Checks if the values provided in arguments are equal. If either
         of the arguments are missing, "no" is returned.
       id: 9c646c84-8ba3-4f49-8028-17e466d6f10e
-      isOverridable: false
       iscommand: false
       name: Is auto-commit defined?
       script: AreValuesEqual
@@ -544,7 +534,6 @@ tasks:
     task:
       brand: ""
       id: 987cb459-479b-4011-85dc-0403306d3eb0
-      isOverridable: false
       iscommand: false
       name: PAN-OS - Create Or Edit Rule
       playbookId: PAN-OS - Create Or Edit Rule
