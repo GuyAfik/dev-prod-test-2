@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -58,7 +59,6 @@ inputs:
   required: true
   value:
     simple: "False"
-isOverridable: false
 name: URL Enrichment - Generic v2
 outputs:
 - contextPath: URL
@@ -132,7 +132,6 @@ tasks:
     task:
       brand: ""
       id: e1a236ab-b35b-4b70-84a7-3ca08b9bbe95
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -180,7 +179,6 @@ tasks:
       brand: ""
       description: Checks whether there is at least one URL to enrich.
       id: 2e1b93fe-512d-4fba-80dd-2912bf3382f5
-      isOverridable: false
       iscommand: false
       name: Is there a URL to enrich?
       type: condition
@@ -208,7 +206,6 @@ tasks:
     task:
       brand: ""
       id: 7956570c-4a34-462b-84aa-0f8c6d01cf43
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -264,7 +261,6 @@ tasks:
       description: Checks if there is an active instance of the Rasterize integration
         enabled.
       id: 426d5e5a-76ec-4310-8157-e3ce1795f88f
-      isOverridable: false
       iscommand: false
       name: 'Is Rasterize integration enabled? '
       script: Exists
@@ -304,7 +300,6 @@ tasks:
       brand: Rasterize
       description: Gets a screenshot of the URL page.
       id: 13c4e2ea-abb5-49b0-8139-79ba102250c7
-      isOverridable: false
       iscommand: true
       name: Get URL screenshot
       script: Rasterize|||rasterize
@@ -355,7 +350,6 @@ tasks:
       description: Checks if the playbook's Rasterize input is set to "True", which
         determines whether screenshots of the URLs are created.
       id: 71af55e1-a11a-42f9-84f6-ce3ce93e17ce
-      isOverridable: false
       iscommand: false
       name: Capture screenshots of the URL?
       type: condition
@@ -386,7 +380,6 @@ tasks:
     task:
       brand: ""
       id: 7fc4755c-5a08-4f90-8bab-12c892b21df4
-      isOverridable: false
       iscommand: false
       name: URL Screenshots
       type: title
@@ -417,7 +410,6 @@ tasks:
     task:
       brand: ""
       id: 11224752-fee9-4a8f-82c0-5af370081779
-      isOverridable: false
       iscommand: false
       name: URL Verification
       type: title
@@ -456,7 +448,6 @@ tasks:
       brand: ""
       description: Verify URL SSL certificate.
       id: ab4dd806-764c-4b25-8e34-98b9a0fc87f7
-      isOverridable: false
       iscommand: false
       name: Verify SSL for URLs
       script: URLSSLVerification
@@ -505,7 +496,6 @@ tasks:
       description: Checks if the playbook's VerifyURL input is set to "True", to determine
         whether to perform SSL verification on the URLs.
       id: 0a60d379-a6c4-449e-87e2-4939b8d0ad13
-      isOverridable: false
       iscommand: false
       name: Verify URLs?
       type: condition
@@ -536,7 +526,6 @@ tasks:
     task:
       brand: ""
       id: 395ad908-d5b6-4449-8665-b085546d0d42
-      isOverridable: false
       iscommand: false
       name: No URLs
       type: title
@@ -567,7 +556,6 @@ tasks:
     task:
       brand: ""
       id: 704516ae-95d9-4ef5-8772-1958046fcac7
-      isOverridable: false
       iscommand: false
       name: URL Reputation
       type: title
@@ -605,7 +593,6 @@ tasks:
       brand: ""
       description: Checks the reputation of a URL.
       id: 66cd353d-652e-4786-8d2e-af0fbd9c63e7
-      isOverridable: false
       iscommand: true
       name: Check Reputation
       script: '|||url'
@@ -653,7 +640,6 @@ tasks:
       brand: ""
       description: Check if should run URL reputation command
       id: e0db6ab1-2c0e-4859-84eb-e764c3fd01e5
-      isOverridable: false
       iscommand: false
       name: Should use !url command?
       type: condition
