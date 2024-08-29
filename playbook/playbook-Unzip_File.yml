@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -33,7 +34,6 @@ inputs:
   required: false
   value:
     simple: 7z
-isOverridable: false
 name: Unzip File
 outputs:
 - contextPath: ExtractedFiles
@@ -61,7 +61,6 @@ tasks:
     task:
       brand: ""
       id: 1a15af2c-7e11-4bd8-8011-08b69036846c
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -91,7 +90,6 @@ tasks:
     task:
       brand: ""
       id: 2bd8c6c6-8e56-428a-8dd8-e4e05dd8f6fa
-      isOverridable: false
       iscommand: false
       name: No File / Unsupported File
       type: title
@@ -188,7 +186,6 @@ tasks:
       description: 'Checks whether there is a zipped file in the incident. The following
         extensions are checked: 7z, gzip, tar, zip.'
       id: c5f41b44-aa87-40bb-81d7-16d14591a0b3
-      isOverridable: false
       iscommand: false
       name: Is there a zipped file?
       type: condition
@@ -234,7 +231,6 @@ tasks:
       description: Unzip a file using fileName or entryID to specify a file. Unzipped
         files will be loaded to the War Room and names will be put into the context.
       id: a0822541-24c7-4c65-86f3-6afc288bbb2e
-      isOverridable: false
       iscommand: false
       name: Unzip file
       script: UnzipFile
@@ -324,7 +320,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: ee6e7c90-b233-4a54-8600-8f5e531fb4bd
-      isOverridable: false
       iscommand: false
       name: Save zip file in a separate key
       script: Set
@@ -356,7 +351,6 @@ tasks:
     task:
       brand: ""
       id: 51a28574-428c-401e-8ddf-608584b2190d
-      isOverridable: false
       iscommand: false
       name: Zip Extraction
       type: title
@@ -384,7 +378,6 @@ tasks:
     task:
       brand: ""
       id: 5cc5f04e-34dd-490b-8d2c-370404c650d6
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
