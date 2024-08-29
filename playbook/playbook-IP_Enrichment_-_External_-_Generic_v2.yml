@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -101,7 +102,6 @@ inputs:
   required: false
   value:
     simple: "False"
-isOverridable: false
 name: IP Enrichment - External - Generic v2
 outputs:
 - contextPath: IP
@@ -207,7 +207,6 @@ tasks:
     task:
       brand: ""
       id: 6635b28b-bdf1-42cf-88bc-14ad75e9ebe0
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -275,7 +274,6 @@ tasks:
       brand: ""
       description: Checks whether the "InRange" attribute is set to "no".
       id: c8d8906f-cbf4-4ddd-84e6-1e55570d00a0
-      isOverridable: false
       iscommand: false
       name: Is there an external IP address?
       type: condition
@@ -303,7 +301,6 @@ tasks:
     task:
       brand: ""
       id: 8149db7c-af8d-41e2-85ee-c9fe2efd5040
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -335,7 +332,6 @@ tasks:
     task:
       brand: ""
       id: 1734f24b-0b27-431e-81b6-89997f08894c
-      isOverridable: false
       iscommand: false
       name: Enrich external IP addresses
       type: title
@@ -381,7 +377,6 @@ tasks:
         internal, sets the \"InRange\" attribute to \"yes\".\nIf external, sets the
         \"InRange\" attribute to \"no\". "
       id: ae5e40bb-17cb-4470-84bc-4801e67b1cae
-      isOverridable: false
       iscommand: false
       name: Determine whether the IP address is internal or external
       script: IsIPInRanges
@@ -428,7 +423,6 @@ tasks:
       brand: ""
       description: Checks whether the "ResolveIP" parameter is set to "True".
       id: 607dafbe-8ee1-47ad-810a-dacf03842673
-      isOverridable: false
       iscommand: false
       name: Resolve the IP address?
       type: condition
@@ -487,7 +481,6 @@ tasks:
       brand: ""
       description: Convert the IP address to a hostname using DNS query.
       id: 9a9092a5-a173-4c8d-8a0c-f63960c42451
-      isOverridable: false
       iscommand: false
       name: IP to Hostname (DNS)
       script: IPToHost
@@ -519,7 +512,6 @@ tasks:
     task:
       brand: ""
       id: 22f7b81d-ea1a-44b3-8b73-c628afaf5cfc
-      isOverridable: false
       iscommand: false
       name: Enrich Using VirusTotal Private API
       type: title
@@ -584,7 +576,6 @@ tasks:
       description: Checks if there is an active instance of the VirusTotal Private
         API integration enabled.
       id: 0df4420b-8119-4731-8cb3-4745fd044913
-      isOverridable: false
       iscommand: false
       name: Is VirusTotal Private API enabled?
       type: condition
@@ -652,7 +643,6 @@ tasks:
       description: |
         Retrieves a report for a given IP address.
       id: bf0fa0db-39d0-4074-8878-c38077334c7a
-      isOverridable: false
       iscommand: true
       name: Get IP report from VirusTotal Private API
       script: VirusTotal - Private API|||vt-private-get-ip-report
@@ -684,7 +674,6 @@ tasks:
     task:
       brand: ""
       id: 67d938bf-2bd3-4dfd-885f-8dd190cd0b93
-      isOverridable: false
       iscommand: false
       name: No External IP Address
       type: title
@@ -715,7 +704,6 @@ tasks:
     task:
       brand: ""
       id: 9bda4dfe-35b9-40ac-8d8c-c6973b2d1d40
-      isOverridable: false
       iscommand: false
       name: Check Reputation Using All Available Integrations
       type: title
@@ -786,7 +774,6 @@ tasks:
       brand: ""
       description: Checks the reputation of an IP address using all available integrations.
       id: 6495e988-b3a2-44ca-866d-8a847c7914f9
-      isOverridable: false
       iscommand: true
       name: Check Reputation
       script: '|||ip'
@@ -833,7 +820,6 @@ tasks:
       brand: ""
       description: Should use !IP command?
       id: c55e9651-e6f5-48ec-8bbc-995c4e87808b
-      isOverridable: false
       iscommand: false
       name: Should use !IP command?
       type: condition
@@ -896,7 +882,6 @@ tasks:
       brand: ""
       description: Checks whether the playbook's input contains at least one IP address.
       id: ea6c64c9-4852-47c9-8cfd-d6d6907037cf
-      isOverridable: false
       iscommand: false
       name: Are the IPs already classified?
       type: condition
@@ -927,7 +912,6 @@ tasks:
     task:
       brand: ""
       id: 2e4dbc75-e8f0-4478-8b16-523ba22e1621
-      isOverridable: false
       iscommand: false
       name: Classify & Resolve IPs
       type: title
