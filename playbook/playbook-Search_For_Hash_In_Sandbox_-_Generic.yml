@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -21,7 +22,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Search For Hash In Sandbox - Generic
 outputs:
 - contextPath: AttackPattern
@@ -62,7 +62,6 @@ tasks:
       brand: ""
       description: ' '
       id: 568ce337-1ee9-443e-8022-0fc40fff04aa
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -101,7 +100,6 @@ tasks:
       description: Returns 'yes' if the CrowdStrike Falcon Intelligence Sandbox integration
         is available.
       id: ee043234-3d7b-4195-8ca7-1cbde477e677
-      isOverridable: false
       iscommand: false
       name: Is Falcon Intelligence Sandbox enabled?
       script: IsIntegrationAvailable
@@ -113,7 +111,7 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1430,
+          "x": 1410,
           "y": 130
         }
       }
@@ -142,7 +140,6 @@ tasks:
       brand: ""
       description: Returns 'yes' if the WildFire-v2 integration is available.
       id: 33f97f6a-5963-423c-8db6-fcaefc5a8a31
-      isOverridable: false
       iscommand: false
       name: Is WildFire enabled?
       script: IsIntegrationAvailable
@@ -187,7 +184,6 @@ tasks:
       brand: ""
       description: Searches for a specific hash in the WildFire sandbox.
       id: e2d75750-8dec-4e9f-8ef3-94cbf5bedb8f
-      isOverridable: false
       iscommand: true
       name: Search for hash in Wildfire
       script: '|||wildfire-report'
@@ -211,7 +207,7 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "13"
+      - "45"
     note: false
     quietmode: 0
     scriptarguments:
@@ -228,7 +224,6 @@ tasks:
       brand: ""
       description: Finds sandbox reports by providing an FQL filter and paging details.
       id: 23a14477-9a87-48a9-8ab4-0a03a72b8209
-      isOverridable: false
       iscommand: true
       name: Search for hash in Falcon Intelligence Sandbox
       script: '|||cs-fx-find-reports'
@@ -240,7 +235,7 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1430,
+          "x": 1410,
           "y": 350
         }
       }
@@ -273,7 +268,6 @@ tasks:
       brand: ""
       description: Is there a hash to check?
       id: ca8852d8-fa26-4061-8673-2e0f0710b967
-      isOverridable: false
       iscommand: false
       name: Is there a hash to check?
       type: condition
@@ -301,7 +295,6 @@ tasks:
     task:
       brand: ""
       id: 0eb7ea1e-8067-4c3c-8d44-9fa64f71e7ad
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -346,7 +339,6 @@ tasks:
       brand: ""
       description: Gets a full report from the Falcon Intelligence Sandbox.
       id: 0cc08ef9-5225-44a8-8221-553bb90807b1
-      isOverridable: false
       iscommand: true
       name: Get full report from Falcon Intelligence Sandbox
       script: '|||cs-fx-get-full-report'
@@ -358,8 +350,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1430,
-          "y": 510
+          "x": 1620,
+          "y": 700
         }
       }
   "16":
@@ -400,7 +392,6 @@ tasks:
       brand: ""
       description: Are there MITRE findings?
       id: 776cf8da-d5f6-4fcc-8c46-be9bda455b2e
-      isOverridable: false
       iscommand: false
       name: Are there MITRE findings?
       type: condition
@@ -411,8 +402,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1430,
-          "y": 685
+          "x": 1620,
+          "y": 860
         }
       }
   "18":
@@ -444,7 +435,6 @@ tasks:
         This playbook accepts as input MITRE techniques IDs.
         It returns the MITRE technique name and full technique data using the MITRE integration.
       id: 1f8f4125-0530-470e-81a3-2458a5159ba0
-      isOverridable: false
       iscommand: false
       name: Mitre Attack - Extract Technique Information From ID
       playbookId: Mitre Attack - Extract Technique Information From ID
@@ -456,8 +446,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1670,
-          "y": 870
+          "x": 1790,
+          "y": 1030
         }
       }
   "23":
@@ -488,7 +478,6 @@ tasks:
       description: Gets a PDF report of search results for hashes in the WildFire
         sandbox.
       id: 398e10df-835c-4362-8812-bfc35b7b2cc8
-      isOverridable: false
       iscommand: true
       name: Get Wildfire PDF report
       script: '|||wildfire-report'
@@ -542,7 +531,6 @@ tasks:
       brand: ""
       description: Converts a PDF file to an image file.
       id: 93e1ecdb-1db8-4189-8aea-f455c87ebab2
-      isOverridable: false
       iscommand: true
       name: Rasterize PDF
       script: '|||rasterize-pdf'
@@ -589,7 +577,6 @@ tasks:
       brand: ""
       description: Is there a report to rasterize?
       id: 41001a52-b698-414c-8561-a9f8a3c2d620
-      isOverridable: false
       iscommand: false
       name: Is there a report to rasterize?
       type: condition
@@ -601,7 +588,7 @@ tasks:
       {
         "position": {
           "x": 2140,
-          "y": 530
+          "y": 520
         }
       }
   "26":
@@ -628,7 +615,6 @@ tasks:
       brand: ""
       description: Returns 'yes' if the JoeSecurity Sandbox integration is available.
       id: 157ba2a0-d8e3-4d38-8360-d1dac15d5ec6
-      isOverridable: false
       iscommand: false
       name: Is JoeSecurity Sandbox enabled?
       script: IsIntegrationAvailable
@@ -667,7 +653,6 @@ tasks:
       brand: ""
       description: Search through all analyses.
       id: 3dda4898-5efa-4139-88c6-9c39a271ee7e
-      isOverridable: false
       iscommand: true
       name: Search for hash in Joe Sandbox
       script: '|||joe-search'
@@ -715,7 +700,6 @@ tasks:
         report, dropped binaries, etc. See integration README for the full supported
         report types.
       id: d9c0d67b-34c9-4adf-85f9-6108aaf34809
-      isOverridable: false
       iscommand: true
       name: Get a full report from Joe Sandbox - JSON
       script: '|||joe-download-report'
@@ -728,7 +712,7 @@ tasks:
       {
         "position": {
           "x": 980,
-          "y": 685
+          "y": 700
         }
       }
   "30":
@@ -761,7 +745,6 @@ tasks:
       brand: ""
       description: Any results from the Joe search?
       id: ded9ca0b-1c63-4d2d-8a66-2c8665e30fe2
-      isOverridable: false
       iscommand: false
       name: Any results from the Joe search?
       type: condition
@@ -773,7 +756,7 @@ tasks:
       {
         "position": {
           "x": 750,
-          "y": 510
+          "y": 520
         }
       }
   "31":
@@ -808,7 +791,6 @@ tasks:
         report, dropped binaries, etc. See integration README for the full supported
         report types.
       id: c21fdd06-e54d-4576-8765-7800c60bf729
-      isOverridable: false
       iscommand: true
       name: Get a full report from Joe Sandbox - PDF
       script: '|||joe-download-report'
@@ -820,8 +802,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 530,
-          "y": 685
+          "x": 520,
+          "y": 700
         }
       }
   "32":
@@ -862,7 +844,6 @@ tasks:
       brand: ""
       description: Converts a PDF file to an image file.
       id: a429b558-2253-4679-8686-168073e28073
-      isOverridable: false
       iscommand: true
       name: Rasterize PDF
       script: '|||rasterize-pdf'
@@ -874,8 +855,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 530,
-          "y": 870
+          "x": 520,
+          "y": 860
         }
       }
   "33":
@@ -912,7 +893,6 @@ tasks:
       brand: Builtin
       description: commands.local.cmd.extract.indicators
       id: 8896119d-cd9b-423d-8c92-f8c27079232e
-      isOverridable: false
       iscommand: true
       name: Extract Indicators from the report
       script: Builtin|||extractIndicators
@@ -925,7 +905,7 @@ tasks:
       {
         "position": {
           "x": 980,
-          "y": 870
+          "y": 860
         }
       }
   "34":
@@ -958,7 +938,6 @@ tasks:
       brand: ""
       description: Looks up the reputation of the indicator.
       id: c3db939d-366a-4355-8e39-75aa4154b464
-      isOverridable: false
       iscommand: true
       name: Enrich Mitre Attack Techniques information.
       script: '|||attack-pattern'
@@ -971,7 +950,7 @@ tasks:
       {
         "position": {
           "x": 980,
-          "y": 1210
+          "y": 1200
         }
       }
   "35":
@@ -990,7 +969,6 @@ tasks:
     task:
       brand: ""
       id: 1dda1f08-ff0a-4138-872e-86870368aad6
-      isOverridable: false
       iscommand: false
       name: Integration is not available
       type: title
@@ -1041,7 +1019,6 @@ tasks:
       brand: ""
       description: Are there MITRE findings?
       id: 0db7cd2f-8ed8-4e79-81bc-a58a8218ac62
-      isOverridable: false
       iscommand: false
       name: Are there MITRE findings?
       type: condition
@@ -1053,7 +1030,7 @@ tasks:
       {
         "position": {
           "x": 980,
-          "y": 1040
+          "y": 1020
         }
       }
   "37":
@@ -1072,7 +1049,6 @@ tasks:
     task:
       brand: ""
       id: 8c5159e3-6276-4da1-8de1-0616f8fe62a1
-      isOverridable: false
       iscommand: false
       name: Set Unfound Hashes to Context
       type: title
@@ -1084,7 +1060,7 @@ tasks:
       {
         "position": {
           "x": 2140,
-          "y": 1550
+          "y": 1540
         }
       }
   "39":
@@ -1130,7 +1106,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
       id: 33a49df6-9764-4640-8477-ad4aaf91741d
-      isOverridable: false
       iscommand: false
       name: Set Detected Hashes - WildFire
       script: SetAndHandleEmpty
@@ -1185,7 +1160,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
       id: b139aa96-52d4-47f6-8730-16dfb5d5f02a
-      isOverridable: false
       iscommand: false
       name: Set Detected Hashes - Falcon Intelligence Sandbox
       script: SetAndHandleEmpty
@@ -1197,8 +1171,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1430,
-          "y": 1040
+          "x": 1410,
+          "y": 1200
         }
       }
   "43":
@@ -1239,7 +1213,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
       id: c0730703-6695-42d7-8e08-40409c3863b2
-      isOverridable: false
       iscommand: false
       name: Set Detected Hashes - JoeSecurity Sandbox
       script: SetAndHandleEmpty
@@ -1252,7 +1225,7 @@ tasks:
       {
         "position": {
           "x": 750,
-          "y": 1380
+          "y": 1370
         }
       }
   "44":
@@ -1296,7 +1269,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
       id: ad2952cc-821c-4ef7-8774-54c42c8be887
-      isOverridable: false
       iscommand: false
       name: Set Non-Found Hashes
       script: SetAndHandleEmpty
@@ -1312,6 +1284,51 @@ tasks:
           "y": 1680
         }
       }
+  "45":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: resources
+                root: csfalconx.resource
+          operator: isNotEmpty
+          right:
+            value: {}
+      label: "yes"
+    continueonerrortype: ""
+    id: "45"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "40"
+      "yes":
+      - "13"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Any results from the Falcon Intelligence Sandbox search?
+      id: f00bb93e-66f8-41da-86a8-8532905b405c
+      iscommand: false
+      name: Any results from the Falcon Intelligence Sandbox search?
+      type: condition
+      version: -1
+    taskid: f00bb93e-66f8-41da-86a8-8532905b405c
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1410,
+          "y": 520
+        }
+      }
 version: -1
 view: |-
   {
@@ -1320,17 +1337,18 @@ view: |-
       "1_6_yes": 0.65,
       "26_27_yes": 0.6,
       "26_35_no": 0.12,
-      "30_43_#default#": 0.47,
+      "30_43_#default#": 0.16,
       "36_34_yes": 0.63,
-      "36_43_#default#": 0.5,
+      "36_43_#default#": 0.35,
       "3_35_no": 0.34,
-      "3_5_yes": 0.68
+      "3_5_yes": 0.68,
+      "45_40_#default#": 0.22
     },
     "paper": {
       "dimensions": {
         "height": 2085,
-        "width": 2630,
-        "x": 530,
+        "width": 2640,
+        "x": 520,
         "y": -170
       }
     }
