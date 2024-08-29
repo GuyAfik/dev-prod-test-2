@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.8.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -26,6 +25,7 @@ inputs:
   value:
     complex:
       root: URL.Data
+isOverridable: false
 name: Detonate URL - Generic v1.5
 outputs:
 - contextPath: ThreatGrid.Sample.id
@@ -1391,6 +1391,7 @@ tasks:
     task:
       brand: ""
       id: 649023ff-9594-4e23-8799-143e96e8650d
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -1447,6 +1448,7 @@ tasks:
       brand: ""
       description: Checks if there is a URL to detonate.
       id: 7631e811-c7ae-4c2b-895b-793922894b45
+      isOverridable: false
       iscommand: false
       name: Check if URL exists
       type: condition
@@ -1494,6 +1496,7 @@ tasks:
       description: Detonates a URL using the McAfee Advanced Threat Defense sandbox
         integration.
       id: f880c851-c874-4f45-8e30-a31dcd6bd034
+      isOverridable: false
       iscommand: false
       name: Detonate URL - McAfee ATD
       playbookName: Detonate URL - McAfee ATD
@@ -1541,6 +1544,7 @@ tasks:
       brand: ""
       description: Detonates a URL using the Lastline sandbox integration.
       id: 20b9f2f5-0bf3-4990-8035-75e2ee5576f7
+      isOverridable: false
       iscommand: false
       name: Detonate URL - Lastline v2
       playbookName: Detonate URL - Lastline v2
@@ -1588,6 +1592,7 @@ tasks:
       brand: ""
       description: Detonate a URL with Cuckoo.
       id: 36274297-5bc4-4f17-8f71-eace307e6ffd
+      isOverridable: false
       iscommand: false
       name: Detonate URL - Cuckoo
       playbookName: Detonate URL - Cuckoo
@@ -1637,6 +1642,7 @@ tasks:
         Detonates one or more URLs using the ANYRUN sandbox integration.
         Returns relevant reports to the War Room and URL reputations to the context data.
       id: 48e0c334-003e-4e26-80df-808e542ad988
+      isOverridable: false
       iscommand: false
       name: Detonate URL - ANYRUN
       playbookName: Detonate URL - ANYRUN
@@ -1684,6 +1690,7 @@ tasks:
       brand: ""
       description: Detonate URL using Group-IB THF Polygon integration.
       id: e96e1ea1-83b9-45e7-8838-4417978b24d5
+      isOverridable: false
       iscommand: false
       name: Detonate URL - Group-IB TDS Polygon
       playbookName: Detonate URL - Group-IB TDS Polygon
@@ -1727,6 +1734,7 @@ tasks:
       brand: ""
       description: Detonate URL through VirusTotal (API v3) integration.
       id: 3868d472-e5f4-4714-8c58-5c8f95d6b626
+      isOverridable: false
       iscommand: false
       name: Detonate URL - VirusTotal (API v3)
       playbookId: Detonate URL - VirusTotal (API v3)
@@ -1774,6 +1782,7 @@ tasks:
       brand: ""
       description: Detonates a URL using the VMRay sandbox integration.
       id: bf8eaa1a-576f-4ab3-89b7-e383180a536c
+      isOverridable: false
       iscommand: false
       name: Detonate URL - VMRay
       playbookName: Detonate URL - VMRay
@@ -1823,6 +1832,7 @@ tasks:
         Detonates one or more URLs using the Anomali ThreatStream v2 sandbox integration.
         Returns relevant reports to the War Room and URL reputations to the context data.
       id: d1eb756a-f615-40b1-80fe-88179b28a4ac
+      isOverridable: false
       iscommand: false
       name: Detonate URL - ThreatStream
       playbookName: Detonate URL - ThreatStream
@@ -1870,6 +1880,7 @@ tasks:
       brand: ""
       description: Detonates a URL with FireEye AX.
       id: aaaae5ac-95e9-4542-81c2-a3f634f13437
+      isOverridable: false
       iscommand: false
       name: Detonate URL - FireEye AX
       playbookName: Detonate URL - FireEye AX
@@ -1917,6 +1928,7 @@ tasks:
       brand: ""
       description: Detonates a URL with Hatching Triage.
       id: bd03837d-6714-4e64-8afb-99aa81aeb6b5
+      isOverridable: false
       iscommand: false
       name: Detonate URL - Hatching Triage
       playbookName: Detonate URL - Hatching Triage
@@ -1973,6 +1985,7 @@ tasks:
       description: Detonates a URL using the SecneurX Analysis integration. Returns
         relevant reports to the War Room and file reputations to the context data.
       id: 8139a6d0-05e9-4633-8c60-b840a51c7e11
+      isOverridable: false
       iscommand: false
       name: Detonate URL - SecneurX Analysis
       playbookName: Detonate URL - SecneurX Analysis
@@ -2011,6 +2024,7 @@ tasks:
       brand: ""
       description: Scan URL resource.
       id: c54ae675-b7ba-48fb-8669-1a220aeacbed
+      isOverridable: false
       iscommand: true
       name: Detonate URL - OPSWAT
       script: '|||opswat-filescan-scan-url'
@@ -2039,6 +2053,7 @@ tasks:
     task:
       brand: ""
       id: d52344a0-57e4-45ea-8b33-1ad8c3b7484f
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -2089,6 +2104,7 @@ tasks:
         Sandbox integration. This playbook returns relevant reports to the War Room
         and file reputations to the context data.
       id: 60bd5acb-bfa4-411c-89bb-c07a71574ebf
+      isOverridable: false
       iscommand: false
       name: Detonate URL - CrowdStrike Falcon Intelligence Sandbox v2
       playbookName: Detonate URL - CrowdStrike Falcon Intelligence Sandbox v2
@@ -2139,6 +2155,7 @@ tasks:
         The detonation supports the following file types:
         APK, JAR, DOC, DOCX, RTF, OOXLS, XLSX, PPT, PPTX, XML, PE32, PDF, DMG, PKG, RAR, 7Z, JS.
       id: d2b682c2-7df5-4ebd-855a-8949333649fb
+      isOverridable: false
       iscommand: false
       name: Detonate URL - WildFire v2.2
       playbookId: Detonate URL - WildFire v2.2
@@ -2177,6 +2194,7 @@ tasks:
       brand: ""
       description: Submit a URL for sandbox analysis.
       id: 156ee7d3-6235-4011-85fe-32e8d2154de1
+      isOverridable: false
       iscommand: true
       name: Detonate URL - JoeSecurity
       script: '|||joe-submit-url'
@@ -2208,6 +2226,7 @@ tasks:
     task:
       brand: ""
       id: 79a510af-3640-415e-85bd-b9cf42ace798
+      isOverridable: false
       iscommand: false
       name: Detonate URL - ThreatGrid v2
       playbookName: Detonate URL - ThreatGrid v2
