@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -91,7 +92,6 @@ inputs:
   required: false
   value:
     simple: Shared
-isOverridable: false
 name: Block URL - Generic v2
 outputs: []
 starttaskid: "0"
@@ -113,7 +113,6 @@ tasks:
     task:
       brand: ""
       id: f7a7452c-dafe-4b3e-8461-4ea61daf5e3b
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -140,7 +139,6 @@ tasks:
     task:
       brand: ""
       id: 8f968aa5-26ca-4471-891b-4ac7f9114147
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -178,7 +176,6 @@ tasks:
     task:
       brand: ""
       id: ecece7aa-0eb6-4f67-8a9b-dfc77bcef34d
-      isOverridable: false
       iscommand: false
       name: Block URLs
       type: title
@@ -222,7 +219,6 @@ tasks:
       brand: ""
       description: Verify that the playbook input includes at least one URL to block.
       id: 0e2e9b54-cbaa-4f8c-85b2-b5927f30f52a
-      isOverridable: false
       iscommand: false
       name: Is there a URL to block?
       type: condition
@@ -286,7 +282,6 @@ tasks:
       brand: ""
       description: Verify that there is a valid instance of Zscaler enabled.
       id: efeca267-b6d2-4a08-8325-e8fb7c1dd633
-      isOverridable: false
       iscommand: false
       name: Is Zscaler enabled?
       type: condition
@@ -322,7 +317,6 @@ tasks:
       brand: Zscaler
       description: Adds the specified URLs to the block list.
       id: ea188096-e085-4155-884d-a6c9d23ddb1f
-      isOverridable: false
       iscommand: true
       name: Block URL with Zscaler
       script: Zscaler|||zscaler-blacklist-url
@@ -386,7 +380,6 @@ tasks:
         This playbook blocks URLs using Palo Alto Networks Panorama or Firewall through Custom URL Categories.
         The playbook checks whether the input URL category already exists, and if the URLs are a part of this category. Otherwise, it will create the category, block the URLs, and commit the configuration.
       id: a3211000-764a-4ea3-8fea-1cb2a8c2b4cd
-      isOverridable: false
       iscommand: false
       name: PAN-OS - Block URL - Custom URL Category
       playbookId: PAN-OS - Block URL - Custom URL Category
@@ -418,7 +411,6 @@ tasks:
     task:
       brand: ""
       id: 90b64f91-6db0-4a69-86e3-80aa6fc36ebd
-      isOverridable: false
       iscommand: false
       name: Checkpoint
       type: title
@@ -449,7 +441,6 @@ tasks:
     task:
       brand: ""
       id: 0c64c152-533a-4e38-8a33-5ba8499b4c48
-      isOverridable: false
       iscommand: false
       name: PAN-OS
       type: title
@@ -480,7 +471,6 @@ tasks:
     task:
       brand: ""
       id: 9e331921-f00a-47d7-8f02-8ab4fbacc053
-      isOverridable: false
       iscommand: false
       name: Zscaler
       type: title
@@ -525,7 +515,6 @@ tasks:
       brand: ""
       description: Check if should use EDL or not
       id: b9e7db2b-6985-4410-8e01-ccb9950cd8b7
-      isOverridable: false
       iscommand: false
       name: Use EDL?
       type: condition
@@ -569,7 +558,6 @@ tasks:
       brand: ""
       description: Check if should use Custom URL Category or not
       id: 47aff5b6-5919-46bb-8979-c342b18f9197
-      isOverridable: false
       iscommand: false
       name: Use Custom URL Category?
       type: condition
@@ -609,7 +597,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: da7121fa-715d-4010-81ac-e519b88b58e3
-      isOverridable: false
       iscommand: false
       name: "Is CheckPoint Integration \nAavailable?"
       script: IsIntegrationAvailable
@@ -649,7 +636,6 @@ tasks:
         This playbook blocks URLs using Checkpoint Firewall through Custom URL Categories.
         The playbook checks whether the input URL category already exists, and if the URLs are a part of this category. Otherwise, it will create the category, block the URLs, and publish the configuration.
       id: 195a51ea-2a0b-47e3-83f6-c6b6a4938847
-      isOverridable: false
       iscommand: false
       name: Checkpoint - Block URL
       playbookName: Checkpoint - Block URL
@@ -691,7 +677,6 @@ tasks:
         the playbook.\n2) Create a new firewall rule and assign the web policy to
         the one created in the previous step."
       id: 0dd55a58-9d45-449e-8b9f-3c1630188951
-      isOverridable: false
       iscommand: false
       name: Sophos Firewall - Block URL
       playbookName: Sophos Firewall - Block URL
@@ -723,7 +708,6 @@ tasks:
     task:
       brand: ""
       id: 21af0a6a-234a-4061-884a-86f3209ae79e
-      isOverridable: false
       iscommand: false
       name: No URL was definded
       type: title
@@ -754,7 +738,6 @@ tasks:
     task:
       brand: ""
       id: 42362e33-89e4-4e9a-89ad-8fca62f06425
-      isOverridable: false
       iscommand: false
       name: Sophos
       type: title
@@ -794,7 +777,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: c08fd24c-0333-4f69-8700-69b92c530882
-      isOverridable: false
       iscommand: false
       name: Is Sophos Integration Enabled?
       script: IsIntegrationAvailable
@@ -826,7 +808,6 @@ tasks:
     task:
       brand: ""
       id: 12ce6945-cd09-46e6-8661-748f50ed220c
-      isOverridable: false
       iscommand: false
       name: EDL
       type: title
@@ -868,7 +849,6 @@ tasks:
       brand: Builtin
       description: commands.local.cmd.add.values.to.indicator.multi.select.field
       id: 8d37ba43-fa53-4ab4-83f9-5b9764281c85
-      isOverridable: false
       iscommand: true
       name: Update Tag For URLs
       script: Builtin|||appendIndicatorField
@@ -944,7 +924,6 @@ tasks:
       brand: ""
       description: Ask the analyst for verification of which URL to block
       id: 7948896f-f14b-4e0b-865e-47a3a0c1da3f
-      isOverridable: false
       iscommand: false
       name: User Verification
       type: collection
@@ -984,7 +963,6 @@ tasks:
       description: Set a value in context under the key you entered. If no value is
         entered, the script doesn't do anything.
       id: 6a38d62a-b597-4165-87e8-7b5b92953ca5
-      isOverridable: false
       iscommand: false
       name: Append the URLs' blocking list
       script: SetAndHandleEmpty
@@ -1016,7 +994,6 @@ tasks:
     task:
       brand: ""
       id: d561f0f8-0d4c-4ba3-8560-187751ca5c85
-      isOverridable: false
       iscommand: false
       name: Forcepoint
       type: title
@@ -1056,7 +1033,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 08e14d34-e96d-422a-8640-f5ef9a6eaa7a
-      isOverridable: false
       iscommand: false
       name: Is Forcepoint Integration Enabled?
       script: IsIntegrationAvailable
@@ -1095,7 +1071,6 @@ tasks:
         to https://www.forcepoint.com/product/feature/master-database-url-categories)\nor
         specify a custom/user-defined category."
       id: d3a1e7fd-3deb-4910-8567-c5bcb6363576
-      isOverridable: false
       iscommand: true
       name: Forcepoint - Add URL's to a specific category
       script: Forcepoint|||fp-add-address-to-category
@@ -1143,7 +1118,6 @@ tasks:
       brand: ""
       description: Check if should ask for user verification
       id: 33d5bf90-736a-4228-8307-53b1d58d4550
-      isOverridable: false
       iscommand: false
       name: Is User Verification Is Required?
       type: condition
@@ -1182,7 +1156,6 @@ tasks:
       description: Set a value in context under the key you entered. If no value is
         entered, the script doesn't do anything.
       id: 76856aa5-7ff2-415b-8f6f-e4bd1e6798a9
-      isOverridable: false
       iscommand: false
       name: Set Input URLs as Blocklist.
       script: SetAndHandleEmpty
@@ -1214,7 +1187,6 @@ tasks:
     task:
       brand: ""
       id: e889ae46-04a0-4514-8923-2291cec2883a
-      isOverridable: false
       iscommand: false
       name: Netcraft
       type: title
@@ -1252,7 +1224,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 35fcf7d9-19c6-48fe-831d-0b78cbf96323
-      isOverridable: false
       iscommand: false
       name: Is Netcraft Integration Enabled?
       script: IsIntegrationAvailable
@@ -1294,7 +1265,6 @@ tasks:
         Report a new attack or authorize an existing attack in the Takedown Service.
         If a takedown for the attack already exists in the Netcraft system it will be authorized, otherwise, a new takedown will be added and authorized.
       id: 0e06c863-2829-4749-8d1a-6daeb34d89c6
-      isOverridable: false
       iscommand: true
       name: Block URL with Netcraft
       script: '|||netcraft-attack-report'
@@ -1326,7 +1296,6 @@ tasks:
     task:
       brand: ""
       id: f840dbdd-478b-445f-8f0b-a5527a54467b
-      isOverridable: false
       iscommand: false
       name: Prisma SASE
       type: title
@@ -1366,7 +1335,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: e5de9af1-33df-4064-82d9-b5b87f472d7f
-      isOverridable: false
       iscommand: false
       name: Is Prisma SASE Enabled?
       script: IsIntegrationAvailable
@@ -1425,7 +1393,6 @@ tasks:
         If a category is provided, the URL will be added to the list.
         If not, a new URL category will be created, and a new security rule that blocks that category.
       id: 7fa52bc1-010b-4de9-87e4-dbc537abd12b
-      isOverridable: false
       iscommand: false
       name: Prisma SASE - Block URL
       playbookId: Prisma SASE - Block URL
