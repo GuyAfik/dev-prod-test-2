@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -23,6 +22,7 @@ inputs:
   value:
     complex:
       root: URL
+isOverridable: false
 name: Detonate URL - Generic
 outputs:
 - contextPath: File
@@ -447,6 +447,7 @@ tasks:
       brand: ""
       description: Playbook start point
       id: ab416b1d-600a-47a5-89dc-64d0f0002db6
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -474,6 +475,7 @@ tasks:
       brand: ""
       description: Done
       id: 91ee56ee-91ac-4199-89fe-50ad796c6b02
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -517,6 +519,7 @@ tasks:
         playbook returns relevant reports to the War Room and URL reputations to the
         context data.
       id: 754e447b-20d7-4ab6-8713-97409910d090
+      isOverridable: false
       iscommand: false
       name: Detonate URL - ThreatGrid
       playbookName: Detonate URL - ThreatGrid
@@ -560,6 +563,7 @@ tasks:
       description: Detonates a URL using the McAfee Advanced Threat Defense sandbox
         integration.
       id: 237ce1af-7984-4df7-8eea-e6577bf59c4a
+      isOverridable: false
       iscommand: false
       name: Detonate URL - McAfee ATD
       playbookName: Detonate URL - McAfee ATD
@@ -604,6 +608,7 @@ tasks:
         Detonates one or more URLs using the Joe Security sandbox integration.
         Returns relevant reports to the War Room and URL reputations to the context data.
       id: 22124bae-451b-432b-88e6-1a9affb9ee16
+      isOverridable: false
       iscommand: false
       name: Detonate URL - JoeSecurity
       playbookName: Detonate URL - JoeSecurity
@@ -646,6 +651,7 @@ tasks:
       brand: ""
       description: Detonates a URL using the Lastline sandbox integration.
       id: 481f79ec-f360-4b69-8881-98b67f23eedb
+      isOverridable: false
       iscommand: false
       name: Detonate URL - Lastline v2
       playbookName: Detonate URL - Lastline v2
@@ -692,6 +698,7 @@ tasks:
       brand: ""
       description: Detonating URL with Cuckoo
       id: bf269b42-9e68-4fe8-8ae1-f197a0678116
+      isOverridable: false
       iscommand: false
       name: Detonate URL - Cuckoo
       playbookName: Detonate URL - Cuckoo
@@ -734,6 +741,7 @@ tasks:
       brand: ""
       description: Detonates a URL using the ANYRUN sandbox.
       id: 527c7883-aab3-4641-87a1-296c5bc10806
+      isOverridable: false
       iscommand: false
       name: Detonate URL - ANYRUN
       playbookName: Detonate URL - ANYRUN
@@ -779,6 +787,7 @@ tasks:
     task:
       brand: ""
       id: ae8130db-d640-476c-8509-caa0a3318d69
+      isOverridable: false
       iscommand: false
       name: Detonate URL - Group-IB TDS Polygon
       playbookName: Detonate URL - Group-IB TDS Polygon
@@ -820,6 +829,7 @@ tasks:
       brand: CrowdStrike Falcon Sandbox V2
       description: Submits a URL for analysis.
       id: 0ff5715e-873b-4d67-87da-2080cd4e5f34
+      isOverridable: false
       iscommand: true
       name: Detonate URL - CrowdStrike Falcon Intelligence Sandbox
       script: '|||cs-falcon-sandbox-submit-url'
@@ -869,6 +879,7 @@ tasks:
         The detonation supports the following file types:
         APK, JAR, DOC, DOCX, RTF, OOXLS, XLSX, PPT, PPTX, XML, PE32, PDF, DMG, PKG, RAR, 7Z, JS.
       id: 2ad2429a-91b6-4728-820f-d782e7b3a42d
+      isOverridable: false
       iscommand: false
       name: Detonate URL - WildFire v2.1
       playbookId: Detonate URL - WildFire v2.1
@@ -911,6 +922,7 @@ tasks:
       brand: ""
       description: Detonate URL through VirusTotal (API v3) integration.
       id: 035deb07-590a-485a-8500-2b5b553efec4
+      isOverridable: false
       iscommand: false
       name: Detonate URL - VirusTotal (API v3)
       playbookId: Detonate URL - VirusTotal (API v3)
@@ -956,6 +968,7 @@ tasks:
     task:
       brand: ""
       id: c1bbd5a6-59c4-4c09-8399-2e2ae4abd2df
+      isOverridable: false
       iscommand: false
       name: Detonate URL - VMRay
       playbookName: Detonate URL - VMRay
@@ -1001,6 +1014,7 @@ tasks:
     task:
       brand: ""
       id: 28a9d2ed-ee25-4a25-87f5-a19dd30e6b45
+      isOverridable: false
       iscommand: false
       name: Detonate URL - ThreatStream
       playbookName: Detonate URL - ThreatStream
@@ -1032,6 +1046,7 @@ tasks:
     task:
       brand: ""
       id: 5535b892-f1b1-42d6-8f7e-c673377dff5c
+      isOverridable: false
       iscommand: false
       name: Detonate URL - Hybrid Analysis
       playbookName: Detonate URL - Hybrid Analysis
@@ -1063,6 +1078,7 @@ tasks:
     task:
       brand: ""
       id: 538c5113-5469-4692-89b2-c1570b74aaef
+      isOverridable: false
       iscommand: false
       name: Detonate URL - FireEye AX
       playbookName: Detonate URL - FireEye AX
@@ -1094,6 +1110,7 @@ tasks:
     task:
       brand: ""
       id: 13bebc22-497e-48e6-85f0-41f6ee62fef1
+      isOverridable: false
       iscommand: false
       name: Detonate URL - Hatching Triage
       playbookName: Detonate URL - Hatching Triage
@@ -1148,6 +1165,7 @@ tasks:
       description: Detonates a file using the SecneurX Analysis Integration. Returns
         relevant reports to the War Room and file reputations to the context data.
       id: ca1a3f90-8330-4eac-885c-eec86c8b8885
+      isOverridable: false
       iscommand: false
       name: Detonate URL - SecneurX Analysis
       playbookName: Detonate URL - SecneurX Analysis
@@ -1195,6 +1213,7 @@ tasks:
       description: Detonate one or more files using the CrowdStrike Falcon Intelligence
         Sandbox integration.
       id: b12fdeb4-9952-416d-8e01-39eef0662454
+      isOverridable: false
       iscommand: false
       name: Detonate URL - CrowdStrike Falcon Intelligence Sandbox
       playbookName: Detonate URL - CrowdStrike Falcon Intelligence Sandbox
@@ -1239,6 +1258,7 @@ tasks:
       brand: ""
       description: Checks if there is a URL to detonate.
       id: 1abb6283-2a97-4409-8344-027a49c5ef5e
+      isOverridable: false
       iscommand: false
       name: Check if URL exists
       type: condition
@@ -1274,6 +1294,7 @@ tasks:
       description: Detonates a URL using the MetaDefender Sandbox Integration. Returns
         relevant reports to the War Room and URL reputations to the context data.
       id: 2fee63e9-6482-4101-8272-d42cf3a950aa
+      isOverridable: false
       iscommand: true
       name: Detonate URL - MetaDefender Sandbox
       script: metadefender-sandbox-scan-url
