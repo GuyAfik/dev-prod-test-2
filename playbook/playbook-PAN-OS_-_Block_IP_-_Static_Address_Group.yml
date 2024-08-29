@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -48,7 +49,6 @@ inputs:
   required: false
   value:
     simple: "No"
-isOverridable: false
 name: PAN-OS - Block IP - Static Address Group
 outputs: []
 starttaskid: "0"
@@ -70,7 +70,6 @@ tasks:
     task:
       brand: ""
       id: 190b5447-4f35-40e2-83f3-8dd9753b0708
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -129,7 +128,6 @@ tasks:
     task:
       brand: ""
       id: 480942ef-335c-4e66-87f7-dc2b3ada2048
-      isOverridable: false
       iscommand: false
       name: Palo Alto Networks PAN-OS enabled?
       type: condition
@@ -170,7 +168,6 @@ tasks:
     task:
       brand: ""
       id: 1ecb1e3c-a84b-40ce-8975-79f309bd0b07
-      isOverridable: false
       iscommand: false
       name: Is there an IP to block?
       type: condition
@@ -198,7 +195,6 @@ tasks:
     task:
       brand: ""
       id: 36d25b97-4e69-4936-86da-72333275ad79
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -234,7 +230,6 @@ tasks:
       brand: ""
       description: Get details for the specified address group
       id: e5deb437-498e-4e8a-8b9e-d1d79579f6a2
-      isOverridable: false
       iscommand: true
       name: PAN-OS - Get address group
       script: '|||pan-os-get-address-group'
@@ -280,7 +275,6 @@ tasks:
     task:
       brand: ""
       id: 435dfd22-d2d5-4ccb-8116-20e0c9dab09f
-      isOverridable: false
       iscommand: false
       name: Check if the malicious IPs already exist in the address group
       type: condition
@@ -327,7 +321,6 @@ tasks:
       brand: ""
       description: Add IP addresses to a static or dynamic address group.
       id: ec1a0c5b-7017-4503-8ee3-c582418808c3
-      isOverridable: false
       iscommand: true
       name: PAN OS - Add IP addresses to address group
       script: '|||pan-os-edit-address-group'
@@ -366,7 +359,6 @@ tasks:
       brand: ""
       description: Creates an address object
       id: c27672c3-546c-4a5b-8b16-31729a029798
-      isOverridable: false
       iscommand: true
       name: PAN-OS - Create address objects
       script: '|||pan-os-create-address'
@@ -398,7 +390,6 @@ tasks:
     task:
       brand: ""
       id: af6b5eb3-b5d1-4bed-81c6-28ca8d6ec194
-      isOverridable: false
       iscommand: false
       name: PAN-OS Commit Configuration
       playbookId: PAN-OS Commit Configuration
@@ -430,7 +421,6 @@ tasks:
     task:
       brand: ""
       id: e910a8ff-52dd-40db-8fe2-e39b357b4c15
-      isOverridable: false
       iscommand: false
       name: PAN-OS Commit Configuration
       playbookId: PAN-OS Commit Configuration
@@ -476,7 +466,6 @@ tasks:
     task:
       brand: ""
       id: 52739aac-151a-484e-8ca0-cb85200d4a9b
-      isOverridable: false
       iscommand: false
       name: AutoCommit defined?
       type: condition
@@ -507,7 +496,6 @@ tasks:
     task:
       brand: ""
       id: 32cbe912-af9b-416f-8c8a-e54b58a88558
-      isOverridable: false
       iscommand: false
       name: Commit PAN-OS Instance manually
       type: regular
@@ -554,7 +542,6 @@ tasks:
       brand: ""
       description: Add IP addresses to a static or dynamic address group.
       id: 9a28e55c-f29e-4a61-8659-beac27c60f74
-      isOverridable: false
       iscommand: true
       name: PAN OS - Add IP addresses to address group
       script: '|||pan-os-edit-address-group'
@@ -586,7 +573,6 @@ tasks:
     task:
       brand: ""
       id: 8a034a0d-ebea-401c-8b9d-e7e708d94fdb
-      isOverridable: false
       iscommand: false
       name: Commit PAN-OS Instance manually
       type: regular
