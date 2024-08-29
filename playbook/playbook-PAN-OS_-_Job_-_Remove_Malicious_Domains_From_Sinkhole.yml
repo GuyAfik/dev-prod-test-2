@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.9.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -33,7 +34,6 @@ inputs:
   required: true
   value:
     simple: "14"
-isOverridable: false
 name: PAN-OS - Job - Remove Malicious Domains From Sinkhole
 outputs: []
 quiet: true
@@ -62,7 +62,6 @@ tasks:
     task:
       brand: ""
       id: 59964f1b-d04b-4ede-8fbe-3c5d81afe4b1
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -108,7 +107,6 @@ tasks:
       brand: Builtin
       description: Gets all the domains that have the sinkhole tag.
       id: 2bc6fde6-29d1-40dc-82ed-e11d5dfe55ef
-      isOverridable: false
       iscommand: true
       name: Get domains with sinkhole tag
       script: Builtin|||findIndicators
@@ -151,7 +149,6 @@ tasks:
         in the playbook input. Domains that have not been tagged since the decay time
         will be untagged.
       id: 7c1c7038-aaa1-4b07-8677-4921ab9077f5
-      isOverridable: false
       iscommand: false
       name: Get the oldest decay date
       script: GetTime
@@ -207,7 +204,6 @@ tasks:
       description: Removes the sinkhole tag from the domains that reached the decay
         period according to the playbook input.
       id: 1f109241-f295-4231-8a78-ae89b78d98e1
-      isOverridable: false
       iscommand: true
       name: Remove tags from the decayed domains
       script: Builtin|||removeIndicatorField
@@ -236,7 +232,6 @@ tasks:
     task:
       brand: ""
       id: e35a4a0b-aca0-4f03-8572-d70614c500e5
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -285,7 +280,6 @@ tasks:
         section, so that it can be used when filtering past tag events and deciding
         whether to remove the tag from the indicator.
       id: 70f7905f-7f25-44de-8f4c-d4adc31a80ff
-      isOverridable: false
       iscommand: false
       name: Save the name of the tagging event to search in history
       script: Set
@@ -317,7 +311,6 @@ tasks:
     task:
       brand: ""
       id: 91bb4e5f-5008-4f03-8449-b3238c8025e3
-      isOverridable: false
       iscommand: false
       name: Filter Domains
       type: title
@@ -384,7 +377,6 @@ tasks:
         Checks whether any of the checked domains was tagged *after* the oldest decay date and time. If they were, they will not be considered in the decay time period, and will not be untagged.
         They will be untagged when the playbook re-runs and the time window changes in a way that their tagging activity is not present in the decay time window.
       id: b12a2bae-cb41-4c91-833c-9151d0c41f96
-      isOverridable: false
       iscommand: false
       name: Has any of the tagged domains been recently tagged?
       type: condition
@@ -444,7 +436,6 @@ tasks:
       brand: ""
       description: Saves the domains that were tagged since the decay period.
       id: 4ea6f022-63b6-4742-83d8-b92a67862e9e
-      isOverridable: false
       iscommand: false
       name: Save newly tagged domains
       script: Set
@@ -503,7 +494,6 @@ tasks:
         the decay period. If domains have been recently tagged (e.g., after the date
         derived from the decay period input), they will not be untagged.
       id: ed078f6d-529e-4243-8d35-a03182bdd5ad
-      isOverridable: false
       iscommand: false
       name: Any domains have NOT been tagged recently?
       type: condition
