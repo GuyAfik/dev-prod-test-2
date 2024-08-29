@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -75,6 +74,7 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
+isOverridable: false
 name: GenericPolling
 outputs: []
 starttaskid: "0"
@@ -97,6 +97,7 @@ tasks:
       brand: ""
       description: '-'
       id: c644af04-2cd7-4462-83e3-5f55bc12aa73
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -149,6 +150,7 @@ tasks:
       brand: ""
       description: Schedule Polling Task
       id: 35c115cc-f926-48db-895a-c10a1dada76e
+      isOverridable: false
       iscommand: false
       name: Schedule Polling Task
       script: ScheduleGenericPolling
@@ -183,6 +185,7 @@ tasks:
       brand: ""
       description: This task will complete automatically when polling is complete.
       id: 154b9a55-3d7c-412e-804c-c838cf7431c0
+      isOverridable: false
       iscommand: false
       name: Waiting for polling to complete (Automated Task)
       tags:
@@ -228,6 +231,7 @@ tasks:
       brand: ""
       description: RunPollingCommand
       id: aaa21aff-02c5-4930-81fc-c8f8e9085884
+      isOverridable: false
       iscommand: false
       name: RunPollingCommand
       script: RunPollingCommand
@@ -257,6 +261,7 @@ tasks:
       brand: ""
       description: Done
       id: 778e1007-f7ea-4ff6-89c4-cffc067165c4
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -289,6 +294,7 @@ tasks:
       brand: ""
       description: Scheduled Task Failed
       id: db74b973-dc4a-499c-8d63-8df213685a1d
+      isOverridable: false
       iscommand: false
       name: Scheduled Task Failed
       script: PrintErrorEntry
