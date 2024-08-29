@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.9.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -53,7 +54,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Search and Compare Process Executions - Generic
 outputs:
 - contextPath: StringSimilarity
@@ -83,7 +83,6 @@ tasks:
     task:
       brand: ""
       id: e4d8d0c7-56ec-4b27-8fbb-ae3a02490091
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -110,7 +109,6 @@ tasks:
     task:
       brand: ""
       id: 6511abc4-4a61-4657-86b8-3809cbcc5dae
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -162,7 +160,6 @@ tasks:
         - value: *process name*
         - commands: *command-line arguments*
       id: 0c2ea311-165b-48ae-8f5f-92cb5ec5e81b
-      isOverridable: false
       iscommand: false
       name: MDE - Search and Compare Process Executions
       playbookName: MDE - Search and Compare Process Executions
@@ -219,7 +216,6 @@ tasks:
         - value: *process name*
         - commands: *command-line arguments*
       id: 936cbb1b-fc14-42e0-80e4-9ca0bbec9f10
-      isOverridable: false
       iscommand: false
       name: Cortex XDR - Search and Compare Process Executions - XDR Alerts
       playbookName: Cortex XDR - Search and Compare Process Executions - XDR Alerts
@@ -272,7 +268,6 @@ tasks:
         - value: *process name*
         - commands: *command-line arguments*
       id: 6246b45d-476d-4e3d-8c6a-6eccafe838ef
-      isOverridable: false
       iscommand: false
       name: Cortex XDR - Search and Compare Process Executions - XQL Engine
       playbookName: Cortex XDR - Search and Compare Process Executions - XQL Engine
