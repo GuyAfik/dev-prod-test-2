@@ -1,4 +1,5 @@
 {
+	"IsOverridable": false,
 	"cacheVersn": 0,
 	"definitionId": "",
 	"fromDate": "0001-01-01T00:00:00Z",
@@ -8,8 +9,7 @@
 	"hideSearch": false,
 	"id": "health-status-dashboard",
 	"isCommon": true,
-	"isOverridable": false,
-	"itemVersion": "1.34.35",
+	"itemVersion": "1.34.36",
 	"layout": [
 		{
 			"forceRange": false,
@@ -20,6 +20,7 @@
 			"w": 2,
 			"widget": {
 				"Cache": null,
+				"IsOverridable": false,
 				"cacheVersn": 0,
 				"category": "",
 				"commitMessage": "",
@@ -40,7 +41,6 @@
 				"definitionId": "",
 				"fromServerVersion": "",
 				"id": "3",
-				"isOverridable": false,
 				"isPredefined": true,
 				"itemVersion": "",
 				"modified": "2018-03-23T18:16:10.634227+03:00",
@@ -90,6 +90,7 @@
 			"w": 5,
 			"widget": {
 				"Cache": null,
+				"IsOverridable": false,
 				"cacheVersn": 0,
 				"category": "",
 				"commitMessage": "",
@@ -110,7 +111,6 @@
 				"definitionId": "",
 				"fromServerVersion": "",
 				"id": "4",
-				"isOverridable": false,
 				"isPredefined": true,
 				"itemVersion": "",
 				"modified": "2018-03-23T18:17:18.728545+03:00",
@@ -160,6 +160,7 @@
 			"w": 5,
 			"widget": {
 				"Cache": null,
+				"IsOverridable": false,
 				"cacheVersn": 0,
 				"category": "",
 				"commitMessage": "",
@@ -180,7 +181,6 @@
 				"definitionId": "",
 				"fromServerVersion": "",
 				"id": "12",
-				"isOverridable": false,
 				"isPredefined": true,
 				"itemVersion": "",
 				"modified": "2018-03-23T18:43:35.777902+03:00",
@@ -230,6 +230,7 @@
 			"w": 5,
 			"widget": {
 				"Cache": null,
+				"IsOverridable": false,
 				"cacheVersn": 0,
 				"category": "",
 				"commitMessage": "",
@@ -251,7 +252,6 @@
 				"description": "Server CPU usage in the previous 24 hours",
 				"fromServerVersion": "",
 				"id": "cpu-percentage-trend",
-				"isOverridable": false,
 				"isPredefined": true,
 				"itemVersion": "",
 				"modified": "2018-09-07T13:26:12.309081+03:00",
@@ -284,6 +284,7 @@
 			"w": 5,
 			"widget": {
 				"Cache": null,
+				"IsOverridable": false,
 				"cacheVersn": 0,
 				"category": "",
 				"commitMessage": "",
@@ -305,7 +306,6 @@
 				"description": "Server memory usage % (previous 24 hours)",
 				"fromServerVersion": "",
 				"id": "memory-percentage-trend",
-				"isOverridable": false,
 				"isPredefined": true,
 				"itemVersion": "",
 				"modified": "2018-09-07T13:26:12.335105+03:00",
