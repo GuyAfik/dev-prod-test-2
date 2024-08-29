@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -83,7 +84,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: IP Enrichment - Internal - Generic v2
 outputs:
 - contextPath: IP
@@ -605,7 +605,6 @@ tasks:
     task:
       brand: ""
       id: 6635b28b-bdf1-42cf-88bc-14ad75e9ebe0
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -632,7 +631,6 @@ tasks:
     task:
       brand: ""
       id: 8149db7c-af8d-41e2-85ee-c9fe2efd5040
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -663,7 +661,6 @@ tasks:
     task:
       brand: ""
       id: a22c2045-33e0-4ad3-8627-15886227f805
-      isOverridable: false
       iscommand: false
       name: Enrich internal IP addresses
       type: title
@@ -726,7 +723,6 @@ tasks:
       brand: ""
       description: Checks whether the playbook's input contains at least one IP address.
       id: cd79c4ac-4dec-4872-8ec8-35079ffe9e5d
-      isOverridable: false
       iscommand: false
       name: Are the IPs already classified?
       type: condition
@@ -772,7 +768,6 @@ tasks:
       brand: ""
       description: Checks whether the ResolveIP parameter is set to "True".
       id: 8556e257-fee3-46d6-8e63-e06c38c3b7af
-      isOverridable: false
       iscommand: false
       name: Resolve the IP address?
       type: condition
@@ -830,7 +825,6 @@ tasks:
       brand: ""
       description: Convert the IP address to a hostname using DNS query.
       id: abe79100-1944-48db-8ada-f7f05dff4f91
-      isOverridable: false
       iscommand: false
       name: IP to Hostname (DNS)
       script: IPToHost
@@ -889,7 +883,6 @@ tasks:
       brand: ""
       description: Checks whether the "InRange" attribute is set to "yes".
       id: ac707a9d-ef3d-4dbc-867d-1bef4287be9d
-      isOverridable: false
       iscommand: false
       name: Is there an internal IP address?
       type: condition
@@ -935,7 +928,6 @@ tasks:
         internal, sets the \"InRange\" attribute to \"yes\".\nIf external, sets the
         \"InRange\" attribute to \"no\". \n"
       id: 711a6f17-1f6f-4b1f-86d6-2808ea6ea255
-      isOverridable: false
       iscommand: false
       name: Determine whether the IP address is internal or external
       script: IsIPInRanges
@@ -967,7 +959,6 @@ tasks:
     task:
       brand: ""
       id: 3dbd6139-a053-466c-8abf-86544d804022
-      isOverridable: false
       iscommand: false
       name: No Internal IP Address
       type: title
@@ -1065,7 +1056,6 @@ tasks:
         - Cortex XDR / Core (endpoint enrichment, reputation and risk)
         - Endpoint reputation using !endpoint command.
       id: 955e1140-bb51-446f-86e3-754d5119635b
-      isOverridable: false
       iscommand: false
       name: Endpoint Enrichment - Generic v2.1
       playbookId: Endpoint Enrichment - Generic v2.1
@@ -1097,7 +1087,6 @@ tasks:
     task:
       brand: ""
       id: 7be14457-6daf-4880-8ab7-ddc7d9c5f5ea
-      isOverridable: false
       iscommand: false
       name: Classify & Resolve IPs
       type: title
