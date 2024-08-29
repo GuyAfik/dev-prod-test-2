@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -32,7 +33,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Get endpoint details - Generic
 outputs:
 - contextPath: Endpoint.Hostname
@@ -78,7 +78,6 @@ tasks:
     task:
       brand: ""
       id: 9716b204-62a4-450c-8253-26271fde0c01
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -118,7 +117,6 @@ tasks:
     task:
       brand: ""
       id: 54bb9713-a67d-4c97-8422-65d5c9ae1b88
-      isOverridable: false
       iscommand: false
       name: Is the endpoint id was provided?
       type: condition
@@ -153,7 +151,6 @@ tasks:
       brand: ""
       description: Returns information about an endpoint.
       id: 7ad4b670-6c2b-47f3-8475-0cff052ec80c
-      isOverridable: false
       iscommand: true
       name: Get endpoint by ID
       script: '|||endpoint'
@@ -195,7 +192,6 @@ tasks:
     task:
       brand: ""
       id: 55202260-763a-4ab5-854b-e3d732645504
-      isOverridable: false
       iscommand: false
       name: Is the hostname provided?
       type: condition
@@ -230,7 +226,6 @@ tasks:
       brand: ""
       description: Returns information about an endpoint.
       id: 9b85faf0-0d1f-41cc-858c-47a1011746cd
-      isOverridable: false
       iscommand: true
       name: Get endpoint by hostname
       script: '|||endpoint'
@@ -259,7 +254,6 @@ tasks:
     task:
       brand: ""
       id: 1eed6e13-e39f-45f2-86f0-021a16a24a66
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -300,7 +294,6 @@ tasks:
     task:
       brand: ""
       id: d118de51-1c82-4f69-8454-61f80edd0741
-      isOverridable: false
       iscommand: false
       name: Is the endpoint IP provided?
       type: condition
@@ -335,7 +328,6 @@ tasks:
       brand: ""
       description: Returns information about an endpoint.
       id: 3fdf2df6-ea67-4639-8ef1-2f32d783f32e
-      isOverridable: false
       iscommand: true
       name: Get endpoint by IP
       script: '|||endpoint'
@@ -377,7 +369,6 @@ tasks:
     task:
       brand: ""
       id: e2f57f23-a132-41f2-8ceb-3a84c652333b
-      isOverridable: false
       iscommand: false
       name: Is the endpoint details retrieved by ID?
       type: condition
@@ -418,7 +409,6 @@ tasks:
     task:
       brand: ""
       id: 21ed3ecb-a998-4ef0-8864-3dbd44e89a89
-      isOverridable: false
       iscommand: false
       name: Is agent ID provided?
       type: condition
@@ -457,7 +447,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: 90239616-0624-4464-8b2b-ff9b92ab5069
-      isOverridable: false
       iscommand: false
       name: Set endpoint ID to context
       script: Set
@@ -499,7 +488,6 @@ tasks:
     task:
       brand: ""
       id: f40bcf3f-0570-41e3-8c97-fe26908b3a13
-      isOverridable: false
       iscommand: false
       name: 'Is the endpoint details retrieved by hostname? '
       type: condition
@@ -540,7 +528,6 @@ tasks:
     task:
       brand: ""
       id: 645a04bf-3e22-407e-873d-f571a05b5225
-      isOverridable: false
       iscommand: false
       name: Was hostname provided?
       type: condition
@@ -577,7 +564,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: eecde4bf-341f-4347-8192-c9067f63727e
-      isOverridable: false
       iscommand: false
       name: Set endpoint hostname to context
       script: Set
@@ -619,7 +605,6 @@ tasks:
     task:
       brand: ""
       id: c6f50e01-1671-422d-8a29-90c685e03e48
-      isOverridable: false
       iscommand: false
       name: Is the endpoint details retrieved by IP?
       type: condition
@@ -658,7 +643,6 @@ tasks:
       brand: ""
       description: Set a value in context under the key you entered.
       id: e40edb78-b5f5-4b04-82e5-92693f2e7bfc
-      isOverridable: false
       iscommand: false
       name: Set endpoint IP to context
       script: Set
@@ -700,7 +684,6 @@ tasks:
     task:
       brand: ""
       id: 3ab69c5f-8c2b-4ef7-81a1-6fafd368c9ec
-      isOverridable: false
       iscommand: false
       name: Was endpoint IP provided?
       type: condition
