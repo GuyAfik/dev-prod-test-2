@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -40,6 +39,7 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
+isOverridable: false
 name: Get File Sample From Path - Generic V3
 outputs:
 - contextPath: File.Size
@@ -107,6 +107,7 @@ tasks:
     task:
       brand: ""
       id: 5d887731-fb71-4226-872c-a9e8dbddac42
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -133,6 +134,7 @@ tasks:
     task:
       brand: ""
       id: f81d6908-8ce9-452b-8dde-689f44256933
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -163,6 +165,7 @@ tasks:
     task:
       brand: ""
       id: 906138a1-e3ee-4711-889a-4ebcc8c2a1c6
+      isOverridable: false
       iscommand: false
       name: Use VMware Carbon Black EDR (Live Response API)
       type: title
@@ -206,6 +209,7 @@ tasks:
         This playbook retrieves a file from a path on an endpoint using VMware Carbon Black EDR (Live Response API).
         Make sure to provide the Carbon Black sensor ID of the endpoint from which you want to retrieve the file.
       id: 6d73fcbe-5c0f-4dec-8fa4-9f0c1dd70a8d
+      isOverridable: false
       iscommand: false
       name: Get File Sample From Path - VMware Carbon Black EDR - Live Response API
       playbookName: Get File Sample From Path - VMware Carbon Black EDR - Live Response
@@ -255,6 +259,7 @@ tasks:
         capabilities to connect to a Windows host to acquire a file as forensic evidence
         for further analysis.
       id: 9c4ed95f-7e7e-4dcc-8c09-29a421593849
+      isOverridable: false
       iscommand: false
       name: PS Remote Get File Sample From Path
       playbookName: PS Remote Get File Sample From Path
@@ -286,6 +291,7 @@ tasks:
     task:
       brand: ""
       id: 4ae1d82e-3106-42b4-848e-67f64641dd08
+      isOverridable: false
       iscommand: false
       name: Use Powershell Remoting
       type: title
@@ -316,6 +322,7 @@ tasks:
     task:
       brand: ""
       id: c12382b6-414b-4613-8ba2-3a686f22ba19
+      isOverridable: false
       iscommand: false
       name: Use Microsoft Defender for Endpoint
       type: title
@@ -346,6 +353,7 @@ tasks:
     task:
       brand: ""
       id: dd5f9bca-f2d6-4d83-8188-372acf9aafc5
+      isOverridable: false
       iscommand: false
       name: Use CrowdStrike Falcon
       type: title
@@ -376,6 +384,7 @@ tasks:
     task:
       brand: ""
       id: 9abf10fa-2f9e-4714-83ce-94f1e9388e92
+      isOverridable: false
       iscommand: false
       name: Use Cortex XDR
       type: title
@@ -427,6 +436,7 @@ tasks:
         - A comma-separated list of endpoint IDs.
         - A comma-separated list of file paths for your operating system, either Windows, Linux, or Mac. At least one file path is required.
       id: 291977e7-1951-462c-8875-7a8f13ad4636
+      isOverridable: false
       iscommand: false
       name: Cortex XDR - Retrieve File v2
       playbookName: Cortex XDR - Retrieve File v2
@@ -479,6 +489,7 @@ tasks:
         This playbook is part of the 'Malware Investigation And Response' pack. For more information, refer to https://xsoar.pan.dev/docs/reference/packs/malware-investigation-and-response.
         This playbook retrieves and unzips files from CrowdStrike Falcon and returns a list of the files that were and were not retrieved.
       id: 093a8aa7-07c9-45e3-85de-b08c39983dce
+      isOverridable: false
       iscommand: false
       name: CrowdStrike Falcon - Retrieve File
       playbookName: CrowdStrike Falcon - Retrieve File
@@ -529,6 +540,7 @@ tasks:
         This playbook is part of the 'Malware Investigation And Response' pack. For more information, refer to https://xsoar.pan.dev/docs/reference/packs/malware-investigation-and-response.
         This playbook uses the Live Response feature to retrieve a file from an endpoint./nNote that the endpoint ID will be set from the incident field "DeviceID".
       id: 8232fa6d-94a4-4d02-8ea4-dd0d3144fcaa
+      isOverridable: false
       iscommand: false
       name: MDE - Retrieve File
       playbookName: MDE - Retrieve File
