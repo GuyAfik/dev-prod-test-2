@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.5.15
+    isoverridable: false
+    itemVersion: 1.5.16
     packID: Whois
     packName: Whois
     packPropagationLabels:
@@ -55,7 +56,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: TIM - Process Domain Registrant With Whois
 outputs:
 - contextPath: RegistrantDomainNotInList
@@ -91,7 +91,6 @@ tasks:
     task:
       brand: ""
       id: 56443fa8-222d-4859-8feb-fd9e7b202053
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -131,7 +130,6 @@ tasks:
     task:
       brand: ""
       id: 8f996d46-fb1d-4680-88cd-a3d222d5a167
-      isOverridable: false
       iscommand: false
       name: Are there query results?
       type: condition
@@ -159,7 +157,6 @@ tasks:
     task:
       brand: ""
       id: 9ac9f838-21c1-4381-8745-6ebcab8da602
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -204,7 +201,6 @@ tasks:
       description: Checks whether the specified item is in a list. The default list
         is the Cortex XSOAR Indicators Allow list.
       id: 44b28e9c-3040-4919-8edf-98c2861fabbc
-      isOverridable: false
       iscommand: false
       name: FilterByList
       script: FilterByList
@@ -247,7 +243,6 @@ tasks:
     task:
       brand: ""
       id: 50b702d1-0484-4baa-87e7-ce371bc4b0b8
-      isOverridable: false
       iscommand: false
       name: Is there an approved registrants list?
       type: condition
@@ -290,7 +285,6 @@ tasks:
       brand: ""
       description: Sets a value into the context with the given context key
       id: 051e749a-0df6-4aed-8aa1-bbaad5b3f6a5
-      isOverridable: false
       iscommand: false
       name: Set domains that couldn't be processed
       script: Set
@@ -335,7 +329,6 @@ tasks:
     task:
       brand: ""
       id: 2a35a5b3-1824-4906-8666-be31cf6651b1
-      isOverridable: false
       iscommand: false
       name: Are there domains without Whois query results?
       type: condition
@@ -374,7 +367,6 @@ tasks:
       brand: Builtin
       description: Tag indicator with the no_whois_result tag.
       id: fd92dde4-0bda-406e-8402-2307582a68c6
-      isOverridable: false
       iscommand: true
       name: Tag domain with no Whois resolution
       script: Builtin|||appendIndicatorField
@@ -429,7 +421,6 @@ tasks:
       description: Domains whose registrant appears in the list defined in the inputs.ApprovedregistrantsListName
         context key are added to ApprovedDomains in context.
       id: d619742c-2c27-4a60-8156-e877eba9030d
-      isOverridable: false
       iscommand: false
       name: Set domains by approved registrants
       script: SetAndHandleEmpty
@@ -484,7 +475,6 @@ tasks:
       description: Checks if the specified value exists in context. If the value exists,
         it will be set in context, otherwise no value will be set in context.
       id: f7130c8f-83a1-4b6d-89ec-8d6018251e31
-      isOverridable: false
       iscommand: false
       name: Set domains by non approved registrants
       script: SetAndHandleEmpty
@@ -516,7 +506,6 @@ tasks:
     task:
       brand: ""
       id: bc5363dd-1f51-4e66-89d2-12a52b46dec3
-      isOverridable: false
       iscommand: false
       name: No registrant list provided
       type: title
@@ -547,7 +536,6 @@ tasks:
     task:
       brand: ""
       id: c17301fa-f768-4889-8bc1-2ab05c94b019
-      isOverridable: false
       iscommand: false
       name: Domain not found by Whois
       type: title
@@ -578,7 +566,6 @@ tasks:
     task:
       brand: ""
       id: 87cf4728-0a47-4ca4-854e-b5da694d87fe
-      isOverridable: false
       iscommand: false
       name: Domain registrant in approved list
       type: title
@@ -609,7 +596,6 @@ tasks:
     task:
       brand: ""
       id: a8d7d880-46c3-4b04-8ca9-0394a42f1c88
-      isOverridable: false
       iscommand: false
       name: Domain registrant not in approved list
       type: title
@@ -648,7 +634,6 @@ tasks:
       brand: ""
       description: Sets a value into the context with the given context key
       id: 55884370-bce5-43b9-8daa-ce8e94c99240
-      isOverridable: false
       iscommand: false
       name: Set Results
       script: Set
@@ -688,7 +673,6 @@ tasks:
       brand: Builtin
       description: Tags the indicator with the approved_registrant tag.
       id: 66b81388-3784-4887-85e2-d4ac600e80f1
-      isOverridable: false
       iscommand: true
       name: Tag as approved registrant
       script: Builtin|||appendIndicatorField
@@ -741,7 +725,6 @@ tasks:
       brand: ""
       description: Sets a value into the context with the given context key
       id: f1b25a8e-a6ae-41ab-8f3d-30689c64b0a8
-      isOverridable: false
       iscommand: false
       name: Set domains without Whois results
       script: Set
@@ -783,7 +766,6 @@ tasks:
     task:
       brand: ""
       id: 51971516-ed0b-4150-8b78-d7ccbf90506b
-      isOverridable: false
       iscommand: false
       name: Are there there domains with an approved registrant?
       type: condition
