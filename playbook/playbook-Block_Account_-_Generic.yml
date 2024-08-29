@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -29,7 +30,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Block Account - Generic
 outputs: []
 starttaskid: "0"
@@ -51,7 +51,6 @@ tasks:
     task:
       brand: ""
       id: b95110b7-ba18-42a5-87ad-c5d37915401c
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -78,7 +77,6 @@ tasks:
     task:
       brand: ""
       id: 1808d949-f921-4957-8796-7bbedd822ad9
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -110,7 +108,6 @@ tasks:
     task:
       brand: ""
       id: 0b958771-7e06-4239-899f-f7d133be6938
-      isOverridable: false
       iscommand: false
       name: Block accounts
       type: title
@@ -153,7 +150,6 @@ tasks:
       description: Verify that the playbook input includes at least one username to
         block.
       id: 2c5a17dd-e019-4e20-8f5b-4333678a26e0
-      isOverridable: false
       iscommand: false
       name: Is there a username to block?
       type: condition
@@ -218,7 +214,6 @@ tasks:
       description: |
         Verify that there is a valid instance of Active Directory enabled.
       id: 5da07472-33bb-451d-8562-365e05f456ec
-      isOverridable: false
       iscommand: false
       name: Is Active Directory enabled?
       type: condition
@@ -254,7 +249,6 @@ tasks:
       brand: activedir
       description: Disable the account using Active Directory.
       id: c8b9285e-4d21-4070-89b6-33c611531812
-      isOverridable: false
       iscommand: true
       name: Disable account in active directory
       script: activedir|||ad-disable-account
@@ -320,7 +314,6 @@ tasks:
       description: |
         Verify that there is a valid instance of PAN-OS enabled.
       id: 7b9a0521-f530-41f2-8e6c-06df1f72ad87
-      isOverridable: false
       iscommand: false
       name: Is PAN-OS enabled?
       type: condition
@@ -357,7 +350,6 @@ tasks:
       brand: ""
       description: Apply a tag to a user.
       id: 9da1c44c-5522-421f-8f84-a70123600e4a
-      isOverridable: false
       iscommand: true
       name: PAN-OS - Register Tag to User
       script: '|||pan-os-register-user-tag'
@@ -401,7 +393,6 @@ tasks:
       description: Verify that the playbook input includes at least one tag to apply
         to the user.
       id: 06dfb070-8751-4cbc-8dcd-b7ffd39ca2cc
-      isOverridable: false
       iscommand: false
       name: Is there a Tag name to register?
       type: condition
