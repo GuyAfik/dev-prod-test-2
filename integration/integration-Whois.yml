@@ -1,7 +1,6 @@
 category: Data Enrichment & Threat Intelligence
 commonfields:
   id: Whois
-  isOverridable: false
   version: -1
 configuration:
 - additionalinfo: If set, failed command results will be returned as warnings instead
@@ -79,7 +78,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.5.15
+    isoverridable: false
+    itemVersion: 1.5.16
     packID: Whois
     packName: Whois
     packPropagationLabels:
@@ -1493,11 +1493,12 @@ script:
       type: String
   dockerimage: demisto/ippysocks-py3:1.0.0.102706
   nativeimage:
+  - "8.7"
   - "8.6"
   runonce: false
   script: |
     register_module_line('Whois', 'start', __line__())
-    ### pack version: 1.5.15
+    demisto.debug('pack name = Whois, pack version = 1.5.16')
 
 
 
@@ -10586,7 +10587,7 @@ script:
                             headers=hr_headers,
                             removeNull=True,
                         ),
-                        raw_response=str(domain_data),
+                        raw_response=dict(domain_data),
                     )
                 )
             except Exception as e:
