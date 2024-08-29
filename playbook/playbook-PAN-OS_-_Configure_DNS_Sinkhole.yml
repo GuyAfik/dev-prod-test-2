@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.9.0
-    itemVersion: 2.1.34
+    isoverridable: false
+    itemVersion: 2.1.35
     packID: PAN-OS
     packName: PAN-OS by Palo Alto Networks
     packPropagationLabels:
@@ -137,7 +138,6 @@ inputs:
   required: true
   value:
     simple: "False"
-isOverridable: false
 name: PAN-OS - Configure DNS Sinkhole
 outputs: []
 starttaskid: "0"
@@ -164,7 +164,6 @@ tasks:
     task:
       brand: ""
       id: f5e8c7ff-cfec-4e23-8a73-354b6c1dd7d5
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -208,7 +207,6 @@ tasks:
         to sinkhole traffic to domains from the DNS signature source specified in
         the DNSSignatureSource playbook input.
       id: 454902e5-e762-4600-8be5-c5e40078caaa
-      isOverridable: false
       iscommand: true
       name: Update security profile to sinkhole traffic to the domains
       script: '|||pan-os-apply-dns-signature-policy'
@@ -254,7 +252,6 @@ tasks:
         push the configuration to the firewalls. To push the configuration, run the
         panorama-push-to-device-group command.
       id: eda4c8ea-03a8-4c4f-858b-9b970e80588f
-      isOverridable: false
       iscommand: true
       name: Commit changes
       script: '|||pan-os-commit'
@@ -299,7 +296,6 @@ tasks:
       description: Tries to find a rule that allows DNS traffic from the primary internal
         DNS server to the public DNS server.
       id: 7144b4a8-b36c-44f8-86d2-e2928ce14916
-      isOverridable: false
       iscommand: true
       name: Match rule to traffic from primary internal DNS to public DNS
       script: '|||pan-os-security-policy-match'
@@ -359,7 +355,6 @@ tasks:
         Creates a new rule to deny traffic to the sinkhole address object, before the first rule that allows DNS traffic. This in turn creates logs for the IPs making traffic to the sinkhole address.
         It's best practice to deny traffic to the sinkhole address.
       id: 90e857d3-c4c7-45bf-88fd-112c3c8fdf55
-      isOverridable: false
       iscommand: true
       name: Create new deny rule preceding the first DNS allowing rule
       script: '|||pan-os-create-rule'
@@ -391,7 +386,6 @@ tasks:
     task:
       brand: ""
       id: 176ec972-3563-4802-851d-f1a2ecd7720e
-      isOverridable: false
       iscommand: false
       name: Create Sinkhole Address Object
       type: title
@@ -457,7 +451,6 @@ tasks:
         Checks whether a new rule that allows DNS traffic from the internal DNS server/s to the public DNS server can be created.
         The rule will be placed high in the rule list.
       id: 36e39093-785b-4283-8c04-a81f58ca06ec
-      isOverridable: false
       iscommand: false
       name: Can a new rule be created?
       type: condition
@@ -488,7 +481,6 @@ tasks:
     task:
       brand: ""
       id: 32b6f9e5-4381-4d22-8d29-14198b922048
-      isOverridable: false
       iscommand: false
       name: Deny Traffic to Sinkhole Address Object - Creates Logs
       type: title
@@ -540,7 +532,6 @@ tasks:
         packets are dropped anyway, the search also looks for allow rules too. This
         is done because the goal is to log traffic to it, so the action is irrelevant.
       id: 64cc7b9e-62df-4dea-8159-6e172896cdaf
-      isOverridable: false
       iscommand: true
       name: Search for existing rule denying traffic to sinkhole
       script: '|||pan-os-list-rules'
@@ -597,7 +588,6 @@ tasks:
       brand: ""
       description: Checks whether a rule was found.
       id: 4bf3fe72-c342-4f32-8b0e-ed3523c8a0d6
-      isOverridable: false
       iscommand: false
       name: Does the rule already exist?
       type: condition
@@ -643,7 +633,6 @@ tasks:
       description: Checks if there's another DNS internal server configured in the
         playbook inputs.
       id: 47fb9736-cc26-4baa-8647-9bba4fbcdccd
-      isOverridable: false
       iscommand: false
       name: Is there a secondary DNS server?
       type: condition
@@ -687,7 +676,6 @@ tasks:
       description: Tries to find a rule that allows DNS traffic from the primary internal
         DNS server to the public DNS server.
       id: 04315d1e-bcfd-4cc8-837f-12390aa8f6ac
-      isOverridable: false
       iscommand: true
       name: Match rule to traffic from secondary internal DNS to public DNS
       script: '|||pan-os-security-policy-match'
@@ -779,7 +767,6 @@ tasks:
         If there are 2 rules - then the profiles of both of them will be edited and
         applied as needed.
       id: 1618c361-3718-444e-81ba-bc2f3457a9f0
-      isOverridable: false
       iscommand: false
       name: How many rules allow DNS from our internal servers?
       type: condition
@@ -811,7 +798,6 @@ tasks:
     task:
       brand: ""
       id: cf91cbb1-981c-426f-8959-1c96385c1bba
-      isOverridable: false
       iscommand: false
       name: Edit Both Rules
       type: title
@@ -878,7 +864,6 @@ tasks:
         In addition, it checks if there's a Security Profile Group attached, and if there is, it will try to add the Security Profile to the group safely.
         In case we are trying to apply a Security Profile that doesn't exist yet - the playbook will create it too.
       id: 9c8c2e9f-378e-485c-8510-05a6efdcce44
-      isOverridable: false
       iscommand: false
       name: PAN-OS - Add Anti-Spyware Security Profile To Rule
       playbookId: PAN-OS - Add Anti-Spyware Security Profile To Rule
@@ -946,7 +931,6 @@ tasks:
         In addition, it checks if there's a Security Profile Group attached, and if there is, it will try to add the Security Profile to the group safely.
         In case we are trying to apply a Security Profile that doesn't exist yet - the playbook will create it too.
       id: aeb6d47e-d550-4844-8261-20cdc8dcee7b
-      isOverridable: false
       iscommand: false
       name: PAN-OS - Add Anti-Spyware Security Profile To Rule
       playbookId: PAN-OS - Add Anti-Spyware Security Profile To Rule
@@ -978,7 +962,6 @@ tasks:
     task:
       brand: ""
       id: 1e165f1c-1c44-49c7-867b-fdb9f3448453
-      isOverridable: false
       iscommand: false
       name: Edit One Rule
       type: title
@@ -1034,7 +1017,6 @@ tasks:
       brand: ""
       description: Creates a policy rule.
       id: 7dd07f27-ee4f-45d9-83d4-98cd96d33d44
-      isOverridable: false
       iscommand: true
       name: Create a new rule to allow DNS traffic
       script: '|||pan-os-create-rule'
@@ -1079,7 +1061,6 @@ tasks:
         is task is done to normalize the data as we need to refer to that rule later
         on in the playbook.
       id: 7dd5ba54-3323-4f7f-8fe0-a5058da934de
-      isOverridable: false
       iscommand: false
       name: Save rules allowing DNS in a new key
       script: Set
@@ -1111,7 +1092,6 @@ tasks:
     task:
       brand: ""
       id: edb32439-f81d-47e9-8aa5-969107c3959b
-      isOverridable: false
       iscommand: false
       name: Find Policy To Edit
       type: title
@@ -1142,7 +1122,6 @@ tasks:
     task:
       brand: ""
       id: 88bfc3ec-a62e-4149-8491-e241d0873e60
-      isOverridable: false
       iscommand: false
       name: Apply Sinkhole Profile To Rule
       type: title
@@ -1209,7 +1188,6 @@ tasks:
         the internal DNS server/s to the public DNS server being used. The user should
         know which public DNS they're using and they should provide it.
       id: 74695c6e-5035-4e72-8412-fee6fda7c1f6
-      isOverridable: false
       iscommand: false
       name: Is the creation approved?
       type: condition
@@ -1249,7 +1227,6 @@ tasks:
         Application: DNS
         Location: Top
       id: f3fbadc6-2c66-4ab7-801b-529dcfbca5d4
-      isOverridable: false
       iscommand: false
       name: Create the rule manually according to description
       type: regular
@@ -1291,7 +1268,6 @@ tasks:
         to allow DNS traffic outside in a new context key. This is task is done to
         normalize the data as we need to refer to that rule later on in the playbook.
       id: 1bd5eda5-0cfc-47d4-862a-88fb64a8c99f
-      isOverridable: false
       iscommand: false
       name: Save new rule allowing DNS in a new key
       script: Set
@@ -1320,7 +1296,6 @@ tasks:
     task:
       brand: ""
       id: 0acacc94-1156-48a2-861b-6435fb7249de
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -1351,7 +1326,6 @@ tasks:
     task:
       brand: ""
       id: ca9d57bc-b5dd-450b-8f13-8d3c06339ef6
-      isOverridable: false
       iscommand: false
       name: Sinkhole Cannot Be Created
       type: title
@@ -1386,7 +1360,6 @@ tasks:
       description: Asks the user whether they created the rule to allow DNS traffic
         or not.
       id: 5882ab7e-2537-4d7a-8a9d-ee972b9680e0
-      isOverridable: false
       iscommand: false
       name: Did you create the rule?
       type: condition
@@ -1426,7 +1399,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
       id: 821ddf4e-cfa2-40ac-82bb-1af3aae1587b
-      isOverridable: false
       iscommand: false
       name: Is PAN-OS enabled?
       script: IsIntegrationAvailable
@@ -1459,7 +1431,6 @@ tasks:
       brand: ""
       description: Returns a list of addresses.
       id: 7710dec9-3d6a-4e0d-8766-8f1a6f4379d7
-      isOverridable: false
       iscommand: true
       name: Get all the address objects
       script: '|||pan-os-list-addresses'
@@ -1516,7 +1487,6 @@ tasks:
       description: Checks whether there is an existing address object with the FQDN
         of sinkhole.paloaltonetworks.com.
       id: c390ba73-0bd7-4eb9-823f-247f7631d497
-      isOverridable: false
       iscommand: false
       name: Is there an address object for the sinkhole address?
       type: condition
@@ -1565,7 +1535,6 @@ tasks:
       brand: ""
       description: Saves the name of the sinkhole address object.
       id: 810d1944-57ce-404c-8522-0a3dc8362512
-      isOverridable: false
       iscommand: false
       name: Save the name of the address object
       script: Set
@@ -1608,7 +1577,6 @@ tasks:
         because the sinkhole IP rotates, and in order to create a rule that denies
         traffic to it, an address object is needed.
       id: 7c148a00-fcbf-45d0-898f-120d003816e7
-      isOverridable: false
       iscommand: true
       name: Create a new address object for the sinkhole address
       script: '|||pan-os-create-address'
@@ -1656,7 +1624,6 @@ tasks:
         least one rule that allows traffic from the internal DNS server to the public
         one.
       id: 72cb80e2-f783-41ee-8843-571a2a08e917
-      isOverridable: false
       iscommand: false
       name: Is there a tag indicating that sinkhole is configured?
       type: condition
@@ -1687,7 +1654,6 @@ tasks:
     task:
       brand: ""
       id: 81ca4acd-f9fd-4d1f-8254-2642e3977792
-      isOverridable: false
       iscommand: false
       name: Check Sinkhole Configuration
       type: title
@@ -1732,7 +1698,6 @@ tasks:
         all other arguments are overridden. Make sure the query includes all the filters
         you want).
       id: 53cbc73d-45f4-4031-8705-bba6f212d03b
-      isOverridable: false
       iscommand: true
       name: Get the tags of the existing rules
       script: '|||pan-os-list-rules'
@@ -1764,7 +1729,6 @@ tasks:
     task:
       brand: ""
       id: c4bb7d78-0165-4937-8733-aacb637ae486
-      isOverridable: false
       iscommand: false
       name: Skipping reconfiguration
       type: title
@@ -1806,7 +1770,6 @@ tasks:
       brand: ""
       description: Edits a policy rule.
       id: 7866ac46-5e73-408c-8f92-64b737540b45
-      isOverridable: false
       iscommand: true
       name: Tag the rule to indicate that sinkhole is configured
       script: '|||pan-os-edit-rule'
@@ -1838,7 +1801,6 @@ tasks:
     task:
       brand: ""
       id: 023c00b9-09ad-448e-84c8-240ecab776bc
-      isOverridable: false
       iscommand: false
       name: Tag To Indicate Sinkhole Is Configured
       type: title
@@ -1870,7 +1832,6 @@ tasks:
       brand: ""
       description: Returns a list of tags from Panorama.
       id: bba23603-f89c-4fc6-883f-ac474f132334
-      isOverridable: false
       iscommand: true
       name: Get the existing tags
       script: '|||pan-os-list-tag'
@@ -1923,7 +1884,6 @@ tasks:
       brand: ""
       description: Checks if a tag called Sinkhole_Configured exists.
       id: ff5f28db-69da-4599-88df-0b55c7b1036a
-      isOverridable: false
       iscommand: false
       name: Does the sinkhole tag exist?
       type: condition
@@ -1960,7 +1920,6 @@ tasks:
       brand: ""
       description: Creates a new tag in Panorama.
       id: 19e4183c-a903-471f-87d6-3c431e7b14c5
-      isOverridable: false
       iscommand: true
       name: Create a new tag to indicate sinkhole is configured
       script: '|||pan-os-create-tag'
@@ -2002,7 +1961,6 @@ tasks:
         push the configuration to the firewalls. To push the configuration, run the
         panorama-push-to-device-group command.
       id: c6b49830-d9dc-417b-8b05-81aa052d7aaf
-      isOverridable: false
       iscommand: true
       name: Commit the new tag
       script: '|||pan-os-commit'
