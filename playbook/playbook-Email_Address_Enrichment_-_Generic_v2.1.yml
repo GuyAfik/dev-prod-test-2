@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -49,7 +50,6 @@ inputs:
   required: true
   value:
     simple: "False"
-isOverridable: false
 name: Email Address Enrichment - Generic v2.1
 outputs:
 - contextPath: Account
@@ -222,7 +222,6 @@ tasks:
     task:
       brand: ""
       id: 22a55a7c-c942-4d12-84fb-76bce3695b83
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -252,7 +251,6 @@ tasks:
     task:
       brand: ""
       id: 8970ccc7-3ca4-4f5a-879e-f9d0c07c3e5b
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -295,7 +293,6 @@ tasks:
       description: Determines whether the playbook's input contains at least one email
         address.
       id: dce4e3b8-0986-4a8c-8436-0602977d9f8c
-      isOverridable: false
       iscommand: false
       name: Are there email addresses to check?
       type: condition
@@ -349,7 +346,6 @@ tasks:
         email address, according to the domains that were passed as arguments to this
         playbook.
       id: 41284223-6f2e-44de-82a4-c8e096a3cdc4
-      isOverridable: false
       iscommand: false
       name: Classify email addresses as internal or external
       script: IsEmailAddressInternal
@@ -382,7 +378,6 @@ tasks:
     task:
       brand: ""
       id: 1a9686bb-e22f-46a7-8f5e-adf7acffdf3b
-      isOverridable: false
       iscommand: false
       name: Internal
       type: title
@@ -414,7 +409,6 @@ tasks:
     task:
       brand: ""
       id: 7874c1a7-0bae-43cc-8f13-9234c337f491
-      isOverridable: false
       iscommand: false
       name: External
       type: title
@@ -465,7 +459,6 @@ tasks:
       description: Uses Active Directory to get user information for internal email
         addresses.
       id: e3b298d5-cb30-4440-803e-596597adcc10
-      isOverridable: false
       iscommand: true
       name: Get email address info from Active Directory
       script: '|||ad-get-user'
@@ -518,7 +511,6 @@ tasks:
       description: Checks whether there are email addresses with a NetworkType attribute
         value of "External".
       id: 4dbbbdb8-0102-445f-8fc3-d3ed70c32aa3
-      isOverridable: false
       iscommand: false
       name: Are there any external email addresses?
       script: Exists
@@ -571,7 +563,6 @@ tasks:
       description: Checks whether there are email addresses with a NetworkType attribute
         value of "Internal".
       id: 4bb4197a-cd13-41a6-8882-b8e6c51312c3
-      isOverridable: false
       iscommand: false
       name: Are there any internal email addresses?
       script: Exists
@@ -644,7 +635,6 @@ tasks:
       description: Checks if an email address's domain is trying to squat other domains
         using Levenshtein distance algorithm.
       id: 9b9a97f6-c855-4d4e-8047-f0306f006a5f
-      isOverridable: false
       iscommand: false
       name: Check email addresses for domain-squatting
       script: EmailDomainSquattingReputation
@@ -704,7 +694,6 @@ tasks:
       description: Checks if there's an active instance of the Active Directory Query
         v2 integration enabled.
       id: bc59d675-c18d-44ac-878f-bdc8dc7c578e
-      isOverridable: false
       iscommand: false
       name: Is Active Directory Query v2 enabled?
       script: Exists
@@ -751,7 +740,6 @@ tasks:
       brand: ""
       description: Checks if there is at least one domain to check for domain-squatting.
       id: 82034885-dcb2-4c4a-8fa7-1c1514c27e46
-      isOverridable: false
       iscommand: false
       name: Is there a domain list input?
       script: Exists
@@ -783,7 +771,6 @@ tasks:
     task:
       brand: ""
       id: 358de9fa-efe5-47c2-801f-7c85db0d408b
-      isOverridable: false
       iscommand: false
       name: No Email Addresses
       type: title
@@ -830,7 +817,6 @@ tasks:
       brand: ""
       description: Check if should run email address reputation command
       id: 047c804f-cc74-4eb3-8ea5-7776e5827088
-      isOverridable: false
       iscommand: false
       name: Should use !email command?
       type: condition
@@ -879,7 +865,6 @@ tasks:
       brand: ""
       description: Checks if an email address was compromised.
       id: 156ef5ee-88a6-4fd7-8636-b6e9c678f5e3
-      isOverridable: false
       iscommand: true
       name: Check Reputation
       script: '|||email'
@@ -918,7 +903,6 @@ tasks:
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'.
       id: 766c0f6c-feff-49af-8bfd-62574133e61c
-      isOverridable: false
       iscommand: false
       name: Is EWS v2 enabled?
       script: IsIntegrationAvailable
@@ -977,7 +961,6 @@ tasks:
         multiple potential matches, all will be returned, but limited to a maximum
         of 100 candidates.
       id: d10b47f1-37e1-4354-870b-0ac7b022d7d3
-      isOverridable: false
       iscommand: true
       name: Get full contact info
       script: '|||ews-resolve-name'
