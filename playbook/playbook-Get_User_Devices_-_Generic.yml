@@ -2,8 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.8.0
-    isoverridable: false
-    itemVersion: 2.6.38
+    itemVersion: 2.6.34
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -51,6 +50,7 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
+isOverridable: false
 name: Get User Devices - Generic
 outputs:
 - contextPath: UserDevices
@@ -405,6 +405,7 @@ tasks:
     task:
       brand: ""
       id: 454cb663-ccde-4a62-8b49-30eb544b3bc0
+      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -449,6 +450,7 @@ tasks:
     task:
       brand: ""
       id: cf8dc377-5329-470d-844e-791d70e71811
+      isOverridable: false
       iscommand: false
       name: Get User Devices by Username - Generic
       playbookId: Get User Devices by Username - Generic
@@ -495,6 +497,7 @@ tasks:
     task:
       brand: ""
       id: 9c31b9f0-e095-4389-8f58-729f0c4ec788
+      isOverridable: false
       iscommand: false
       name: Get User Devices by Email Address - Generic
       playbookId: Get User Devices by Email Address - Generic
@@ -547,6 +550,7 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.11/Cortex-XSOAR-Administrator-Guide/Automations
       id: 31a7a2ae-9ab4-43fd-8ad3-aed6423e566a
+      isOverridable: false
       iscommand: false
       name: Set UserDevices
       script: SetAndHandleEmpty
@@ -575,6 +579,7 @@ tasks:
     task:
       brand: ""
       id: 0554518b-dd22-4f68-83d5-7bdf164d2b4d
+      isOverridable: false
       iscommand: false
       name: Done
       type: title
