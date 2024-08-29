@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.37
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -153,7 +154,6 @@ inputs:
   required: true
   value:
     simple: "False"
-isOverridable: false
 name: Entity Enrichment - Generic v2
 outputs:
 - contextPath: IP
@@ -1219,7 +1219,6 @@ tasks:
     task:
       brand: ""
       id: cdd6228a-7feb-4386-8ab1-7dfdf77d99c2
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -1246,7 +1245,6 @@ tasks:
     task:
       brand: ""
       id: 38007764-1687-47b1-8490-0f3cded9dc95
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -1307,7 +1305,6 @@ tasks:
         - Separate internal and external IP addresses
         - For internal IP addresses, get host information
       id: 79119615-b605-486c-8592-d84ab35523d3
-      isOverridable: false
       iscommand: false
       name: IP Enrichment - Generic v2
       playbookId: IP Enrichment - Generic v2
@@ -1368,7 +1365,6 @@ tasks:
         - Provide threat information
         - File Reputation using !file command
       id: 6b49c26d-0f94-4a7d-82f3-cb91ec5d4530
-      isOverridable: false
       iscommand: false
       name: File Enrichment - Generic v2
       playbookId: File Enrichment - Generic v2
@@ -1427,7 +1423,6 @@ tasks:
         * Providing of URL screenshots
         * URL Reputation using !url
       id: 92056557-239f-490a-8376-a4a0f52e6d66
-      isOverridable: false
       iscommand: false
       name: URL Enrichment - Generic v2
       playbookId: URL Enrichment - Generic v2
@@ -1478,7 +1473,6 @@ tasks:
         * Threat information
         * Domain reputation using !domain command
       id: 7578f493-8243-47c0-86aa-ec1e24c752aa
-      isOverridable: false
       iscommand: false
       name: Domain Enrichment - Generic v2
       playbookId: Domain Enrichment - Generic v2
@@ -1540,7 +1534,6 @@ tasks:
         - Get the domain-squatting reputation for external addresses
         - Email address reputation using !email command
       id: 3ee11f48-e5f2-472f-8911-2c0b20993cca
-      isOverridable: false
       iscommand: false
       name: Email Address Enrichment - Generic v2.1
       playbookId: Email Address Enrichment - Generic v2.1
@@ -1596,7 +1589,6 @@ tasks:
 
         Also, the playbook supports the generic command 'iam-get-user' (implemented in IAM integrations. For more information, visit https://xsoar.pan.dev/docs/integrations/iam-integrations.
       id: 3f3e5655-01ed-4fd4-8509-fd6a78f80835
-      isOverridable: false
       iscommand: false
       name: Account Enrichment - Generic v2.1
       playbookId: Account Enrichment - Generic v2.1
@@ -1653,7 +1645,6 @@ tasks:
         - Cortex XDR / Core (endpoint enrichment, reputation and risk)
         - Endpoint reputation using !endpoint command.
       id: a8e9a8ae-1a6f-4425-8de8-3bc133b809dc
-      isOverridable: false
       iscommand: false
       name: Endpoint Enrichment - Generic v2.1
       playbookId: Endpoint Enrichment - Generic v2.1
