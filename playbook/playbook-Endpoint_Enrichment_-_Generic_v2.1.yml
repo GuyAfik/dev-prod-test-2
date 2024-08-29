@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.8.0
-    itemVersion: 2.6.34
+    isoverridable: false
+    itemVersion: 2.6.38
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -62,7 +63,6 @@ inputs:
       root: Endpoint
       transformers:
       - operator: uniq
-isOverridable: false
 name: Endpoint Enrichment - Generic v2.1
 outputs:
 - contextPath: Endpoint
@@ -680,7 +680,6 @@ tasks:
     task:
       brand: ""
       id: 29bcd70f-1953-4061-84ce-4cde781ad9f7
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -715,7 +714,6 @@ tasks:
     task:
       brand: ""
       id: 54895e0d-9904-4e62-8f45-ebd0d17ad5c9
-      isOverridable: false
       iscommand: false
       name: Endpoint Products
       type: title
@@ -762,7 +760,6 @@ tasks:
       brand: ""
       description: Checks whether there is at least one endpoint to enrich (by hostname).
       id: ddba13dd-92fc-47a3-8ffe-b849c626eb22
-      isOverridable: false
       iscommand: false
       name: Is there an endpoint to enrich?
       type: condition
@@ -790,7 +787,6 @@ tasks:
     task:
       brand: ""
       id: ea90c16b-6985-4f28-816f-78608df3fe51
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -849,7 +845,6 @@ tasks:
       description: Checks if there is an active instance of the Carbon Black Enterprise
         Response integration enabled.
       id: 9fa921fa-d196-40ba-8419-ed0c4f838ab8
-      isOverridable: false
       iscommand: false
       name: Is Carbon Black Enterprise Response enabled?
       type: condition
@@ -899,7 +894,6 @@ tasks:
       brand: ""
       description: List the CarbonBlack sensors
       id: 5e114375-db3d-4267-8f4d-0a411d4bb076
-      isOverridable: false
       iscommand: true
       name: Get host information from Carbon Black Enterprise Response
       script: '|||cb-edr-sensors-list'
@@ -959,7 +953,6 @@ tasks:
       description: Checks if there is an active instance of the CrowdStrike Falcon
         Host integration enabled.
       id: 42f088e2-cb74-485a-8318-0dae68cde0f0
-      isOverridable: false
       iscommand: false
       name: Is CrowdStrike Falcon enabled?
       type: condition
@@ -990,7 +983,6 @@ tasks:
     task:
       brand: ""
       id: d9d617d9-2efd-466e-8ce7-190f8db83b95
-      isOverridable: false
       iscommand: false
       name: McAfee ePolicy Orchestrator
       type: title
@@ -1021,7 +1013,6 @@ tasks:
     task:
       brand: ""
       id: 6cf08862-644d-479e-89ce-f9e173a8c562
-      isOverridable: false
       iscommand: false
       name: Carbon Black Enterprise Response
       type: title
@@ -1052,7 +1043,6 @@ tasks:
     task:
       brand: ""
       id: 471d3862-a05c-42b1-871d-c1faa2fbb7a9
-      isOverridable: false
       iscommand: false
       name: Cylance Protect v2
       type: title
@@ -1083,7 +1073,6 @@ tasks:
     task:
       brand: ""
       id: 5d371f29-3a4c-43c5-8f71-b383db2e5320
-      isOverridable: false
       iscommand: false
       name: CrowdStrike Falcon
       type: title
@@ -1144,7 +1133,6 @@ tasks:
       description: Checks if there is an active instance of the Active Directory Query
         v2 integration enabled.
       id: f7f190b9-5a39-4d8a-83a5-77d5a023f0d4
-      isOverridable: false
       iscommand: false
       name: Is Active Directory Query v2 enabled?
       type: condition
@@ -1185,7 +1173,6 @@ tasks:
         can be specified by name, email address, or as an Active Directory Distinguished
         Name (DN). If no filters are provided, all computers are returned.
       id: 23c75906-3b4e-42e8-8e32-c883d5f06fb3
-      isOverridable: false
       iscommand: true
       name: Get host information from Active Directory
       script: '|||ad-get-computer'
@@ -1217,7 +1204,6 @@ tasks:
     task:
       brand: ""
       id: 9706cc39-d338-44cd-8ee1-efc5ea95b04d
-      isOverridable: false
       iscommand: false
       name: Active Directory
       type: title
@@ -1260,7 +1246,6 @@ tasks:
       brand: ""
       description: Enriches endpoints using the Cylance Protect v2 integration.
       id: d973a016-35b6-4e7c-88a5-9f4c60190224
-      isOverridable: false
       iscommand: false
       name: Endpoint Enrichment - Cylance Protect v2
       playbookName: Endpoint Enrichment - Cylance Protect v2
@@ -1292,7 +1277,6 @@ tasks:
     task:
       brand: ""
       id: ec344482-77f7-42b5-8ee4-34317afd1179
-      isOverridable: false
       iscommand: false
       name: ExtraHop Reveal(x)
       type: title
@@ -1349,7 +1333,6 @@ tasks:
       description: Checks if there is an active instance of the ExtraHop Reveal(x)
         integration enabled.
       id: 58c8b4be-657c-45f6-8eca-5a01da85f1f3
-      isOverridable: false
       iscommand: false
       name: Is ExtraHop Reveal(x) enabled?
       script: Exists
@@ -1393,7 +1376,6 @@ tasks:
       brand: ""
       description: Search for devices in ExtraHop Reveal(x).
       id: 641ba126-c256-4fc1-8631-9bdefec7e6f1
-      isOverridable: false
       iscommand: true
       name: Get host information from ExtraHop Reveal(x)
       script: '|||extrahop-devices-search'
@@ -1456,7 +1438,6 @@ tasks:
       description: Checks if there is an active Mcafee ePolicy Orchestrator v2 integration
         instance enabled.
       id: bf7d9316-446b-452b-843a-3e5a13b8b741
-      isOverridable: false
       iscommand: false
       name: is Mcafee ePolicy Orchestrator v2 enabled
       type: condition
@@ -1496,7 +1477,6 @@ tasks:
       brand: ""
       description: Finds systems in the McAfee ePO system tree.
       id: fdd8e9dc-984d-4b58-828e-faa525abc1a3
-      isOverridable: false
       iscommand: true
       name: Get- host information from McAfee ePO v2
       script: '|||epo-find-system'
@@ -1528,7 +1508,6 @@ tasks:
     task:
       brand: ""
       id: f2dbaff5-7c92-47ad-80cc-991bfd80ff98
-      isOverridable: false
       iscommand: false
       name: Endpoint Reputation
       type: title
@@ -1575,7 +1554,6 @@ tasks:
       brand: ""
       description: Check if should run endpoint reputation command
       id: 50fed99c-1eb9-4a6f-85d0-f9d5ee74bc5a
-      isOverridable: false
       iscommand: false
       name: Should use !endpoint command?
       type: condition
@@ -1623,7 +1601,6 @@ tasks:
       brand: ""
       description: Returns information about an endpoint.
       id: 32b679b9-f8fc-4beb-8455-8ed5642c583a
-      isOverridable: false
       iscommand: true
       name: Check Reputation
       script: '|||endpoint'
@@ -1667,7 +1644,6 @@ tasks:
       brand: ""
       description: Searches for a device that matches the query.
       id: 37d0e116-73c9-42ff-865d-319ae727a315
-      isOverridable: false
       iscommand: true
       name: Crowdstrike Search device
       script: '|||cs-falcon-search-device'
@@ -1728,7 +1704,6 @@ tasks:
       description: Checks if there is an active instance of the Cortex XDR integration
         enabled.
       id: 284d5ea3-58c1-4a0f-87c4-5c395d75a65c
-      isOverridable: false
       iscommand: false
       name: Is Cortex XDR enabled?
       type: condition
@@ -1760,7 +1735,6 @@ tasks:
     task:
       brand: ""
       id: 12dd4de8-094d-4760-8284-22e212b5b76d
-      isOverridable: false
       iscommand: false
       name: Cortex XDR / Core IR
       type: title
@@ -1812,7 +1786,6 @@ tasks:
         set size is 100. Offset is the zero-based number of endpoint from the start
         of the result set (start by counting from 0).
       id: c0e98160-b819-4b3e-82d7-0af4bdca7ea4
-      isOverridable: false
       iscommand: true
       name: Cortex XDR Search device
       script: '|||xdr-get-endpoints'
@@ -1853,7 +1826,6 @@ tasks:
         the highest risk score in the environment along with the reason affecting
         each score.
       id: c62d0cd0-fee1-4a0d-83ab-8386fb5fc485
-      isOverridable: false
       iscommand: true
       name: Cortex XDR get endpoint risk score
       script: '|||xdr-list-risky-hosts'
@@ -1893,7 +1865,6 @@ tasks:
       description: Checks if there is an active instance of the Cortex Core integration
         enabled.
       id: adb8d36c-cdb3-4676-8d4a-da7fbc43188c
-      isOverridable: false
       iscommand: false
       name: Is Cortex Core - IR integration enabled?
       script: IsIntegrationAvailable
@@ -1946,7 +1917,6 @@ tasks:
         set size is 100. Offset is the zero-based number of endpoint from the start
         of the result set (start by counting from 0).
       id: d40cb403-a862-4705-88a0-a1cde3679f83
-      isOverridable: false
       iscommand: true
       name: Core IR Search device
       script: '|||core-get-endpoints'
@@ -1998,7 +1968,6 @@ tasks:
         the highest risk score in the environment along with the reason affecting
         each score.
       id: 8c8575da-152b-4542-81e8-83e161c686f4
-      isOverridable: false
       iscommand: true
       name: Core IR get endpoint risk score
       script: '|||core-list-risky-hosts'
