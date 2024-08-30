@@ -131,7 +131,7 @@ contentitemexportablefields:
     definitionid: ""
     fromServerVersion: 5.5.0
     isoverridable: false
-    itemVersion: 2.2.2
+    itemVersion: 2.2.3
     packID: AutoFocus
     packName: AutoFocus by Palo Alto Networks
     packPropagationLabels:
@@ -174,7 +174,7 @@ script:
   runonce: false
   script: |
     register_module_line('AutoFocus Feed', 'start', __line__())
-    ### pack version: 2.2.2
+    ### pack version: 2.2.3
 
 
 
