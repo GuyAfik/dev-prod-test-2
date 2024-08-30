@@ -1,7 +1,6 @@
 category: Data Enrichment & Threat Intelligence
 commonfields:
   id: AutoFocus Daily Feed
-  isOverridable: false
   version: -1
 configuration:
 - defaultvalue: "true"
@@ -107,7 +106,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 2.2.3
+    isoverridable: false
+    itemVersion: 2.2.2
     packID: AutoFocus
     packName: AutoFocus by Palo Alto Networks
     packPropagationLabels:
@@ -147,7 +147,7 @@ script:
   runonce: false
   script: |
     register_module_line('AutoFocus Daily Feed', 'start', __line__())
-    ### pack version: 2.2.3
+    ### pack version: 2.2.2
 
     # IMPORTS
     from typing import List, Tuple, Optional
