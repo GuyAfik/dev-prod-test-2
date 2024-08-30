@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.2.3
+    isoverridable: false
+    itemVersion: 2.2.2
     packID: AutoFocus
     packName: AutoFocus by Palo Alto Networks
     packPropagationLabels:
@@ -134,7 +135,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Autofocus - Hunting And Threat Detection
 outputs:
 - contextPath: Autofocus.Samples.HuntingResults
@@ -264,7 +264,6 @@ tasks:
     task:
       brand: ""
       id: efd174b1-c3ae-48ce-8d14-52e397954612
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -291,7 +290,6 @@ tasks:
     task:
       brand: ""
       id: 3ab00780-9973-4e65-8271-1f0d598b5fbd
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -368,7 +366,6 @@ tasks:
         create an advanced query, exporting it, and pasting it into the relevant playbook
         inputs."
       id: a0015271-705b-4b2d-8d02-d09f2e3d4374
-      isOverridable: false
       iscommand: false
       name: Autofocus - Traffic Indicators Hunting
       playbookId: Autofocus - Traffic Indicators Hunting
@@ -409,7 +406,6 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available.
       id: a42c1add-d6d0-43c0-85d3-a0768def4a46
-      isOverridable: false
       iscommand: false
       name: Is Autofocus enabled?
       script: IsIntegrationAvailable
@@ -483,7 +479,6 @@ tasks:
     task:
       brand: ""
       id: b74e17f5-8ed6-4241-8b1b-ed2d0c65d2e6
-      isOverridable: false
       iscommand: false
       name: Autofocus - File Indicators Hunting
       playbookId: Autofocus - File Indicators Hunting
