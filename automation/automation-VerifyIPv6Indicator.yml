@@ -12,7 +12,7 @@ contentitemexportablefields:
     definitionid: ""
     fromServerVersion: 5.5.0
     isoverridable: false
-    itemVersion: 1.15.55
+    itemVersion: 1.15.56
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -33,7 +33,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('VerifyIPv6Indicator', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.55')
+  demisto.debug('pack name = Common Scripts, pack version = 1.15.56')
 
 
   from ipaddress import IPv6Address
