@@ -46,7 +46,7 @@ contentitemexportablefields:
     definitionid: ""
     fromServerVersion: 5.0.0
     isoverridable: false
-    itemVersion: 1.34.36
+    itemVersion: 1.34.37
     packID: Base
     packName: Base
     packPropagationLabels:
@@ -64,7 +64,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('DBotFindSimilarIncidentsByIndicators', 'start', __line__())
-  demisto.debug('pack name = Base, pack version = 1.34.36')
+  demisto.debug('pack name = Base, pack version = 1.34.37')
 
 
 
