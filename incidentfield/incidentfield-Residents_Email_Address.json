@@ -45,7 +45,7 @@
 	"id": "incident_residentsemailaddress",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.15.55",
+	"itemVersion": "1.15.56",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Residents Email Address",
