@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.2.3
+    isoverridable: false
+    itemVersion: 2.2.2
     packID: AutoFocus
     packName: AutoFocus by Palo Alto Networks
     packPropagationLabels:
@@ -148,7 +149,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Autofocus Query Samples, Sessions and Tags
 outputs:
 - contextPath: AutoFocus.SessionsResults
@@ -180,7 +180,6 @@ tasks:
       brand: ""
       description: Playbook started.
       id: 9745a269-e023-4903-88ec-065a56f9775e
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -231,7 +230,6 @@ tasks:
       brand: ""
       description: Submit search to autofocus-search-samples.
       id: f4ed1739-4f96-4145-86cf-c941cea2cf48
-      isOverridable: false
       iscommand: true
       name: Submit search to Autofocus - sample hash
       script: '|||autofocus-search-samples'
@@ -261,7 +259,6 @@ tasks:
       brand: ""
       description: Done
       id: b4492bfe-cd15-4815-835e-e926c94aba72
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -324,7 +321,6 @@ tasks:
       brand: ""
       description: Checks if Autofocus is enabled.
       id: d8d223e4-96dd-4069-81f5-adad2ff8759a
-      isOverridable: false
       iscommand: false
       name: Is Autofocus enabled?
       type: condition
@@ -384,7 +380,6 @@ tasks:
         2. Poll to check if the operation completed.
         3. (optional) Get the results of the operation.
       id: d8565659-495d-4e14-8d80-387359ac0af6
-      isOverridable: false
       iscommand: false
       name: AutoFocusPolling
       playbookId: AutoFocusPolling
@@ -442,7 +437,6 @@ tasks:
       brand: ""
       description: Checks if search for samples is relevant.
       id: 6283e2d0-9044-496c-8394-6d2eca7e41b4
-      isOverridable: false
       iscommand: false
       name: Search samples?
       type: condition
@@ -499,7 +493,6 @@ tasks:
       brand: ""
       description: Checks if search for sessions is relevant.
       id: 2e8e9548-47bb-4007-8194-948267516219
-      isOverridable: false
       iscommand: false
       name: Search Sessions?
       type: condition
@@ -548,7 +541,6 @@ tasks:
       brand: ""
       description: Submit search to autofocus-search-sessions.
       id: 6157126e-ff31-4e10-872e-4a1c8fede04d
-      isOverridable: false
       iscommand: true
       name: Submit search to Autofocus - Sessions hash
       script: '|||autofocus-search-sessions'
@@ -609,7 +601,6 @@ tasks:
         2. Poll to check if the operation completed.
         3. (optional) Get the results of the operation.
       id: ecc5d644-5a48-4d9b-82c2-30e927febd19
-      isOverridable: false
       iscommand: false
       name: AutoFocusPolling
       playbookId: AutoFocusPolling
@@ -667,7 +658,6 @@ tasks:
       brand: ""
       description: Checks if search for tags is relevant.
       id: 1f715cc4-d33b-47b8-886e-7a022d2aec73
-      isOverridable: false
       iscommand: false
       name: Search Tags?
       type: condition
@@ -719,7 +709,6 @@ tasks:
       brand: ""
       description: Performs a search to identify the most popular tags.
       id: b0eae75d-921d-4f6e-822f-10a2b0d20934
-      isOverridable: false
       iscommand: true
       name: Submit search to Autofocus - tags
       script: '|||autofocus-top-tags-search'
@@ -780,7 +769,6 @@ tasks:
         2. Poll to check if the operation completed.
         3. (optional) Get the results of the operation.
       id: c2b392ae-5a29-474a-80fb-16416eef4c7c
-      isOverridable: false
       iscommand: false
       name: AutoFocusPolling
       playbookId: AutoFocusPolling
@@ -833,7 +821,6 @@ tasks:
       brand: ""
       description: Checks whether the session search submitted to AutoFocus was successful.
       id: 95013903-e251-4b1f-81b0-ea0be5be25f5
-      isOverridable: false
       iscommand: false
       name: Was submit session search to AutoFocus successful?
       type: condition
@@ -885,7 +872,6 @@ tasks:
       brand: ""
       description: Checks whether the sample search submitted to AutoFocus was successful.
       id: 711cd9a8-d641-45f8-8cbd-71f62451fe99
-      isOverridable: false
       iscommand: false
       name: Was submit sample search to AutoFocus successful?
       type: condition
@@ -937,7 +923,6 @@ tasks:
       brand: ""
       description: Checks whether the tag search submitted to AutoFocus was successful.
       id: 8f4b9d0d-30f6-4d1c-8bd9-36967cf95fdd
-      isOverridable: false
       iscommand: false
       name: Was submit tags search to AutoFocus successful?
       type: condition
