@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.2.3
+    isoverridable: false
+    itemVersion: 2.2.2
     packID: AutoFocus
     packName: AutoFocus by Palo Alto Networks
     packPropagationLabels:
@@ -100,7 +101,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: Autofocus - File Indicators Hunting
 outputs:
 - contextPath: Autofocus.Samples.HuntingResults
@@ -230,7 +230,6 @@ tasks:
     task:
       brand: ""
       id: efd174b1-c3ae-48ce-8d14-52e397954612
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -257,7 +256,6 @@ tasks:
     task:
       brand: ""
       id: 3ab00780-9973-4e65-8271-1f0d598b5fbd
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -302,7 +300,6 @@ tasks:
       brand: ""
       description: Checks whether there are any file hashes available for searching.
       id: 0370eaaa-158d-4e7b-892e-2d775ec0e9c3
-      isOverridable: false
       iscommand: false
       name: Any file hash to hunt for?
       type: condition
@@ -333,7 +330,6 @@ tasks:
     task:
       brand: ""
       id: ea34de11-75f6-42c9-844e-2137532ea54a
-      isOverridable: false
       iscommand: false
       name: Search File Hashes
       type: title
@@ -644,7 +640,6 @@ tasks:
 
         This playbook supports searching both the Samples API and the Sessions API.
       id: 5eff5255-3ad4-4fe0-86dc-c2c7726b26b8
-      isOverridable: false
       iscommand: false
       name: Autofocus Query Samples, Sessions and Tags
       playbookId: Autofocus Query Samples, Sessions and Tags
@@ -706,7 +701,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: ada25639-fff8-4779-84e2-f5cd2ecc0bd7
-      isOverridable: false
       iscommand: false
       name: Save Matching Results - Sessions Search
       script: SetAndHandleEmpty
@@ -778,7 +772,6 @@ tasks:
         For more information, see the section about permissions here:
         https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations
       id: 399883e1-3bd8-492c-82dd-0c2548f1500a
-      isOverridable: false
       iscommand: false
       name: Save Matching Results - Samples Results
       script: SetAndHandleEmpty
