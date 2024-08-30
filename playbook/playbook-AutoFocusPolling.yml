@@ -2,7 +2,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.2.3
+    isoverridable: false
+    itemVersion: 2.2.2
     packID: AutoFocus
     packName: AutoFocus by Palo Alto Networks
     packPropagationLabels:
@@ -66,7 +67,6 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
-isOverridable: false
 name: AutoFocusPolling
 outputs:
 - contextPath: AutoFocus.SessionsResults
@@ -98,7 +98,6 @@ tasks:
       brand: ""
       description: '-'
       id: e203c607-e32d-4ff5-8fba-5e5b375341d2
-      isOverridable: false
       iscommand: false
       name: ""
       version: -1
@@ -148,7 +147,6 @@ tasks:
       brand: ""
       description: Schedule Polling Task
       id: 91d8437f-2d28-4743-8f17-53439ff84b94
-      isOverridable: false
       iscommand: false
       name: Schedule Polling Task
       script: ScheduleGenericPolling
@@ -183,7 +181,6 @@ tasks:
       brand: ""
       description: This task will complete automatically when polling is complete.
       id: 04ae43a8-abfd-44b9-8111-dcbb934e085c
-      isOverridable: false
       iscommand: false
       name: Waiting for polling to complete (Automated Task)
       tags:
@@ -228,7 +225,6 @@ tasks:
       brand: ""
       description: RunPollingCommand
       id: c6a3af0a-cc78-4323-80c1-93d686010d86
-      isOverridable: false
       iscommand: false
       name: RunPollingCommand
       script: RunPollingCommand
@@ -258,7 +254,6 @@ tasks:
       brand: ""
       description: Done
       id: be61d922-edcf-424e-8fee-84f3f7609884
-      isOverridable: false
       iscommand: false
       name: Done
       type: title
@@ -290,7 +285,6 @@ tasks:
       brand: ""
       description: Scheduled Task Failed
       id: c97d906b-7ecc-409b-819b-acdeaada8900
-      isOverridable: false
       iscommand: false
       name: Scheduled Task Failed
       script: PrintErrorEntry
