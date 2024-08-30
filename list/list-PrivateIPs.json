@@ -9,7 +9,7 @@
 	"detached": false,
 	"fromServerVersion": "6.5.0",
 	"id": "PrivateIPs",
-	"itemVersion": "1.15.55",
+	"itemVersion": "1.15.56",
 	"locked": false,
 	"name": "PrivateIPs",
 	"nameLocked": false,
