@@ -1,5 +1,6 @@
 {
 	"Cache": null,
+	"IsOverridable": false,
 	"cacheVersn": 0,
 	"category": "",
 	"dataType": "metrics",
@@ -19,9 +20,8 @@
 	"definitionId": "",
 	"fromServerVersion": "6.10.0",
 	"id": "0821903b-1099-4f3d-8c30-12345d8c5c07",
-	"isOverridable": false,
 	"isPredefined": true,
-	"itemVersion": "2.2.3",
+	"itemVersion": "2.2.2",
 	"name": "API Call Results for Autofocus",
 	"packID": "AutoFocus",
 	"packName": "AutoFocus by Palo Alto Networks",
