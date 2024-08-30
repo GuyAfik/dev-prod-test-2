@@ -1,7 +1,6 @@
 category: Data Enrichment & Threat Intelligence
 commonfields:
   id: AutoFocusTagsFeed
-  isOverridable: false
   version: -1
 configuration:
 - defaultvalue: https://autofocus.paloaltonetworks.com/api/v1.0/
@@ -114,7 +113,8 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 2.2.3
+    isoverridable: false
+    itemVersion: 2.2.2
     packID: AutoFocus
     packName: AutoFocus by Palo Alto Networks
     packPropagationLabels:
@@ -157,7 +157,7 @@ script:
   runonce: false
   script: |
     register_module_line('AutoFocusTagsFeed', 'start', __line__())
-    ### pack version: 2.2.3
+    ### pack version: 2.2.2
 
 
     """
