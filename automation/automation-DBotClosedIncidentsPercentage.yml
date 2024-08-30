@@ -8,7 +8,7 @@ contentitemexportablefields:
     definitionid: ""
     fromServerVersion: 5.0.0
     isoverridable: false
-    itemVersion: 1.15.55
+    itemVersion: 1.15.56
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -24,7 +24,7 @@ pswd: ""
 runas: DBotRole
 runonce: false
 script: |
-  // pack version: 1.15.55
+  // pack version: 1.15.56
   var res = executeCommand("getIncidents", {
       'query': 'status:closed and closingUser:DBot',
       'fromdate': args.from,
