@@ -15,16 +15,6 @@
 	"contentItems": {
 		"automation": [
 			{
-				"description": "Deprecated. Use DBotFindSimilarIncidents instead.\nFind similar incidents by text comparison - the algorithm based on TF-IDF method.\nTo read more about this method: https://en.wikipedia.org/wiki/Tf%E2%80%93idf\n\nThis automation runs using the default Limited User role, unless you explicitly\nchange the permissions.\nFor more information, see the section about permissions here:\nhttps://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations",
-				"name": "FindSimilarIncidentsByText",
-				"tags": [
-					"ml",
-					"dedup",
-					"duplicate",
-					"incidents"
-				]
-			},
-			{
 				"description": "Gets a list of incident objects and the associated incident outputs that\nmatch the specified query and filters. The results are returned in a structured data file.\n\nThis automation runs using the default Limited User role, unless you explicitly change the permissions.\nFor more information, see the section about permissions here:\nhttps://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations",
 				"name": "GetIncidentsByQuery",
 				"tags": [
@@ -32,10 +22,32 @@
 				]
 			},
 			{
-				"description": "This script helps organizes and groups incidents based on their similarities using clustering algorithms.\nClustering is a technique used to group data points (in this case, incidents) that are similar to each other into clusters.\nUsed to automatically categorize a large number of incidents into meaningful groups.\n",
-				"name": "DBotTrainClustering",
+				"description": "Show clustering model information - model summary and incidents in specific cluster.",
+				"name": "DBotShowClusteringModelInfo",
+				"tags": [
+					"widget"
+				]
+			},
+			{
+				"description": "Deprecated. No available replacement. Suggests a classifier mapping based on an advanced name matching algorithm.",
+				"name": "DBotSuggestClassifierMapping",
 				"tags": [
 					"ml"
+				]
+			},
+			{
+				"description": "This automation outputs the indicator relationships to context according to the provided query, using the entities, entityTypes, and relationships arguments. All arguments will use the AND operator. For example, using the following arguments entities=8.8.8.8 entities_types=Domain will provide only relationships that the 8.8.8.8 indicator has with indicators of type domain.",
+				"name": "SearchIndicatorRelationships",
+				"tags": [
+					"basescript"
+				]
+			},
+			{
+				"description": "Common code that will be merged into each PowerShell script/integration when it runs.",
+				"name": "CommonServerPowerShell",
+				"tags": [
+					"infra",
+					"server"
 				]
 			},
 			{
@@ -46,16 +58,91 @@
 				]
 			},
 			{
+				"description": "Parse Sane-json-reports and export them as pdf files (used internally).",
+				"name": "SanePdfReports",
+				"tags": [
+					"sane-pdf-reports",
+					"sane-reports",
+					"pdf"
+				]
+			},
+			{
 				"description": "Draw incidents and indicators on the canvas to map and visualize their connections.",
 				"name": "DrawRelatedIncidentsCanvas",
 				"tags": []
 			},
 			{
-				"description": "Parse STIX files to Cortex XSOAR indicators by clicking the **Upload STIX File** button.",
-				"name": "StixParser",
+				"description": "This automation creates a relationship between indicator objects.",
+				"name": "CreateIndicatorRelationship",
 				"tags": [
-					"stix",
-					"ioc"
+					"basescript"
+				]
+			},
+			{
+				"description": "This script helps organizes and groups incidents based on their similarities using clustering algorithms.\nClustering is a technique used to group data points (in this case, incidents) that are similar to each other into clusters.\nUsed to automatically categorize a large number of incidents into meaningful groups.\n",
+				"name": "DBotTrainClustering",
+				"tags": [
+					"ml"
+				]
+			},
+			{
+				"description": "Common code that will be merged into each server script when it runs.",
+				"name": "CommonServer",
+				"tags": [
+					"infra",
+					"server"
+				]
+			},
+			{
+				"description": "Finds past similar incidents based on incident fields' similarity. Includes an option to also display indicators similarity.\nNote: For the similarity calculation, at least one field must be provided in one of the \"similarTextField\", \"similarCategoricalField\", or \"similarJsonField\" arguments.",
+				"name": "DBotFindSimilarIncidents",
+				"tags": []
+			},
+			{
+				"description": "Pre-process text data for the machine learning text classifier.",
+				"name": "DBotPreProcessTextData",
+				"tags": [
+					"ml"
+				]
+			},
+			{
+				"description": "Common code that will be merged into each server script when it runs.",
+				"name": "CommonServerPython",
+				"tags": [
+					"infra",
+					"server"
+				]
+			},
+			{
+				"description": "Finds similar incidents based on indicators' similarity. Indicators' contribution to the final score is based on their scarcity.",
+				"name": "DBotFindSimilarIncidentsByIndicators",
+				"tags": []
+			},
+			{
+				"description": "Finds a threshold for ML model, and performs an evaluation based on it.",
+				"name": "GetMLModelEvaluation",
+				"tags": [
+					"ml"
+				]
+			},
+			{
+				"description": "Deprecated. No available replacement. Collect telemetry data from the environment.",
+				"name": "DBotMLFetchData",
+				"tags": [
+					"ml"
+				]
+			},
+			{
+				"description": "Check if a docker image is available for performing docker pull. Script simulates the docker pull flow but doesn't actually pull the image. Returns an entry with 'ok' if all is good otherwise will return an error.",
+				"name": "CheckDockerImageAvailable",
+				"tags": []
+			},
+			{
+				"description": "Deprecated. Use DBotPreProcessTextData instead.",
+				"name": "WordTokenizerNLP",
+				"tags": [
+					"phishing",
+					"ml"
 				]
 			},
 			{
@@ -71,40 +158,6 @@
 				"tags": []
 			},
 			{
-				"description": "This automation creates a relationship between indicator objects.",
-				"name": "CreateIndicatorRelationship",
-				"tags": [
-					"basescript"
-				]
-			},
-			{
-				"description": "Finds similar incidents based on indicators' similarity. Indicators' contribution to the final score is based on their scarcity.",
-				"name": "DBotFindSimilarIncidentsByIndicators",
-				"tags": []
-			},
-			{
-				"description": "Deprecated. Use DBotPreProcessTextData instead.",
-				"name": "WordTokenizerNLP",
-				"tags": [
-					"phishing",
-					"ml"
-				]
-			},
-			{
-				"description": "Deprecated. No available replacement. Collect telemetry data from the environment.",
-				"name": "DBotMLFetchData",
-				"tags": [
-					"ml"
-				]
-			},
-			{
-				"description": "Gets a list of indicator objects and the associated indicator outputs that match the specified query and filters. The results are returned in a structured data file.",
-				"name": "GetIndicatorsByQuery",
-				"tags": [
-					"ml"
-				]
-			},
-			{
 				"description": "Parse Sane-json-reports and export them as docx files (used internally).",
 				"name": "SaneDocReports",
 				"tags": [
@@ -114,28 +167,26 @@
 				]
 			},
 			{
-				"description": "Common code that will be merged into each server script when it runs.",
-				"name": "CommonServer",
+				"description": "Parse STIX files to Cortex XSOAR indicators by clicking the **Upload STIX File** button.",
+				"name": "StixParser",
 				"tags": [
-					"infra",
-					"server"
+					"stix",
+					"ioc"
+				]
+			},
+			{
+				"description": "Deprecated. Use DBotFindSimilarIncidents instead.\nFind similar incidents by text comparison - the algorithm based on TF-IDF method.\nTo read more about this method: https://en.wikipedia.org/wiki/Tf%E2%80%93idf\n\nThis automation runs using the default Limited User role, unless you explicitly\nchange the permissions.\nFor more information, see the section about permissions here:\nhttps://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations",
+				"name": "FindSimilarIncidentsByText",
+				"tags": [
+					"ml",
+					"dedup",
+					"duplicate",
+					"incidents"
 				]
 			},
 			{
 				"description": "Highlight words inside a given text.",
 				"name": "HighlightWords",
-				"tags": []
-			},
-			{
-				"description": "This automation allows to delete a relationship between indicator objects based on the relationship id.",
-				"name": "DeleteIndicatorRelationships",
-				"tags": [
-					"basescript"
-				]
-			},
-			{
-				"description": "Check if a docker image is available for performing docker pull. Script simulates the docker pull flow but doesn't actually pull the image. Returns an entry with 'ok' if all is good otherwise will return an error.",
-				"name": "CheckDockerImageAvailable",
 				"tags": []
 			},
 			{
@@ -147,68 +198,17 @@
 				]
 			},
 			{
-				"description": "This automation outputs the indicator relationships to context according to the provided query, using the entities, entityTypes, and relationships arguments. All arguments will use the AND operator. For example, using the following arguments entities=8.8.8.8 entities_types=Domain will provide only relationships that the 8.8.8.8 indicator has with indicators of type domain.",
-				"name": "SearchIndicatorRelationships",
+				"description": "This automation allows to delete a relationship between indicator objects based on the relationship id.",
+				"name": "DeleteIndicatorRelationships",
 				"tags": [
 					"basescript"
 				]
 			},
 			{
-				"description": "Pre-process text data for the machine learning text classifier.",
-				"name": "DBotPreProcessTextData",
+				"description": "Gets a list of indicator objects and the associated indicator outputs that match the specified query and filters. The results are returned in a structured data file.",
+				"name": "GetIndicatorsByQuery",
 				"tags": [
 					"ml"
-				]
-			},
-			{
-				"description": "Deprecated. No available replacement. Suggests a classifier mapping based on an advanced name matching algorithm.",
-				"name": "DBotSuggestClassifierMapping",
-				"tags": [
-					"ml"
-				]
-			},
-			{
-				"description": "Finds a threshold for ML model, and performs an evaluation based on it.",
-				"name": "GetMLModelEvaluation",
-				"tags": [
-					"ml"
-				]
-			},
-			{
-				"description": "Common code that will be merged into each PowerShell script/integration when it runs.",
-				"name": "CommonServerPowerShell",
-				"tags": [
-					"infra",
-					"server"
-				]
-			},
-			{
-				"description": "Show clustering model information - model summary and incidents in specific cluster.",
-				"name": "DBotShowClusteringModelInfo",
-				"tags": [
-					"widget"
-				]
-			},
-			{
-				"description": "Common code that will be merged into each server script when it runs.",
-				"name": "CommonServerPython",
-				"tags": [
-					"infra",
-					"server"
-				]
-			},
-			{
-				"description": "Finds past similar incidents based on incident fields' similarity. Includes an option to also display indicators similarity.\nNote: For the similarity calculation, at least one field must be provided in one of the \"similarTextField\", \"similarCategoricalField\", or \"similarJsonField\" arguments.",
-				"name": "DBotFindSimilarIncidents",
-				"tags": []
-			},
-			{
-				"description": "Parse Sane-json-reports and export them as pdf files (used internally).",
-				"name": "SanePdfReports",
-				"tags": [
-					"sane-pdf-reports",
-					"sane-reports",
-					"pdf"
 				]
 			}
 		],
@@ -234,7 +234,7 @@
 		"wizard": null
 	},
 	"created": "2020-08-02T11:28:20Z",
-	"currentVersion": "1.34.36",
+	"currentVersion": "1.34.37",
 	"defaultDataSource": {
 		"id": "",
 		"name": ""
@@ -243,7 +243,7 @@
 	"dependencies": {},
 	"deprecated": false,
 	"description": "The base pack for Cortex XSOAR.",
-	"downloads": 174447,
+	"downloads": 174572,
 	"eulaLink": "https://github.com/demisto/content/blob/master/LICENSE",
 	"fromServerVersion": "6.0.0",
 	"general": [
@@ -256,7 +256,7 @@
 	"id": "Base",
 	"installMessage": "",
 	"integrations": [],
-	"itemVersion": "1.34.36",
+	"itemVersion": "1.34.37",
 	"keywords": [
 		"base",
 		"common"
@@ -284,13 +284,13 @@
 		"url": "https://www.paloaltonetworks.com/cortex"
 	},
 	"tags": [
-		"Core",
-		"Trending"
+		"Trending",
+		"Core"
 	],
 	"toServerVersion": "",
-	"updated": "2024-08-28T19:24:21Z",
+	"updated": "2024-08-29T19:27:22Z",
 	"useCases": [],
 	"version": -1,
-	"versionInfo": "1320807",
+	"versionInfo": "1324639",
 	"videos": []
 }
