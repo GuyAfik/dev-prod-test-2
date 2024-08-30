@@ -32,7 +32,7 @@ contentitemexportablefields:
     definitionid: ""
     fromServerVersion: 5.0.0
     isoverridable: false
-    itemVersion: 1.15.55
+    itemVersion: 1.15.56
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -48,7 +48,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  // pack version: 1.15.55
+  // pack version: 1.15.56
   var ec = {};
   var value;
   try {
