@@ -92,7 +92,7 @@
 	"propagationLabels": [
 		"all"
 	],
-	"query": "name:blahblah",
+	"query": "name:aaaa",
 	"toServerVersion": "",
 	"version": -1,
 	"widgetType": "table"
