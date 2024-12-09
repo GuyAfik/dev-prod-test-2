@@ -1,0 +1,98 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 96567c68-aada-49e0-8390-6bdf8e498a3a
+inputs: []
+name: aaaa
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 4ec6c387-c173-435b-8a59-460e06e16bf0
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 4ec6c387-c173-435b-8a59-460e06e16bf0
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      name:
+        simple: test
+      polling_interval:
+        simple: "2"
+      timeout:
+        simple: "30000"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Gets a specific lock. If the lock doesn't exist, it creates one.
+        If the lock is already in use, the command waits until the lock is released
+        or until timeout is reached. If timeout is reached and the lock hasn't been
+        released, the command fails to get the lock.
+      id: 3407cd37-c1ec-4e97-88c5-ea31020de7ed
+      iscommand: true
+      name: Untitled Task
+      script: '|||demisto-lock-get'
+      type: regular
+      version: -1
+    taskid: 3407cd37-c1ec-4e97-88c5-ea31020de7ed
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 230
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 275,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }
