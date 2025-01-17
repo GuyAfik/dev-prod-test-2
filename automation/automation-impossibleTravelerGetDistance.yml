@@ -16,7 +16,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.6.0
-    itemVersion: 3.0.57
+    itemVersion: 3.2.20
     packID: Core
     packName: Core - Investigation and Response
     packPropagationLabels:
@@ -24,13 +24,13 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/py3-tools:1.0.0.90842
+dockerimage: demisto/py3-tools:1.0.0.114656
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
 name: impossibleTravelerGetDistance
 nativeimage:
-- "8.7"
+- "8.8"
 - "8.6"
 outputs:
 - contextPath: GeoEvents
@@ -40,7 +40,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('impossibleTravelerGetDistance', 'start', __line__())
-  demisto.debug('pack name = Core - Investigation and Response, pack version = 3.0.57')
+  demisto.debug('pack name = Core - Investigation and Response, pack version = 3.2.20')
 
 
   import itertools
