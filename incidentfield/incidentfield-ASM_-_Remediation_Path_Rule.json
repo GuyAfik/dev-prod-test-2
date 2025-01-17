@@ -92,7 +92,7 @@
 	"id": "incident_asmremediationpathrule",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.7.47",
+	"itemVersion": "1.7.65",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "ASM - Remediation Path Rule",
@@ -106,7 +106,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "ASM - Remediation Path Rule",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
