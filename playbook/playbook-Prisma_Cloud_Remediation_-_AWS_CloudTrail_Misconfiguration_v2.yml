@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 4.3.9
+    itemVersion: 4.3.17
     packID: PrismaCloud
     packName: Prisma Cloud by Palo Alto Networks
     packPropagationLabels:
@@ -675,7 +675,7 @@ tasks:
                   simple: id
             operator: getField
       dismissal_note:
-        simple: ${alert.labels.id} has been remediated by Cortex XSIAM.
+        simple: ${alert.labels.id} has been remediated by Cortex.
     separatecontext: false
     skipunavailable: false
     task:
