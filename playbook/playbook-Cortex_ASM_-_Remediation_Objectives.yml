@@ -1,0 +1,905 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: 6.8.0
+    itemVersion: 1.7.47
+    packID: CortexAttackSurfaceManagement
+    packName: Cortex Attack Surface Management
+    packPropagationLabels:
+    - all
+    prevname: ""
+    propagationLabels: []
+    toServerVersion: ""
+description: Playbook that populates the remediation objectives field that is used
+  to display the remediation actions to the end user.
+id: Cortex ASM - Remediation Objectives
+inputs: []
+name: Cortex ASM - Remediation Objectives
+outputs: []
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "14"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: b02b1b95-560a-4328-827a-67908105f2ff
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: b02b1b95-560a-4328-827a-67908105f2ff
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 550,
+          "y": -180
+        }
+      }
+  "4":
+    continueonerrortype: ""
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      gridfield:
+        simple: asmremediationobjectives
+      keys:
+        simple: option,statement
+      val1:
+        simple: Automated remediation by blocking open ports
+      val2:
+        simple: 'In this case, automated remediation will replace the security group
+          that is allowing the risky service to be exposed to the public internet
+          with a new security group: the new security group be created with the name
+          of the old security group with ''_xpanse_ar_XXX'' appended to it and XXX
+          signifies a random three digit number so there are no naming conflicts.'
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Automation used to more easily populate a grid field.  This is necessary when you want to assign certain values as static or if you have context paths that you will assign to different values as well.  Instead of a value you can enter `TIMESTAMP` to get the current timestamp in ISO format. For example:
+        `!GridFieldSetup keys=ip,src,timestamp val1=${AWS.EC2.Instances.NetworkInterfaces.PrivateIpAddress} val2="AWS" val3="TIMESTAMP" gridfiled="gridfield"`
+      id: 0101180e-58c9-4fc5-801b-5e24e0903e90
+      iscommand: false
+      name: Set remediation objectives grid field
+      script: GridFieldSetup
+      type: regular
+      version: -1
+    taskid: 0101180e-58c9-4fc5-801b-5e24e0903e90
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 750,
+          "y": 500
+        }
+      }
+  "5":
+    continueonerrortype: ""
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 90679395-ae09-4e26-89fa-790ae126f877
+      iscommand: false
+      name: Complete
+      type: title
+      version: -1
+    taskid: 90679395-ae09-4e26-89fa-790ae126f877
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 550,
+          "y": 830
+        }
+      }
+  "9":
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      gridfield:
+        simple: asmremediationobjectives
+      keys:
+        simple: option,statement
+      val1:
+        simple: Automated remediation by blocking open ports
+      val2:
+        complex:
+          root: PortAndProtocol
+          transformers:
+          - args:
+              prefix:
+                value:
+                  simple: 'In this case, automated remediation will add new Azure
+                    Network Security Groups (NSG) rules to NSG attached to a NIC:
+                    rule remediation-block-port-'
+              suffix:
+                value:
+                  simple: ' will block all internet traffic to this service and remediation-allow-port-'
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                iscontext: true
+                value:
+                  simple: PortAndProtocol
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: ' will ensure that internal communication to this asset
+                    can continue.'
+            operator: concat
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Automation used to more easily populate a grid field.  This is necessary when you want to assign certain values as static or if you have context paths that you will assign to different values as well.  Instead of a value you can enter `TIMESTAMP` to get the current timestamp in ISO format. For example:
+        `!GridFieldSetup keys=ip,src,timestamp val1=${AWS.EC2.Instances.NetworkInterfaces.PrivateIpAddress} val2="AWS" val3="TIMESTAMP" gridfiled="gridfield"`
+      id: 1323ca4c-ad8b-477b-87b2-d0ed1d838b4d
+      iscommand: false
+      name: Set remediation objectives grid field
+      script: GridFieldSetup
+      type: regular
+      version: -1
+    taskid: 1323ca4c-ad8b-477b-87b2-d0ed1d838b4d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -50,
+          "y": 500
+        }
+      }
+  "10":
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      gridfield:
+        simple: asmremediationobjectives
+      keys:
+        simple: option,statement
+      val1:
+        simple: Automated remediation by creating empty S3 bucket
+      val2:
+        complex:
+          root: bucketname
+          transformers:
+          - args:
+              prefix:
+                value:
+                  simple: 'In this case, automated remediation will create an empty
+                    S3 bucket with no external access that matches the organization’s
+                    undefined DNS CNAME record: the DNS name '
+              suffix:
+                value:
+                  simple: ' was queried and the Bucket name '
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                iscontext: true
+                value:
+                  simple: bucketname
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: ' will be created.'
+            operator: concat
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Automation used to more easily populate a grid field.  This is necessary when you want to assign certain values as static or if you have context paths that you will assign to different values as well.  Instead of a value you can enter `TIMESTAMP` to get the current timestamp in ISO format. For example:
+        `!GridFieldSetup keys=ip,src,timestamp val1=${AWS.EC2.Instances.NetworkInterfaces.PrivateIpAddress} val2="AWS" val3="TIMESTAMP" gridfiled="gridfield"`
+      id: b0b1e051-a749-4f33-8360-14def6fe0db1
+      iscommand: false
+      name: Set remediation objectives grid field
+      script: GridFieldSetup
+      type: regular
+      version: -1
+    taskid: b0b1e051-a749-4f33-8360-14def6fe0db1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1150,
+          "y": 500
+        }
+      }
+  "12":
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      gridfield:
+        simple: asmremediationobjectives
+      keys:
+        simple: option,statement
+      val1:
+        simple: Automated remediation by blocking open ports
+      val2:
+        complex:
+          accessor: id
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: alert.asmsystemids.type
+              operator: isEqualString
+              right:
+                value:
+                  simple: ASSET-NAME
+          root: alert.asmsystemids
+          transformers:
+          - args:
+              prefix:
+                value:
+                  simple: ' will ensure that internal communication to this asset
+                    can continue.  After these rules are created, '
+              suffix:
+                value:
+                  simple: ' will have a new network tag named remediation-tag-'
+            operator: concat
+          - args:
+              prefix:
+                iscontext: true
+                value:
+                  simple: PortAndProtocol
+              suffix:
+                iscontext: true
+                value:
+                  simple: PortAndProtocol
+            operator: concat
+          - args:
+              prefix:
+                value:
+                  simple: -port-
+              suffix: {}
+            operator: concat
+          - args:
+              prefix:
+                iscontext: true
+                value:
+                  simple: VPCNetwork
+              suffix: {}
+            operator: concat
+          - args:
+              prefix:
+                value:
+                  simple: ' will block all internet traffic to this service and remediation-allow-'
+              suffix:
+                value:
+                  simple: ' which will apply these new firewall rules and restrict
+                    public internet access.'
+            operator: concat
+          - args:
+              prefix:
+                iscontext: true
+                value:
+                  simple: PortAndProtocol
+              suffix: {}
+            operator: concat
+          - args:
+              prefix:
+                value:
+                  simple: -port-
+              suffix: {}
+            operator: concat
+          - args:
+              prefix:
+                iscontext: true
+                value:
+                  simple: VPCNetwork
+              suffix: {}
+            operator: concat
+          - args:
+              prefix:
+                value:
+                  simple: 'In this case, automated remediation will create two new
+                    firewall rules: rule remediation-block-'
+              suffix: {}
+            operator: concat
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Automation used to more easily populate a grid field.  This is necessary when you want to assign certain values as static or if you have context paths that you will assign to different values as well.  Instead of a value you can enter `TIMESTAMP` to get the current timestamp in ISO format. For example:
+        `!GridFieldSetup keys=ip,src,timestamp val1=${AWS.EC2.Instances.NetworkInterfaces.PrivateIpAddress} val2="AWS" val3="TIMESTAMP" gridfiled="gridfield"`
+      id: 2269fdad-af2d-4bba-8647-eab3ee06775d
+      iscommand: false
+      name: Set remediation objectives grid field
+      script: GridFieldSetup
+      type: regular
+      version: -1
+    taskid: 2269fdad-af2d-4bba-8647-eab3ee06775d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 350,
+          "y": 500
+        }
+      }
+  "14":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: provider
+                root: alert.asmcloud
+          operator: containsGeneral
+          right:
+            value:
+              simple: AWS
+      label: AWS
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: provider
+                root: alert.asmcloud
+          operator: containsGeneral
+          right:
+            value:
+              simple: GCP
+      label: GCP
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: provider
+                root: alert.asmcloud
+          operator: containsGeneral
+          right:
+            value:
+              simple: Azure
+      label: Azure
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: provider
+                root: alert.asmcloud
+          operator: containsGeneral
+          right:
+            value:
+              simple: On Prem
+      label: On Prem
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: asmattacksurfaceruleid
+                root: alert
+                transformers:
+                - args:
+                    chars:
+                      value:
+                        simple: '[\"]'
+                  operator: StripChars
+          operator: isEqualString
+          right:
+            value:
+              simple: UnclaimedS3Bucket
+      label: Unclaimed S3 Bucket
+    continueonerrortype: ""
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      AWS:
+      - "4"
+      Azure:
+      - "21"
+      GCP:
+      - "20"
+      On Prem:
+      - "28"
+      Unclaimed S3 Bucket:
+      - "17"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Determines which cloud provider the service is in order to direct
+        to the correct enrichment.
+      id: 82286133-aca4-4269-828b-c25707d897ed
+      iscommand: false
+      name: What provider is this service?
+      type: condition
+      version: -1
+    taskid: 82286133-aca4-4269-828b-c25707d897ed
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 550,
+          "y": -45
+        }
+      }
+  "17":
+    continueonerrortype: ""
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: bucketname
+      value:
+        complex:
+          accessor: id
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: alert.asmsystemids.type
+              operator: isEqualString
+              right:
+                value:
+                  simple: S3-BucketName
+          root: alert.asmsystemids
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: e757b72c-8c18-468d-8e5a-7c4c7f2a03c8
+      iscommand: false
+      name: Set temp context
+      script: Set
+      type: regular
+      version: -1
+    taskid: e757b72c-8c18-468d-8e5a-7c4c7f2a03c8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1150,
+          "y": 190
+        }
+      }
+  "20":
+    continueonerrortype: ""
+    id: "20"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "29"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: PortAndProtocol
+      value:
+        complex:
+          accessor: remoteport
+          root: alert
+          transformers:
+          - operator: Stringify
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: '-'
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                iscontext: true
+                value:
+                  simple: alert.protocol
+            operator: concat
+          - operator: toLowerCase
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: b333f88a-aadb-4aa0-8c23-d7a0d1d34206
+      iscommand: false
+      name: Set temp context
+      script: Set
+      type: regular
+      version: -1
+    taskid: b333f88a-aadb-4aa0-8c23-d7a0d1d34206
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 350,
+          "y": 180
+        }
+      }
+  "21":
+    continueonerrortype: ""
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: PortAndProtocol
+      value:
+        complex:
+          accessor: remoteport
+          root: alert
+          transformers:
+          - operator: Stringify
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: '-'
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                iscontext: true
+                value:
+                  simple: alert.protocol
+            operator: concat
+          - operator: toLowerCase
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 270cac81-412f-41b5-8ee1-40fd19b2c057
+      iscommand: false
+      name: Set temp context
+      script: Set
+      type: regular
+      version: -1
+    taskid: 270cac81-412f-41b5-8ee1-40fd19b2c057
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -50,
+          "y": 170
+        }
+      }
+  "23":
+    continueonerrortype: ""
+    id: "23"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "26"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: IPString
+      value:
+        complex:
+          accessor: remoteip
+          root: alert
+          transformers:
+          - operator: Stringify
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 23838c64-715e-4ee5-8cec-af2d4d52d016
+      iscommand: false
+      name: Set temp context
+      script: Set
+      type: regular
+      version: -1
+    taskid: 23838c64-715e-4ee5-8cec-af2d4d52d016
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1570,
+          "y": 340
+        }
+      }
+  "26":
+    continueonerrortype: ""
+    id: "26"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      gridfield:
+        simple: asmremediationobjectives
+      keys:
+        simple: option,statement
+      val1:
+        simple: Automated remediation by blocking open ports
+      val2:
+        complex:
+          accessor: id
+          root: alert
+          transformers:
+          - args:
+              prefix:
+                value:
+                  simple: 'In this case, automated remediation will create a new firewall
+                    rule on the top of the ruleset called "xpanse-ar-rule - '
+              suffix:
+                value:
+                  simple: '".  This rule will block internet traffic to the IP address
+                    of '
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                iscontext: true
+                value:
+                  simple: ${IPString}
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: ' for port '
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                iscontext: true
+                value:
+                  simple: ${PortAndProtocol}
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: .
+            operator: concat
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Automation used to more easily populate a grid field.  This is necessary when you want to assign certain values as static or if you have context paths that you will assign to different values as well.  Instead of a value you can enter `TIMESTAMP` to get the current timestamp in ISO format. For example:
+        `!GridFieldSetup keys=ip,src,timestamp val1=${AWS.EC2.Instances.NetworkInterfaces.PrivateIpAddress} val2="AWS" val3="TIMESTAMP" gridfiled="gridfield"`
+      id: 5481df1b-4758-4baa-8b94-e31167987ba9
+      iscommand: false
+      name: Set remediation objectives grid field
+      script: GridFieldSetup
+      type: regular
+      version: -1
+    taskid: 5481df1b-4758-4baa-8b94-e31167987ba9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1570,
+          "y": 500
+        }
+      }
+  "28":
+    continueonerrortype: ""
+    id: "28"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "23"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: PortAndProtocol
+      value:
+        complex:
+          accessor: remoteport
+          root: alert
+          transformers:
+          - operator: Stringify
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: '-'
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                iscontext: true
+                value:
+                  simple: alert.protocol
+            operator: concat
+          - operator: toLowerCase
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: a5467183-28c5-4f7a-83cb-a7787443aa6a
+      iscommand: false
+      name: Set temp context
+      script: Set
+      type: regular
+      version: -1
+    taskid: a5467183-28c5-4f7a-83cb-a7787443aa6a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1570,
+          "y": 155
+        }
+      }
+  "29":
+    continueonerrortype: ""
+    id: "29"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "12"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: VPCNetwork
+      value:
+        complex:
+          accessor: id
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: alert.asmsystemids.type
+              operator: isEqualString
+              right:
+                value:
+                  simple: ASSET-VIRTUAL-NET
+          root: alert.asmsystemids
+          transformers:
+          - args:
+              delimiter:
+                value:
+                  simple: networks/
+            operator: split
+          - operator: LastArrayElement
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "29"
+            operator: substring
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: db0fcab3-0426-4065-83f7-1131fbd3dfbd
+      iscommand: false
+      name: Set VPCNetwork temporary context
+      script: Set
+      type: regular
+      version: -1
+    taskid: db0fcab3-0426-4065-83f7-1131fbd3dfbd
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 350,
+          "y": 340
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "14_4_AWS": 0.52
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1075,
+        "width": 2000,
+        "x": -50,
+        "y": -180
+      }
+    }
+  }
