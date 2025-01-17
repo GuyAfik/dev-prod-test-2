@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 4.3.9
+    itemVersion: 4.3.17
     packID: PrismaCloud
     packName: Prisma Cloud by Palo Alto Networks
     packPropagationLabels:
@@ -197,11 +197,11 @@ tasks:
     skipunavailable: false
     task:
       brand: PrismaCloud v2
-      description: Search AWS Elastic Load Balancers in Prisma Cloud.
+      description: Search AWS Elastic Load Balancers in Prisma Cloud
       id: 1b59f137-fb46-4639-8904-00bb5f021d86
       iscommand: true
       name: Search in Load Balancers (dnsname)
-      script: PrismaCloud v2|||prisma-cloud-config-search
+      script: PrismaCloud v2|||redlock-search-config
       type: regular
       version: -1
     taskid: 1b59f137-fb46-4639-8904-00bb5f021d86
@@ -368,11 +368,11 @@ tasks:
     skipunavailable: false
     task:
       brand: PrismaCloud v2
-      description: Search Route53 Hosted Zones in Prisma Cloud.
+      description: Search Route53 Hosted Zones in Prisma Cloud
       id: ea2fd6b3-2dc3-4d03-8917-78779c2c8b18
       iscommand: true
       name: Search Domain in Route53 HostedZone Name
-      script: PrismaCloud v2|||prisma-cloud-config-search
+      script: PrismaCloud v2|||redlock-search-config
       type: regular
       version: -1
     taskid: ea2fd6b3-2dc3-4d03-8917-78779c2c8b18
