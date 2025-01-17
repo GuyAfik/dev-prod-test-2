@@ -84,7 +84,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 4.3.9
+    itemVersion: 4.3.17
     packID: PrismaCloud
     packName: Prisma Cloud by Palo Alto Networks
     packPropagationLabels:
@@ -285,16 +285,16 @@ script:
     description: Retrieves a User Profile schema, which holds all of the user fields
       within the application. Used for outgoing-mapping through the Get Schema option.
     name: get-mapping-fields
-  dockerimage: demisto/python3:3.11.9.101916
+  dockerimage: demisto/python3:3.11.10.113941
   ismappable: true
   isremotesyncout: true
   nativeimage:
-  - "8.7"
+  - "8.8"
   - "8.6"
   runonce: false
   script: |
     register_module_line('PrismaCloud IAM', 'start', __line__())
-    ### pack version: 4.3.9
+    demisto.debug('pack name = Prisma Cloud by Palo Alto Networks, pack version = 4.3.17')
 
 
 
@@ -438,7 +438,7 @@ script:
 
         def __init__(self, user_profile, mapper: str, incident_type: str, user_profile_delta=None):
             self._user_profile = safe_load_json(user_profile)
-            # Mapping is added here for GET USER commands, where we need to map Cortex XSIAM fields to the given app fields.
+            # Mapping is added here for GET USER commands, where we need to map Cortex XSOAR fields to the given app fields.
             self.mapped_user_profile = None
             self.mapped_user_profile = self.map_object(mapper, incident_type, map_old_data=True) if \
                 mapper else self._user_profile
@@ -668,8 +668,8 @@ script:
             :param is_disable_enabled: (bool) Whether or not to allow disabling users in the application.
             :param is_update_enabled: (bool) Whether or not to allow updating users in the application.
             :param create_if_not_exists: (bool) Whether or not to create a user if does not exist in the application.
-            :param mapper_in: (str) Incoming mapper from the application to Cortex XSIAM
-            :param mapper_out: (str) Outgoing mapper from the Cortex XSIAM to the application
+            :param mapper_in: (str) Incoming mapper from the application to Cortex XSOAR
+            :param mapper_out: (str) Outgoing mapper from the Cortex XSOAR to the application
             :param get_user_iam_attrs (List[str]): List of IAM attributes supported by integration by precedence
                                                             order to get user details.
             """
