@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.7.47
+    itemVersion: 1.7.65
     packID: CortexAttackSurfaceManagement
     packName: Cortex Attack Surface Management
     packPropagationLabels:
@@ -113,7 +113,7 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "5"
+      - "8"
     note: false
     quietmode: 0
     scriptarguments:
@@ -277,7 +277,17 @@ tasks:
       asmattacksurfacerulepriority:
         simple: ${ASM.AttackSurfaceRule.priority}
       asmattacksurfaceruleremediationguidance:
-        simple: ${ASM.AttackSurfaceRule.remediation_guidance}
+        complex:
+          accessor: remediation_guidance
+          root: ASM.AttackSurfaceRule
+          transformers:
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                iscontext: true
+                value:
+                  simple: RemediationGuidance
+            operator: SetIfEmpty
     separatecontext: false
     skipunavailable: false
     task:
@@ -330,9 +340,7 @@ tasks:
       - - left:
             iscontext: true
             value:
-              complex:
-                accessor: asmserviceid
-                root: alert
+              simple: inputs.IssueTypeID
           operator: isExists
       label: "yes"
     continueonerrortype: ""
