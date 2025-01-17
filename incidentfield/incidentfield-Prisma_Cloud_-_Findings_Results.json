@@ -110,7 +110,7 @@
 	"id": "incident_prismacloudfindingsresults",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "4.3.9",
+	"itemVersion": "4.3.17",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Prisma Cloud - Findings Results",
@@ -124,7 +124,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Prisma Cloud - Findings Results",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
