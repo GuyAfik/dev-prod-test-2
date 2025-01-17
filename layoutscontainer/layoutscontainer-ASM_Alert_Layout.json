@@ -505,12 +505,6 @@
 				"id": "workPlan",
 				"name": "Work Plan",
 				"type": "workPlan"
-			},
-			{
-				"hidden": false,
-				"id": "canvas",
-				"name": "Canvas",
-				"type": "canvas"
 			}
 		]
 	},
@@ -520,7 +514,7 @@
 	"id": "ASM Alert Layout",
 	"indicatorsDetails": null,
 	"indicatorsQuickView": null,
-	"itemVersion": "1.7.63",
+	"itemVersion": "1.7.47",
 	"locked": false,
 	"mobile": null,
 	"name": "ASM Alert Layout",
