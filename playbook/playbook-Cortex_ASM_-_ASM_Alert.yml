@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.10.0
-    itemVersion: 1.7.47
+    itemVersion: 1.7.65
     packID: CortexAttackSurfaceManagement
     packName: Cortex Attack Surface Management
     packPropagationLabels:
@@ -22,7 +22,7 @@ inputSections:
   - RemediationNotificationSubject
   - RemediationNotificationHTMLBody
   - BypassDevCheck
-  - AcceptedRiskDs
+  - AcceptedRiskIDs
   - AcceptedRiskProjects
   - AcceptedRiskOther
   - JiraProjectKey
@@ -97,7 +97,7 @@ inputs:
     simple: "False"
 - description: Comma-separated list of instance/VM IDs that are considered an accepted
     risk and that should be closed.
-  key: AcceptedRiskDs
+  key: AcceptedRiskIDs
   playbookInputQuery: null
   required: false
   value: {}
@@ -2090,7 +2090,7 @@ tasks:
             iscontext: true
             value:
               complex:
-                root: inputs.AcceptedRiskDs
+                root: inputs.AcceptedRiskIDs
         - left:
             iscontext: true
             value:
@@ -3514,7 +3514,7 @@ tasks:
       BypassDevCheck:
         simple: ${inputs.BypassDevCheck}
       ExternallyDetectedProviders:
-        simple: ${ASM.ExternalService.externally_detected_providers}
+        simple: ${alert.asmprovider}
     separatecontext: true
     skipunavailable: false
     task:
