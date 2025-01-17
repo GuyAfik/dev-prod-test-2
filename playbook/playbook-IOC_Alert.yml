@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.6.0
-    itemVersion: 3.0.57
+    itemVersion: 3.2.20
     packID: Core
     packName: Core - Investigation and Response
     packPropagationLabels:
