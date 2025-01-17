@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 4.3.9
+    itemVersion: 4.3.17
     packID: PrismaCloud
     packName: Prisma Cloud by Palo Alto Networks
     packPropagationLabels:
@@ -255,7 +255,7 @@ tasks:
     task:
       brand: ""
       description: |
-        1. Login to the AWS console and navigate to the CloudTrail dashboard
+        1. Log in to the AWS console and navigate to the CloudTrail dashboard.
       id: b8279f24-0d0d-48f6-8c67-554d8e0dac81
       iscommand: false
       name: Manually update CloudTrail
@@ -680,12 +680,14 @@ tasks:
     skipunavailable: false
     task:
       brand: PrismaCloud v2
-      description: Dismiss the alerts matching the given filter. Must provide either
-        policy IDs or alert IDs.
+      description: Dismiss or snooze the alerts matching the given filter. Either
+        policy IDs or alert IDs must be provided. When no absolute time nor relative
+        time arguments are provided, the default time range is all times. For snoozing,
+        provide "snooze_unit" and "snooze_value" arguments.
       id: 9245d63b-9dcd-4cb6-81e6-6b09dcb35f4f
       iscommand: true
       name: Dismiss Prisma Cloud alert
-      script: PrismaCloud v2|||redlock-dismiss-alerts
+      script: PrismaCloud v2|||prisma-cloud-alert-dismiss
       type: regular
       version: -1
     taskid: 9245d63b-9dcd-4cb6-81e6-6b09dcb35f4f
