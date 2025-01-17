@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.2.0
-    itemVersion: 2.6.38
+    itemVersion: 2.6.49
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -10,10 +10,10 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-description: "This playbook identifies duplicate alerts using the Cortex XSIAM machine
-  learning method (script).\nIn this playbook, you can choose fields and/or indicators
-  to be compared against other alerts in the Cortex XSIAM database. \n\nNote: To identify
-  similar alerts you *must* properly define the playbook inputs. "
+description: "This playbook identifies duplicate alerts using the Cortex machine learning
+  method (script).\nIn this playbook, you can choose fields and/or indicators to be
+  compared against other alerts in the Cortex database. \n\nNote: To identify similar
+  alerts you *must* properly define the playbook inputs. "
 id: Dedup - Generic v4
 inputs:
 - description: Choose the way you want to identify similar incidents. Choose between
