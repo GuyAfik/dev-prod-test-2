@@ -28,7 +28,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.7.63
+    itemVersion: 1.7.47
     packID: CortexAttackSurfaceManagement
     packName: Cortex Attack Surface Management
     packPropagationLabels:
@@ -517,14 +517,14 @@ script:
       description: Attack surface rule priority.
     - contextPath: ASM.AttackSurfaceRule.remediation_guidance
       description: Remediation guidance of attack surface rule.
-  dockerimage: demisto/python3:3.11.10.115186
+  dockerimage: demisto/python3:3.10.14.92207
   nativeimage:
-  - "8.8"
+  - "8.7"
   - "8.6"
   runonce: false
   script: |
     register_module_line('Cortex Attack Surface Management', 'start', __line__())
-    demisto.debug('pack name = Cortex Attack Surface Management, pack version = 1.7.63')
+    ### pack version: 1.7.47
 
 
     import urllib3
