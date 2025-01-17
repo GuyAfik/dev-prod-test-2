@@ -580,6 +580,12 @@
 					}
 				],
 				"type": "custom"
+			},
+			{
+				"hidden": false,
+				"id": "canvas",
+				"name": "Canvas",
+				"type": "canvas"
 			}
 		]
 	},
@@ -812,7 +818,7 @@
 			}
 		]
 	},
-	"itemVersion": "3.5.13",
+	"itemVersion": "3.8.2",
 	"locked": false,
 	"mobile": null,
 	"name": "Host Indicator",
