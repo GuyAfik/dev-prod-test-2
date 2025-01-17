@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.9.0
-    itemVersion: 1.7.63
+    itemVersion: 1.7.47
     packID: CortexAttackSurfaceManagement
     packName: Cortex Attack Surface Management
     packPropagationLabels:
@@ -13,13 +13,6 @@ contentitemexportablefields:
 description: This playbook is used to create ServiceNow tickets directed toward service
   owners to notify them of their internet exposures.
 id: Cortex ASM - ServiceNow Notification
-inputSections:
-- description: Generic group for inputs.
-  inputs:
-  - OwnerNotificationBody
-  - NotificationTicketType
-  - RemediationGuidance
-  name: General (Inputs group)
 inputs:
 - description: Body of the notification (email or ticket) sent to the potential service
     owner.
@@ -39,10 +32,6 @@ inputs:
   required: true
   value: {}
 name: Cortex ASM - ServiceNow Notification
-outputSections:
-- description: Generic group for outputs.
-  name: General (Outputs group)
-  outputs: []
 outputs: []
 starttaskid: "0"
 system: true
@@ -55,18 +44,18 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "9"
+      - "7"
     note: false
     quietmode: 0
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
-      id: b2dad0cb-d59b-4656-8b00-45e7bf43e237
+      id: 18a8542a-f6ca-474e-82bb-cd023bdf2a69
       iscommand: false
       name: ""
       version: -1
-    taskid: b2dad0cb-d59b-4656-8b00-45e7bf43e237
+    taskid: 18a8542a-f6ca-474e-82bb-cd023bdf2a69
     timertriggers: []
     type: start
     view: |-
@@ -88,19 +77,19 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 0dfcbaac-1689-4433-82a2-361344c6503f
+      id: e28fdfca-d524-4853-8dc3-285981f0050f
       iscommand: false
       name: Complete
       type: title
       version: -1
-    taskid: 0dfcbaac-1689-4433-82a2-361344c6503f
+    taskid: e28fdfca-d524-4853-8dc3-285981f0050f
     timertriggers: []
     type: title
     view: |-
       {
         "position": {
           "x": 450,
-          "y": 800
+          "y": 580
         }
       }
   "7":
@@ -115,18 +104,12 @@ tasks:
     note: false
     quietmode: 0
     scriptarguments:
-      contact_type:
-        simple: ASM
-      correlation_id:
-        simple: ${alert.id}
       description:
         complex:
           root: inputs.OwnerNotificationBody
           transformers:
           - args:
-              prefix:
-                value:
-                  simple: ${predescription}
+              prefix: {}
               suffix:
                 iscontext: true
                 value:
@@ -138,29 +121,6 @@ tasks:
               toReplace:
                 value:
                   simple: <br>
-            operator: replace
-          - args:
-              limit: {}
-              replaceWith: {}
-              toReplace:
-                value:
-                  simple: '["'
-            operator: replace
-          - args:
-              limit: {}
-              replaceWith: {}
-              toReplace:
-                value:
-                  simple: '"]'
-            operator: replace
-          - args:
-              limit: {}
-              replaceWith:
-                value:
-                  simple: ','
-              toReplace:
-                value:
-                  simple: '","'
             operator: replace
       extend-context:
         simple: 'ServiceNowDomain=.={"url": val.result.sys_domain.link.split(''api/now'')[0]}'
@@ -183,20 +143,20 @@ tasks:
     task:
       brand: ServiceNow v2
       description: Creates new ServiceNow ticket.
-      id: dd4851db-4755-4535-8057-c794b7836d2a
+      id: 2d40f244-f863-4313-8ba2-c526f39d0fa1
       iscommand: true
       name: Create ServiceNow alert
       script: ServiceNow v2|||servicenow-create-ticket
       type: regular
       version: -1
-    taskid: dd4851db-4755-4535-8057-c794b7836d2a
+    taskid: 2d40f244-f863-4313-8ba2-c526f39d0fa1
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
           "x": 450,
-          "y": 430
+          "y": 210
         }
       }
   "8":
@@ -230,7 +190,7 @@ tasks:
               prefix: {}
               suffix:
                 value:
-                  simple: nav_to.do?uri=alert.do?sysparm_query=number=
+                  simple: alert.do?sysparm_query=number=
             operator: concat
           - args:
               prefix: {}
@@ -250,79 +210,20 @@ tasks:
       description: |-
         Automation used to more easily populate a grid field. This is necessary when you want to assign certain values as static or if you have context paths that you will assign to different values as well. For example:
         `!GridFieldSetup keys=ip,src val1=${AWS.EC2.Instances.NetworkInterfaces.PrivateIpAddress} val2="AWS" gridfiled="gridfield"`
-      id: 89c90893-467e-4394-8e3e-46c4e5afc691
+      id: 75531f68-ebd5-4f9d-855f-d739e502ef20
       iscommand: false
       name: Set notification grid field
       script: GridFieldSetup
       type: regular
       version: -1
-    taskid: 89c90893-467e-4394-8e3e-46c4e5afc691
+    taskid: 75531f68-ebd5-4f9d-855f-d739e502ef20
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
           "x": 450,
-          "y": 620
-        }
-      }
-  "9":
-    continueonerrortype: ""
-    id: "9"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    nexttasks:
-      '#none#':
-      - "7"
-    note: false
-    quietmode: 0
-    scriptarguments:
-      key:
-        simple: predescription
-      stringify:
-        simple: "true"
-      value:
-        simple: |+
-          Source: ASM
-
-          Alert ID: ${alert.id}
-
-          Cloud: ${alert.asmprovider}
-
-          Severity: ${alert.severity}
-
-          IP address: ${alert.remoteip}
-
-          Hostname: ${alert.hostname}
-
-          Tags: ${alert.tags}
-
-          Attack surface rule: ${alert.asmattacksurfaceruleid.[0]}
-
-          Excluded: ${alert.excluded}
-
-          External ID: ${alert.external_id}
-
-    separatecontext: false
-    skipunavailable: false
-    task:
-      brand: ""
-      description: Set a value in context under the key you entered.
-      id: 80795fa8-8410-446c-8ce9-0ebe1d09a0b7
-      iscommand: false
-      name: Set predescription field
-      script: Set
-      type: regular
-      version: -1
-    taskid: 80795fa8-8410-446c-8ce9-0ebe1d09a0b7
-    timertriggers: []
-    type: regular
-    view: |-
-      {
-        "position": {
-          "x": 450,
-          "y": 220
+          "y": 400
         }
       }
 version: -1
@@ -331,7 +232,7 @@ view: |-
     "linkLabelsPosition": {},
     "paper": {
       "dimensions": {
-        "height": 815,
+        "height": 595,
         "width": 380,
         "x": 450,
         "y": 50
