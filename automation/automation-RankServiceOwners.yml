@@ -13,7 +13,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.7.63
+    itemVersion: 1.7.47
     packID: CortexAttackSurfaceManagement
     packName: Cortex Attack Surface Management
     packPropagationLabels:
@@ -21,7 +21,7 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/xpanse-ml-ev2:1.0.0.1858265
+dockerimage: demisto/xpanse-ml-ev2:1.0.0.77388
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
@@ -31,7 +31,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('RankServiceOwners', 'start', __line__())
-  demisto.debug('pack name = Cortex Attack Surface Management, pack version = 1.7.63')
+  ### pack version: 1.7.47
 
 
   """Script for identifying and recommending the most likely owners of a discovered service
@@ -282,7 +282,7 @@ script: |
               if key.lower() not in {'name', 'email', 'source', 'timestamp', 'canonicalization'}:
                   other_keys.append(key)
           for other in other_keys:
-              if keys_to_types[other] is str:
+              if keys_to_types[other] == str:
                   # union over strings
                   owner[other] = STRING_DELIMITER.join(sorted(
                       {owner.get(other, '') for owner in duplicates if owner.get(other, '')}
@@ -652,8 +652,6 @@ script: |
       try:
           # parse inputs
           unranked = demisto.args().get("owners", [])
-          if isinstance(unranked, dict):
-              unranked = [unranked]
           asm_system_ids = demisto.args().get("asmsystemids", [])
 
           # deduplicate/normalize, score, and rank owners
@@ -661,11 +659,8 @@ script: |
           final_owners = justify(rank(score(owners=normalized, asm_system_ids=asm_system_ids)))
 
           # write output to context
-          if final_owners:
-              demisto.executeCommand("setAlert", {"asmserviceowner": final_owners})
-              return_results(CommandResults(readable_output='Service owners ranked and written to asmserviceowner'))
-          else:
-              return_results(CommandResults(readable_output='No service owners found'))
+          demisto.executeCommand("setAlert", {"asmserviceowner": final_owners})
+          return_results(CommandResults(readable_output='Service owners ranked and written to asmserviceowner'))
 
       except Exception as ex:
           demisto.error(traceback.format_exc())  # print the traceback
