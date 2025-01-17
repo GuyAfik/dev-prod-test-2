@@ -13,7 +13,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.8.0
-    itemVersion: 1.7.63
+    itemVersion: 1.7.47
     packID: CortexAttackSurfaceManagement
     packName: Cortex Attack Surface Management
     packPropagationLabels:
@@ -21,20 +21,20 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.11.10.116439
+dockerimage: demisto/python3:3.10.13.75921
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
 name: GetProjectOwners
 nativeimage:
-- "8.8"
+- "8.7"
 - "8.6"
 pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('GetProjectOwners', 'start', __line__())
-  demisto.debug('pack name = Cortex Attack Surface Management, pack version = 1.7.63')
+  ### pack version: 1.7.47
 
 
   """Script for identifying and recommending the most likely owners of a discovered service
