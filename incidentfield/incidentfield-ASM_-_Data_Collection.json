@@ -81,7 +81,7 @@
 	"id": "incident_asmdatacollection",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.7.65",
+	"itemVersion": "1.7.64",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "ASM - Data Collection",
