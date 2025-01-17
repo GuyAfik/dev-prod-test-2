@@ -1,0 +1,517 @@
+category: Analytics & SIEM
+commonfields:
+  id: Alibaba Action Trail Event Collector
+  version: -1
+configuration:
+- display: Endpoint
+  name: endpoint
+  required: true
+  section: Connect
+  type: 0
+- display: Access key ID
+  displaypassword: Access key
+  name: access_key
+  required: true
+  section: Connect
+  type: 9
+- display: Project name
+  name: project_name
+  required: true
+  section: Connect
+  type: 0
+- display: Logstore name
+  name: logstore_name
+  required: true
+  section: Connect
+  type: 0
+- defaultvalue: '*| select * from actiontrail_pa_trail'
+  display: Query
+  name: query
+  required: true
+  section: Collect
+  type: 0
+- defaultvalue: "1000"
+  display: Number of incidents to fetch per fetch.
+  name: limit
+  required: false
+  section: Collect
+  type: 0
+- defaultvalue: 3 days
+  display: First fetch time interval
+  name: from
+  required: false
+  section: Collect
+  type: 0
+- advanced: true
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  section: Connect
+  type: 8
+- advanced: true
+  display: Trust any certificate (not secure)
+  name: verify
+  required: false
+  section: Connect
+  type: 8
+- display: Fetch Events
+  name: isFetchEvents
+  required: false
+  section: Collect
+  type: 8
+- advanced: true
+  defaultvalue: "1"
+  display: Events Fetch Interval
+  name: eventFetchInterval
+  required: false
+  section: Collect
+  type: 19
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: 6.8.0
+    itemVersion: 1.1.3
+    packID: AlibabaActionTrail
+    packName: Alibaba Action Trail
+    packPropagationLabels:
+    - all
+    prevname: ""
+    propagationLabels: []
+    toServerVersion: ""
+description: Alibaba logs event collector integration for XSIAM.
+detaileddescription: '[View Integration Documentation](https://xsoar.pan.dev/docs/reference/integrations/alibaba-action-trail-event-collector)'
+display: Alibaba Action Trail Event Collector
+image: data:image/png;base64,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
+name: Alibaba Action Trail Event Collector
+script:
+  commands:
+  - arguments:
+    - description: The date after which to search for logs in ISO format. For example,
+        2020-12-24T00:00:00.
+      name: from
+    - defaultValue: "1"
+      description: Number of events to fetch.
+      name: limit
+      required: true
+    - auto: PREDEFINED
+      defaultValue: "False"
+      description: Set this argument to True in order to create events, otherwise
+        the command will only display them.
+      name: should_push_events
+      predefined:
+      - "True"
+      - "False"
+      required: true
+    description: Manual command to fetch events and display them.
+    name: alibaba-get-events
+  dockerimage: demisto/auth-utils:1.0.0.1968974
+  isfetchevents: true
+  nativeimage:
+  - "8.8"
+  - "8.6"
+  runonce: false
+  script: |
+    register_module_line('Alibaba Action Trail Event Collector', 'start', __line__())
+    demisto.debug('pack name = Alibaba Action Trail, pack version = 1.1.3')
+
+
+
+    ### GENERATED CODE ###: from SiemApiModule import *
+    # This code was inserted in place of an API module.
+    register_module_line('SiemApiModule', 'start', __line__(), wrapper=-3)
+
+
+    # pylint: disable=no-name-in-module
+    # pylint: disable=no-self-argument
+
+    from abc import ABC
+    from typing import Any, Callable, Optional
+
+
+    from enum import Enum
+    from pydantic import BaseConfig, BaseModel, AnyUrl, validator, Field
+    from requests.auth import HTTPBasicAuth
+
+
+    class Method(str, Enum):
+        GET = 'GET'
+        POST = 'POST'
+        PUT = 'PUT'
+        HEAD = 'HEAD'
+        PATCH = 'PATCH'
+        DELETE = 'DELETE'
+
+
+    def load_json(v: Any) -> dict:
+        if not isinstance(v, (dict, str)):
+            raise ValueError('headers are not dict or a valid json')
+        if isinstance(v, str):
+            try:
+                v = json.loads(v)
+                if not isinstance(v, dict):
+                    raise ValueError('headers are not from dict type')
+            except json.decoder.JSONDecodeError as exc:
+                raise ValueError('headers are not valid Json object') from exc
+        if isinstance(v, dict):
+            return v
+        return {}
+
+
+    class IntegrationHTTPRequest(BaseModel):
+        method: Method
+        url: AnyUrl
+        verify: bool = True
+        headers: dict = {}  # type: ignore[type-arg]
+        auth: Optional[HTTPBasicAuth] = None
+        data: Any = None
+        params: dict = {}  # type: ignore[type-arg]
+
+        class Config(BaseConfig):
+            arbitrary_types_allowed = True
+
+        _normalize_headers = validator('headers', pre=True, allow_reuse=True)(  # type: ignore[type-var]
+            load_json
+        )
+
+
+    class Credentials(BaseModel):
+        identifier: Optional[str]
+        password: str
+
+
+    def set_authorization(request: IntegrationHTTPRequest, auth_credendtials):
+        """Automatic authorization.
+        Supports {Authorization: Bearer __token__}
+        or Basic Auth.
+        """
+        creds = Credentials.parse_obj(auth_credendtials)
+        if creds.password and creds.identifier:
+            request.auth = HTTPBasicAuth(creds.identifier, creds.password)
+        auth = {'Authorization': f'Bearer {creds.password}'}
+        if request.headers:
+            request.headers |= auth  # type: ignore[assignment, operator]
+        else:
+            request.headers = auth  # type: ignore[assignment]
+
+
+    class IntegrationOptions(BaseModel):
+        """Add here any option you need to add to the logic"""
+
+        proxy: Optional[bool] = False
+        limit: Optional[int] = Field(None, ge=1)
+
+
+    class IntegrationEventsClient(ABC):
+        def __init__(
+            self,
+            request: IntegrationHTTPRequest,
+            options: IntegrationOptions,
+            session=requests.Session(),
+        ):
+            self.request = request
+            self.options = options
+            self.session = session
+            self._set_proxy()
+            self._skip_cert_verification()
+
+        @abstractmethod
+        def set_request_filter(self, after: Any):
+            """TODO: set the next request's filter.
+            Example:
+            """
+            self.request.headers['after'] = after
+
+        def __del__(self):
+            try:
+                self.session.close()
+            except AttributeError as err:
+                demisto.debug(
+                    f'ignore exceptions raised due to session not used by the client. {err=}'
+                )
+
+        def call(self, request: IntegrationHTTPRequest) -> requests.Response:
+            try:
+                response = self.session.request(**request.dict())
+                response.raise_for_status()
+                return response
+            except Exception as exc:
+                msg = f'something went wrong with the http call {exc}'
+                demisto.debug(msg)
+                raise DemistoException(msg) from exc
+
+        def _skip_cert_verification(
+            self, skip_cert_verification: Callable = skip_cert_verification
+        ):
+            if not self.request.verify:
+                skip_cert_verification()
+
+        def _set_proxy(self):
+            if self.options.proxy:
+                ensure_proxy_has_http_prefix()
+            else:
+                skip_proxy()
+
+
+    class IntegrationGetEvents(ABC):
+        def __init__(
+            self, client: IntegrationEventsClient, options: IntegrationOptions
+        ) -> None:
+            self.client = client
+            self.options = options
+
+        def run(self):
+            stored = []
+            for logs in self._iter_events():
+                stored.extend(logs)
+                if self.options.limit:
+                    demisto.debug(
+                        f'{self.options.limit=} reached. \
+                        slicing from {len(logs)=}. \
+                        limit must be presented ONLY in commands and not in fetch-events.'
+                    )
+                    if len(stored) >= self.options.limit:
+                        return stored[: self.options.limit]
+            return stored
+
+        def call(self) -> requests.Response:
+            return self.client.call(self.client.request)
+
+        @staticmethod
+        @abstractmethod
+        def get_last_run(events: list) -> dict:
+            """Logic to get the last run from the events
+            Example:
+            """
+            return {'after': events[-1]['created']}
+
+        @abstractmethod  # noqa: B027
+        def _iter_events(self):
+            """Create iterators with Yield"""
+
+    register_module_line('SiemApiModule', 'end', __line__(), wrapper=1)
+    ### END GENERATED CODE ###
+    from datetime import datetime
+    from typing import Any
+    import six
+    import hmac
+    import hashlib
+    import base64
+    import urllib3
+
+    API_VERSION = '0.6.0'
+    VENDOR = "alibaba"
+    PRODUCT = "action-trail"
+    urllib3.disable_warnings()
+
+
+    class AlibabaParams(BaseModel):
+        from_: str = Field(alias='from')
+        to: int
+        type: str = 'log'
+        offset: int = 0
+        reverse: bool = False
+        powerSql: bool = False
+        query: str
+
+
+    class AlibabaEventsClient(IntegrationEventsClient):
+        def __init__(self, request: IntegrationHTTPRequest, options: IntegrationOptions, access_key: str,
+                     access_key_id: str, logstore_name: str):
+            self.access_key = access_key
+            self.access_key_id = access_key_id
+            self.logstore_name = logstore_name
+            super().__init__(request=request, options=options)
+
+        def set_request_filter(self, after: Any):
+            from_time = int(after)
+
+            self.request.params.from_ = from_time + 1  # type: ignore
+            self.request.params.to = from_time + 3600  # type: ignore
+
+        def call(self, request: IntegrationHTTPRequest) -> requests.Response:
+            try:
+                response = self.session.request(**self.request.dict(by_alias=True))
+                response.raise_for_status()
+                return response
+            except Exception as exc:
+                msg = f'something went wrong with the http call {exc}'
+                demisto.debug(msg)
+                raise DemistoException(msg) from exc
+
+        def prepare_request(self):
+            headers = self.request.headers
+
+            del headers['x-log-date']
+            headers['Date'] = datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')
+
+            signature = get_request_authorization(f'/logstores/{self.logstore_name}', self.access_key,
+                                                  self.request.params.dict(by_alias=True), headers)  # type: ignore
+
+            headers['Authorization'] = "LOG " + self.access_key_id + ':' + signature
+            headers['x-log-date'] = headers['Date']
+            del headers['Date']
+
+            self.request.headers = headers
+
+
+    class AlibabaGetEvents(IntegrationGetEvents):
+        client: AlibabaEventsClient
+
+        def __init__(self, client: AlibabaEventsClient, options: IntegrationOptions):
+            super().__init__(client=client, options=options)
+
+        @staticmethod
+        def get_last_run(events: list) -> dict:
+            return {'from': events[-1]['__time__']}
+
+        def _iter_events(self):
+            self.client.prepare_request()
+            response = self.call()
+            events: list = response.json()
+            events.sort(key=lambda k: k.get('__time__'))
+
+            if not events:
+                return []
+
+            while True:
+                yield events
+
+                last = events[-1]
+                self.client.set_request_filter(last['__time__'])
+                self.client.prepare_request()
+                response = self.call()
+
+                events = response.json()
+                events.sort(key=lambda k: k.get('__time__'))
+
+                if not events:
+                    break
+
+
+    def canonicalized_log_headers(headers):
+        content = ''
+        for key in sorted(six.iterkeys(headers)):
+            if key[:6].lower() in ('x-log-', 'x-acs-'):  # x-log- header
+                content += key + ':' + str(headers[key]) + "\n"
+        return content
+
+
+    def canonicalized_resource(resource, params):
+        if params:
+            urlString = ''
+            for key, value in sorted(six.iteritems(params)):
+                urlString += "{}={}&".format(
+                    key, value.decode('utf8') if isinstance(value, six.binary_type) else value)
+            resource += '?' + urlString[:-1]
+        return resource
+
+
+    def base64_encodestring(s):
+        if isinstance(s, str):
+            s = s.encode('utf8')
+        return base64.encodebytes(s).decode('utf8')
+
+
+    def hmac_sha1(content, key):
+        if isinstance(content, six.text_type):  # hmac.new accept 8-bit str
+            content = content.encode('utf-8')
+        if isinstance(key, six.text_type):  # hmac.new accept 8-bit str
+            key = key.encode('utf-8')
+
+        hashed = hmac.new(key, content, hashlib.sha1).digest()
+        return base64_encodestring(hashed).rstrip()
+
+
+    def get_request_authorization(resource, key, req_params, req_headers):
+        content = 'GET\n\n\n'
+        content += req_headers['Date'] + "\n"
+        content += canonicalized_log_headers(req_headers)
+        content += canonicalized_resource(resource, req_params)
+        return hmac_sha1(content, key)
+
+
+    def get_alibaba_timestamp_format(value):
+        timestamp: datetime
+        if isinstance(value, int):
+            return value
+        if not isinstance(value, datetime):
+            timestamp = dateparser.parse(value)  # type: ignore
+        return int(time.mktime(timestamp.timetuple()))
+
+
+    def main():
+        # Args is always stronger. Get last run even stronger
+        demisto_params = demisto.params() | demisto.args() | demisto.getLastRun()
+
+        project_name = demisto_params.get('project_name')
+        endpoint = demisto_params.get('endpoint')
+        logstore_name = demisto_params.get('logstore_name')
+        access_key = demisto_params.get('access_key').get('password')
+        access_key_id = demisto_params.get('access_key').get('identifier')
+        query = demisto_params.get('query')
+        from_ = get_alibaba_timestamp_format(demisto_params.get('from'))
+        should_push_events = argToBoolean(demisto_params.get('should_push_events', 'false'))
+
+        headers = {'Content-Length': '0',
+                   'x-log-bodyrawsize': '0',
+                   'x-log-apiversion': API_VERSION,
+                   'x-log-signaturemethod': 'hmac-sha1',
+                   'Host': f'{project_name}.{endpoint}',
+                   'x-log-date': ''}
+
+        params = {'from': str(from_),
+                  'to': str(from_ + 3600),
+                  'query': query}
+
+        demisto_params['method'] = Method.GET
+        demisto_params['url'] = f'http://{project_name}.{endpoint}:80/logstores/{logstore_name}'
+        demisto_params['headers'] = headers
+
+        request = IntegrationHTTPRequest(**demisto_params)
+        request.params = AlibabaParams.model_validate(params)  # type: ignore[attr-defined,assignment]
+
+        options = IntegrationOptions.model_validate(demisto_params)  # type: ignore[attr-defined]
+
+        client = AlibabaEventsClient(request, options, access_key=access_key,
+                                     access_key_id=access_key_id, logstore_name=logstore_name)
+
+        get_events = AlibabaGetEvents(client, options)
+
+        command = demisto.command()
+        try:
+            if command == 'test-module':
+                get_events.client.options.limit = 1
+                get_events.run()
+                return_results('ok')
+            elif command in ('alibaba-get-events', 'fetch-events'):
+                events = get_events.run()
+
+                if command == 'fetch-events':
+                    send_events_to_xsiam(events, vendor=VENDOR, product=PRODUCT)
+                    if events:
+                        demisto.setLastRun(AlibabaGetEvents.get_last_run(events))
+
+                elif command == 'alibaba-get-events':
+                    command_results = CommandResults(
+                        readable_output=tableToMarkdown('alibaba Logs', events, headerTransform=pascalToSpace),
+                        outputs_prefix='alibaba.Logs',
+                        outputs_key_field='event.eventid',
+                        outputs=events,
+                        raw_response=events,
+                    )
+                    return_results(command_results)
+
+                    if should_push_events:
+                        send_events_to_xsiam(events, vendor=VENDOR, product=PRODUCT)
+
+        except Exception as e:
+            return_error(str(e))
+
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+
+    register_module_line('Alibaba Action Trail Event Collector', 'end', __line__())
+  subtype: python3
+  type: python
+system: true
