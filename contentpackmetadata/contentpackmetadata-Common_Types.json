@@ -36,213 +36,13 @@
 		"generictype": null,
 		"incidentfield": [
 			{
-				"description": "",
-				"name": "Tool Usage Found",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "Cost Center",
-				"name": "Cost Center",
+				"description": "Detected internal hosts",
+				"name": "Detected Internal Hosts",
 				"type": "shortText"
 			},
 			{
-				"description": "",
-				"name": "Source Created By",
-				"type": "shortText"
-			},
-			{
-				"description": "Device's OU path in Active Directory",
-				"name": "Device OU",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Unique Ports",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "EmailCampaignSnippets",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "Detection End Time",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "Internal Addresses",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Last Modified By",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "High Risky Hosts",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The source IP before NAT.",
-				"name": "Pre Nat Source IP",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The last time the incident was mirrored in.",
-				"name": "Last Mirrored Time Stamp",
-				"type": "date"
-			},
-			{
-				"description": "Display Name",
-				"name": "Display Name",
-				"type": "shortText"
-			},
-			{
-				"description": "The method used to verify the user.",
-				"name": "Verification Method",
-				"type": "shortText"
-			},
-			{
-				"description": "The display name of the employee.",
-				"name": "Employee Display Name",
-				"type": "shortText"
-			},
-			{
-				"description": "Blocked Action",
-				"name": "Blocked Action",
-				"type": "shortText"
-			},
-			{
-				"description": "The low level category of the event.",
-				"name": "Low Level Categories Events",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Parent Process CMD",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Incident Classification",
-				"name": "Classification",
-				"type": "shortText"
-			},
-			{
-				"description": "The direction of the traffic in the event.",
-				"name": "Traffic Direction",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The status for the approval of the request.",
-				"name": "Approval Status",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Registry Hive",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "SSDeep",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Policy Description",
-				"type": "longText"
-			},
-			{
-				"description": "",
-				"name": "RemovedFromCampaigns",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The technical owner of the asset.",
-				"name": "Technical Owner",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Process Creation Time",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "MITRE Technique Name",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The number of failed logon events in a specific timeframe. Can be used with reference to the \"Failed Logon Events Timeframe\" field.",
-				"name": "Failed Logon Events",
-				"type": "number"
-			},
-			{
-				"description": "Medium or Higher Severity Alerts",
-				"name": "Number Of Found Related Alerts",
-				"type": "number"
-			},
-			{
-				"description": "The closing reason",
-				"name": "Closing Reason",
-				"type": "shortText"
-			},
-			{
-				"description": "The sub category",
-				"name": "Sub Category",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Custom Query Results",
-				"type": "markdown"
-			},
-			{
-				"description": "The time it took to contain the incident.",
-				"name": "Containment SLA",
-				"type": "timer"
-			},
-			{
-				"description": "",
-				"name": "Group ID",
-				"type": "shortText"
-			},
-			{
-				"description": "The source geolocation of the event.",
-				"name": "Source Geolocation",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Ticket Closed Date",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "User SID",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Duration",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Registration Email",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Detection ID",
-				"type": "number"
-			},
-			{
-				"description": "Job Function",
-				"name": "Job Function",
+				"description": "Subtype",
+				"name": "Subtype",
 				"type": "shortText"
 			},
 			{
@@ -251,138 +51,28 @@
 				"type": "multiSelect"
 			},
 			{
-				"description": "Title",
-				"name": "Title",
+				"description": "True if marked for follow up.",
+				"name": "Follow Up",
+				"type": "boolean"
+			},
+			{
+				"description": "Cost Center Code",
+				"name": "Cost Center Code",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Process CMD",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Threat Family Name Associated with an Attacking Vector. I.E. Meterpreter as toolkit or Extortion\\ֿFraud\\Espionage",
-				"name": "Threat Family Name",
+				"name": "SKU TIER",
 				"type": "shortText"
 			},
 			{
-				"description": "The timeframe which the failed logon events occurred in.",
-				"name": "Failed Logon Events Timeframe",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "External Category ID",
-				"type": "multiSelect"
-			},
-			{
-				"description": "SHA512",
-				"name": "SHA512",
-				"type": "shortText"
-			},
-			{
-				"description": "Indicates whether the URLs passed the SSL certificate verification.",
-				"name": "URL SSL Verification",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Vulnerable Product",
-				"type": "shortText"
-			},
-			{
-				"description": "The error message that contains details about the error that occurred.",
-				"name": "Error Message",
-				"type": "longText"
-			},
-			{
-				"description": "",
-				"name": "Technique",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Log Source",
-				"name": "Log Source",
-				"type": "shortText"
-			},
-			{
-				"description": "Device Id",
-				"name": "Device Id",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Additional Data",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Number of Related Incidents",
+				"description": "Medium or Higher Severity Alerts",
+				"name": "Number Of Found Related Alerts",
 				"type": "number"
 			},
 			{
-				"description": "",
-				"name": "User Groups",
-				"type": "multiSelect"
-			},
-			{
-				"description": "In case there's a macro in a Microsoft file such as docm, xlsm or pptm, this field will hold the source code of the macro.",
-				"name": "Macro Source Code",
-				"type": "longText"
-			},
-			{
-				"description": "",
-				"name": "External Sub Category ID",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "External Last Updated Time",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "Tactic ID",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Asset ID",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Device Status",
-				"type": "shortText"
-			},
-			{
-				"description": "User sAMAAccountName",
-				"name": "sAMAccountName",
-				"type": "shortText"
-			},
-			{
-				"description": "The destination IP address after NAT.",
-				"name": "Post Nat Destination IP",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "IP Blocked Status",
-				"type": "shortText"
-			},
-			{
-				"description": "Location Region",
-				"name": "Location Region",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Domain Name",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The ID of the campaign incident of which the current incident is part of.",
-				"name": "Part of Campaign",
+				"description": "Title",
+				"name": "Title",
 				"type": "shortText"
 			},
 			{
@@ -392,217 +82,112 @@
 			},
 			{
 				"description": "",
-				"name": "Campaign Name",
-				"type": "markdown"
-			},
-			{
-				"description": "Tenant Name",
-				"name": "Tenant Name",
-				"type": "shortText"
-			},
-			{
-				"description": "Isolated",
-				"name": "Isolated",
+				"name": "Sensor IP",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "User Engagement Response",
+				"name": "External Start Time",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "Tactic",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Alert ID as received from the integration JSON",
+				"name": "Original Alert ID",
+				"type": "shortText"
+			},
+			{
+				"description": "The status for the approval of the request.",
+				"name": "Approval Status",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Item Owner Email",
+				"name": "Policy Description",
+				"type": "longText"
+			},
+			{
+				"description": "",
+				"name": "Affected Hosts",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Acquisition Hire",
+				"type": "shortText"
+			},
+			{
+				"description": "In case there's a macro in a Microsoft file such as docm, xlsm or pptm, this field will hold the source code of the macro.",
+				"name": "Macro Source Code",
+				"type": "longText"
+			},
+			{
+				"description": "",
+				"name": "Source Id",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "External Category Name",
+				"name": "Device External IPs",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "File Access Date",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Policy Severity",
-				"type": "shortText"
-			},
-			{
-				"description": "First Name",
-				"name": "First Name",
-				"type": "shortText"
-			},
-			{
-				"description": "The result of the domain-squatting check for the attacker's email.",
-				"name": "Domain Squatting Result",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "CVE ID",
-				"type": "shortText"
-			},
-			{
-				"description": "Whether the alert is malicious.",
-				"name": "Alert Malicious",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "EmailCampaignCanvas",
-				"type": "markdown"
-			},
-			{
-				"description": "Cloud Instance ID",
-				"name": "Cloud Instance ID",
+				"name": "File SHA1",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "User Block Status",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Parent Process File Path",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Street Address",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Resource Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "External Confidence",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Agents ID",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Registry Value Type",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The source port before NAT.",
-				"name": "Pre Nat Source Port",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The CVSS collateral damage potential of the asset.",
-				"name": "CVSS Collateral Damage Potential",
-				"type": "multiSelect"
-			},
-			{
-				"description": "SHA1",
-				"name": "SHA1",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "MITRE Technique ID",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Mobile Phone",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Suspicious Executions Found",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "File Relationships",
-				"type": "grid"
-			},
-			{
-				"description": "Location",
-				"name": "Location",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "SKU TIER",
-				"type": "shortText"
-			},
-			{
-				"description": "Department",
-				"name": "Department",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Policy Actions",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Objective",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Detected internal hosts",
-				"name": "Detected Internal Hosts",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Manager Email Address",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Detected Endpoints",
-				"type": "shortText"
-			},
-			{
-				"description": "Given Name",
-				"name": "Given Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Alert tags",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Referenced Resource ID",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Operation Name",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Alert status",
-				"name": "Is Active",
-				"type": "singleSelect"
-			},
-			{
-				"description": "The number of log sources related to the offense.",
-				"name": "Number Of Log Sources",
+				"name": "Detection ID",
 				"type": "number"
 			},
 			{
 				"description": "",
-				"name": "Process ID",
+				"name": "Personal Email",
+				"type": "shortText"
+			},
+			{
+				"description": "Display Name",
+				"name": "Display Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Risk Rating",
+				"type": "shortText"
+			},
+			{
+				"description": "Surname",
+				"name": "Surname",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Cloud Service",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "Work Phone",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Account Status",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Rating",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Operation Name",
 				"type": "multiSelect"
 			},
 			{
@@ -612,8 +197,178 @@
 			},
 			{
 				"description": "",
-				"name": "Process MD5",
+				"name": "Tool Usage Found",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Unique Ports",
+				"type": "shortText"
+			},
+			{
+				"description": "Department",
+				"name": "Department",
+				"type": "shortText"
+			},
+			{
+				"description": "The source port before NAT.",
+				"name": "Pre Nat Source Port",
 				"type": "multiSelect"
+			},
+			{
+				"description": "Location",
+				"name": "Location",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Internal Addresses",
+				"type": "shortText"
+			},
+			{
+				"description": "The number of failed logon events in a specific timeframe. Can be used with reference to the \"Failed Logon Events Timeframe\" field.",
+				"name": "Failed Logon Events",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "CVE",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Parent Process IDs",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "First Seen",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Last Modified By",
+				"type": "shortText"
+			},
+			{
+				"description": "Reporting Agent/Sensor Version",
+				"name": "Agent Version",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The technical owner of the asset.",
+				"name": "Technical Owner",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Affected Users",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Suspicious Executions",
+				"type": "grid"
+			},
+			{
+				"description": "The source IP address after NAT.",
+				"name": "Post Nat Source IP",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "External Confidence",
+				"type": "multiSelect"
+			},
+			{
+				"description": "A table of critical assets involved in the incident, including the name and asset type.",
+				"name": "Critical Assets",
+				"type": "grid"
+			},
+			{
+				"description": "The time it took from incident creation until the maliciousness was determined.",
+				"name": "Detection SLA",
+				"type": "timer"
+			},
+			{
+				"description": "",
+				"name": "Registry Value Type",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Isolated",
+				"name": "Isolated",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Signature",
+				"type": "shortText"
+			},
+			{
+				"description": "Threat Family Name Associated with an Attacking Vector. I.E. Meterpreter as toolkit or Extortion\\ֿFraud\\Espionage",
+				"name": "Threat Family Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Device MAC Address",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The contact details for the technical owner.",
+				"name": "Technical Owner Contact",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Bugtraq",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Org Unit",
+				"type": "shortText"
+			},
+			{
+				"description": "Device Name",
+				"name": "Device Name",
+				"type": "shortText"
+			},
+			{
+				"description": "Includes the indicators selected by the user.",
+				"name": "Selected Indicators",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "MITRE Tactic Name",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Attack Patterns",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Policy URI",
+				"type": "shortText"
+			},
+			{
+				"description": "The log source type associated with the event.",
+				"name": "Log Source Type",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The time when the offense started.",
+				"name": "Start Time",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "SSDeep",
+				"type": "shortText"
 			},
 			{
 				"description": "State",
@@ -622,17 +377,72 @@
 			},
 			{
 				"description": "",
-				"name": "Last Modified On",
+				"name": "Tools",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Parent Process MD5",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Identity Type",
+				"type": "multiSelect"
+			},
+			{
+				"description": "User Id",
+				"name": "User Id",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Password Changed Date",
+				"name": "IncomingMirrorError",
+				"type": "longText"
+			},
+			{
+				"description": "",
+				"name": "Source Status",
 				"type": "shortText"
 			},
 			{
-				"description": "Zip Code",
-				"name": "Zip Code",
+				"description": "userAccountControl",
+				"name": "userAccountControl",
+				"type": "shortText"
+			},
+			{
+				"description": "The time when the offense ended.",
+				"name": "End Time",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Process ID",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Device Model",
+				"name": "Device Model",
+				"type": "shortText"
+			},
+			{
+				"description": "Whether the email has been successfully sent.",
+				"name": "Email Sent Successfully",
+				"type": "boolean"
+			},
+			{
+				"description": "",
+				"name": "Policy Type",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Resource Type",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Last Update Time",
 				"type": "shortText"
 			},
 			{
@@ -641,13 +451,488 @@
 				"type": "multiSelect"
 			},
 			{
-				"description": "Alert ID as received from the integration JSON",
-				"name": "Original Alert ID",
+				"description": "",
+				"name": "EmailCampaignCanvas",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "EmailCampaignMutualIndicators",
+				"type": "markdown"
+			},
+			{
+				"description": "The status of the user verification.",
+				"name": "Verification Status",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Additional Indicators",
+				"name": "External Sub Category ID",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Policy Deleted",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Ticket Closed Date",
+				"type": "date"
+			},
+			{
+				"description": "Notes regarding the assets compliance.",
+				"name": "Compliance Notes",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The list of rules associated to an event.",
+				"name": "List Of Rules - Event",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "App message",
+				"type": "longText"
+			},
+			{
+				"description": "",
+				"name": "Manager Email Address",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Source Networks",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Attack mode as received from the integration JSON",
+				"name": "Attack Mode",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Item Owner Email",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Registry Hive",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Domain Name",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "MITRE Technique Name",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The email address of the user who reported the email.",
+				"name": "Reporter Email Address",
+				"type": "shortText"
+			},
+			{
+				"description": "The CVSS integrity requirement for the asset.",
+				"name": "CVSS Integrity Requirement",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Number of Related Incidents",
+				"type": "number"
+			},
+			{
+				"description": "The description of the incident",
+				"name": "Original Description",
+				"type": "shortText"
+			},
+			{
+				"description": "Whether the password has been successfully reset.",
+				"name": "Password Reset Successfully",
+				"type": "boolean"
+			},
+			{
+				"description": "Blocked Action",
+				"name": "Blocked Action",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "High Risky Users",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Cloud Resource List",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Device OS Version",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Triggered Security Profile",
+				"name": "Triggered Security Profile",
+				"type": "shortText"
+			},
+			{
+				"description": "The source port after NAT.",
+				"name": "Post Nat Source Port",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "User Anomaly Count",
+				"type": "shortText"
+			},
+			{
+				"description": "The operating system.",
+				"name": "OS",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Risk Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "External Severity",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The event name (translated QID ) in the event.",
+				"name": "Event Names",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Mobile Device Model",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Process Paths",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Parent Process Name",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Incident Classification",
+				"name": "Classification",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Related Report",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Related Endpoints",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Policy Details",
+				"type": "shortText"
+			},
+			{
+				"description": "Location Region",
+				"name": "Location Region",
+				"type": "shortText"
+			},
+			{
+				"description": "Detected external IPs",
+				"name": "Detected External IPs",
+				"type": "shortText"
+			},
+			{
+				"description": "Device Hash",
+				"name": "Device Hash",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Policy Severity",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Resource Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Detected Endpoints",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "File Relationships",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Device Internal IPs",
+				"type": "multiSelect"
+			},
+			{
+				"description": "SHA1",
+				"name": "SHA1",
+				"type": "shortText"
+			},
+			{
+				"description": "Alert acknowledgement as received from the integration JSON",
+				"name": "Alert Acknowledgement",
+				"type": "shortText"
+			},
+			{
+				"description": "The description of the event name.",
+				"name": "Event Descriptions",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Alert action as received from the integration JSON",
+				"name": "Alert Action",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Vulnerable Product",
+				"type": "shortText"
+			},
+			{
+				"description": "Person's Birthday",
+				"name": "Birthday",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Objective",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The person who approved or needs to approve the request.",
+				"name": "Approver",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Source Updated by",
+				"type": "shortText"
+			},
+			{
+				"description": "The number of categories that are associated with the offense.",
+				"name": "Category Count",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "Password Changed Date",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Referenced Resource Name",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The timeframe which the failed logon events occurred in.",
+				"name": "Failed Logon Events Timeframe",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Campaign Name",
+				"type": "markdown"
+			},
+			{
+				"description": "The error message that contains details about the error that occurred.",
+				"name": "Error Message",
+				"type": "longText"
+			},
+			{
+				"description": "",
+				"name": "IP Blocked Status",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Detection End Time",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "Cloud Region List",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The destination port before NAT.",
+				"name": "Pre Nat Destination Port",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Src OS",
+				"name": "Src OS",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Users Details",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "Custom Query Results",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "High Risky Hosts",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Action taken on user accounts - Create, Update, Deactivate, Reactivate",
+				"name": "Event Action",
+				"type": "singleSelect"
+			},
+			{
+				"description": "The closing user.",
+				"name": "Closing User",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Resource URL",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Policy Actions",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Parent Process SHA256",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The display name of the employee.",
+				"name": "Employee Display Name",
+				"type": "shortText"
+			},
+			{
+				"description": "UUID as received from the integration JSON",
+				"name": "UUID",
+				"type": "shortText"
+			},
+			{
+				"description": "The time it took from when the incident was created until a user was assigned to it.",
+				"name": "Time to Assignment",
+				"type": "timer"
+			},
+			{
+				"description": "",
+				"name": "Source Category",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Org Level 2",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Similar incidents Dbot",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Number of similar files",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "Use Case Description",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "User Groups",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Registration Email",
+				"type": "shortText"
+			},
+			{
+				"description": "The technical user of the asset.",
+				"name": "Technical User",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Vulnerability Category",
+				"type": "shortText"
+			},
+			{
+				"description": "The time it took since remediation of the incident began, and until it ended.",
+				"name": "Remediation SLA",
+				"type": "timer"
+			},
+			{
+				"description": "The source IP before NAT.",
+				"name": "Pre Nat Source IP",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Agents ID",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Verdict",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Account ID",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Related Alerts",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "Hunt Results Count",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "External End Time",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "Technique",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Last Name",
+				"name": "Last Name",
 				"type": "shortText"
 			},
 			{
@@ -657,63 +942,48 @@
 			},
 			{
 				"description": "",
-				"name": "Org Level 2",
+				"name": "User Block Status",
 				"type": "shortText"
 			},
 			{
-				"description": "The time when the offense started.",
-				"name": "Start Time",
+				"description": "Job Code",
+				"name": "Job Code",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Affected Users",
-				"type": "tagsSelect"
+				"name": "SKU Name",
+				"type": "shortText"
 			},
 			{
-				"description": "The description of the event name.",
-				"name": "Event Descriptions",
+				"description": "File Size",
+				"name": "File Size",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Additional Indicators",
+				"type": "shortText"
+			},
+			{
+				"description": "The method used to verify the user.",
+				"name": "Verification Method",
+				"type": "shortText"
+			},
+			{
+				"description": "Assigned User",
+				"name": "Assigned User",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Parent Process CMD",
 				"type": "multiSelect"
 			},
 			{
-				"description": "The time it took from when the incident was created until a user was assigned to it.",
-				"name": "Time to Assignment",
-				"type": "timer"
-			},
-			{
 				"description": "",
-				"name": "Country Code",
+				"name": "Region",
 				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Ticket Number",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Source Create time",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Account Member Of",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Primary Email Address",
-				"name": "Email",
-				"type": "shortText"
-			},
-			{
-				"description": "The CVSS confidentiality requirement of the asset.",
-				"name": "CVSS Confidentiality Requirement",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The destination IPV6 address.",
-				"name": "Destination IPV6",
-				"type": "multiSelect"
 			},
 			{
 				"description": "",
@@ -721,8 +991,128 @@
 				"type": "multiSelect"
 			},
 			{
-				"description": "The CVSS integrity requirement for the asset.",
-				"name": "CVSS Integrity Requirement",
+				"description": "",
+				"name": "URLs",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Ticket Acknowledged Date",
+				"type": "date"
+			},
+			{
+				"description": "The ID of the campaign incident of which the current incident is part of.",
+				"name": "Part of Campaign",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Caller",
+				"type": "shortText"
+			},
+			{
+				"description": "The CVSS collateral damage potential of the asset.",
+				"name": "CVSS Collateral Damage Potential",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Related Campaign",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "External Category Name",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "app channel name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Vendor Product",
+				"type": "shortText"
+			},
+			{
+				"description": "The destination geolocation of the event.",
+				"name": "Destination Geolocation",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Risk Score",
+				"type": "shortText"
+			},
+			{
+				"description": "The CVSS availability requirement for the asset.",
+				"name": "CVSS Availability Requirement",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Assignment Group",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "External Link",
+				"type": "url"
+			},
+			{
+				"description": "",
+				"name": "File Access Date",
+				"type": "shortText"
+			},
+			{
+				"description": "Person's Full Name",
+				"name": "Full Name",
+				"type": "shortText"
+			},
+			{
+				"description": "The result of the domain-squatting check for the attacker's email.",
+				"name": "Domain Squatting Result",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "User Engagement Response",
+				"type": "shortText"
+			},
+			{
+				"description": "The time from the original logging device when the event occurred.",
+				"name": "Device Time",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Incident Link",
+				"type": "url"
+			},
+			{
+				"description": "",
+				"name": "Item Owner",
+				"type": "shortText"
+			},
+			{
+				"description": "Cloud Instance ID",
+				"name": "Cloud Instance ID",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Last Modified On",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Parent Process File Path",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "MITRE Tactic ID",
 				"type": "multiSelect"
 			},
 			{
@@ -732,13 +1122,53 @@
 			},
 			{
 				"description": "",
-				"name": "Policy Details",
+				"name": "CVSS",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "MITRE Tactic Name",
-				"type": "multiSelect"
+				"name": "File Creation Date",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Country Code Number",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Alert Type ID",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "ASN Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Block Indicators Status",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Policy ID",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IP Reputation",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Application Path",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Mobile Phone",
+				"type": "shortText"
 			},
 			{
 				"description": "",
@@ -746,23 +1176,23 @@
 				"type": "longText"
 			},
 			{
+				"description": "The last time the incident was mirrored in.",
+				"name": "Last Mirrored Time Stamp",
+				"type": "date"
+			},
+			{
 				"description": "",
-				"name": "Region",
+				"name": "Asset Name",
 				"type": "shortText"
 			},
 			{
-				"description": "Job Code",
-				"name": "Job Code",
+				"description": "Primary Email Address",
+				"name": "Email",
 				"type": "shortText"
 			},
 			{
-				"description": "Src OS",
-				"name": "Src OS",
-				"type": "shortText"
-			},
-			{
-				"description": "The comments related with the incident",
-				"name": "Comment",
+				"description": "",
+				"name": "Policy Remediable",
 				"type": "shortText"
 			},
 			{
@@ -777,52 +1207,27 @@
 			},
 			{
 				"description": "",
-				"name": "Technique ID",
+				"name": "Endpoints Details",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "User Creation Time",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Process MD5",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "IncomingMirrorError",
-				"type": "longText"
-			},
-			{
-				"description": "Action taken on user accounts - Create, Update, Deactivate, Reactivate",
-				"name": "Event Action",
-				"type": "singleSelect"
-			},
-			{
-				"description": "",
-				"name": "Device OS Version",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Suspicious Executions",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Escalation",
+				"name": "Status Reason",
 				"type": "shortText"
 			},
 			{
-				"description": "",
-				"name": "External Start Time",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "Region ID",
-				"type": "shortText"
-			},
-			{
-				"description": "The closing user.",
-				"name": "Closing User",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Command Line Verdict",
+				"description": "Tenant Name",
+				"name": "Tenant Name",
 				"type": "shortText"
 			},
 			{
@@ -832,83 +1237,108 @@
 			},
 			{
 				"description": "",
-				"name": "Tactic",
+				"name": "External Status",
 				"type": "multiSelect"
 			},
 			{
-				"description": "The list of rules associated to an event.",
-				"name": "List Of Rules - Event",
+				"description": "URL of the ExtraHop Reveal(x) detection",
+				"name": "Detection URL",
+				"type": "url"
+			},
+			{
+				"description": "",
+				"name": "Account Member Of",
 				"type": "multiSelect"
 			},
 			{
-				"description": "The status of the user verification.",
-				"name": "Verification Status",
+				"description": "",
+				"name": "Alert tags",
 				"type": "shortText"
 			},
 			{
-				"description": "The time it took since remediation of the incident began, and until it ended.",
-				"name": "Remediation SLA",
+				"description": "The time it took to investigate and enrich incident information.",
+				"name": "Triage SLA",
 				"type": "timer"
 			},
 			{
-				"description": "",
-				"name": "Block Indicators Status",
-				"type": "shortText"
-			},
-			{
-				"description": "The operating system.",
-				"name": "OS",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "User Creation Time",
-				"type": "shortText"
-			},
-			{
-				"description": "The time when the offense ended.",
-				"name": "End Time",
-				"type": "shortText"
-			},
-			{
-				"description": "Assigned User",
-				"name": "Assigned User",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Policy Deleted",
-				"type": "shortText"
-			},
-			{
-				"description": "The email address of the user who reported the email.",
-				"name": "Reporter Email Address",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Related Campaign",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Additional Email Addresses",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Reporting Agent/Sensor Version",
-				"name": "Agent Version",
+				"description": "The CVSS confidentiality requirement of the asset.",
+				"name": "CVSS Confidentiality Requirement",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "Cloud Resource List",
+				"name": "CVE ID",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Group ID",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Additional Data",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "String Similarity Results",
+				"name": "Process Creation Time",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Report Name",
 				"type": "markdown"
+			},
+			{
+				"description": "The sub category",
+				"name": "Sub Category",
+				"type": "shortText"
+			},
+			{
+				"description": "The comments related with the incident",
+				"name": "Comment",
+				"type": "shortText"
+			},
+			{
+				"description": "The source geolocation of the event.",
+				"name": "Source Geolocation",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Street Address",
+				"type": "shortText"
+			},
+			{
+				"description": "Indicates whether the URLs passed the SSL certificate verification.",
+				"name": "URL SSL Verification",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Scenario",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Source Urgency",
+				"name": "Source Urgency",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "User SID",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Timezone",
+				"type": "shortText"
+			},
+			{
+				"description": "The closing time.",
+				"name": "Close Time",
+				"type": "shortText"
 			},
 			{
 				"description": "",
@@ -916,128 +1346,78 @@
 				"type": "shortText"
 			},
 			{
-				"description": "userAccountControl",
-				"name": "userAccountControl",
+				"description": "User sAMAAccountName",
+				"name": "sAMAccountName",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "IP Reputation",
+				"name": "Tactic ID",
+				"type": "multiSelect"
+			},
+			{
+				"description": "First Name",
+				"name": "First Name",
+				"type": "shortText"
+			},
+			{
+				"description": "Destination OS",
+				"name": "Dest OS",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Registry Value",
+				"name": "Source Create time",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "File Hash",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Team name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "RemovedFromCampaigns",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The unparsed event data.",
+				"name": "Raw Event",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "Use Case Description",
-				"type": "markdown"
-			},
-			{
-				"description": "Phone number",
-				"name": "Phone Number",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Notes regarding the assets compliance.",
-				"name": "Compliance Notes",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The event name (translated QID ) in the event.",
-				"name": "Event Names",
+				"name": "Parent Process Path",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "Account Status",
-				"type": "shortText"
-			},
-			{
-				"description": "Person's Full Name",
-				"name": "Full Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Related Alerts",
-				"type": "markdown"
-			},
-			{
-				"description": "OS Type",
-				"name": "OS Type",
-				"type": "shortText"
-			},
-			{
-				"description": "The log source type associated with the event.",
-				"name": "Log Source Type",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The description of the incident",
-				"name": "Original Description",
-				"type": "shortText"
-			},
-			{
-				"description": "The person who approved or needs to approve the request.",
-				"name": "Approver",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "External End Time",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "Policy ID",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Source Updated by",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Source External IPs",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The events associated with the offense.",
-				"name": "Original Events",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The stage of the investigation.",
-				"name": "Investigation Stage",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Source Id",
-				"type": "shortText"
-			},
-			{
-				"description": "The log source name associated with the event.",
-				"name": "Log Source Name",
+				"name": "Additional Email Addresses",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "Bugtraq",
-				"type": "shortText"
-			},
-			{
-				"description": "The email address of the employee.",
-				"name": "Employee Email",
-				"type": "shortText"
+				"name": "Protocol names",
+				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "Assignment Group",
+				"name": "Referenced Resource ID",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Cost Center",
+				"name": "Cost Center",
+				"type": "shortText"
+			},
+			{
+				"description": "Job Family",
+				"name": "Job Family",
 				"type": "shortText"
 			},
 			{
@@ -1047,497 +1427,17 @@
 			},
 			{
 				"description": "",
-				"name": "Scenario",
+				"name": "External Category ID",
 				"type": "multiSelect"
 			},
 			{
-				"description": "",
-				"name": "Risk Score",
+				"description": "Job Function",
+				"name": "Job Function",
 				"type": "shortText"
 			},
 			{
-				"description": "",
-				"name": "Timezone",
-				"type": "shortText"
-			},
-			{
-				"description": "Whether the password has been successfully reset.",
-				"name": "Password Reset Successfully",
-				"type": "boolean"
-			},
-			{
-				"description": "",
-				"name": "MITRE Tactic ID",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Define the threat name such as malware/exploit/phishing/etc",
-				"name": "Threat Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Attack Patterns",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Mobile Device Model",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "ASN Name",
-				"type": "shortText"
-			},
-			{
-				"description": "URL of the ExtraHop Reveal(x) detection",
-				"name": "Detection URL",
-				"type": "url"
-			},
-			{
-				"description": "Alert name as received from the integration JSON",
-				"name": "Original Alert Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Tools",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "EmailCampaignSummary",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "SKU Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Parent Process SHA256",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "User Anomaly Count",
-				"type": "shortText"
-			},
-			{
-				"description": "The destination port before NAT.",
-				"name": "Pre Nat Destination Port",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Resource Type",
-				"type": "shortText"
-			},
-			{
-				"description": "Surname",
-				"name": "Surname",
-				"type": "shortText"
-			},
-			{
-				"description": "The number of categories that are associated with the offense.",
-				"name": "Category Count",
-				"type": "number"
-			},
-			{
-				"description": "",
-				"name": "Org Unit",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Vendor ID",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "EmailCampaignMutualIndicators",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "Ticket Acknowledged Date",
-				"type": "date"
-			},
-			{
-				"description": "Source Urgency",
-				"name": "Source Urgency",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Cloud Account ID",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The closing time.",
-				"name": "Close Time",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "External Status",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Work Phone",
-				"type": "shortText"
-			},
-			{
-				"description": "The source port after NAT.",
-				"name": "Post Nat Source Port",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Person's Birthday",
-				"name": "Birthday",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Item Owner",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Incident Link",
-				"type": "url"
-			},
-			{
-				"description": "A table of critical assets involved in the incident, including the name and asset type.",
-				"name": "Critical Assets",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "External Link",
-				"type": "url"
-			},
-			{
-				"description": "",
-				"name": "File Creation Date",
-				"type": "shortText"
-			},
-			{
-				"description": "Includes the indicators selected by the user.",
-				"name": "Selected Indicators",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "similarIncidents",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The name of a YARA rule",
-				"name": "Rule Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "OutgoingMirrorError",
-				"type": "longText"
-			},
-			{
-				"description": "",
-				"name": "File SHA1",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Similar incidents Dbot",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Affected Hosts",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Application Path",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Cloud Region List",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Exposure Level",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Personal Email",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "High Risky Users",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Source Priority",
-				"type": "shortText"
-			},
-			{
-				"description": "The time it took to investigate and enrich incident information.",
-				"name": "Triage SLA",
-				"type": "timer"
-			},
-			{
-				"description": "The technical user of the asset.",
-				"name": "Technical User",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Subtype",
-				"name": "Subtype",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "External Sub Category Name",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Process Paths",
-				"type": "multiSelect"
-			},
-			{
-				"description": "File Size",
-				"name": "File Size",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "URLs",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Device Model",
-				"name": "Device Model",
-				"type": "shortText"
-			},
-			{
-				"description": "The unparsed event data.",
-				"name": "Raw Event",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Source Status",
-				"type": "shortText"
-			},
-			{
-				"description": "UUID as received from the integration JSON",
-				"name": "UUID",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "First Seen",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Identity Type",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Source Networks",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Device Hash",
-				"name": "Device Hash",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Vendor Product",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Source Category",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Users Details",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "Leadership",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Alert Type ID",
-				"type": "shortText"
-			},
-			{
-				"description": "The contact details for the technical owner.",
-				"name": "Technical Owner Contact",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "External Severity",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Cost Center Code",
-				"name": "Cost Center Code",
-				"type": "shortText"
-			},
-			{
-				"description": "The destination geolocation of the event.",
-				"name": "Destination Geolocation",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Parent Process MD5",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Risk Rating",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "App message",
-				"type": "longText"
-			},
-			{
-				"description": "",
-				"name": "Device External IPs",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The time it took from incident creation until the maliciousness was determined.",
-				"name": "Detection SLA",
-				"type": "timer"
-			},
-			{
-				"description": "",
-				"name": "app channel name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Related Endpoints",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Sensor IP",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Related Report",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "CVE",
-				"type": "shortText"
-			},
-			{
-				"description": "Triggered Security Profile",
-				"name": "Triggered Security Profile",
-				"type": "shortText"
-			},
-			{
-				"description": "The time from the original logging device when the event occurred.",
-				"name": "Device Time",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The HTML content in a rendered form.",
-				"name": "Rendered HTML",
-				"type": "html"
-			},
-			{
-				"description": "",
-				"name": "CVSS",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Device OS Name",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Signature",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Last Update Time",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "CVE Published",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Parent Process IDs",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Resource URL",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Endpoints Details",
-				"type": "markdown"
-			},
-			{
-				"description": "Destination OS",
-				"name": "Dest OS",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Policy Remediable",
-				"type": "shortText"
-			},
-			{
-				"description": "Device Name",
-				"name": "Device Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Policy URI",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "City",
+				"description": "The email address of the employee.",
+				"name": "Employee Email",
 				"type": "shortText"
 			},
 			{
@@ -1547,27 +1447,17 @@
 			},
 			{
 				"description": "",
-				"name": "Status Reason",
+				"name": "External Last Updated Time",
+				"type": "date"
+			},
+			{
+				"description": "The closing reason",
+				"name": "Closing Reason",
 				"type": "shortText"
 			},
 			{
-				"description": "Attack mode as received from the integration JSON",
-				"name": "Attack Mode",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Rating",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "ASN",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Policy Type",
+				"description": "The stage of the investigation.",
+				"name": "Investigation Stage",
 				"type": "shortText"
 			},
 			{
@@ -1576,89 +1466,124 @@
 				"type": "multiSelect"
 			},
 			{
-				"description": "Alert acknowledgement as received from the integration JSON",
-				"name": "Alert Acknowledgement",
+				"description": "The email address of the employee's manager.",
+				"name": "Employee Manager Email",
 				"type": "shortText"
 			},
 			{
-				"description": "The source IP address after NAT.",
-				"name": "Post Nat Source IP",
+				"description": "",
+				"name": "Technique ID",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The log source name associated with the event.",
+				"name": "Log Source Name",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "Verdict",
+				"name": "CVE Published",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Error Code",
+				"name": "Org Level 3",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Hunt Results Count",
+				"name": "Asset ID",
 				"type": "shortText"
 			},
 			{
-				"description": "",
-				"name": "Acquisition Hire",
-				"type": "shortText"
-			},
-			{
-				"description": "Last Name",
-				"name": "Last Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Team name",
-				"type": "shortText"
-			},
-			{
-				"description": "Detected external IPs",
-				"name": "Detected External IPs",
-				"type": "shortText"
-			},
-			{
-				"description": "Job Family",
-				"name": "Job Family",
-				"type": "shortText"
-			},
-			{
-				"description": "The CVSS availability requirement for the asset.",
-				"name": "CVSS Availability Requirement",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Whether the email has been successfully sent.",
-				"name": "Email Sent Successfully",
-				"type": "boolean"
-			},
-			{
-				"description": "The user who changed this incident",
-				"name": "Changed",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Destination Networks",
+				"description": "The direction of the traffic in the event.",
+				"name": "Traffic Direction",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "Report Name",
+				"name": "Escalation",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Command Line Verdict",
+				"type": "shortText"
+			},
+			{
+				"description": "Manager Name",
+				"name": "Manager Name",
+				"type": "shortText"
+			},
+			{
+				"description": "The destination IPV6 address.",
+				"name": "Destination IPV6",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Process CMD",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Exposure Level",
+				"type": "shortText"
+			},
+			{
+				"description": "The events associated with the offense.",
+				"name": "Original Events",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "similarIncidents",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The number of log sources related to the offense.",
+				"name": "Number Of Log Sources",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "Leadership",
+				"type": "shortText"
+			},
+			{
+				"description": "SHA512",
+				"name": "SHA512",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Country Code",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "MITRE Technique ID",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Alert name as received from the integration JSON",
+				"name": "Original Alert Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "String Similarity Results",
 				"type": "markdown"
 			},
 			{
-				"description": "",
-				"name": "Parent Process Path",
+				"description": "Device's OU path in Active Directory",
+				"name": "Device OU",
 				"type": "multiSelect"
 			},
 			{
-				"description": "",
-				"name": "Cloud Service",
-				"type": "number"
+				"description": "Log Source",
+				"name": "Log Source",
+				"type": "shortText"
 			},
 			{
 				"description": "",
@@ -1667,98 +1592,215 @@
 			},
 			{
 				"description": "",
-				"name": "Org Level 3",
-				"type": "shortText"
-			},
-			{
-				"description": "Alert action as received from the integration JSON",
-				"name": "Alert Action",
-				"type": "shortText"
-			},
-			{
-				"description": "The email address of the employee's manager.",
-				"name": "Employee Manager Email",
+				"name": "Source Priority",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Account ID",
+				"name": "ASN",
 				"type": "shortText"
 			},
 			{
-				"description": "User Id",
-				"name": "User Id",
+				"description": "Given Name",
+				"name": "Given Name",
+				"type": "shortText"
+			},
+			{
+				"description": "The name of a YARA rule",
+				"name": "Rule Name",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Parent Process Name",
+				"name": "City",
+				"type": "shortText"
+			},
+			{
+				"description": "Zip Code",
+				"name": "Zip Code",
+				"type": "shortText"
+			},
+			{
+				"description": "OS Type",
+				"name": "OS Type",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Vendor ID",
+				"type": "shortText"
+			},
+			{
+				"description": "The time it took to contain the incident.",
+				"name": "Containment SLA",
+				"type": "timer"
+			},
+			{
+				"description": "The low level category of the event.",
+				"name": "Low Level Categories Events",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "Country Code Number",
+				"name": "EmailCampaignSnippets",
+				"type": "markdown"
+			},
+			{
+				"description": "Device Id",
+				"name": "Device Id",
 				"type": "shortText"
 			},
 			{
-				"description": "",
-				"name": "Device MAC Address",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Manager Name",
-				"name": "Manager Name",
+				"description": "Whether the alert is malicious.",
+				"name": "Alert Malicious",
 				"type": "shortText"
 			},
 			{
-				"description": "",
-				"name": "Protocol names",
-				"type": "multiSelect"
-			},
-			{
-				"description": "True if marked for follow up.",
-				"name": "Follow Up",
-				"type": "boolean"
-			},
-			{
-				"description": "",
-				"name": "Vulnerability Category",
+				"description": "Define the threat name such as malware/exploit/phishing/etc",
+				"name": "Threat Name",
 				"type": "shortText"
 			},
 			{
-				"description": "",
-				"name": "Number of similar files",
-				"type": "number"
-			},
-			{
-				"description": "",
-				"name": "File Hash",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Referenced Resource Name",
+				"description": "Phone number",
+				"name": "Phone Number",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "Device Internal IPs",
+				"name": "Duration",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Source Created By",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Suspicious Executions Found",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "Device Status",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "EmailCampaignSummary",
+				"type": "markdown"
+			},
+			{
+				"description": "The destination IP address after NAT.",
+				"name": "Post Nat Destination IP",
 				"type": "multiSelect"
 			},
 			{
 				"description": "",
-				"name": "Caller",
+				"name": "Registry Value",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The user who changed this incident",
+				"name": "Changed",
 				"type": "shortText"
+			},
+			{
+				"description": "Alert status",
+				"name": "Is Active",
+				"type": "singleSelect"
+			},
+			{
+				"description": "",
+				"name": "Source External IPs",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Ticket Number",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "External Sub Category Name",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Destination Networks",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Error Code",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Region ID",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "OutgoingMirrorError",
+				"type": "longText"
+			},
+			{
+				"description": "",
+				"name": "Cloud Account ID",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The HTML content in a rendered form.",
+				"name": "Rendered HTML",
+				"type": "html"
+			},
+			{
+				"description": "",
+				"name": "Device OS Name",
+				"type": "multiSelect"
 			}
 		],
 		"incidenttype": [
 			{
 				"closureScript": "",
+				"days": 3,
+				"hours": 0,
+				"name": "Hunt",
+				"playbook": "",
+				"weeks": 1
+			},
+			{
+				"closureScript": "",
 				"days": 0,
 				"hours": 0,
-				"name": "Indicator Feed",
+				"name": "Job",
 				"playbook": "",
 				"weeks": 0
+			},
+			{
+				"closureScript": "",
+				"days": 3,
+				"hours": 0,
+				"name": "Reconnaissance",
+				"playbook": "",
+				"weeks": 1
+			},
+			{
+				"closureScript": "",
+				"days": 3,
+				"hours": 0,
+				"name": "Authentication",
+				"playbook": "",
+				"weeks": 1
+			},
+			{
+				"closureScript": "",
+				"days": 3,
+				"hours": 0,
+				"name": "Policy Violation",
+				"playbook": "",
+				"weeks": 1
 			},
 			{
 				"closureScript": "",
@@ -1772,7 +1814,7 @@
 				"closureScript": "",
 				"days": 3,
 				"hours": 0,
-				"name": "Authentication",
+				"name": "Exploit",
 				"playbook": "",
 				"weeks": 1
 			},
@@ -1796,6 +1838,30 @@
 				"closureScript": "",
 				"days": 3,
 				"hours": 0,
+				"name": "Simulation",
+				"playbook": "",
+				"weeks": 1
+			},
+			{
+				"closureScript": "",
+				"days": 3,
+				"hours": 0,
+				"name": "Defacement",
+				"playbook": "",
+				"weeks": 1
+			},
+			{
+				"closureScript": "",
+				"days": 3,
+				"hours": 0,
+				"name": "Exfiltration",
+				"playbook": "",
+				"weeks": 1
+			},
+			{
+				"closureScript": "",
+				"days": 3,
+				"hours": 0,
 				"name": "Vulnerability",
 				"playbook": "",
 				"weeks": 1
@@ -1812,31 +1878,7 @@
 				"closureScript": "",
 				"days": 3,
 				"hours": 0,
-				"name": "Reconnaissance",
-				"playbook": "",
-				"weeks": 1
-			},
-			{
-				"closureScript": "",
-				"days": 3,
-				"hours": 0,
-				"name": "Policy Violation",
-				"playbook": "",
-				"weeks": 1
-			},
-			{
-				"closureScript": "",
-				"days": 3,
-				"hours": 0,
 				"name": "C2Communication",
-				"playbook": "",
-				"weeks": 1
-			},
-			{
-				"closureScript": "",
-				"days": 3,
-				"hours": 0,
-				"name": "Defacement",
 				"playbook": "",
 				"weeks": 1
 			},
@@ -1844,463 +1886,16 @@
 				"closureScript": "",
 				"days": 0,
 				"hours": 0,
-				"name": "Job",
+				"name": "Indicator Feed",
 				"playbook": "",
 				"weeks": 0
-			},
-			{
-				"closureScript": "",
-				"days": 3,
-				"hours": 0,
-				"name": "Simulation",
-				"playbook": "",
-				"weeks": 1
-			},
-			{
-				"closureScript": "",
-				"days": 3,
-				"hours": 0,
-				"name": "Exploit",
-				"playbook": "",
-				"weeks": 1
-			},
-			{
-				"closureScript": "",
-				"days": 3,
-				"hours": 0,
-				"name": "Hunt",
-				"playbook": "",
-				"weeks": 1
-			},
-			{
-				"closureScript": "",
-				"days": 3,
-				"hours": 0,
-				"name": "Exfiltration",
-				"playbook": "",
-				"weeks": 1
 			}
 		],
 		"indicatorfield": [
 			{
-				"description": "Given Name",
-				"name": "Given Name",
+				"description": "Title",
+				"name": "Title",
 				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Organizational Unit (OU)",
-				"type": "shortText"
-			},
-			{
-				"description": "Job Code",
-				"name": "Job Code",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Malware Family",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Indicator Identification",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Applications",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "Display Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Admin Phone",
-				"type": "shortText"
-			},
-			{
-				"description": "Specifies the languages supported by the software. The value of each list member MUST be a language code conformant to - RFC5646.",
-				"name": "Languages",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Signature Description",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Domain IDN Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Infrastructure Types",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Paths",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Extension",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Commands",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Tool Types",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Location Region",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "State",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Actor",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The specific service of a feed integration from which an indicator was ingested.",
-				"name": "Service",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Path",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Registrar Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Name Field",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Implementation Languages",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Org Level 3",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Number of subkeys",
-				"type": "number"
-			},
-			{
-				"description": "",
-				"name": "Short Description",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "CVE Modified",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "Signature Copyright",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Architecture",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Port",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Work Phone",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Subdomains",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Confidence",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Email Address",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Issuer",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Country Code",
-				"type": "shortText"
-			},
-			{
-				"description": "An identifier uniquely identifies a STIX Object and MAY do so in a deterministic way",
-				"name": "STIX ID",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "STIX Goals",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Registrant Name",
-				"type": "shortText"
-			},
-			{
-				"description": "The source that reported this indicator. Can be a feed, an incident, or users.",
-				"name": "Reported By",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Registrar Abuse Phone",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Validity Not After",
-				"type": "date"
-			},
-			{
-				"description": "City",
-				"name": "City",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Registrant Email",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "MD5",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Behavior",
-				"type": "grid"
-			},
-			{
-				"description": "Whether to force user synchronization.",
-				"name": "Force Sync",
-				"type": "boolean"
-			},
-			{
-				"description": "Manager Name",
-				"name": "Manager Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "DNS",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Org Level 1",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Source Priority",
-				"type": "number"
-			},
-			{
-				"description": "",
-				"name": "Job Family",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Whois Records",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Domain Status",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Registrar Abuse Email",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Size",
-				"type": "number"
-			},
-			{
-				"description": "",
-				"name": "STIX Roles",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Office365Category",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Feed Related Indicators",
-				"type": "grid"
-			},
-			{
-				"description": "Specifies the Software Identification (SWID) tags entry for the software",
-				"name": "SWID",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "OS Version",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "SHA1",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "STIX Threat Actor Types",
-				"type": "multiSelect"
-			},
-			{
-				"description": "Known associations to other pieces of Threat Data.",
-				"name": "Associations",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "Industry sector is an open vocabulary that describes industrial and commercial sectors.",
-				"name": "Industry sectors",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Author",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Processors",
-				"type": "number"
-			},
-			{
-				"description": "",
-				"name": "Campaign",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Resource Level",
-				"type": "multiSelect"
-			},
-			{
-				"description": "The last time the indicator was seen by the Source vendor.",
-				"name": "Last Seen By Source",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "STIX Tool Types",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "STIX Tool Version",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Registrar Abuse Address",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Expiration Date",
-				"type": "date"
-			},
-			{
-				"description": "Alternative names used to identify this object",
-				"name": "Aliases",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Vulnerabilities",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Reports",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Geo Location",
-				"type": "shortText"
-			},
-			{
-				"description": "Whether the employee is an acquisition hire.",
-				"name": "Acquisition Hire",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Creation Date",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "STIX Is Malware Family",
-				"type": "boolean"
-			},
-			{
-				"description": "",
-				"name": "CVSS Score",
-				"type": "number"
-			},
-			{
-				"description": "Total number of engines that checked the indicator",
-				"name": "Detection Engines",
-				"type": "number"
 			},
 			{
 				"description": "Number of engines that positively detected the indicator as malicious",
@@ -2309,592 +1904,7 @@
 			},
 			{
 				"description": "",
-				"name": "Operating System",
-				"type": "shortText"
-			},
-			{
-				"description": "The list of Kill Chain Phases for which this object is used.",
-				"name": "STIX Kill Chain Phases",
-				"type": "multiSelect"
-			},
-			{
-				"description": "SHA256 fingerprint of Subject Public Key Info",
-				"name": "SPKI SHA256",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "STIX Primary Motivation.",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Subject Alternative Names",
-				"type": "grid"
-			},
-			{
-				"description": "The threat category associated to this indicator by the source vendor. For example, Phishing, Command \\u0026 Control, TOR, etc.",
-				"name": "Threat Types",
-				"type": "grid"
-			},
-			{
-				"description": "The original score/severity provided by the source without DBot translation.",
-				"name": "Source Original Severity",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Signature Original Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Admin Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "IP Address",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "DNS Records",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Street Address",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Certificate Validation Checks",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Is Malware Family",
-				"type": "boolean"
-			},
-			{
-				"description": "",
-				"name": "Country Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "CVSS Version",
-				"type": "number"
-			},
-			{
-				"description": "",
-				"name": "Published",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "Assigned user",
-				"type": "user"
-			},
-			{
-				"description": "",
-				"name": "Serial Number",
-				"type": "shortText"
-			},
-			{
-				"description": "Alternative names used to identify this object",
-				"name": "STIX Aliases",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "imphash",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Vulnerable Products",
-				"type": "grid"
-			},
-			{
-				"description": "The type of entity that this Identity describes, e.g., an individual or organization.",
-				"name": "Identity class",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "Department",
-				"name": "Department",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Subject",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Operating System Version",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Certificates",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Domains",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Version",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Signature Internal Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "ASN",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Samples",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Name Servers",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Tags",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "STIX Malware Types",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Description",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "Domain Referring Subnets",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "AS Owner",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "SHA512",
-				"type": "shortText"
-			},
-			{
-				"description": "The list of Kill Chain Phases for which this object is used.",
-				"name": "Kill Chain Phases",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "CVSS3",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "DHCP Server",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Organization Type",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Threat Actor Types",
-				"type": "multiSelect"
-			},
-			{
-				"description": "TLP is a set of designations used to ensure that sensitive information is shared with the appropriate audience. It employs four colors to indicate expected sharing boundaries to be applied by the recipient(s).",
-				"name": "Traffic Light Protocol",
-				"type": "singleSelect"
-			},
-			{
-				"description": "Certificate in PEM format.",
-				"name": "PEM",
-				"type": "longText"
-			},
-			{
-				"description": "",
-				"name": "Detections",
-				"type": "grid"
-			},
-			{
-				"description": "Used to display rank from different sources",
-				"name": "Rank",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Community Notes",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "STIX Resource Level",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Vendor",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Processor",
-				"type": "number"
-			},
-			{
-				"description": "The first time the indicator was seen by the source vendor.",
-				"name": "First Seen By Source",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "Goals",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "Specifies the Common Platform Enumeration (CPE) entry for the software, if available. The value for this property MUST be a CPE v2.3 entry from the official NVD CPE Dictionary",
-				"name": "CPE",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Region",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "SHA256",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "STIX Sophistication",
-				"type": "multiSelect"
-			},
-			{
-				"description": "A list of STIX IDs referenced in the report.",
-				"name": "Report Object References",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "X.509 v3 Extensions",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Internal",
-				"type": "boolean"
-			},
-			{
-				"description": "",
-				"name": "Validity Not Before",
-				"type": "date"
-			},
-			{
-				"description": "",
-				"name": "Account Type",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Secondary Motivations",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Key Value",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Is Processed",
-				"type": "boolean"
-			},
-			{
-				"description": "",
-				"name": "Email",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Targets",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Objective",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Name",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Signature Algorithm",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Blocked",
-				"type": "boolean"
-			},
-			{
-				"description": "",
-				"name": "Associated File Names",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Cost Center Code",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Leadership",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Primary Motivation",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Category",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Registrant Phone",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Registrar Abuse Country",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Certificate Names",
-				"type": "longText"
-			},
-			{
-				"description": "",
-				"name": "STIX Secondary Motivations",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "BIOS Version",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Admin Email",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "User ID",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Personal Email",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "CVSS Vector",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Public Key",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Report type",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Location",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "File Extension",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Domain Referring IPs",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Download URL",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "File Type",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Admin Country",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Entry ID",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "CVE Description",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Geo Country",
-				"type": "shortText"
-			},
-			{
-				"description": "Subject Distinguished Name",
-				"name": "Subject DN",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Sophistication",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Office365Required",
-				"type": "boolean"
-			},
-			{
-				"description": "",
-				"name": "Groups",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "Org Unit",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Office365ExpressRoute",
-				"type": "boolean"
-			},
-			{
-				"description": "",
-				"name": "Publications",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Certificate Signature",
-				"type": "grid"
-			},
-			{
-				"description": "",
-				"name": "Malware types",
-				"type": "multiSelect"
-			},
-			{
-				"description": "",
-				"name": "Updated Date",
-				"type": "date"
-			},
-			{
-				"description": "Surname",
-				"name": "Surname",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "CVSS",
-				"type": "shortText"
-			},
-			{
-				"description": "Issuer Distinguished Name",
-				"name": "Issuer DN",
-				"type": "shortText"
-			},
-			{
-				"description": "Whether the indicator is quarantined or isolated",
-				"name": "Quarantined",
-				"type": "boolean"
-			},
-			{
-				"description": "",
-				"name": "STIX Description",
-				"type": "markdown"
-			},
-			{
-				"description": "",
-				"name": "Signature Authentihash",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Signed",
-				"type": "boolean"
-			},
-			{
-				"description": "",
-				"name": "Manager Email Address",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Hostname",
-				"type": "shortText"
-			},
-			{
-				"description": "Title",
-				"name": "Title",
-				"type": "shortText"
-			},
-			{
-				"description": "",
-				"name": "Username",
+				"name": "Office365Category",
 				"type": "shortText"
 			},
 			{
@@ -2904,38 +1914,33 @@
 			},
 			{
 				"description": "",
-				"name": "Job Function",
+				"name": "Operating System Version",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Registrar Abuse Network",
-				"type": "shortText"
+				"name": "X.509 v3 Extensions",
+				"type": "grid"
 			},
 			{
 				"description": "",
-				"name": "Action",
+				"name": "Geo Country",
 				"type": "shortText"
 			},
 			{
-				"description": "",
-				"name": "Mitre Tactics",
-				"type": "shortText"
+				"description": "The threat category associated to this indicator by the source vendor. For example, Phishing, Command \\u0026 Control, TOR, etc.",
+				"name": "Threat Types",
+				"type": "grid"
 			},
 			{
 				"description": "",
-				"name": "Country Code Number",
-				"type": "shortText"
+				"name": "Processor",
+				"type": "number"
 			},
 			{
-				"description": "",
-				"name": "Operating System Refs",
-				"type": "tagsSelect"
-			},
-			{
-				"description": "",
-				"name": "Signature File Version",
-				"type": "shortText"
+				"description": "The list of Kill Chain Phases for which this object is used.",
+				"name": "Kill Chain Phases",
+				"type": "multiSelect"
 			},
 			{
 				"description": "",
@@ -2944,7 +1949,107 @@
 			},
 			{
 				"description": "",
-				"name": "Org Level 2",
+				"name": "Registrar Abuse Country",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Personal Email",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Groups",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "Primary Motivation",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Implementation Languages",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "STIX Primary Motivation.",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Objective",
+				"type": "shortText"
+			},
+			{
+				"description": "Total number of engines that checked the indicator",
+				"name": "Detection Engines",
+				"type": "number"
+			},
+			{
+				"description": "Date and time when the indicator was last seen in the organization.",
+				"name": "Organization Last Seen",
+				"type": "date"
+			},
+			{
+				"description": "Issuer Distinguished Name",
+				"name": "Issuer DN",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "CVSS3",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Number of subkeys",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "Key Value",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Country Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Size",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "Registrar Abuse Email",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "STIX Is Malware Family",
+				"type": "boolean"
+			},
+			{
+				"description": "",
+				"name": "Goals",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "SHA256 fingerprint of Subject Public Key Info",
+				"name": "SPKI SHA256",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "OS Version",
+				"type": "shortText"
+			},
+			{
+				"description": "Subject Distinguished Name",
+				"name": "Subject DN",
 				"type": "shortText"
 			},
 			{
@@ -2954,13 +2059,508 @@
 			},
 			{
 				"description": "",
-				"name": "Zip Code",
+				"name": "Category",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "CVSS Table",
+				"name": "Expiration Date",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "Feed Related Indicators",
 				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Infrastructure Types",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Country Code Number",
+				"type": "shortText"
+			},
+			{
+				"description": "Used to display rank from different sources",
+				"name": "Rank",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Port",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "File Extension",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Signature Description",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Detections",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Leadership",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Hostname",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Name Field",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Secondary Motivations",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Behavior",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Certificate Validation Checks",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "Manager Name",
+				"name": "Manager Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Assigned user",
+				"type": "user"
+			},
+			{
+				"description": "",
+				"name": "DHCP Server",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Tool Types",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Community Notes",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Processors",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "Threat Actor Types",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Short Description",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "Display Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Associated File Names",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Indicator Identification",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Vulnerable Products",
+				"type": "grid"
+			},
+			{
+				"description": "Industry sector is an open vocabulary that describes industrial and commercial sectors.",
+				"name": "Industry sectors",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Account Type",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Targets",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Specifies the Software Identification (SWID) tags entry for the software",
+				"name": "SWID",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "Org Unit",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Registrant Phone",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Job Function",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Subdomains",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Signature File Version",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Malware Family",
+				"type": "multiSelect"
+			},
+			{
+				"description": "The type of entity that this Identity describes, e.g., an individual or organization.",
+				"name": "Identity class",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Registrant Country",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Certificate Signature",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Office365ExpressRoute",
+				"type": "boolean"
+			},
+			{
+				"description": "A list of STIX IDs referenced in the report.",
+				"name": "Report Object References",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Confidence",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Entry ID",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Vendor",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Author",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Updated Date",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "CVSS Score",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "Internal",
+				"type": "boolean"
+			},
+			{
+				"description": "",
+				"name": "Blocked",
+				"type": "boolean"
+			},
+			{
+				"description": "",
+				"name": "Signed",
+				"type": "boolean"
+			},
+			{
+				"description": "",
+				"name": "Publications",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "imphash",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "SHA512",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Email",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Org Level 1",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IP Address",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "BIOS Version",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Resource Level",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Admin Phone",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Registrar Abuse Network",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Country Code",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "STIX Malware Types",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Alternative names used to identify this object",
+				"name": "Aliases",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "Department",
+				"name": "Department",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "State",
+				"type": "shortText"
+			},
+			{
+				"description": "Specifies the date on which the certificate validity period begins.",
+				"name": "Validity Not Before",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "STIX Secondary Motivations",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Issuer",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Action",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Domains",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Device Model",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Job Family",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Subject",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Mobile Phone",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "SHA256",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "SHA1",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Manager Email Address",
+				"type": "shortText"
+			},
+			{
+				"description": "The list of Kill Chain Phases for which this object is used.",
+				"name": "STIX Kill Chain Phases",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Certificate in PEM format.",
+				"name": "PEM",
+				"type": "longText"
+			},
+			{
+				"description": "Specifies the date on which the certificate validity period ends.",
+				"name": "Validity Not After",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "Query Language",
+				"type": "shortText"
+			},
+			{
+				"description": "The number of times the indicator is detected in the organization.",
+				"name": "Organization Prevalence",
+				"type": "number"
+			},
+			{
+				"description": "The specific service of a feed integration from which an indicator was ingested.",
+				"name": "Service",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "STIX Tool Version",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Version",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Definition",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "CVSS Version",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "STIX Roles",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Whether to force user synchronization.",
+				"name": "Force Sync",
+				"type": "boolean"
+			},
+			{
+				"description": "",
+				"name": "Mitre Tactics",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Registrar Abuse Address",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Registrant Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Domain Referring IPs",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Public Key",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Office365Required",
+				"type": "boolean"
+			},
+			{
+				"description": "",
+				"name": "STIX Tool Types",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Assigned role",
+				"type": "role"
+			},
+			{
+				"description": "",
+				"name": "Admin Country",
+				"type": "shortText"
 			},
 			{
 				"description": "",
@@ -2969,12 +2569,197 @@
 			},
 			{
 				"description": "",
-				"name": "Domain Name",
+				"name": "Whois Records",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Operating System",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Mitre ID",
+				"name": "Commands",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "SSDeep",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Reports",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Signature Original Name",
+				"type": "shortText"
+			},
+			{
+				"description": "City",
+				"name": "City",
+				"type": "shortText"
+			},
+			{
+				"description": "The last time the indicator was seen by the Source vendor.",
+				"name": "Last Seen By Source",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "Location",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Geo Location",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Tags",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Samples",
+				"type": "grid"
+			},
+			{
+				"description": "TLP is a set of designations used to ensure that sensitive information is shared with the appropriate audience. It employs four colors to indicate expected sharing boundaries to be applied by the recipient(s).",
+				"name": "Traffic Light Protocol",
+				"type": "singleSelect"
+			},
+			{
+				"description": "",
+				"name": "Campaign",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Domain Referring Subnets",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Work Phone",
+				"type": "shortText"
+			},
+			{
+				"description": "An identifier uniquely identifies a STIX Object and MAY do so in a deterministic way",
+				"name": "STIX ID",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Org Level 2",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Name Servers",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "STIX Sophistication",
+				"type": "multiSelect"
+			},
+			{
+				"description": "Job Code",
+				"name": "Job Code",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Applications",
+				"type": "markdown"
+			},
+			{
+				"description": "The original score/severity provided by the source without DBot translation.",
+				"name": "Source Original Severity",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Certificate Names",
+				"type": "longText"
+			},
+			{
+				"description": "",
+				"name": "Organizational Unit (OU)",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Creation Date",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "Certificates",
+				"type": "grid"
+			},
+			{
+				"description": "The source that reported this indicator. Can be a feed, an incident, or users.",
+				"name": "Reported By",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "Given Name",
+				"name": "Given Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Operating System Refs",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Domain Status",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "STIX Description",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "STIX Goals",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Region",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Memory",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "Signature Copyright",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Cost Center Code",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Path",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Registrant Email",
 				"type": "shortText"
 			},
 			{
@@ -2984,8 +2769,148 @@
 			},
 			{
 				"description": "",
-				"name": "Assigned role",
-				"type": "role"
+				"name": "CVSS Table",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Subject Alternative Names",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Is Malware Family",
+				"type": "boolean"
+			},
+			{
+				"description": "",
+				"name": "User ID",
+				"type": "shortText"
+			},
+			{
+				"description": "Alternative names used to identify this object",
+				"name": "STIX Aliases",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Published",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "Source Priority",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "Description",
+				"type": "markdown"
+			},
+			{
+				"description": "",
+				"name": "Domain Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Actor",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Street Address",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "CVSS",
+				"type": "shortText"
+			},
+			{
+				"description": "Known associations to other pieces of Threat Data.",
+				"name": "Associations",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "Specifies the languages supported by the software. The value of each list member MUST be a language code conformant to - RFC5646.",
+				"name": "Languages",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Username",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Admin Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "CVE Modified",
+				"type": "date"
+			},
+			{
+				"description": "Date and time when the indicator was first seen in the organization.",
+				"name": "Organization First Seen",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "Email Address",
+				"type": "shortText"
+			},
+			{
+				"description": "The number of times the indicator is detected across all organizations.",
+				"name": "Global Prevalence",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "DNS Records",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "File Type",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Sophistication",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Signature Authentihash",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Signature Algorithm",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Registrar Abuse Phone",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Domain IDN Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "STIX Resource Level",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Mitre ID",
+				"type": "shortText"
 			},
 			{
 				"description": "",
@@ -2994,28 +2919,148 @@
 			},
 			{
 				"description": "",
-				"name": "Mobile Phone",
+				"name": "Download URL",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Device Model",
+				"name": "Organization Type",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Registrant Country",
+				"name": "Location Region",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "SSDeep",
+				"name": "ASN",
 				"type": "shortText"
 			},
 			{
 				"description": "",
-				"name": "Memory",
-				"type": "number"
+				"name": "Admin Email",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "CVE Description",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Is Processed",
+				"type": "boolean"
+			},
+			{
+				"description": "The first time the indicator was seen by the source vendor.",
+				"name": "First Seen By Source",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "Registrar Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "STIX Threat Actor Types",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "MD5",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Vulnerabilities",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Paths",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "Product",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Architecture",
+				"type": "tagsSelect"
+			},
+			{
+				"description": "",
+				"name": "Signature Internal Name",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Report type",
+				"type": "shortText"
+			},
+			{
+				"description": "Whether the indicator is quarantined or isolated",
+				"name": "Quarantined",
+				"type": "boolean"
+			},
+			{
+				"description": "",
+				"name": "Serial Number",
+				"type": "shortText"
+			},
+			{
+				"description": "Surname",
+				"name": "Surname",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Zip Code",
+				"type": "shortText"
+			},
+			{
+				"description": "Specifies the Common Platform Enumeration (CPE) entry for the software, if available. The value for this property MUST be a CPE v2.3 entry from the official NVD CPE Dictionary",
+				"name": "CPE",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Malware types",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "Extension",
+				"type": "grid"
+			},
+			{
+				"description": "",
+				"name": "CVSS Vector",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "DNS",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "Org Level 3",
+				"type": "shortText"
+			},
+			{
+				"description": "Whether the employee is an acquisition hire.",
+				"name": "Acquisition Hire",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "AS Owner",
+				"type": "shortText"
 			}
 		],
 		"integration": null,
@@ -3024,56 +3069,41 @@
 				"deprecated": false,
 				"description": "",
 				"fromversion": "6.10.0",
-				"id": "Indicator_Feed_layout_rule",
-				"layout_id": "Indicator Feed",
-				"name": "Indicator Feed Layout Rule",
+				"id": "Vulnerability_layout_rule",
+				"layout_id": "Vulnerability",
+				"name": "Vulnerability Layout Rule",
 				"toversion": ""
 			},
 			{
 				"deprecated": false,
 				"description": "",
 				"fromversion": "6.10.0",
-				"id": "Vulnerability_layout_rule",
-				"layout_id": "Vulnerability",
-				"name": "Vulnerability Layout Rule",
+				"id": "Indicator_Feed_layout_rule",
+				"layout_id": "Indicator Feed",
+				"name": "Indicator Feed Layout Rule",
 				"toversion": ""
 			}
 		],
 		"layoutscontainer": [
 			{
-				"description": "CVE Indicator Layout",
+				"description": "Host indicator layout",
 				"group": "indicator",
-				"name": "CVE Indicator"
+				"name": "Host Indicator"
 			},
 			{
-				"description": "Report Indicator Layout",
+				"description": "Tactic Indicator Layout",
 				"group": "indicator",
-				"name": "Report"
+				"name": "Tactic Layout"
+			},
+			{
+				"description": "Course of Action Indicator Layout",
+				"group": "indicator",
+				"name": "Course of Action"
 			},
 			{
 				"description": "Malware Indicator Layout",
 				"group": "indicator",
 				"name": "Malware Indicator"
-			},
-			{
-				"description": "",
-				"group": "incident",
-				"name": "Vulnerability Incident"
-			},
-			{
-				"description": "File Indicator Layout",
-				"group": "indicator",
-				"name": "File Indicator"
-			},
-			{
-				"description": "ASN Indicator Layout",
-				"group": "indicator",
-				"name": "ASN"
-			},
-			{
-				"description": "Campaign Indicator Layout",
-				"group": "indicator",
-				"name": "Campaign"
 			},
 			{
 				"description": "Software Indicator Layout",
@@ -3086,69 +3116,9 @@
 				"name": "Intrusion Set"
 			},
 			{
-				"description": "Threat Actor Indicator Layout",
-				"group": "indicator",
-				"name": "Threat Actor"
-			},
-			{
-				"description": "CVE Indicator Layout",
-				"group": "indicator",
-				"name": "X509 Certificate"
-			},
-			{
 				"description": "Registry Key Indicator Layout",
 				"group": "indicator",
 				"name": "Registry Key Indicator"
-			},
-			{
-				"description": "Email Indicator Layout",
-				"group": "indicator",
-				"name": "Email Indicator"
-			},
-			{
-				"description": "Host indicator layout",
-				"group": "indicator",
-				"name": "Host Indicator"
-			},
-			{
-				"description": "Infrastructure Indicator Layout",
-				"group": "indicator",
-				"name": "Infrastructure"
-			},
-			{
-				"description": "Course of Action Indicator Layout",
-				"group": "indicator",
-				"name": "Course of Action"
-			},
-			{
-				"description": "Location indicator layout",
-				"group": "indicator",
-				"name": "Location"
-			},
-			{
-				"description": "",
-				"group": "incident",
-				"name": "Indicator Feed Incident"
-			},
-			{
-				"description": "Mutex indicator layout",
-				"group": "indicator",
-				"name": "Mutex"
-			},
-			{
-				"description": "URL Indicator Layout",
-				"group": "indicator",
-				"name": "URL Indicator"
-			},
-			{
-				"description": "Identity indicator layout",
-				"group": "indicator",
-				"name": "Identity"
-			},
-			{
-				"description": "Attack Pattern Indicator Layout",
-				"group": "indicator",
-				"name": "Attack Pattern"
 			},
 			{
 				"description": "Domain Indicator Layout",
@@ -3156,9 +3126,39 @@
 				"name": "Domain Indicator"
 			},
 			{
+				"description": "Infrastructure Indicator Layout",
+				"group": "indicator",
+				"name": "Infrastructure"
+			},
+			{
+				"description": "IP Indicator Layout",
+				"group": "indicator",
+				"name": "IP Indicator"
+			},
+			{
 				"description": "Tool Indicator Layout",
 				"group": "indicator",
 				"name": "Tool Indicator"
+			},
+			{
+				"description": "Email Indicator Layout",
+				"group": "indicator",
+				"name": "Email Indicator"
+			},
+			{
+				"description": "File Indicator Layout",
+				"group": "indicator",
+				"name": "File Indicator"
+			},
+			{
+				"description": "Campaign Indicator Layout",
+				"group": "indicator",
+				"name": "Campaign"
+			},
+			{
+				"description": "",
+				"group": "incident",
+				"name": "Indicator Feed Incident"
 			},
 			{
 				"description": "Account Indicator Layout",
@@ -3166,14 +3166,59 @@
 				"name": "Account Indicator"
 			},
 			{
-				"description": "",
+				"description": "Location indicator layout",
 				"group": "indicator",
-				"name": "Malware"
+				"name": "Location"
 			},
 			{
-				"description": "IP Indicator Layout",
+				"description": "Identity indicator layout",
 				"group": "indicator",
-				"name": "IP Indicator"
+				"name": "Identity"
+			},
+			{
+				"description": "Threat Actor Indicator Layout",
+				"group": "indicator",
+				"name": "Threat Actor"
+			},
+			{
+				"description": "URL Indicator Layout",
+				"group": "indicator",
+				"name": "URL Indicator"
+			},
+			{
+				"description": "Mutex indicator layout",
+				"group": "indicator",
+				"name": "Mutex"
+			},
+			{
+				"description": "CVE Indicator Layout",
+				"group": "indicator",
+				"name": "CVE Indicator"
+			},
+			{
+				"description": "Attack Pattern Indicator Layout",
+				"group": "indicator",
+				"name": "Attack Pattern"
+			},
+			{
+				"description": "",
+				"group": "incident",
+				"name": "Vulnerability Incident"
+			},
+			{
+				"description": "Report Indicator Layout",
+				"group": "indicator",
+				"name": "Report"
+			},
+			{
+				"description": "ASN Indicator Layout",
+				"group": "indicator",
+				"name": "ASN"
+			},
+			{
+				"description": "CVE Indicator Layout",
+				"group": "indicator",
+				"name": "X509 Certificate"
 			}
 		],
 		"list": null,
@@ -3181,25 +3226,8 @@
 		"report": null,
 		"reputation": [
 			{
-				"details": "Tool",
-				"enhancementScriptNames": [],
-				"reputationScriptName": ""
-			},
-			{
-				"details": "Host",
-				"enhancementScriptNames": [],
-				"reputationScriptName": ""
-			},
-			{
-				"details": "ASN",
+				"details": "Tactic",
 				"enhancementScriptNames": null,
-				"reputationScriptName": ""
-			},
-			{
-				"details": "File SHA-256",
-				"enhancementScriptNames": [
-					"FileReputation"
-				],
 				"reputationScriptName": ""
 			},
 			{
@@ -3208,17 +3236,17 @@
 				"reputationScriptName": ""
 			},
 			{
-				"details": "Infrastructure",
+				"details": "Attack Pattern",
 				"enhancementScriptNames": null,
 				"reputationScriptName": ""
 			},
 			{
-				"details": "ssdeep",
-				"enhancementScriptNames": [],
-				"reputationScriptName": ""
+				"details": "Onion Address",
+				"enhancementScriptNames": null,
+				"reputationScriptName": "OnionURLReputation"
 			},
 			{
-				"details": "Attack Pattern",
+				"details": "ssdeep",
 				"enhancementScriptNames": [],
 				"reputationScriptName": ""
 			},
@@ -3230,17 +3258,12 @@
 				"reputationScriptName": ""
 			},
 			{
-				"details": "X509 Certificate",
-				"enhancementScriptNames": null,
-				"reputationScriptName": ""
-			},
-			{
 				"details": "DomainGlob",
 				"enhancementScriptNames": [],
 				"reputationScriptName": ""
 			},
 			{
-				"details": "Identity",
+				"details": "Campaign",
 				"enhancementScriptNames": null,
 				"reputationScriptName": ""
 			},
@@ -3257,24 +3280,29 @@
 				"reputationScriptName": ""
 			},
 			{
-				"details": "Software",
+				"details": "Infrastructure",
 				"enhancementScriptNames": null,
 				"reputationScriptName": ""
 			},
 			{
-				"details": "Onion Address",
-				"enhancementScriptNames": null,
-				"reputationScriptName": "OnionURLReputation"
+				"details": "Registry Key",
+				"enhancementScriptNames": [],
+				"reputationScriptName": ""
 			},
 			{
-				"details": "File",
+				"details": "Tool",
+				"enhancementScriptNames": [],
+				"reputationScriptName": ""
+			},
+			{
+				"details": "File SHA-256",
 				"enhancementScriptNames": [
 					"FileReputation"
 				],
 				"reputationScriptName": ""
 			},
 			{
-				"details": "IPv6CIDR",
+				"details": "Host",
 				"enhancementScriptNames": [],
 				"reputationScriptName": ""
 			},
@@ -3284,28 +3312,6 @@
 				"reputationScriptName": ""
 			},
 			{
-				"details": "URL",
-				"enhancementScriptNames": [
-					"URLReputation"
-				],
-				"reputationScriptName": ""
-			},
-			{
-				"details": "Campaign",
-				"enhancementScriptNames": null,
-				"reputationScriptName": ""
-			},
-			{
-				"details": "Intrusion Set",
-				"enhancementScriptNames": null,
-				"reputationScriptName": ""
-			},
-			{
-				"details": "CVE",
-				"enhancementScriptNames": null,
-				"reputationScriptName": "cveReputationV2"
-			},
-			{
 				"details": "File MD5",
 				"enhancementScriptNames": [
 					"FileReputation"
@@ -3313,40 +3319,8 @@
 				"reputationScriptName": ""
 			},
 			{
-				"details": "IPv6",
-				"enhancementScriptNames": [],
-				"reputationScriptName": ""
-			},
-			{
-				"details": "Course of Action",
-				"enhancementScriptNames": null,
-				"reputationScriptName": ""
-			},
-			{
-				"details": "Account",
-				"enhancementScriptNames": [],
-				"reputationScriptName": ""
-			},
-			{
 				"details": "Threat Actor",
 				"enhancementScriptNames": [],
-				"reputationScriptName": ""
-			},
-			{
-				"details": "Mutex",
-				"enhancementScriptNames": null,
-				"reputationScriptName": ""
-			},
-			{
-				"details": "Domain",
-				"enhancementScriptNames": [
-					"DomainReputation"
-				],
-				"reputationScriptName": ""
-			},
-			{
-				"details": "Location",
-				"enhancementScriptNames": null,
 				"reputationScriptName": ""
 			},
 			{
@@ -3357,7 +3331,83 @@
 				"reputationScriptName": ""
 			},
 			{
-				"details": "Registry Key",
+				"details": "X509 Certificate",
+				"enhancementScriptNames": null,
+				"reputationScriptName": ""
+			},
+			{
+				"details": "Location",
+				"enhancementScriptNames": null,
+				"reputationScriptName": ""
+			},
+			{
+				"details": "CVE",
+				"enhancementScriptNames": null,
+				"reputationScriptName": "cveReputationV2"
+			},
+			{
+				"details": "Course of Action",
+				"enhancementScriptNames": null,
+				"reputationScriptName": ""
+			},
+			{
+				"details": "IPv6",
+				"enhancementScriptNames": [],
+				"reputationScriptName": ""
+			},
+			{
+				"details": "Account",
+				"enhancementScriptNames": [],
+				"reputationScriptName": ""
+			},
+			{
+				"details": "Domain",
+				"enhancementScriptNames": [
+					"DomainReputation"
+				],
+				"reputationScriptName": ""
+			},
+			{
+				"details": "File",
+				"enhancementScriptNames": [
+					"FileReputation"
+				],
+				"reputationScriptName": ""
+			},
+			{
+				"details": "Mutex",
+				"enhancementScriptNames": null,
+				"reputationScriptName": ""
+			},
+			{
+				"details": "URL",
+				"enhancementScriptNames": [
+					"URLReputation"
+				],
+				"reputationScriptName": ""
+			},
+			{
+				"details": "Identity",
+				"enhancementScriptNames": null,
+				"reputationScriptName": ""
+			},
+			{
+				"details": "ASN",
+				"enhancementScriptNames": null,
+				"reputationScriptName": ""
+			},
+			{
+				"details": "Software",
+				"enhancementScriptNames": null,
+				"reputationScriptName": ""
+			},
+			{
+				"details": "Intrusion Set",
+				"enhancementScriptNames": null,
+				"reputationScriptName": ""
+			},
+			{
+				"details": "IPv6CIDR",
 				"enhancementScriptNames": [],
 				"reputationScriptName": ""
 			}
@@ -3366,7 +3416,7 @@
 		"wizard": null
 	},
 	"created": "2020-07-26T20:01:30Z",
-	"currentVersion": "3.5.13",
+	"currentVersion": "3.8.2",
 	"defaultDataSource": {
 		"id": "",
 		"name": ""
@@ -3377,35 +3427,35 @@
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.3.51",
+			"minVersion": "1.3.55",
 			"name": "AWS - GuardDuty"
 		},
 		"AWS-SecurityHub": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.3.34",
+			"minVersion": "1.3.38",
 			"name": "AWS - Security Hub"
 		},
 		"AccessInvestigation": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.2.9",
+			"minVersion": "1.2.10",
 			"name": "Access Investigation"
 		},
 		"AzureSentinel": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.5.46",
+			"minVersion": "1.5.56",
 			"name": "Microsoft Sentinel"
 		},
 		"Base": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": true,
-			"minVersion": "1.34.34",
+			"minVersion": "1.39.5",
 			"name": "Base"
 		},
 		"BruteForce": {
@@ -3419,168 +3469,189 @@
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "4.0.1",
+			"minVersion": "4.0.6",
 			"name": "Carbon Black Endpoint Standard"
 		},
 		"Carbon_Black_Enterprise_Response": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.1.47",
+			"minVersion": "2.1.49",
 			"name": "Carbon Black Enterprise Response"
 		},
 		"CommonScripts": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": true,
-			"minVersion": "1.15.53",
+			"minVersion": "1.19.0",
 			"name": "Common Scripts"
 		},
 		"CoreAlertFields": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.0.36",
+			"minVersion": "1.0.38",
 			"name": "Core Alert Fields"
 		},
 		"Cyberint": {
 			"author": "Cyberint",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.1.3",
+			"minVersion": "1.1.4",
 			"name": "Cyberint"
 		},
 		"Exabeam": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.4.0",
+			"minVersion": "2.4.2",
 			"name": "Exabeam Advanced Analytics"
+		},
+		"ExabeamSecurityOperationsPlatform": {
+			"author": "Cortex XSIAM",
+			"certification": "certified",
+			"mandatory": false,
+			"minVersion": "1.1.1",
+			"name": "Exabeam Security Operations Platform"
 		},
 		"ExtraHop": {
 			"author": "ExtraHop",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.2.7",
+			"minVersion": "2.2.10",
 			"name": "ExtraHop Reveal(x)"
 		},
 		"FireEyeEX": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.0.29",
+			"minVersion": "2.0.31",
 			"name": "FireEye Email Security (EX)"
 		},
 		"FireEyeHX": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.3.12",
+			"minVersion": "2.3.16",
 			"name": "FireEye HX"
 		},
 		"FireEyeNX": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.1.33",
+			"minVersion": "1.1.35",
 			"name": "FireEye Network Security (NX)"
 		},
 		"FraudWatch": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.0.12",
+			"minVersion": "1.0.13",
 			"name": "FraudWatch PhishPortal"
 		},
 		"FreshworksFreshservice": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.0.26",
+			"minVersion": "1.0.27",
 			"name": "Freshworks Freshservice"
 		},
 		"GDPR": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.0.9",
+			"minVersion": "1.0.10",
 			"name": "GDPR"
 		},
 		"GuardiCore": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.0.12",
+			"minVersion": "2.0.13",
 			"name": "GuardiCore"
+		},
+		"IBMResilientSystems": {
+			"author": "Cortex XSIAM",
+			"certification": "certified",
+			"mandatory": false,
+			"minVersion": "1.2.0",
+			"name": "IBM Security QRadar SOAR"
 		},
 		"ImpossibleTraveler": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.2.12",
+			"minVersion": "1.2.13",
 			"name": "Impossible Traveler"
 		},
 		"IntSight": {
 			"author": "Rapid7",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "3.1.4",
+			"minVersion": "3.1.5",
 			"name": "Rapid7 - Threat Command (IntSights)"
 		},
 		"LogRhythmRest": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.0.22",
+			"minVersion": "2.0.23",
 			"name": "LogRhythm"
 		},
 		"Malware": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.4.13",
+			"minVersion": "1.4.14",
 			"name": "Malware Core"
 		},
 		"MicrosoftCloudAppSecurity": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.2.4",
+			"minVersion": "2.2.9",
 			"name": "Microsoft Defender for Cloud Apps"
 		},
 		"MicrosoftDefenderAdvancedThreatProtection": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.16.36",
+			"minVersion": "1.18.1",
 			"name": "Microsoft Defender for Endpoint"
 		},
 		"MicrosoftGraphSecurity": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.2.18",
+			"minVersion": "2.2.21",
 			"name": "Microsoft Graph Security"
+		},
+		"Netskope": {
+			"author": "Cortex XSIAM",
+			"certification": "certified",
+			"mandatory": false,
+			"minVersion": "4.0.3",
+			"name": "Netskope"
 		},
 		"NutanixHypervisor": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.0.23",
+			"minVersion": "1.0.25",
 			"name": "Nutanix Hypervisor"
 		},
 		"OpsGenie": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.0.24",
+			"minVersion": "2.0.25",
 			"name": "OpsGenie"
 		},
 		"Palo_Alto_Networks_Enterprise_DLP": {
 			"author": "Palo Alto Networks Enterprise DLP",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.0.10",
+			"minVersion": "2.0.14",
 			"name": "Enterprise DLP by Palo Alto Networks"
 		},
 		"PasswordResetViaChatbot": {
@@ -3594,14 +3665,14 @@
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.4.9",
+			"minVersion": "2.4.10",
 			"name": "PCAP Analysis"
 		},
 		"Phishing": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "3.6.22",
+			"minVersion": "3.6.29",
 			"name": "Phishing"
 		},
 		"PortScan": {
@@ -3615,111 +3686,111 @@
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "4.3.9",
+			"minVersion": "4.3.17",
 			"name": "Prisma Cloud by Palo Alto Networks"
 		},
 		"PrismaCloudCompute": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.7.3",
+			"minVersion": "1.7.9",
 			"name": "Prisma Cloud Compute by Palo Alto Networks"
 		},
 		"PrismaSaasSecurity": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.0.30",
+			"minVersion": "2.0.34",
 			"name": "SaaS Security by Palo Alto Networks"
 		},
 		"QRadar": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.5.3",
+			"minVersion": "2.5.9",
 			"name": "IBM QRadar"
 		},
 		"RSANetWitness_v11_1": {
 			"author": "Netwitness",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "3.2.4",
+			"minVersion": "3.2.5",
 			"name": "RSA NetWitness"
 		},
 		"Respond": {
 			"author": "Mandiant",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.0.8",
+			"minVersion": "1.0.9",
 			"name": "Mandiant Automated Defense"
 		},
 		"SkyhighSecurity": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.0.15",
+			"minVersion": "1.0.16",
 			"name": "Skyhigh Security SSE"
 		},
 		"SplunkPy": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "3.1.37",
+			"minVersion": "3.1.49",
 			"name": "Splunk"
 		},
 		"SymantecDLP": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.1.3",
+			"minVersion": "2.1.4",
 			"name": "Symantec Data Loss Prevention"
 		},
 		"SysAid": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.0.15",
+			"minVersion": "1.0.16",
 			"name": "SysAid"
 		},
 		"TaniumThreatResponse": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "2.2.15",
+			"minVersion": "2.2.18",
 			"name": "Tanium Threat Response"
 		},
 		"ThreatConnect": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "3.1.8",
+			"minVersion": "3.1.9",
 			"name": "ThreatConnect"
 		},
 		"TrendMicroCAS": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.1.6",
+			"minVersion": "1.1.9",
 			"name": "Trend Micro Cloud App Security"
 		},
 		"Tripwire": {
 			"author": "Cortex XSIAM",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.0.19",
+			"minVersion": "1.0.20",
 			"name": "Tripwire"
 		},
 		"Vectra_AI": {
 			"author": "Vectra TME Integrations",
 			"certification": "certified",
 			"mandatory": false,
-			"minVersion": "1.2.13",
+			"minVersion": "2.0.2",
 			"name": "Vectra AI"
 		}
 	},
 	"deprecated": false,
 	"description": "This Content Pack will get you up and running in no-time and provide you with the most commonly used incident \u0026 indicator fields and types.",
-	"downloads": 110719,
+	"downloads": 117178,
 	"eulaLink": "https://github.com/demisto/content/blob/master/LICENSE",
 	"fromServerVersion": "5.0.0",
 	"general": [
@@ -3753,7 +3824,11 @@
 		},
 		{
 			"imagePath": "content/packs/MicrosoftDefenderAdvancedThreatProtection/Microsoft365DefenderEventCollector_image.png",
-			"name": "Microsoft Defender for Endpoint Event Collector"
+			"name": "Microsoft Defender for Endpoint Alerts (Deprecated)"
+		},
+		{
+			"imagePath": "content/packs/AzureSentinel/AzureSentinel_image.png",
+			"name": "Microsoft Sentinel"
 		},
 		{
 			"imagePath": "content/packs/PrismaCloud/RedLock_image.png",
@@ -3766,10 +3841,6 @@
 		{
 			"imagePath": "content/packs/PrismaCloud/PrismaCloudIAM_image.png",
 			"name": "PrismaCloud IAM"
-		},
-		{
-			"imagePath": "content/packs/AzureSentinel/AzureSentinel_image.png",
-			"name": "Microsoft Sentinel"
 		},
 		{
 			"imagePath": "content/packs/MicrosoftCloudAppSecurity/MicrosoftCloudAppSecurity_image.png",
@@ -3872,6 +3943,10 @@
 			"name": "VMware Carbon Black Endpoint Standard (Deprecated)"
 		},
 		{
+			"imagePath": "content/packs/FireEyeEX/FireEyeEmailSecurity_image.png",
+			"name": "FireEye Email Security"
+		},
+		{
 			"imagePath": "content/packs/LogRhythmRest/LogRhythmRest_image.png",
 			"name": "LogRhythmRest"
 		},
@@ -3880,8 +3955,8 @@
 			"name": "LogRhythmRest v2"
 		},
 		{
-			"imagePath": "content/packs/FireEyeEX/FireEyeEmailSecurity_image.png",
-			"name": "FireEye Email Security"
+			"imagePath": "content/packs/Exabeam/Exabeam_image.png",
+			"name": "Exabeam Advanced Analytics"
 		},
 		{
 			"imagePath": "content/packs/IntSight/IntSights_image.png",
@@ -3892,8 +3967,20 @@
 			"name": "Rapid7 - Threat Command (IntSights)"
 		},
 		{
-			"imagePath": "content/packs/Exabeam/Exabeam_image.png",
-			"name": "Exabeam Advanced Analytics"
+			"imagePath": "content/packs/Netskope/NetskopeAPIv1_image.png",
+			"name": "Netskope (API v1)"
+		},
+		{
+			"imagePath": "content/packs/Netskope/netskope_api_v2_image.png",
+			"name": "Netskope (API v2)"
+		},
+		{
+			"imagePath": "content/packs/Netskope/Netskope_image.png",
+			"name": "Netskope (Deprecated)"
+		},
+		{
+			"imagePath": "content/packs/Netskope/NetskopeEventCollector_image.png",
+			"name": "Netskope Event Collector"
 		},
 		{
 			"imagePath": "content/packs/RSANetWitness_v11_1/RSANetWitnessv11.1_image.png",
@@ -3918,6 +4005,10 @@
 		{
 			"imagePath": "content/packs/SymantecDLP/SymantecDataLossPreventionv2_image.png",
 			"name": "Symantec Data Loss Prevention v2"
+		},
+		{
+			"imagePath": "content/packs/IBMResilientSystems/IBMResilientSystems_image.png",
+			"name": "IBM Security QRadar SOAR"
 		},
 		{
 			"imagePath": "content/packs/TrendMicroCAS/TrendMicroCloudAppSecurity_image.png",
@@ -3982,9 +4073,13 @@
 		{
 			"imagePath": "content/packs/SysAid/SysAid_image.png",
 			"name": "SysAid"
+		},
+		{
+			"imagePath": "content/packs/ExabeamSecurityOperationsPlatform/ExabeamSecOpsPlatform_image.png",
+			"name": "Exabeam Security Operations Platform"
 		}
 	],
-	"itemVersion": "3.5.13",
+	"itemVersion": "3.8.2",
 	"keywords": [],
 	"legacy": true,
 	"modules": [],
@@ -4000,7 +4095,7 @@
 	"rawKeywords": null,
 	"rawTags": null,
 	"rawUseCases": null,
-	"readme": "\n### Pack Contributors:\n\n---\n - Francisco Javier Fernández Jiménez\n\nContributions are welcome and appreciated. For more info, visit our [Contribution Guide](https://xsoar.pan.dev/docs/contributing/contributing).",
+	"readme": "\n### Pack Contributors:\n\n---\n - Francisco Javier Fernández Jiménez\n - Timothy Roberts\n\nContributions are welcome and appreciated. For more info, visit our [Contribution Guide](https://xsoar.pan.dev/docs/contributing/contributing).",
 	"searchRank": 10,
 	"serverMaxVersion": "",
 	"serverMinVersion": "5.0.0",
@@ -4013,9 +4108,9 @@
 		"Partner Spotlight"
 	],
 	"toServerVersion": "",
-	"updated": "2024-08-22T19:23:26Z",
+	"updated": "2024-12-31T12:56:30Z",
 	"useCases": [],
 	"version": -1,
-	"versionInfo": "1300648",
+	"versionInfo": "1900707",
 	"videos": []
 }
