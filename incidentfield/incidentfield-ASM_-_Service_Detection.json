@@ -97,7 +97,7 @@
 	"id": "incident_asmservicedetection",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.7.47",
+	"itemVersion": "1.7.65",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "ASM - Service Detection",
@@ -111,7 +111,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "ASM - Service Detection",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
