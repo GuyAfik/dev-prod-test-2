@@ -36,7 +36,7 @@
 	"id": "incident_prismacloudid",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "4.3.9",
+	"itemVersion": "4.3.17",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Prisma Cloud ID",
@@ -50,7 +50,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Prisma Cloud ID",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
