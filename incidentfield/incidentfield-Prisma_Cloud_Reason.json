@@ -36,7 +36,7 @@
 	"id": "incident_prismacloudreason",
 	"ipVersion": "",
 	"isReadOnly": true,
-	"itemVersion": "4.3.9",
+	"itemVersion": "4.3.17",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Prisma Cloud Reason",
@@ -50,7 +50,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Prisma Cloud Reason",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
