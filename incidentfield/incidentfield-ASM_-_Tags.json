@@ -68,7 +68,7 @@
 	"id": "incident_asmtags",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.7.47",
+	"itemVersion": "1.7.65",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "ASM - Tags",
