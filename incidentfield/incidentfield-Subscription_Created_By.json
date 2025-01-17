@@ -36,7 +36,7 @@
 	"id": "incident_subscriptioncreatedby",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "4.3.9",
+	"itemVersion": "4.3.17",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Subscription Created By",
@@ -50,7 +50,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Subscription Created By",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
