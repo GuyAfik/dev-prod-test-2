@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.8.0
-    itemVersion: 4.3.9
+    itemVersion: 4.3.17
     packID: PrismaCloud
     packName: Prisma Cloud by Palo Alto Networks
     packPropagationLabels:
@@ -12,8 +12,8 @@ contentitemexportablefields:
     toServerVersion: ""
 description: |-
   This playbook handles alerts related to dozens of Prisma Cloud public VM alerts.
-  It determines the severity of the ingested alert based on data returned from Cortex XSIAM commands interacting with the Prisma Cloud API and creates new issues in either Slack or Jira, with all of the relevant information.
-  The playbook updates the Cortex XSIAM alert’s layout with information the analyst can use to investigate the alert. It also extracts and enriches indicators using existing configured integrations and then closes the investigation.
+  It determines the severity of the ingested alert based on data returned from Cortex commands interacting with the Prisma Cloud API and creates new issues in either Slack or Jira, with all of the relevant information.
+  The playbook updates the Cortex alert’s layout with information the analyst can use to investigate the alert. It also extracts and enriches indicators using existing configured integrations and then closes the investigation.
 
   The flow of this playbook is as following:
   1) Check the CSP type.
@@ -704,7 +704,7 @@ tasks:
     scriptarguments:
       description:
         simple: |-
-          *This alert was created automatically with Cortex XSIAM.*
+          *This alert was created automatically with Cortex.*
 
           *Prisma Cloud - Public VM alert*
           *Please review the following details:*
@@ -1071,9 +1071,9 @@ tasks:
         complex:
           root: inputs.SlackChannelID
       message:
-        simple: "*This alert was created automatically with Cortex XSIAM.*\n\n*Prisma
-          Cloud - Public VM alert*\n*Please review the following details:*\n\n*Asset
-          ID*: ${PrismaCloud.Config.assetId}\n\n*RRN*: ${alert.rrn}\n\n\n*Findings:*\n```\n${.=JSON.stringify(val.incident.prismacloudfindingsresults,null,2)}\n```\n\n*IAM
+        simple: "*This alert was created automatically with Cortex.*\n\n*Prisma Cloud
+          - Public VM alert*\n*Please review the following details:*\n\n*Asset ID*:
+          ${PrismaCloud.Config.assetId}\n\n*RRN*: ${alert.rrn}\n\n\n*Findings:*\n```\n${.=JSON.stringify(val.incident.prismacloudfindingsresults,null,2)}\n```\n\n*IAM
           Permissions*:\n``` \n${.=JSON.stringify(val.incident.prismacloudiamresults,null,2)}\n```\n"
     separatecontext: false
     skipunavailable: true
