@@ -20,8 +20,8 @@ args:
   description: When set to True, appends the new content to the existing grid content
     instead of overwriting it.
   name: append
-comment: This script updates an indicator's grid field in Cortex XSIAM with provided
-  row data. You can input the rows directly or extract them from the context.
+comment: This script updates an indicator's grid field in Cortex with provided row
+  data. You can input the rows directly or extract them from the context.
 commonfields:
   id: SetIndicatorGridField
   version: -1
@@ -29,7 +29,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.10.0
-    itemVersion: 1.15.56
+    itemVersion: 1.19.10
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -37,20 +37,20 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.11.9.103066
+dockerimage: demisto/python3:3.11.10.115186
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
 name: SetIndicatorGridField
 nativeimage:
-- "8.7"
+- "8.8"
 - "8.6"
 pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('SetIndicatorGridField', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.56')
+  demisto.debug('pack name = Common Scripts, pack version = 1.19.10')
 
 
 
