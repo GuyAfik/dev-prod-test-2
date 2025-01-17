@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.6.0
-    itemVersion: 2.6.38
+    itemVersion: 2.6.49
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -1748,7 +1748,7 @@ tasks:
     quietmode: 0
     scriptarguments:
       query:
-        simple: agentsid:${inputs.agentID} and caseid:${parentIncidentFields.incident_id}
+        simple: agentid:${inputs.agentID} and caseid:${parentIncidentFields.incident_id}
     separatecontext: false
     skipunavailable: false
     task:
