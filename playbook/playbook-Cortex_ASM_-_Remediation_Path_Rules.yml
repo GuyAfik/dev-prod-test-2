@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.9.0
-    itemVersion: 1.7.63
+    itemVersion: 1.7.47
     packID: CortexAttackSurfaceManagement
     packName: Cortex Attack Surface Management
     packPropagationLabels:
@@ -1937,7 +1937,7 @@ tasks:
       key:
         simple: remediationattacksurfacerules
       value:
-        simple: RdpServer,InsecureOpenSSH,TelnetServer,UnencryptedFtpServer,OpenSSH,SshServer,SnmpServer,MysqlServer,MongoServer,PostgresServer,ElasticsearchServer,SSHTerrapinAttack,TftpServer,InsecureSFTPGo,InsecureBitviseSSHServer,Libssh,RpcBindServer,SmbServer,KubernetesControlPlaneComponent,NfsRpcBindServer,NetBiosNameServer,LDAPServer
+        simple: RdpServer,InsecureOpenSSH,TelnetServer,UnencryptedFtpServer,OpenSSH,SshServer,SnmpServer,MysqlServer,MongoServer,PostgresServer,ElasticsearchServer,SSHTerrapinAttack
     separatecontext: false
     skipunavailable: false
     task:
