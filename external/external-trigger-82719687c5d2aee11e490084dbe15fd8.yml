@@ -5,7 +5,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: ""
-    itemVersion: 4.3.9
+    itemVersion: 4.3.17
     packID: PrismaCloud
     packName: Prisma Cloud by Palo Alto Networks
     packPropagationLabels:
@@ -20,5 +20,5 @@ externalitemdata: '{"trigger_id":"82719687c5d2aee11e490084dbe15fd8","playbook_id
 filetype: json
 packid: PrismaCloud
 packname: Prisma Cloud by Palo Alto Networks
-packversion: 4.3.9
+packversion: 4.3.17
 subtype: trigger
