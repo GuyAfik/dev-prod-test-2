@@ -175,7 +175,7 @@
 	"id": "incident_prismacloudiamresults",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "4.3.9",
+	"itemVersion": "4.3.17",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Prisma Cloud - IAM Results",
@@ -189,7 +189,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Prisma Cloud - IAM Results",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
