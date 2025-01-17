@@ -13,7 +13,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.7.64
+    itemVersion: 1.7.63
     packID: CortexAttackSurfaceManagement
     packName: Cortex Attack Surface Management
     packPropagationLabels:
@@ -31,7 +31,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('RankServiceOwners', 'start', __line__())
-  demisto.debug('pack name = Cortex Attack Surface Management, pack version = 1.7.64')
+  demisto.debug('pack name = Cortex Attack Surface Management, pack version = 1.7.63')
 
 
   """Script for identifying and recommending the most likely owners of a discovered service
