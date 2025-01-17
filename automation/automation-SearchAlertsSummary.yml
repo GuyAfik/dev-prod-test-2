@@ -64,8 +64,8 @@ args:
 - description: 'A comma seperated list of fields to return to the context, (default:
     id,name,type,severity,status,owner,created,closed)'
   name: add_fields_to_context
-comment: "Searches Cortex XSIAM Alerts and returnrs the most relevant fields. Default
-  search range is the last 30 days, if you want to change this, use the fromDate argument.
+comment: "Searches Cortex Alerts and returnrs the most relevant fields. Default search
+  range is the last 30 days, if you want to change this, use the fromDate argument.
   \n\nReturns the id, name, type, severity, status, owner, and created/closed times
   to context.  You can add additional fields using the add_field_to_context argument.\n\nThis
   automation runs using the default Limited User role, unless you explicitly change
@@ -78,7 +78,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 1.15.56
+    itemVersion: 1.19.10
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -86,13 +86,13 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.10.13.86272
+dockerimage: demisto/python3:3.11.10.115186
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
 name: SearchAlertsSummary
 nativeimage:
-- "8.7"
+- "8.8"
 - "8.6"
 outputs:
 - contextPath: foundIncidents.id
@@ -127,7 +127,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('SearchAlertsSummary', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.56')
+  demisto.debug('pack name = Common Scripts, pack version = 1.19.10')
 
 
   from typing import Dict, List
