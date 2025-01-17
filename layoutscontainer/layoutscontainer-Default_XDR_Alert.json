@@ -1580,7 +1580,7 @@
 						"y": 2
 					},
 					{
-						"description": "When you click a button in this tab - the execution results will be displayed here.\nTo clear this table click “clear results”.",
+						"description": "When you click a button in this tab - the execution results will be displayed here.\nTo clear this table click “clear results“.",
 						"h": 8,
 						"i": "3podiwrjhh-796c1f40-a6d4-11ed-8f16-61aeed0987f5",
 						"items": [],
@@ -1685,6 +1685,12 @@
 				"id": "workPlan",
 				"name": "Work Plan",
 				"type": "workPlan"
+			},
+			{
+				"hidden": false,
+				"id": "canvas",
+				"name": "Canvas",
+				"type": "canvas"
 			}
 		]
 	},
@@ -1694,7 +1700,7 @@
 	"id": "Default XDR Alert",
 	"indicatorsDetails": null,
 	"indicatorsQuickView": null,
-	"itemVersion": "3.0.57",
+	"itemVersion": "3.2.20",
 	"locked": false,
 	"mobile": null,
 	"name": "Default XDR Alert",
