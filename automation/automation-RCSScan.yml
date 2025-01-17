@@ -16,7 +16,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.10.0
-    itemVersion: 1.7.63
+    itemVersion: 1.7.47
     packID: CortexAttackSurfaceManagement
     packName: Cortex Attack Surface Management
     packPropagationLabels:
@@ -24,20 +24,20 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.11.10.115186
+dockerimage: demisto/python3:3.10.14.91134
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
 name: RCSScan
 nativeimage:
-- "8.8"
+- "8.7"
 - "8.6"
 pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('RCSScan', 'start', __line__())
-  demisto.debug('pack name = Cortex Attack Surface Management, pack version = 1.7.63')
+  ### pack version: 1.7.47
 
 
 
