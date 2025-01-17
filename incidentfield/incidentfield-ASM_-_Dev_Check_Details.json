@@ -79,7 +79,7 @@
 	"id": "incident_asmdevcheckdetails",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.7.47",
+	"itemVersion": "1.7.65",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "ASM - Dev Check Details",
@@ -93,7 +93,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "ASM - Dev Check Details",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
