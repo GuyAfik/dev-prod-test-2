@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.10.0
-    itemVersion: 3.0.57
+    itemVersion: 3.2.20
     packID: Core
     packName: Core - Investigation and Response
     packPropagationLabels:
@@ -415,7 +415,7 @@ tasks:
                       value:
                         simple: uploaded\s(.*(MB|GB|TB))
                   operator: RegexGroups
-          operator: isEqualString
+          operator: containsGeneral
           right:
             value:
               simple: GB
@@ -437,7 +437,7 @@ tasks:
                       value:
                         simple: uploaded\s(.*(MB|GB|TB))
                   operator: RegexGroups
-          operator: isEqualString
+          operator: containsGeneral
           right:
             value:
               simple: TB
@@ -456,22 +456,7 @@ tasks:
                     keys: {}
                     regex:
                       value:
-                        simple: uploaded\s(.*(MB|GB|TB))
-                  operator: RegexGroups
-                - args:
-                    chars:
-                      value:
-                        simple: MB
-                  operator: StripChars
-                - args:
-                    flags: {}
-                    groups:
-                      value:
-                        simple: "0"
-                    keys: {}
-                    regex:
-                      value:
-                        simple: (\d+)\.
+                        simple: (?i)uploaded\s(\d+(?:[.]\d+)?)
                   operator: RegexGroups
           operator: greaterThanOrEqual
           right:
@@ -497,12 +482,12 @@ tasks:
       brand: ""
       description: Determines if the amount of data uploaded to an external host exceeds
         the defined threshold amount.
-      id: aaf85552-310e-44ec-80df-6d13fc74babe
+      id: e865ea1c-7558-4b04-8c30-778d7107c2f0
       iscommand: false
       name: Check Uploaded Data Volume
       type: condition
       version: -1
-    taskid: aaf85552-310e-44ec-80df-6d13fc74babe
+    taskid: e865ea1c-7558-4b04-8c30-778d7107c2f0
     timertriggers: []
     type: condition
     view: |-
@@ -592,7 +577,7 @@ tasks:
       InternalRange:
         simple: ${inputs.InternalIPRanges}
       ResolveIP:
-        simple: "True"
+        simple: "False"
       SHA256:
         complex:
           accessor: os_actor_process_image_sha256
@@ -619,7 +604,7 @@ tasks:
           root: Core.OriginalAlert._all_events.causality_actor_primary_normalized_user
           transformers:
           - operator: uniq
-    separatecontext: true
+    separatecontext: false
     skipunavailable: false
     task:
       brand: ""
@@ -717,14 +702,20 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Set a value in context under the key you entered.
-      id: d9285c68-50eb-40bd-8fd4-759eb210ac87
+      description: "Set a value in context under the key you entered. If no value
+        is entered, the script doesn't do anything.\n\nThis automation runs using
+        the default Limited User role, unless you explicitly change the permissions.\nFor
+        more information, see the section about permissions here:\n- For Cortex see
+        https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.x/Cortex-XSOAR-Playbook-Design-Guide/Automations
+        \n- For Cortex Cloud see https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/8/Cortex-XSOAR-Cloud-Documentation/Create-a-script\n-
+        For Cortex.7 On-prem see https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/8.7/Cortex-XSOAR-On-prem-Documentation/Create-a-script"
+      id: 4512ad3f-a604-4ee3-8f9a-f0fc78614dbc
       iscommand: false
       name: Set Additional Alerts to Context
-      script: Set
+      script: SetAndHandleEmpty
       type: regular
       version: -1
-    taskid: d9285c68-50eb-40bd-8fd4-759eb210ac87
+    taskid: 4512ad3f-a604-4ee3-8f9a-f0fc78614dbc
     timertriggers: []
     type: regular
     view: |-
@@ -770,14 +761,20 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Set a value in context under the key you entered.
-      id: ba180592-3db7-47b3-85a0-b67b132defdb
+      description: "Set a value in context under the key you entered. If no value
+        is entered, the script doesn't do anything.\n\nThis automation runs using
+        the default Limited User role, unless you explicitly change the permissions.\nFor
+        more information, see the section about permissions here:\n- For Cortex see
+        https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.x/Cortex-XSOAR-Playbook-Design-Guide/Automations
+        \n- For Cortex Cloud see https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/8/Cortex-XSOAR-Cloud-Documentation/Create-a-script\n-
+        For Cortex.7 On-prem see https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/8.7/Cortex-XSOAR-On-prem-Documentation/Create-a-script"
+      id: 6beec2c4-76c1-4f04-8002-d9757de02ba3
       iscommand: false
       name: Check Whether The Source Host Is an FTP Server
-      script: Set
+      script: SetAndHandleEmpty
       type: regular
       version: -1
-    taskid: ba180592-3db7-47b3-85a0-b67b132defdb
+    taskid: 6beec2c4-76c1-4f04-8002-d9757de02ba3
     timertriggers: []
     type: regular
     view: |-
@@ -823,14 +820,20 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Set a value in context under the key you entered.
-      id: 8dd7433f-8937-4d38-8eb5-3227abd969df
+      description: "Set a value in context under the key you entered. If no value
+        is entered, the script doesn't do anything.\n\nThis automation runs using
+        the default Limited User role, unless you explicitly change the permissions.\nFor
+        more information, see the section about permissions here:\n- For Cortex see
+        https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.x/Cortex-XSOAR-Playbook-Design-Guide/Automations
+        \n- For Cortex Cloud see https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/8/Cortex-XSOAR-Cloud-Documentation/Create-a-script\n-
+        For Cortex.7 On-prem see https://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/8.7/Cortex-XSOAR-On-prem-Documentation/Create-a-script"
+      id: 42b98818-3436-40d0-8767-84ee2fe2cb49
       iscommand: false
       name: Check Whether The Source Host Is an SMTP Server
-      script: Set
+      script: SetAndHandleEmpty
       type: regular
       version: -1
-    taskid: 8dd7433f-8937-4d38-8eb5-3227abd969df
+    taskid: 42b98818-3436-40d0-8767-84ee2fe2cb49
     timertriggers: []
     type: regular
     view: |-
@@ -1472,7 +1475,7 @@ tasks:
         simple: Blocked Indicator In Systems
       UserVerification:
         simple: ${inputs.BlockIndicators_UserVerification}
-    separatecontext: true
+    separatecontext: false
     skipunavailable: false
     task:
       brand: ""
@@ -1559,7 +1562,7 @@ tasks:
           - operator: uniq
       LimitResults:
         simple: "200"
-    separatecontext: true
+    separatecontext: false
     skipunavailable: true
     task:
       brand: ""
@@ -1570,13 +1573,13 @@ tasks:
         - Campaigns related to the investigation.
         - IOCs associated with the identified campaigns.
         - Reports containing details on the identified campaigns.
-      id: e42cdc09-90b7-4f4c-8932-f1cd98dbce53
+      id: f96c9d24-ae8d-4888-8f43-1827d644292b
       iscommand: false
       name: TIM - Indicator Relationships Analysis
       playbookName: TIM - Indicator Relationships Analysis
       type: playbook
       version: -1
-    taskid: e42cdc09-90b7-4f4c-8932-f1cd98dbce53
+    taskid: f96c9d24-ae8d-4888-8f43-1827d644292b
     timertriggers: []
     type: playbook
     view: |-
@@ -1629,7 +1632,7 @@ tasks:
         simple: "True"
       XDRUsernameField:
         simple: actor_effective_username
-    separatecontext: true
+    separatecontext: false
     skipunavailable: false
     task:
       brand: ""
@@ -1643,13 +1646,13 @@ tasks:
         -Azure Log Analytics
         -PAN-OS
         -XDR / Core By Palo Alto Networks.
-      id: 80ecf312-6088-4f9f-88b3-99c606b1c5dc
+      id: dfaff694-5e45-4cfe-84b4-c80c885026ec
       iscommand: false
       name: User Investigation - Generic
       playbookId: User Investigation - Generic
       type: playbook
       version: -1
-    taskid: 80ecf312-6088-4f9f-88b3-99c606b1c5dc
+    taskid: dfaff694-5e45-4cfe-84b4-c80c885026ec
     timertriggers: []
     type: playbook
     view: |-
@@ -1822,7 +1825,7 @@ tasks:
           root: DBotScore
           transformers:
           - operator: uniq
-    separatecontext: true
+    separatecontext: false
     skipunavailable: false
     task:
       brand: ""
@@ -1832,13 +1835,13 @@ tasks:
         IP, External host)\n* MITRE techniques\n* File hash (currently, the playbook
         supports only SHA256)  \n\nNote: The playbook inputs enable manipulating the
         execution flow; read the input descriptions for details."
-      id: cc640258-7d81-4d75-8374-a9d7082bbf36
+      id: ed863d05-e3ef-409f-89d9-70fac8f65414
       iscommand: false
       name: Endpoint Investigation Plan
       playbookId: Endpoint Investigation Plan
       type: playbook
       version: -1
-    taskid: cc640258-7d81-4d75-8374-a9d7082bbf36
+    taskid: ed863d05-e3ef-409f-89d9-70fac8f65414
     timertriggers: []
     type: playbook
     view: |-
@@ -1879,7 +1882,7 @@ tasks:
           - operator: uniq
       StringSimilarityThreshold:
         simple: "0.5"
-    separatecontext: true
+    separatecontext: false
     skipunavailable: false
     task:
       brand: ""
@@ -1893,13 +1896,13 @@ tasks:
         of suspicious LOLBIN execution\n\nNote: To run this playbook with a list of
         command lines, set this playbook to run in a loop. To do so, navigate to 'Loop'
         \ and check \"For Each Input\"."
-      id: 9a0966fc-2354-4a7f-84af-8408838bd539
+      id: c9c91b29-bca6-4a8e-8019-6293aa15fe02
       iscommand: false
       name: Command-Line Analysis
       playbookId: Command-Line Analysis
       type: playbook
       version: -1
-    taskid: 9a0966fc-2354-4a7f-84af-8408838bd539
+    taskid: c9c91b29-bca6-4a8e-8019-6293aa15fe02
     timertriggers: []
     type: playbook
     view: |-
@@ -1936,7 +1939,7 @@ tasks:
         simple: "True"
       StringSimilarityThreshold:
         simple: "0.5"
-    separatecontext: true
+    separatecontext: false
     skipunavailable: false
     task:
       brand: ""
@@ -2029,6 +2032,8 @@ tasks:
             value:
               simple: Findings
           operator: isNotEmpty
+          right:
+            value: {}
         - ignorecase: true
           left:
             iscontext: true
@@ -2091,13 +2096,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Checks whether an initiator command-line is available for investigation.
-      id: fab649a7-5152-441c-8975-0b21e8452278
+      description: Checks whether the command-line investigation produced any results.
+      id: e4b8a16c-1eb6-4f0e-8b8a-7b6ec5b8fceb
       iscommand: false
-      name: Has Command-Line to Investigate?
+      name: Has Command-Line Investigation Results?
       type: condition
       version: -1
-    taskid: fab649a7-5152-441c-8975-0b21e8452278
+    taskid: e4b8a16c-1eb6-4f0e-8b8a-7b6ec5b8fceb
     timertriggers: []
     type: condition
     view: |-
@@ -2197,7 +2202,7 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
@@ -2207,22 +2212,30 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
-                        simple: Core._all_events.actor_process_image_sha256
+                        simple: Core.OriginalAlert._all_events.actor_process_image_sha256
                   - ignorecase: true
                     left:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
                         simple: Core.OriginalAlert._all_events.causality_actor_process_image_sha256
                 root: DBotScore
+                transformers:
+                - operator: uniq
+                - args:
+                    descending:
+                      value:
+                        simple: "false"
+                  operator: sort
+                - operator: LastArrayElement
           operator: greaterThanOrEqual
           right:
             value:
@@ -2238,7 +2251,7 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
@@ -2248,7 +2261,7 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
@@ -2258,7 +2271,7 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
@@ -2268,7 +2281,7 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
@@ -2278,12 +2291,20 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
                         simple: Core.OriginalAlert._all_events.action_external_hostname
                 root: DBotScore
+                transformers:
+                - operator: uniq
+                - args:
+                    descending:
+                      value:
+                        simple: "false"
+                  operator: sort
+                - operator: LastArrayElement
           operator: greaterThanOrEqual
           right:
             value:
@@ -2336,13 +2357,15 @@ tasks:
                     left:
                       iscontext: true
                       value:
-                        simple: PaloAltoNetworksXDR.RiskyUser.id
+                        simple: Core.RiskyUser.id
                     operator: containsString
                     right:
                       iscontext: true
                       value:
                         simple: alert.username
-                root: PaloAltoNetworksXDR.RiskyUser
+                root: Core.RiskyUser
+                transformers:
+                - operator: uniq
           operator: isEqualString
           right:
             value:
@@ -2352,19 +2375,21 @@ tasks:
             iscontext: true
             value:
               complex:
-                accessor: 'risk_level '
+                accessor: risk_level
                 filters:
                 - - ignorecase: true
                     left:
                       iscontext: true
                       value:
-                        simple: PaloAltoNetworksXDR.RiskyHost.id
-                    operator: isEqualString
+                        simple: Core.RiskyHost.id
+                    operator: containsString
                     right:
                       iscontext: true
                       value:
                         simple: alert.hostname
-                root: PaloAltoNetworksXDR.RiskyHost
+                root: Core.RiskyHost
+                transformers:
+                - operator: uniq
           operator: isEqualString
           right:
             value:
@@ -2540,97 +2565,59 @@ tasks:
             iscontext: true
             value:
               complex:
-                accessor: host_name
+                accessor: _all_events.agent_hostname
                 filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: Core.OriginalAlert._all_events.agent_hostname
+                    operator: isNotEmpty
                 - - ignorecase: true
                     left:
                       iscontext: true
                       value:
-                        simple: Core.Incident.alerts.host_name
-                    operator: inList
-                    right:
-                      iscontext: true
-                      value:
-                        simple: Analysis.FTP_Server
-                - - ignorecase: true
-                    left:
-                      iscontext: true
-                      value:
-                        simple: Core.Incident.alerts.name
+                        simple: Core.OriginalAlert.alert_name
                     operator: isEqualString
                     right:
                       value:
                         simple: Large Upload (FTP)
-                root: Core.Incident.alerts
+                root: Core.OriginalAlert
                 transformers:
                 - operator: uniq
-          operator: isEqualString
+          operator: inList
           right:
             iscontext: true
             value:
-              complex:
-                accessor: endpoint_name
-                filters:
-                - - ignorecase: true
-                    left:
-                      iscontext: true
-                      value:
-                        simple: Core.Endpoint.endpoint_type
-                    operator: isEqualString
-                    right:
-                      value:
-                        simple: AGENT_TYPE_SERVER
-                root: Core.Endpoint
-                transformers:
-                - operator: uniq
+              simple: Analysis.FTP_Server
         - ignorecase: true
           left:
             iscontext: true
             value:
               complex:
-                accessor: host_name
+                accessor: _all_events.agent_hostname
                 filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: Core.OriginalAlert._all_events.agent_hostname
+                    operator: isNotEmpty
                 - - ignorecase: true
                     left:
                       iscontext: true
                       value:
-                        simple: Core.Incident.alerts.host_name
-                    operator: inList
-                    right:
-                      iscontext: true
-                      value:
-                        simple: Analysis.SMTP_Server
-                - - ignorecase: true
-                    left:
-                      iscontext: true
-                      value:
-                        simple: Core.Incident.alerts.name
+                        simple: Core.OriginalAlert.alert_name
                     operator: isEqualString
                     right:
                       value:
                         simple: Large Upload (SMTP)
-                root: Core.Incident.alerts
+                root: Core.OriginalAlert
                 transformers:
                 - operator: uniq
-          operator: isEqualString
+          operator: inList
           right:
             iscontext: true
             value:
-              complex:
-                accessor: endpoint_name
-                filters:
-                - - ignorecase: true
-                    left:
-                      iscontext: true
-                      value:
-                        simple: Core.Endpoint.endpoint_type
-                    operator: isEqualString
-                    right:
-                      value:
-                        simple: AGENT_TYPE_SERVER
-                root: Core.Endpoint
-                transformers:
-                - operator: uniq
+              simple: Analysis.SMTP_Server
       - - left:
             iscontext: true
             value:
@@ -2642,7 +2629,7 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
@@ -2652,7 +2639,7 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
@@ -2662,7 +2649,7 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
@@ -2672,7 +2659,7 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
@@ -2682,7 +2669,7 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
@@ -2692,12 +2679,20 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
                         simple: Core.OriginalAlert._all_events.action_external_hostname
                 root: DBotScore
+                transformers:
+                - operator: uniq
+                - args:
+                    descending:
+                      value:
+                        simple: "true"
+                  operator: sort
+                - operator: LastArrayElement
           operator: lessThanOrEqual
           right:
             value:
@@ -2745,7 +2740,7 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
@@ -2755,7 +2750,7 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
@@ -2765,12 +2760,20 @@ tasks:
                       iscontext: true
                       value:
                         simple: DBotScore.Indicator
-                    operator: isEqualString
+                    operator: containsGeneral
                     right:
                       iscontext: true
                       value:
                         simple: Core.OriginalAlert._all_events.causality_actor_process_image_sha256
                 root: DBotScore
+                transformers:
+                - operator: uniq
+                - args:
+                    descending:
+                      value:
+                        simple: "true"
+                  operator: sort
+                - operator: LastArrayElement
           operator: lessThanOrEqual
           right:
             value:
@@ -2844,12 +2847,12 @@ tasks:
     task:
       brand: ""
       description: Estimate the verdict for the large upload Cortex XDR alerts.
-      id: c32e7f2d-5b93-4f70-8305-43f704dfad02
+      id: 4e31d21d-f0e5-40d2-8333-750fd0973c3c
       iscommand: false
       name: Calculate Verdict
       type: condition
       version: -1
-    taskid: c32e7f2d-5b93-4f70-8305-43f704dfad02
+    taskid: 4e31d21d-f0e5-40d2-8333-750fd0973c3c
     timertriggers: []
     type: condition
     view: |-
