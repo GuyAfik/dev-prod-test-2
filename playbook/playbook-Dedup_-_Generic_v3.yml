@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 2.6.38
+    itemVersion: 2.6.49
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -13,7 +13,7 @@ contentitemexportablefields:
 deprecated: true
 description: "Deprecated. Use the `Dedup - Generic v4` playbook instead. This playbook
   identifies duplicate alerts using one of the supported methods.\nSelect one of the
-  following methods to identify duplicate alerts in Cortex XSIAM.\n- ml: Machine learning
+  following methods to identify duplicate alerts in Cortex.\n- ml: Machine learning
   model, which is trained mostly on phishing alerts.\n-rules: Rules help identify
   duplicate alerts when the logic is well defined, for example, the same label or
   custom fields.\n-text: Statistics algorithm that compares text, which is generally
@@ -217,7 +217,7 @@ tasks:
     task:
       brand: ""
       description: |-
-        Select one of the following methods to identify duplicate alerts in Cortex XSIAM.
+        Select one of the following methods to identify duplicate alerts in Cortex.
         - ml: Machine learning model, which is trained mostly on phishing alerts.
         -rules: Rules help identify duplicate alerts when the logic is well defined, for example, same label or custom fields.
         -text: Statistics algorithm that compares text, which is generally useful for phishing alerts.
@@ -712,7 +712,6 @@ tasks:
       iscommand: false
       name: Identify Phishing duplicates using ML
       script: PhishingDedupPreprocessingRule
-      scriptName: PhishingDedupPreprocessingRule
       type: regular
       version: -1
     taskid: e69901e9-ee05-4b11-8b09-2db95aba308e
