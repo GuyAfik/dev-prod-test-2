@@ -107,7 +107,7 @@
 	"id": "incident_asmserviceowner",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.7.47",
+	"itemVersion": "1.7.65",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "ASM - Service Owner",
@@ -121,7 +121,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "ASM - Service Owner",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
