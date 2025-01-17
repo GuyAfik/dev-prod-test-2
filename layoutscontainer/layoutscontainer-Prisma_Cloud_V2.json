@@ -561,6 +561,12 @@
 				"id": "workPlan",
 				"name": "Work Plan",
 				"type": "workPlan"
+			},
+			{
+				"hidden": false,
+				"id": "canvas",
+				"name": "Canvas",
+				"type": "canvas"
 			}
 		]
 	},
@@ -570,7 +576,7 @@
 	"id": "Prisma Cloud V2",
 	"indicatorsDetails": null,
 	"indicatorsQuickView": null,
-	"itemVersion": "4.3.9",
+	"itemVersion": "4.3.17",
 	"locked": false,
 	"mobile": null,
 	"name": "Prisma Cloud V2",
