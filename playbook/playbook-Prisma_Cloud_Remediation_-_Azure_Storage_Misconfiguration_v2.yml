@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 4.3.9
+    itemVersion: 4.3.17
     packID: PrismaCloud
     packName: Prisma Cloud by Palo Alto Networks
     packPropagationLabels:
@@ -170,7 +170,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Checks for a Prisma Cloud policy ID.
+      description: Checks for a Prisma Cloud policy Id.
       id: 39f753bf-3720-4d47-831e-110291f8b761
       iscommand: false
       name: Is there a policy to remediate?
@@ -323,7 +323,7 @@ tasks:
     task:
       brand: ""
       description: Execute the appropriate remediation sub-playbook based on the Prisma
-        Cloud policy ID.
+        Cloud policy Id.
       id: ad29c1b0-047e-40b7-8f6a-9f89a58554f4
       iscommand: false
       name: Execute playbook
@@ -355,16 +355,16 @@ tasks:
     task:
       brand: ""
       description: |-
-        1. Log in to the Azure Portal.
-        2. Go to SQL servers.
-        3. Choose the reported DB server.
-        4. Under the Security section, click 'Auditing'.
-        5. Set 'Auditing' to 'On'.
-        6. Select 'Storage' and click 'Storage Details'.
-        7. Configure 'Retention (days)' setting to be greater than or equal to 90 days.
+        1. Log in to the Azure Portal
+        2. Go to SQL servers
+        3. Choose the reported each DB server
+        4. Under the Security section, Click on 'Auditing'
+        5. Set 'Auditing' to 'On'
+        6. Select 'Storage' and click on 'Storage Details'
+        7. Configure 'Retention (days)' setting to greater than or equal to 90 days
         Note: The default value for the retention period is 0 (unlimited retention).
-        8. Click 'Ok'.
-        9. Click 'Save'.
+        8. Click on 'Ok'
+        9. Click on 'Save'
       id: a65b8012-ec7f-4ff5-80de-64492dff85df
       iscommand: false
       name: Manually update Storage
@@ -502,19 +502,17 @@ tasks:
                   simple: id
             operator: getField
       dismissal_note:
-        simple: ${alert.labels.id} has been remediated by Cortex XSIAM.
+        simple: ${alert.labels.id} has been remediated by Cortex.
     separatecontext: false
     skipunavailable: true
     task:
       brand: PrismaCloud v2
-      description: Dismiss or snooze the alerts matching the given filter. Either
-        policy IDs or alert IDs must be provided. When no absolute time nor relative
-        time arguments are provided, the default time range is all times. For snoozing,
-        provide "snooze_unit" and "snooze_value" arguments.
+      description: Dismiss the alerts matching the given filter. Must provide either
+        policy IDs or alert IDs.
       id: e35348a0-09fc-4386-8b04-cb1d1d36b4d4
       iscommand: true
       name: Dismiss Prisma Cloud alert
-      script: PrismaCloud v2|||prisma-cloud-alert-dismiss
+      script: PrismaCloud v2|||redlock-dismiss-alerts
       type: regular
       version: -1
     taskid: e35348a0-09fc-4386-8b04-cb1d1d36b4d4
