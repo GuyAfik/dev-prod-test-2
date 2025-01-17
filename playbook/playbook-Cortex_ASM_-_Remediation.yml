@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.10.0
-    itemVersion: 1.7.63
+    itemVersion: 1.7.47
     packID: CortexAttackSurfaceManagement
     packName: Cortex Attack Surface Management
     packPropagationLabels:
@@ -259,7 +259,7 @@ tasks:
           root: alert
       RemoteProtocol:
         complex:
-          accessor: asmprotocol
+          accessor: protocol
           root: alert
     separatecontext: true
     skipunavailable: true
@@ -376,7 +376,7 @@ tasks:
           root: alert
       Protocol:
         complex:
-          accessor: asmprotocol
+          accessor: protocol
           root: alert
           transformers:
           - operator: toLowerCase
@@ -486,7 +486,7 @@ tasks:
           root: alert
       RemoteProtocol:
         complex:
-          accessor: asmprotocol
+          accessor: protocol
           root: alert
     separatecontext: true
     skipunavailable: true
@@ -608,7 +608,7 @@ tasks:
           root: alert
       Protocol:
         complex:
-          accessor: asmprotocol
+          accessor: protocol
           root: alert
           transformers:
           - operator: toLowerCase
@@ -690,7 +690,7 @@ tasks:
           root: alert
       RemoteProtocol:
         complex:
-          accessor: asmprotocol
+          accessor: protocol
           root: alert
           transformers:
           - operator: toLowerCase
