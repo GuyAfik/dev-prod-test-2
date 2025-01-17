@@ -3,15 +3,15 @@ commonfields:
   id: Core REST API
   version: -1
 configuration:
-- additionalinfo: For Cortex XSIAM 8 or Cortex XSIAM, use the Copy API URL button
-    on the API Keys page. For Cortex XSIAM 6, use the server URL.
+- additionalinfo: For Cortex or Cortex XSIAM, use the Copy API URL button on the API
+    Keys page. For Cortex, use the server URL.
   defaultvalue: https://127.0.0.1
   display: Core Server URL
   name: url
   required: true
   type: 0
-- additionalinfo: Please provide API Key ID when using Cortex XSIAM or Cortex XSIAM
-    8.0.0 and above.
+- additionalinfo: Please provide API Key ID when using Cortex XSIAM or Cortex.0.0
+    and above.
   display: API Key ID
   displaypassword: API Key
   name: creds_apikey
@@ -50,7 +50,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.3.58
+    itemVersion: 1.3.64
     packID: DemistoRESTAPI
     packName: Cortex REST API
     packPropagationLabels:
@@ -76,14 +76,8 @@ detaileddescription: |-
   1. Go to **Settings** -> API Keys.
   2. Click the **Copy URL** button in the top right corner.
 
-  1. Go to **Settings & Info** > **Settings** > **Integrations** > **API Keys**.
-  2. Click the **Copy URL** button in the top right corner.
 
-
-
-
-
-
+  Make sure your API key has the proper permissions. For more information, please refer to the [Roles Management](https://docs-cortex.paloaltonetworks.com/r/Cortex-XSIAM/Cortex-XSIAM-Administrator-Guide/Manage-Roles) documentation.
 
   ---
   [View Integration Documentation](https://xsoar.pan.dev/docs/reference/integrations/core-rest-api)
@@ -308,7 +302,7 @@ script:
     - description: The War Room entry ID of the file.
       name: entry_id
       required: true
-    description: Delete a file from Cortex XSIAM by entry_id.
+    description: Delete a file from Cortex by entry_id.
     name: core-api-file-delete
   - arguments:
     - description: The incident's ID.
@@ -320,14 +314,13 @@ script:
     - defaultValue: attachment
       description: Name of the field (type attachment) from which to remove the attachment.
       name: field_name
-    description: Delete the attachment from the incident and from the Cortex XSIAM
-      server.
+    description: Delete the attachment from the incident and from the Cortex server.
     name: core-api-file-attachment-delete
   - arguments:
     - description: The War Room entry ID of the file.
       name: entry_id
       required: true
-    description: Check if the file exists in Cortex XSIAM (Context) by entry_id.
+    description: Check if the file exists in Cortex (Context) by entry_id.
     name: core-api-file-check
     outputs:
     - contextPath: IsFileExists
@@ -335,7 +328,7 @@ script:
         as a value in Context.
   runonce: false
   script: |
-    // pack version: 1.3.58
+    // pack version: 1.3.64
 
     const MIN_HOSTED_XSOAR_VERSION = '8.0.0';
 
@@ -672,26 +665,14 @@ script:
     /**
      * deletes an entry  by entryID by the key_to_delete
     Arguments:
-        @param {String} file_content -- content of the file to upload
-        @param {String} file_name  -- name of the file in the dest incident
-        @param {String} key_to_delete  -- the name of the key to delete
         @param {String} incident_id  -- the incident id
+        @param {String} entry_id  -- the entry ID of the file
     Returns:
         CommandResults
     """
      */
-    var uploadFile= function(incident_id, file_content, file_name) {
-        var body = {
-            file:
-            {
-                value: [file_content],
-                options: {
-                    filename: [file_name],
-                    contentType: 'multipart/form-data'
-                }
-            },
-        };
-        var res = httpMultipart(`/entry/upload/${incident_id}`,file_content ,body);
+    var uploadFile= function(incident_id, entry_id) {
+        var res = httpMultipart(`/entry/upload/${incident_id}`, entry_id);
         if (isError(res[0])) {
             throw res[0].Contents;
         }
@@ -772,8 +753,8 @@ script:
         }
         var fileId = '';
         if ((!entryID)) {
-            response = uploadFile(incident_id, file_content, file_name);
             fileId = saveFile(file_content);
+            response = uploadFile(incident_id, fileId);
         } else {
             if (file_name === undefined) {
                 file_name = dq(invContext, `File(val.EntryID == ${entryID}).Name`);
