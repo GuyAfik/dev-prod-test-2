@@ -62,7 +62,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.7.47
+    itemVersion: 1.7.65
     packID: CortexAttackSurfaceManagement
     packName: Cortex Attack Surface Management
     packPropagationLabels:
@@ -70,20 +70,20 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.10.13.80014
+dockerimage: demisto/python3:3.11.10.116949
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
 name: GenerateASMReport
 nativeimage:
-- "8.7"
+- "8.8"
 - "8.6"
 pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('GenerateASMReport', 'start', __line__())
-  ### pack version: 1.7.47
+  demisto.debug('pack name = Cortex Attack Surface Management, pack version = 1.7.65')
 
 
   import json
@@ -714,6 +714,11 @@ script: |
 
           placeholder = 15
           optional_order = ["asm_service_owner", "asm_private_ip", "asm_cloud", "asm_tags", "asm_system_ids"]
+      else:
+          placeholder = 0
+          optional_order = []
+          template = []
+          demisto.debug(f"No condition was met -> {placeholder=} {optional_order=} {template=}")
 
       optional_template = optional_report_fields(placeholder, optional_order, args)
       template.extend(optional_template)
