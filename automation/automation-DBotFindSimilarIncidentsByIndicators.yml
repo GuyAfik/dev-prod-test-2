@@ -45,7 +45,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.34.37
+    itemVersion: 1.39.16
     packID: Base
     packName: Base
     packPropagationLabels:
@@ -54,7 +54,7 @@ contentitemexportablefields:
     propagationLabels: []
     toServerVersion: ""
 deprecated: true
-dockerimage: demisto/ml:1.0.0.105874
+dockerimage: demisto/ml:1.0.0.1870375
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
