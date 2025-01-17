@@ -14,7 +14,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.5.0
-    itemVersion: 1.7.65
+    itemVersion: 1.7.64
     packID: CortexAttackSurfaceManagement
     packName: Cortex Attack Surface Management
     packPropagationLabels:
@@ -39,7 +39,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('SnmpDetection', 'start', __line__())
-  demisto.debug('pack name = Cortex Attack Surface Management, pack version = 1.7.65')
+  demisto.debug('pack name = Cortex Attack Surface Management, pack version = 1.7.64')
 
 
   import ipaddress
