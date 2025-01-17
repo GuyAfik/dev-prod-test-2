@@ -5,7 +5,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 8.2.0
-    itemVersion: 4.3.9
+    itemVersion: 4.3.17
     packID: PrismaCloud
     packName: Prisma Cloud by Palo Alto Networks
     packPropagationLabels:
@@ -95,5 +95,5 @@ externalitemdata: "fromversion: 8.2.0\nid: Palo_Alto_Prisma_Cloud_ModelingRule\n
 filetype: yml
 packid: PrismaCloud
 packname: Prisma Cloud by Palo Alto Networks
-packversion: 4.3.9
+packversion: 4.3.17
 subtype: modelingrule
