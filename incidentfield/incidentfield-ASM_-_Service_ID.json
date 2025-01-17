@@ -24,7 +24,7 @@
 	"id": "incident_asmserviceid",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.7.47",
+	"itemVersion": "1.7.65",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "ASM - Service ID",
@@ -38,7 +38,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "ASM - Service ID",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
