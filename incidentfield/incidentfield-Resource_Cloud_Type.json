@@ -36,7 +36,7 @@
 	"id": "incident_resourcecloudtype",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "4.3.9",
+	"itemVersion": "4.3.17",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Resource Cloud Type",
@@ -50,7 +50,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "Resource Cloud Type",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
