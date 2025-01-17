@@ -11,8 +11,8 @@ args:
   - active
   - both
   - disabled
-comment: Returns integration instances configured in Cortex XSIAM. You can filter
-  by instance status and/or brand name (vendor).
+comment: Returns integration instances configured in Cortex. You can filter by instance
+  status and/or brand name (vendor).
 commonfields:
   id: GetInstances
   version: -1
@@ -20,7 +20,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.56
+    itemVersion: 1.19.10
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -28,13 +28,13 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.10.13.86272
+dockerimage: demisto/python3:3.11.10.115186
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
 name: GetInstances
 nativeimage:
-- "8.7"
+- "8.8"
 - "8.6"
 outputs:
 - contextPath: Modules.name
@@ -57,7 +57,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('GetInstances', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.56')
+  demisto.debug('pack name = Common Scripts, pack version = 1.19.10')
 
 
   from typing import Dict, Iterator
