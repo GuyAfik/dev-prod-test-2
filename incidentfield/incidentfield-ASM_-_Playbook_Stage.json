@@ -51,7 +51,7 @@
 	"id": "incident_asmplaybookstage",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "1.7.47",
+	"itemVersion": "1.7.65",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "ASM - Playbook Stage",
@@ -65,7 +65,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "ASM - Playbook Stage",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
