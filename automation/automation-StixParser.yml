@@ -5,8 +5,8 @@ args:
 - default: true
   description: IOC file entry ID.
   name: entry_id
-comment: Parse STIX files to Cortex XSIAM indicators by clicking the **Upload STIX
-  File** button.
+comment: Parse STIX files to Cortex indicators by clicking the **Upload STIX File**
+  button.
 commonfields:
   id: StixParser
   version: -1
@@ -14,7 +14,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.34.37
+    itemVersion: 1.39.16
     packID: Base
     packName: Base
     packPropagationLabels:
@@ -22,7 +22,7 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/taxii:1.0.0.84046
+dockerimage: demisto/taxii:1.0.0.116749
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
@@ -42,7 +42,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('StixParser', 'start', __line__())
-  demisto.debug('pack name = Base, pack version = 1.34.37')
+  demisto.debug('pack name = Base, pack version = 1.39.16')
 
 
   import copy
