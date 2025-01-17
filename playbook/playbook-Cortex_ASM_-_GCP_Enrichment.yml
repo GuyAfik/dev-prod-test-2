@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.8.0
-    itemVersion: 1.7.47
+    itemVersion: 1.7.65
     packID: CortexAttackSurfaceManagement
     packName: Cortex Attack Surface Management
     packPropagationLabels:
@@ -82,7 +82,7 @@ tasks:
           transformers:
           - operator: FirstArrayElement
       protocol:
-        simple: ${alert.protocol}
+        simple: ${alert.asmprotocol}
     separatecontext: true
     skipunavailable: true
     task:
