@@ -36,7 +36,7 @@
 	"id": "incident_vpcid",
 	"ipVersion": "",
 	"isReadOnly": false,
-	"itemVersion": "4.3.9",
+	"itemVersion": "4.3.17",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "VPC ID",
@@ -50,7 +50,7 @@
 		"all"
 	],
 	"placeholder": "",
-	"pretty_name": "",
+	"pretty_name": "VPC ID",
 	"propagationLabels": [],
 	"required": false,
 	"runScriptAfterUpdate": false,
