@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.6.38
+    itemVersion: 2.6.49
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -624,9 +624,9 @@ tasks:
             operator: append
           - operator: uniq
       IndicatorDescription:
-        simple: Added by Cortex XSIAM
+        simple: Added by Cortex
       IndicatorTitle:
-        simple: Added by Cortex XSIAM
+        simple: Added by Cortex
     separatecontext: true
     skipunavailable: true
     task:
