@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.6.0
-    itemVersion: 2.6.38
+    itemVersion: 2.6.49
     packID: CommonPlaybooks
     packName: Common Playbooks
     packPropagationLabels:
@@ -129,7 +129,7 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "10"
+      - "32"
     note: false
     quietmode: 0
     scriptarguments:
@@ -205,8 +205,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 680,
-          "y": 1520
+          "x": 690,
+          "y": 1710
         }
       }
   "3":
@@ -291,7 +291,7 @@ tasks:
       {
         "position": {
           "x": 470,
-          "y": 760
+          "y": 990
         }
       }
   "11":
@@ -329,7 +329,7 @@ tasks:
       {
         "position": {
           "x": 230,
-          "y": 1350
+          "y": 1530
         }
       }
   "24":
@@ -483,7 +483,7 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "29"
+      - "31"
     note: false
     quietmode: 0
     scriptarguments:
@@ -697,7 +697,7 @@ tasks:
       {
         "position": {
           "x": 230,
-          "y": 990
+          "y": 1170
         }
       }
   "29":
@@ -736,7 +736,7 @@ tasks:
       {
         "position": {
           "x": -10,
-          "y": 760
+          "y": 990
         }
       }
   "30":
@@ -777,7 +777,93 @@ tasks:
       {
         "position": {
           "x": 230,
-          "y": 1160
+          "y": 1340
+        }
+      }
+  "31":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: Core.blocklist.added_hashes.fileHash
+          operator: isNotEmpty
+          right:
+            value: {}
+      label: "yes"
+    continueonerrortype: ""
+    id: "31"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "28"
+      "yes":
+      - "29"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks whether the file hash exists.
+      id: 5e12fc6b-2fa0-43d0-8a46-d2f213525a45
+      iscommand: false
+      name: Is the file hash was added to the block list?
+      type: condition
+      version: -1
+    taskid: 5e12fc6b-2fa0-43d0-8a46-d2f213525a45
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -10,
+          "y": 780
+        }
+      }
+  "32":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: Core.blocklist.added_hashes.fileHash
+          operator: isNotEmpty
+          right:
+            value: {}
+      label: "yes"
+    continueonerrortype: ""
+    id: "32"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "28"
+      "yes":
+      - "10"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks whether the file hash exists.
+      id: 5df17f17-1825-4ac0-8edf-c0e89f437551
+      iscommand: false
+      name: Is the file hash was added to the block list?
+      type: condition
+      version: -1
+    taskid: 5df17f17-1825-4ac0-8edf-c0e89f437551
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 470,
+          "y": 780
         }
       }
 version: -1
@@ -789,13 +875,15 @@ view: |-
       "26_28_#default#": 0.29,
       "30_11_yes": 0.52,
       "30_2_#default#": 0.38,
+      "31_29_yes": 0.51,
+      "32_10_yes": 0.57,
       "3_25_yes": 0.43,
       "3_2_#default#": 0.12
     },
     "paper": {
       "dimensions": {
-        "height": 1775,
-        "width": 1070,
+        "height": 1965,
+        "width": 1080,
         "x": -10,
         "y": -190
       }
