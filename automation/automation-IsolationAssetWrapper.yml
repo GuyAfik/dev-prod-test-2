@@ -11,7 +11,7 @@ args:
   - unisolate
   required: true
 comment: This is a wrapper to isolate or unisolate hash lists from Cortex XDR, MSDE
-  or CrowdStrike (Available from Cortex XSIAM 6.0.0).
+  or CrowdStrike (Available from Cortex.0.0).
 commonfields:
   id: IsolationAssetWrapper
   version: -1
@@ -19,7 +19,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 1.15.56
+    itemVersion: 1.19.10
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -27,12 +27,12 @@ contentitemexportablefields:
     prevname: ""
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.10.13.86272
+dockerimage: demisto/python3:3.11.10.115186
 engineinfo: {}
 mainengineinfo: {}
 name: IsolationAssetWrapper
 nativeimage:
-- "8.7"
+- "8.8"
 - "8.6"
 outputs:
 - contextPath: MicrosoftATP.MachineAction.ID
@@ -83,7 +83,7 @@ runas: DBotWeakRole
 runonce: false
 script: |
   register_module_line('IsolationAssetWrapper', 'start', __line__())
-  demisto.debug('pack name = Common Scripts, pack version = 1.15.56')
+  demisto.debug('pack name = Common Scripts, pack version = 1.19.10')
   from typing import Tuple
 
 
