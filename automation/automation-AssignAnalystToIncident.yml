@@ -23,7 +23,7 @@ args:
 - auto: PREDEFINED
   defaultValue: "false"
   description: Set to true to assign only user that is currently on shift. Requires
-    Cortex XSIAM v5.5 or later.
+    Cortex.5 or later.
   name: onCall
   predefined:
   - "true"
@@ -45,7 +45,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.15.56
+    itemVersion: 1.19.10
     packID: CommonScripts
     packName: Common Scripts
     packPropagationLabels:
@@ -61,7 +61,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  // pack version: 1.15.56
+  // pack version: 1.19.10
   // returns true if the current platform is XSIAM.
   isXsiam = function () {
       res = getDemistoVersion();
