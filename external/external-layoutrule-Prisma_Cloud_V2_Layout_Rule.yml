@@ -5,7 +5,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.10.0
-    itemVersion: 4.3.9
+    itemVersion: 4.3.17
     packID: PrismaCloud
     packName: Prisma Cloud by Palo Alto Networks
     packPropagationLabels:
@@ -29,5 +29,5 @@ externalitemdata: '{"rule_id":"Prisma_Cloud_V2_Layout_Rule","layout_id":"Prisma 
 filetype: json
 packid: PrismaCloud
 packname: Prisma Cloud by Palo Alto Networks
-packversion: 4.3.9
+packversion: 4.3.17
 subtype: layoutrule
