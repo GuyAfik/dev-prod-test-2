@@ -1,0 +1,514 @@
+category: Analytics & SIEM
+commonfields:
+  id: DropboxEventsCollector
+  version: -1
+configuration:
+- defaultvalue: https://api.dropbox.com
+  display: Server URL
+  name: url
+  required: true
+  section: Connect
+  type: 0
+- additionalinfo: The App key and App secret
+  display: App key
+  displaypassword: App secret
+  name: credentials
+  required: true
+  section: Connect
+  type: 9
+- defaultvalue: 7 days
+  display: First fetch in timestamp format (<number> <time unit>, e.g., 12 hours,
+    7 days)
+  name: fetch_from
+  required: false
+  section: Collect
+  type: 0
+- additionalinfo: If you're encountering timeouts, consider decreasing this value.
+  defaultvalue: "500"
+  display: The maximum number of events per fetch.
+  name: limit
+  required: false
+  section: Collect
+  type: 0
+- advanced: true
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  section: Connect
+  type: 8
+- advanced: true
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  section: Connect
+  type: 8
+- display: Fetch Events
+  name: isFetchEvents
+  required: false
+  section: Collect
+  type: 8
+- advanced: true
+  defaultvalue: "1"
+  display: Events Fetch Interval
+  name: eventFetchInterval
+  required: false
+  section: Collect
+  type: 19
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: 6.8.0
+    itemVersion: 1.1.5
+    packID: Dropbox
+    packName: Dropbox
+    packPropagationLabels:
+    - all
+    prevname: ""
+    propagationLabels: []
+    toServerVersion: ""
+description: Collect events from Dropbox's logs.
+detaileddescription: "Use the Dropbox Event Collector integration to get Audit and
+  Auth logs from dropbox using REST APIs.\n\nBefore you begin, in the [Dropbox app
+  console](https://www.dropbox.com/developers/apps) Use the Dropbox Event Collector
+  integration to get Audit and Auth logs from dropbox using REST APIs.\n\n## Create
+  an app in the Dropbox app console\n\n1. Go to [Dropbox app console](https://www.dropbox.com/developers/apps)
+  and click **Create app**.  \n![Description Image](api/marketplace/file?name=content/packs/Dropbox/integration_description_images/Screen_Shot_2022-06-13_at_10_03_00.png)\n\n2.
+  Give full dropbox access (not just a single folder).  \n![Description Image](api/marketplace/file?name=content/packs/Dropbox/integration_description_images/Screen_Shot_2022-06-13_at_10_03_22.png)\n\n3.
+  From the **Permissions** tab, in the **Sessions** section, select **events.read**.
+  \ \n![Description Image](api/marketplace/file?name=content/packs/Dropbox/integration_description_images/Screen_Shot_2022-06-13_at_10_04_11.png)\n\n4.
+  In the **Settings** tab, note the **App key** and the **App secret**.  \n![Description
+  Image](api/marketplace/file?name=content/packs/Dropbox/integration_description_images/Screen_Shot_2022-06-13_at_10_04_34.png)\n\n##
+  Configuration Parameters\n\n**Server URL**    \nThe endpoint to get the logs.\n\n**App
+  key and App secret**    \nThe App key and App secret.\n\n## Test\nIn order to test
+  the connection to the Dropbox app:\n1. Fill in the required parameters.\n2. Run
+  the ***!dropbox-auth-start*** command from the [WarRoom](./incidents/war_room).\n3.
+  Follow the instructions that appear.\n4. Run the ***!dropbox-auth-complete*** command
+  with the code returned from Dropbox.\n5. Run the ***!dropbox-auth-test*** command
+  to verify success.\n\n\n---\n[View Integration Documentation](https://xsoar.pan.dev/docs/reference/integrations/dropbox-events-collector)"
+display: Dropbox Event Collector
+image: data:image/png;base64,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
+name: DropboxEventsCollector
+script:
+  commands:
+  - arguments: []
+    description: Starts the authentication.
+    name: dropbox-auth-start
+  - arguments:
+    - description: The code that returns from Dropbox.
+      name: code
+      required: true
+    description: Completes the authentication.
+    name: dropbox-auth-complete
+  - arguments: []
+    description: Tests the authentication.
+    name: dropbox-auth-test
+  - arguments: []
+    description: Resets the authentication.
+    name: dropbox-auth-reset
+  - arguments:
+    - defaultValue: "500"
+      description: The maximum events to fetch.
+      name: limit
+    - auto: PREDEFINED
+      defaultValue: "false"
+      description: Set this argument to true to create events, otherwise the command
+        only displays them.
+      name: should_push_events
+      predefined:
+      - "true"
+      - "false"
+      required: true
+    - defaultValue: 3 days
+      description: Fetch events from this time (<number> <time unit>, e.g., 12 hours,
+        7 days).
+      name: from
+    description: Get events.
+    name: dropbox-get-events
+  dockerimage: demisto/py3-tools:1.0.0.114656
+  isfetchevents: true
+  nativeimage:
+  - "8.8"
+  - "8.6"
+  runonce: false
+  script: |
+    register_module_line('DropboxEventsCollector', 'start', __line__())
+    demisto.debug('pack name = Dropbox, pack version = 1.1.5')
+    # pylint: disable=no-name-in-module
+    # pylint: disable=no-self-argument
+    import json
+
+    import urllib3
+    from pydantic import parse_obj_as
+
+
+    ### GENERATED CODE ###: from SiemApiModule import *  # noqa: E402
+    # This code was inserted in place of an API module.
+    register_module_line('SiemApiModule', 'start', __line__(), wrapper=-3)
+
+
+    # pylint: disable=no-name-in-module
+    # pylint: disable=no-self-argument
+
+    from abc import ABC
+    from typing import Any, Callable, Optional
+
+
+    from enum import Enum
+    from pydantic import BaseConfig, BaseModel, AnyUrl, validator, Field
+    from requests.auth import HTTPBasicAuth
+
+
+    class Method(str, Enum):
+        GET = 'GET'
+        POST = 'POST'
+        PUT = 'PUT'
+        HEAD = 'HEAD'
+        PATCH = 'PATCH'
+        DELETE = 'DELETE'
+
+
+    def load_json(v: Any) -> dict:
+        if not isinstance(v, (dict, str)):
+            raise ValueError('headers are not dict or a valid json')
+        if isinstance(v, str):
+            try:
+                v = json.loads(v)
+                if not isinstance(v, dict):
+                    raise ValueError('headers are not from dict type')
+            except json.decoder.JSONDecodeError as exc:
+                raise ValueError('headers are not valid Json object') from exc
+        if isinstance(v, dict):
+            return v
+        return {}
+
+
+    class IntegrationHTTPRequest(BaseModel):
+        method: Method
+        url: AnyUrl
+        verify: bool = True
+        headers: dict = {}  # type: ignore[type-arg]
+        auth: Optional[HTTPBasicAuth] = None
+        data: Any = None
+        params: dict = {}  # type: ignore[type-arg]
+
+        class Config(BaseConfig):
+            arbitrary_types_allowed = True
+
+        _normalize_headers = validator('headers', pre=True, allow_reuse=True)(  # type: ignore[type-var]
+            load_json
+        )
+
+
+    class Credentials(BaseModel):
+        identifier: Optional[str]
+        password: str
+
+
+    def set_authorization(request: IntegrationHTTPRequest, auth_credendtials):
+        """Automatic authorization.
+        Supports {Authorization: Bearer __token__}
+        or Basic Auth.
+        """
+        creds = Credentials.parse_obj(auth_credendtials)
+        if creds.password and creds.identifier:
+            request.auth = HTTPBasicAuth(creds.identifier, creds.password)
+        auth = {'Authorization': f'Bearer {creds.password}'}
+        if request.headers:
+            request.headers |= auth  # type: ignore[assignment, operator]
+        else:
+            request.headers = auth  # type: ignore[assignment]
+
+
+    class IntegrationOptions(BaseModel):
+        """Add here any option you need to add to the logic"""
+
+        proxy: Optional[bool] = False
+        limit: Optional[int] = Field(None, ge=1)
+
+
+    class IntegrationEventsClient(ABC):
+        def __init__(
+            self,
+            request: IntegrationHTTPRequest,
+            options: IntegrationOptions,
+            session=requests.Session(),
+        ):
+            self.request = request
+            self.options = options
+            self.session = session
+            self._set_proxy()
+            self._skip_cert_verification()
+
+        @abstractmethod
+        def set_request_filter(self, after: Any):
+            """TODO: set the next request's filter.
+            Example:
+            """
+            self.request.headers['after'] = after
+
+        def __del__(self):
+            try:
+                self.session.close()
+            except AttributeError as err:
+                demisto.debug(
+                    f'ignore exceptions raised due to session not used by the client. {err=}'
+                )
+
+        def call(self, request: IntegrationHTTPRequest) -> requests.Response:
+            try:
+                response = self.session.request(**request.dict())
+                response.raise_for_status()
+                return response
+            except Exception as exc:
+                msg = f'something went wrong with the http call {exc}'
+                demisto.debug(msg)
+                raise DemistoException(msg) from exc
+
+        def _skip_cert_verification(
+            self, skip_cert_verification: Callable = skip_cert_verification
+        ):
+            if not self.request.verify:
+                skip_cert_verification()
+
+        def _set_proxy(self):
+            if self.options.proxy:
+                ensure_proxy_has_http_prefix()
+            else:
+                skip_proxy()
+
+
+    class IntegrationGetEvents(ABC):
+        def __init__(
+            self, client: IntegrationEventsClient, options: IntegrationOptions
+        ) -> None:
+            self.client = client
+            self.options = options
+
+        def run(self):
+            stored = []
+            for logs in self._iter_events():
+                stored.extend(logs)
+                if self.options.limit:
+                    demisto.debug(
+                        f'{self.options.limit=} reached. \
+                        slicing from {len(logs)=}. \
+                        limit must be presented ONLY in commands and not in fetch-events.'
+                    )
+                    if len(stored) >= self.options.limit:
+                        return stored[: self.options.limit]
+            return stored
+
+        def call(self) -> requests.Response:
+            return self.client.call(self.client.request)
+
+        @staticmethod
+        @abstractmethod
+        def get_last_run(events: list) -> dict:
+            """Logic to get the last run from the events
+            Example:
+            """
+            return {'after': events[-1]['created']}
+
+        @abstractmethod  # noqa: B027
+        def _iter_events(self):
+            """Create iterators with Yield"""
+
+    register_module_line('SiemApiModule', 'end', __line__(), wrapper=1)
+    ### END GENERATED CODE ###
+
+    urllib3.disable_warnings()
+    DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
+    VENDOR = "dropbox"
+    PRODUCT = "dropbox"
+
+
+    class DropboxEventsRequestConfig(IntegrationHTTPRequest):
+        # Endpoint: https://api.dropbox.com/2/team_log/get_events
+        url: AnyUrl = parse_obj_as(AnyUrl, 'https://api.dropbox.com')
+        method: Method = Method.POST
+        headers: dict = {'Content-Type': 'application/json'}
+        data: str
+        verify: bool = not demisto.params().get('insecure')
+
+
+    class DropboxEventsClient(IntegrationEventsClient):
+        request: DropboxEventsRequestConfig
+        options: IntegrationOptions
+        credentials: Credentials
+
+        def __init__(
+            self,
+            request: DropboxEventsRequestConfig,
+            options: IntegrationOptions,
+            credentials: Credentials,
+            session: Optional[requests.Session] = None,
+        ) -> None:
+            self.credentials = credentials
+            self.refresh_token = demisto.getIntegrationContext().get('refresh_token')
+            if session is None:
+                session = requests.Session()
+            super().__init__(request, options, session)
+
+        def set_request_filter(self, cursor: str):
+            if 'continue' not in str(self.request.url):
+                demisto.info('continue not in request url')
+                self.request.url = parse_obj_as(AnyUrl, f'{str(self.request.url).removesuffix("/")}/continue')
+
+            self.request.data = json.dumps({'cursor': cursor})
+
+        def get_access_token(self):
+            request = IntegrationHTTPRequest(
+                method=Method.POST,
+                url=f'{str(self.request.url).removesuffix("/")}/oauth2/token',  # type: ignore[arg-type]
+                data={'grant_type': 'refresh_token', 'refresh_token': f'{self.refresh_token}'},
+                auth=HTTPBasicAuth(self.credentials.identifier, self.credentials.password),  # type: ignore[arg-type]
+                verify=self.request.verify,
+            )
+            response = self.call(request)
+            demisto.debug(f'Send request to obtain access_token get status code: {response.status_code}')       # pragma: no cover
+            self.request.headers['Authorization'] = f'Bearer {response.json()["access_token"]}'
+            self.request.url = parse_obj_as(AnyUrl, f'{str(self.request.url).removesuffix("/")}/2/team_log/get_events')
+
+
+    class DropboxEventsGetter(IntegrationGetEvents):
+        client: DropboxEventsClient
+
+        def get_last_run(self: Any, event: dict) -> dict:  # type: ignore
+            last_datetime = datetime.strptime(event.get('timestamp', ''), DATETIME_FORMAT) + timedelta(seconds=1)
+            return {'start_time': datetime.strftime(last_datetime, DATETIME_FORMAT)}
+
+        def _iter_events(self):
+            self.client.get_access_token()
+            # region First Call
+            results = self.client.call(self.client.request).json()
+            # endregion
+
+            # region Yield Response
+            while results.get('events'):  # Run as long there are logs
+                yield sorted(results.get('events', []), key=lambda d: d.get('timestamp'))
+
+                if results.get('has_more'):
+                    self.client.set_request_filter(results.get('cursor'))
+                    demisto.debug(
+                        f'Setting the next request filter {results.get("cursor")}'      # pragma: no cover
+                    )
+                    results = self.client.call(self.client.request).json()
+                else:
+                    break
+
+
+    # ----------------------------------------- Authentication Functions -----------------------------------------
+
+    def start_auth_command(base_url: str, app_key: str) -> CommandResults:      # pragma: no cover
+        url = f'https://www.dropbox.com/oauth2/authorize?client_id={app_key}&token_access_type=offline&response_type=code'
+        message = f"""### Authorization instructions
+    1. To sign in, use a web browser to open the page [{url}]({url})
+    2. Run the **!dropbox-auth-complete** command with the code returned from Dropbox in the War Room."""
+        demisto.debug('start auth command')
+        return CommandResults(readable_output=message)
+
+
+    def complete_auth_command(code: str, credentials: Credentials, base_url: str, insecure: bool) -> CommandResults:
+        data = {
+            'grant_type': 'authorization_code',
+            'code': code,
+        }
+        auth = (credentials.identifier or '', credentials.password)
+        redable_output = ''
+        response = requests.post(f'{base_url}/oauth2/token', data=data, auth=auth, verify=insecure)
+        if response.ok:
+            demisto.setIntegrationContext({'refresh_token': response.json()['refresh_token']})
+            readable_output = '✅ Authorization completed successfully.'
+        else:
+            readable_output = f'❌ Authorization completed failed. {response.text}'
+
+        demisto.debug(f'Complete auth command {readable_output=}')  # pragma: no cover
+        return CommandResults(readable_output=redable_output)
+
+
+    def reset_auth_command() -> CommandResults:
+        demisto.debug('resetting integration context to empty dict.')  # pragma: no cover
+        set_integration_context({})
+        message = 'Authorization was reset successfully. Run **!dropbox-auth-start** to start the authentication process.'
+        return CommandResults(readable_output=message)
+
+
+    def test_connection(events_client: DropboxEventsGetter) -> str:
+        events_client.run()
+        return '✅ Success.'
+
+
+    # ----------------------------------------- Main Functions -----------------------------------------
+
+    def main(command: str, demisto_params: dict):
+        first_fetch = datetime.strftime(
+            dateparser.parse(demisto_params.get('fetch_from', '')) or datetime.now() - timedelta(days=7), DATETIME_FORMAT
+        )
+        start_time = demisto_params.get('start_time', first_fetch)
+        request = DropboxEventsRequestConfig(data=json.dumps({'time': {'start_time': start_time}}), **demisto_params)
+        credentials = Credentials(**demisto_params.get('credentials', {}))
+        options = IntegrationOptions(**demisto_params)
+        client = DropboxEventsClient(request, options, credentials)
+        get_events = DropboxEventsGetter(client, options)
+
+        try:
+            base_url = str(demisto_params.get('url')).removesuffix('/')
+            insecure = not demisto_params.get('insecure')
+
+            if command == 'test-module':
+                raise DemistoException("Please run the !dropbox-auth-test command in order to test the connection")
+
+            # ----- Authentication Commands ----- #
+            elif command == 'dropbox-auth-start':
+                return_results(start_auth_command(base_url, str(credentials.identifier)))
+
+            elif command == 'dropbox-auth-complete':
+                return_results(complete_auth_command(str(demisto_params.get('code')), credentials, base_url, insecure))
+
+            elif not demisto.getIntegrationContext().get('refresh_token'):
+                demisto.debug('Integration getIntegrationContext.get(refresh_token) is empty run auth start.')  # pragma: no cover
+                return_results(CommandResults(readable_output='Please run the **!dropbox-auth-start** command first'))
+
+            elif command == 'dropbox-auth-reset':
+                return_results(reset_auth_command())
+
+            elif command == 'dropbox-auth-test':
+                results = test_connection(get_events)
+                return_results(CommandResults(readable_output=results))
+
+            # ----- Fetch/Get events command ----- #
+            elif command in ('fetch-events', 'dropbox-get-events'):
+                events = get_events.run()
+
+                if command == 'fetch-events' or argToBoolean(demisto_params.get('should_push_events')):
+                    send_events_to_xsiam(events, vendor=VENDOR, product=PRODUCT)
+
+                    if events:
+                        last_run = get_events.get_last_run(events[-1])
+                        demisto.debug(f'Set last run to {last_run}')    # pragma: no cover.
+                        demisto.setLastRun(last_run)
+
+                if command == 'dropbox-get-events':
+                    command_results = CommandResults(
+                        readable_output=tableToMarkdown(
+                            'Dropbox logs', events, removeNull=True, headerTransform=pascalToSpace
+                        ),
+                        raw_response=events,
+                    )
+                    return_results(command_results)
+
+        except Exception as e:
+            return_error(
+                f'An error was returned from dropbox event collector while executing {command} command. error: {str(e)}'
+            )
+
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        # Args is always stronger. Get getLastRun even stronger
+        demisto_params_ = demisto.params() | demisto.args() | demisto.getLastRun()
+        main(demisto.command(), demisto_params_)
+
+    register_module_line('DropboxEventsCollector', 'end', __line__())
+  subtype: python3
+  type: python
+system: true
