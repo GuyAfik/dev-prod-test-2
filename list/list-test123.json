@@ -1,0 +1,28 @@
+{
+	"allRead": true,
+	"allReadWrite": true,
+	"cacheVersn": 0,
+	"data": "1.1.1.1",
+	"definitionId": "",
+	"description": "",
+	"detached": false,
+	"fromServerVersion": "",
+	"id": "test123",
+	"itemVersion": "",
+	"locked": false,
+	"name": "test123",
+	"nameLocked": false,
+	"packID": "",
+	"packName": "",
+	"previousAllRead": true,
+	"previousAllReadWrite": true,
+	"propagationLabels": [
+		"all"
+	],
+	"system": false,
+	"tags": null,
+	"toServerVersion": "",
+	"truncated": false,
+	"type": "plain_text",
+	"version": -1
+}
