@@ -22,6 +22,9 @@ tasks:
     ignoreworker: false
     isautoswitchedtoquietmode: false
     isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
     note: false
     quietmode: 0
     separatecontext: false
@@ -42,13 +45,45 @@ tasks:
           "y": 50
         }
       }
+  "1":
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: d
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 22f68fd0-225b-408a-8d88-4093be1838f2
+      iscommand: false
+      name: Untitled Task
+      script: 4b832ab7-4b05-45c8-892a-46ae510d75bb
+      type: regular
+      version: -1
+    taskid: 22f68fd0-225b-408a-8d88-4093be1838f2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 260
+        }
+      }
 version: -1
 view: |-
   {
     "linkLabelsPosition": {},
     "paper": {
       "dimensions": {
-        "height": 65,
+        "height": 305,
         "width": 380,
         "x": 450,
         "y": 50
