@@ -12,10 +12,10 @@ commonfields:
 contentitemexportablefields:
   contentitemfields:
     definitionid: ""
-    fromServerVersion: 5.0.0
-    itemVersion: 1.19.10
+    fromServerVersion: ""
+    itemVersion: ""
     packID: ""
-    packName: Common Scripts
+    packName: ""
     prevname: ""
     propagationLabels:
     - all
@@ -36,7 +36,6 @@ script: |
       HumanReadable: args.value
   };
 scripttarget: 0
-sourcescripid: Print
 tags:
 - Utility
 type: javascript
