@@ -1,0 +1,211 @@
+{
+	"author": "Cortex XSIAM",
+	"authorImage": "content/packs/Base/Author_image.png",
+	"beta": false,
+	"cacheVersn": 0,
+	"categories": [
+		"Analytics \u0026 SIEM"
+	],
+	"certification": "certified",
+	"contentItemTypes": [
+		"integration",
+		"playbook",
+		"correlationrule",
+		"modelingrule",
+		"parsingrule",
+		"trigger",
+		"xsiamdashboard"
+	],
+	"contentItems": {
+		"automation": null,
+		"casefield": null,
+		"classifier": null,
+		"correlationrule": [
+			{
+				"deprecated": false,
+				"description": "This rule detects more than 100 edited files during an hour by the same user. This is a suspicious behavior which can be an indication of a ransomware attack",
+				"fromversion": "6.10.0",
+				"id": "6de99f56-dfbf-40e0-bffd-bffe0a543cf5",
+				"name": "DropBox - Massive File Alterations",
+				"toversion": ""
+			},
+			{
+				"deprecated": false,
+				"description": "This rule detects more than 100 downloaded files during an hour by the same user. This is a suspicious behavior which can be an indication of a data exfiltration.",
+				"fromversion": "6.10.0",
+				"id": "205317b6-c494-4836-ac31-f80c8204cf4e",
+				"name": "DropBox - Massive File Downloads",
+				"toversion": ""
+			}
+		],
+		"dashboard": null,
+		"genericfield": null,
+		"generictype": null,
+		"incidentfield": null,
+		"incidenttype": null,
+		"indicatorfield": null,
+		"integration": [
+			{
+				"category": "Analytics \u0026 SIEM",
+				"commands": [
+					{
+						"description": "Get events.",
+						"name": "dropbox-get-events"
+					},
+					{
+						"description": "Completes the authentication.",
+						"name": "dropbox-auth-complete"
+					},
+					{
+						"description": "Resets the authentication.",
+						"name": "dropbox-auth-reset"
+					},
+					{
+						"description": "Starts the authentication.",
+						"name": "dropbox-auth-start"
+					},
+					{
+						"description": "Tests the authentication.",
+						"name": "dropbox-auth-test"
+					}
+				],
+				"description": "Collect events from Dropbox's logs.",
+				"id": "DropboxEventsCollector",
+				"name": "Dropbox Event Collector"
+			}
+		],
+		"layoutscontainer": null,
+		"list": null,
+		"modelingrule": [
+			{
+				"datasets": [
+					"dropbox_dropbox_raw"
+				],
+				"deprecated": false,
+				"description": "",
+				"fromversion": "6.10.0",
+				"id": "DropboxEventCollector",
+				"name": "DropboxEventCollector",
+				"toversion": ""
+			}
+		],
+		"parsingrule": [
+			{
+				"deprecated": false,
+				"description": "",
+				"fromversion": "6.10.0",
+				"id": "DropboxEventCollector_Parsing_Rule",
+				"name": "DropboxEventCollector Parsing Rule",
+				"toversion": ""
+			}
+		],
+		"playbook": [
+			{
+				"description": "This playbook investigates “Massive File Alterations” and “DropBox - Massive File Downloads” alerts by gathering user and IP information and performing remediation based on the information gathered and received from the user.\n\nUsed Sub-playbooks:\n* Enrichment for Verdict\n* Block Indicators - Generic v3\n* Block IP - Generic v3\n* Block Account - Generic v2\n\nIf you wish to link this playbook to the relevant alerts automatically, we recommend using the following filters when configuring the playbook triggers: Alert Source = Correlation \nAlert Name = DropBox - Massive File Alterations, DropBox - Massive File Downloads",
+				"name": "DropBox - Massive scale operations on files"
+			}
+		],
+		"report": null,
+		"reputation": null,
+		"trigger": [
+			{
+				"deprecated": false,
+				"description": "This trigger is responsible for handling 'DropBox - Massive File Alterations' and 'DropBox - Massive File Downloads' alerts",
+				"fromversion": "8.0.0",
+				"id": "ba1d7a7c593a407fabc124262e39ff63",
+				"name": "DropBox - Massive Scale Operations on Files Response",
+				"toversion": ""
+			}
+		],
+		"widget": null,
+		"wizard": null,
+		"xsiamdashboard": [
+			{
+				"deprecated": false,
+				"description": "This dashboard displays information about DropBox, which can assist the analysts with their day to day job.",
+				"fromversion": "6.10.0",
+				"id": "8e39c026e23a40bc8985f306e4a6511d",
+				"name": "DropBox Dashboard",
+				"preview": "content/packs/Dropbox/1.1.5/XSIAMDashboards/Dropbox_Dashboard_image.png",
+				"toversion": ""
+			}
+		]
+	},
+	"created": "2022-06-15T10:13:20Z",
+	"currentVersion": "1.1.5",
+	"defaultDataSource": {
+		"id": "DropboxEventsCollector",
+		"name": "Dropbox Event Collector"
+	},
+	"definitionId": "",
+	"dependencies": {
+		"Base": {
+			"author": "Cortex XSIAM",
+			"certification": "certified",
+			"mandatory": true,
+			"minVersion": "1.39.5",
+			"name": "Base"
+		},
+		"CommonPlaybooks": {
+			"author": "Cortex XSIAM",
+			"certification": "certified",
+			"mandatory": true,
+			"minVersion": "2.6.48",
+			"name": "Common Playbooks"
+		}
+	},
+	"deprecated": false,
+	"description": "Use the Dropbox integration to fetch events",
+	"downloads": 0,
+	"eulaLink": "https://github.com/demisto/content/blob/master/LICENSE",
+	"fromServerVersion": "3.3.0",
+	"general": [
+		"generalFieldCertified",
+		"generalFieldFree",
+		"generalFieldSupportIncluded"
+	],
+	"hybrid": false,
+	"id": "Dropbox",
+	"installMessage": "",
+	"integrations": [
+		{
+			"imagePath": "content/packs/Dropbox/DropboxEventsCollector_image.png",
+			"name": "Dropbox Event Collector"
+		}
+	],
+	"itemVersion": "1.1.5",
+	"keywords": [],
+	"legacy": true,
+	"modules": [],
+	"name": "Dropbox",
+	"packID": "Dropbox",
+	"packName": "",
+	"premium": false,
+	"previewOnly": false,
+	"price": 0,
+	"propagationLabels": [
+		"all"
+	],
+	"rawKeywords": null,
+	"rawTags": null,
+	"rawUseCases": null,
+	"readme": "Collect events from Dropbox's logs.\nThis integration was integrated and tested with version 2 of Dropbox API\n\n## Configure Dropbox Event Collector on Cortex XSIAM\n\n1. Navigate to **Settings** \u003e **Configurations** \u003e **Data Collection** \u003e **Automation and Feed Integrations**.\n2. Search for Dropbox Event Collector.\n3. Click **Add instance** to create and configure a new integration instance.\n\n    | **Parameter** | **Description** | **Required** |\n    |---|---|---|\n    | Server URL | The endpoint from which to get the logs. | True |\n    | App Key | The App key (created in the Dropbox app console). | True |\n    | App Secret | The App secret (created in the Dropbox app console).  | True |\n    | First fetch in timestamp format | First fetch in timestamp format (\u0026lt;number\u0026gt; \u0026lt;time unit\u0026gt;, e.g., 12 hours, 7 days) | False |\n    | The maximum number of events per fetch |  | False |\n    | Trust any certificate (not secure) |  | False |\n    | Use system proxy settings |  | False |\n\n4. Run the ***!dropbox-auth-start*** command to test the connection and the authorization process.\n\n* Pay attention: Timestamp parsing support is under the a assumption that a UTC +0000 format is being used.\n\n## Commands\nYou can execute these commands from the Cortex XSIAM War Room, as part of an automation, or in a playbook.\nAfter you successfully execute a command, a DBot message appears in the War Room with the command details.\n\n### dropbox-auth-start\n***\nRun this command to start the authorization process and follow the instructions in the command results. This command generates a link. By clicking the link, you get a code for the dropbox-auth-complete command.\n\n\n#### Base Command\n\n`dropbox-auth-start`\n#### Input\n\nThere are no input arguments for this command.\n\n#### Context Output\n\nThere is no context output for this command.\n\n### dropbox-auth-complete\n***\nRun this command to complete the authorization process. Should be used after running the dropbox-auth-start command.\n\n\n#### Base Command\n\n`dropbox-auth-complete`\n#### Input\n\n| **Argument Name** | **Description** | **Required** |\n| --- | --- | --- |\n| code | The code that returns from Dropbox. | Required | \n\n\n#### Context Output\n\nThere is no context output for this command.\n\n### dropbox-auth-test\n***\nRun this command to test the connectivity to Dropbox. \n\n***Note: Use this command instead of the Test button in the UI.*** \n\n#### Base Command\n\n`dropbox-auth-test`\n#### Input\n\nThere are no input arguments for this command.\n\n#### Context Output\n\nThere is no context output for this command.\n\n### dropbox-auth-reset\n***\nResets the authentication.\n\n\n#### Base Command\n\n`dropbox-auth-reset`\n#### Input\n\nThere are no input arguments for this command.\n\n#### Context Output\n\nThere is no context output for this command.\n### dropbox-get-events\n***\nGet events.\n\n\n#### Base Command\n\n`dropbox-get-events`\n#### Input\n\n| **Argument Name** | **Description** | **Required** |\n| --- | --- | --- |\n| limit | The maximum events to fetch. Default is 500. | Optional | \n| should_push_events | Set this argument to true to create events, otherwise the command will only display them. Possible values are: true, false. Default is false. | Required | \n| from | Fetch events from this time (\u0026lt;number\u0026gt; \u0026lt;time unit\u0026gt;, e.g., 12 hours, 7 days). Default is 3 days. | Optional | \n\n\n#### Context Output\n\nThere is no context output for this command.\n#### Command example\n```!dropbox-get-events should_push_events='false' limit=3```\n\n#### Human Readable Output\n\n\u003e### Dropbox logs\n\u003e|Actor|Context|Details|Event _ Category|Event _ Type|Involve _ Non _ Team _ Member|Origin|Timestamp|\n\u003e|---|---|---|---|---|---|---|---|\n\u003e| .tag: admin\u003cbr/\u003eadmin: {\".tag\": \"team_member\", \"account_id\": \"123456\", \"display_name\": \"John Smith\", \"email\": \"JohnSmith@example.com\", \"team_member_id\": \"111111\"} | .tag: team_member\u003cbr/\u003eaccount_id: 123456\u003cbr/\u003edisplay_name: John Smith\u003cbr/\u003eemail: JohnSmith@example.com\u003cbr/\u003eteam_member_id: 111111 | .tag: member_change_status_details\u003cbr/\u003eprevious_value: {\".tag\": \"not_joined\"}\u003cbr/\u003enew_value: {\".tag\": \"active\"}\u003cbr/\u003eaction: {\".tag\": \"team_join_details\", \"linked_apps\": [], \"linked_devices\": [], \"linked_shared_folders\": [], \"has_linked_apps\": false, \"has_linked_devices\": true, \"has_linked_shared_folders\": false} | .tag: members | .tag: member_change_status\u003cbr/\u003edescription: Changed member status (invited, joined, suspended, etc.) | false | geo_location: {\"city\": \"Tel Aviv\", \"region\": \"Tel Aviv\", \"country\": \"IL\", \"ip_address\": \"1.1.1.1\"}\u003cbr/\u003eaccess_method: {\".tag\": \"end_user\", \"end_user\": {\".tag\": \"web\", \"session_id\": \"222222\"}} | 2022-05-16T11:34:29Z |\n\u003e| .tag: admin\u003cbr/\u003eadmin: {\".tag\": \"team_member\", \"account_id\": \"123456\", \"display_name\": \"John Smith\", \"email\": \"JohnSmith@example.com\", \"team_member_id\": \"111111\"} | .tag: team_member\u003cbr/\u003eaccount_id: 123456\u003cbr/\u003edisplay_name: John Smith\u003cbr/\u003eemail: JohnSmith@example.com\u003cbr/\u003eteam_member_id: 111111 | .tag: member_change_admin_role_details\u003cbr/\u003enew_value: {\".tag\": \"team_admin\"}\u003cbr/\u003eprevious_value: {\".tag\": \"member_only\"} | .tag: members | .tag: member_change_admin_role\u003cbr/\u003edescription: Changed team member admin role | false | geo_location: {\"city\": \"Tel Aviv\", \"region\": \"Tel Aviv\", \"country\": \"IL\", \"ip_address\": \"1.1.1.1\"}\u003cbr/\u003eaccess_method: {\".tag\": \"end_user\", \"end_user\": {\".tag\": \"web\", \"session_id\": \"222222\"}} | 2022-05-16T11:34:29Z |\n\u003e| .tag: admin\u003cbr/\u003eadmin: {\".tag\": \"team_member\", \"account_id\": \"123456\", \"display_name\": \"John Smith\", \"email\": \"JohnSmith@example.com\", \"team_member_id\": \"111111\"} | .tag: team | .tag: member_send_invite_policy_changed_details\u003cbr/\u003enew_value: {\".tag\": \"everyone\"}\u003cbr/\u003eprevious_value: {\".tag\": \"specific_members\"} | .tag: team_policies | .tag: member_send_invite_policy_changed\u003cbr/\u003edescription: Changed member send invite policy for team | false | geo_location: {\"city\": \"Tel Aviv\", \"region\": \"Tel Aviv\", \"country\": \"IL\", \"ip_address\": \"1.1.1.1\"}\u003cbr/\u003eaccess_method: {\".tag\": \"end_user\", \"end_user\": {\".tag\": \"web\", \"session_id\": \"222222\"}} | 2022-05-16T11:34:33Z |\n",
+	"searchRank": 10,
+	"serverMaxVersion": "",
+	"serverMinVersion": "3.3.0",
+	"support": "xsoar",
+	"supportDetails": {
+		"email": "",
+		"url": "https://www.paloaltonetworks.com/cortex"
+	},
+	"tags": [
+		"Collection",
+		"Data Source"
+	],
+	"toServerVersion": "",
+	"updated": "2024-12-31T13:11:11Z",
+	"useCases": [],
+	"version": -1,
+	"versionInfo": "1900707",
+	"videos": []
+}
