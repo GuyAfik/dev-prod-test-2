@@ -1,0 +1,1017 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: 6.6.0
+    itemVersion: 1.1.5
+    packID: Dropbox
+    packName: Dropbox
+    packPropagationLabels:
+    - all
+    prevname: ""
+    propagationLabels: []
+    toServerVersion: ""
+description: "This playbook investigates “Massive File Alterations” and “DropBox -
+  Massive File Downloads” alerts by gathering user and IP information and performing
+  remediation based on the information gathered and received from the user.\n\nUsed
+  Sub-playbooks:\n* Enrichment for Verdict\n* Block Indicators - Generic v3\n* Block
+  IP - Generic v3\n* Block Account - Generic v2\n\nIf you wish to link this playbook
+  to the relevant alerts automatically, we recommend using the following filters when
+  configuring the playbook triggers: Alert Source = Correlation \nAlert Name = DropBox
+  - Massive File Alterations, DropBox - Massive File Downloads"
+id: DropBox - Massive scale operations on files
+inputs:
+- description: List of Internal IP ranges
+  key: InternalRange
+  playbookInputQuery: null
+  required: false
+  value:
+    complex:
+      accessor: PrivateIPs
+      root: lists
+      transformers:
+      - args:
+          error_if_no_match: {}
+          ignore_case: {}
+          multi_line: {}
+          period_matches_newline: {}
+          regex:
+            value:
+              simple: (\b(?:\d{1,3}\.){3}\d{1,3}\b/\d{1,2})
+          unpack_matches: {}
+        operator: RegexExtractAll
+      - args:
+          separator:
+            value:
+              simple: ','
+        operator: join
+name: DropBox - Massive scale operations on files
+outputs: []
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 9f9286cb-7fa6-4f1d-8ed6-a91c98b704ef
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 9f9286cb-7fa6-4f1d-8ed6-a91c98b704ef
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 370,
+          "y": -240
+        }
+      }
+  "1":
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "55"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7a2c1b98-de96-44d1-8299-018a82932cd7
+      iscommand: false
+      name: Enrich Indicators
+      type: title
+      version: -1
+    taskid: 7a2c1b98-de96-44d1-8299-018a82932cd7
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 370,
+          "y": -90
+        }
+      }
+  "12":
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "35"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 82ace765-4368-48a0-830d-0a09b8320e3d
+      iscommand: false
+      name: False Positive
+      type: title
+      version: -1
+    taskid: 82ace765-4368-48a0-830d-0a09b8320e3d
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 1250,
+          "y": 1080
+        }
+      }
+  "20":
+    continueonerrortype: ""
+    id: "20"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "36"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 3ddf8a8c-2235-4672-87bc-8d119771d178
+      iscommand: false
+      name: True Positive
+      type: title
+      version: -1
+    taskid: 3ddf8a8c-2235-4672-87bc-8d119771d178
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 270,
+          "y": 1080
+        }
+      }
+  "21":
+    continueonerrortype: ""
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "25"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      closeNotes:
+        simple: The user confirmed he made these multiple failed logins attempts
+      closeReason:
+        simple: false  positive
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current alert.
+      id: 27803437-6c68-451f-8e0a-e8ca37d443ef
+      iscommand: true
+      name: Close the alert as False Positive
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 27803437-6c68-451f-8e0a-e8ca37d443ef
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1250,
+          "y": 1425
+        }
+      }
+  "25":
+    continueonerrortype: ""
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 13c22260-2c7b-4a6a-87f7-6ebc36d27ede
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: 13c22260-2c7b-4a6a-87f7-6ebc36d27ede
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 550,
+          "y": 1800
+        }
+      }
+  "28":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: IPVerdict
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: Malicious
+                root: IPVerdict
+          operator: isNotEmpty
+          right:
+            value: {}
+        - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: Core.AnalyticsPrevalence.Process.value
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: "false"
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: Core.AnalyticsPrevalence.Process.value
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: "False"
+                root: Core.AnalyticsPrevalence.Process.value
+          operator: isNotEmpty
+      label: Malicious IP or Abnormal File
+    continueonerrortype: ""
+    id: "28"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "53"
+      Malicious IP or Abnormal File:
+      - "20"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Continue investigation based on verdict.
+      id: 63056e39-622e-451e-8b55-6bf7fa98ab60
+      iscommand: false
+      name: Continue based on verdict
+      type: condition
+      version: -1
+    taskid: 63056e39-622e-451e-8b55-6bf7fa98ab60
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 370,
+          "y": 230
+        }
+      }
+  "29":
+    continueonerrortype: ""
+    form:
+      description: |-
+        We have detected that you initiated over one hundred operations on Dropbox files within one hour.
+
+        Please confirm or deny initiating these massive operations on DropBox files.
+      expired: false
+      questions:
+      - defaultrows: []
+        fieldassociated: ""
+        gridcolumns: []
+        id: "0"
+        label: ""
+        labelarg:
+          simple: Did you initiate these massive operations on DropBox files?
+        options: []
+        optionsarg:
+        - simple: "No"
+        - simple: "Yes"
+        placeholder: ""
+        readonly: false
+        required: false
+        tooltip: ""
+        type: singleSelect
+      sender: Your SOC team
+      title: Massive scale operations on DropBox files
+      totalanswers: 0
+    id: "29"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    message:
+      bcc: null
+      body:
+        simple: "Hello,\n\nIt has come to our attention that over the course of one
+          hour, you initiated over one hundred operations on Dropbox files. \n\nThe
+          detected DropBox items include: ${alert.initiatedby}\n\nA pattern of such
+          extensive operations may indicate suspicious activity.\n\nPlease confirm
+          or deny initiating these massive operations on the DropBox files mentioned
+          above."
+      cc: null
+      format: ""
+      methods:
+      - email
+      subject:
+        simple: ${alert.alertname}
+      timings:
+        completeafterreplies: 1
+        completeaftersla: false
+        completeafterv2: true
+        retriescount: 2
+        retriesinterval: 360
+      to:
+        simple: ${Account.Email}
+    nexttasks:
+      '#none#':
+      - "33"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: The user is asked to confirm or deny the detected large-scale operations.
+      id: dccceac6-b283-4d07-8519-79fdc8ce4fb4
+      iscommand: false
+      name: EmailAsk User
+      type: collection
+      version: -1
+    taskid: dccceac6-b283-4d07-8519-79fdc8ce4fb4
+    timertriggers: []
+    type: collection
+    view: |-
+      {
+        "position": {
+          "x": 810,
+          "y": 590
+        }
+      }
+  "30":
+    continueonerrortype: ""
+    id: "30"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "25"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: "Continue investigating the alert manually and check the followings:\n\n1-
+        First, contact ${alert.username} if no replay has been received to determine
+        whether the detected activity is confirmed or denied by the user. \n\n2- Determine
+        whether the IP address initiated further massive operations on DropBox files.\n\n3-
+        Determine whether the user account initiated further massive operations on
+        DropBox files.\n"
+      id: a4dfe6f8-54e8-494f-8cd6-cbf9053ab43c
+      iscommand: false
+      name: Continue Manual Investigation
+      type: regular
+      version: -1
+    taskid: a4dfe6f8-54e8-494f-8cd6-cbf9053ab43c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 550,
+          "y": 1610
+        }
+      }
+  "33":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: "0"
+                root: Massive scale operations on DropBox files.Answers
+          operator: isEqualString
+          right:
+            value:
+              simple: "Yes"
+      label: "Yes"
+    continueonerrortype: ""
+    id: "33"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "20"
+      "Yes":
+      - "12"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Verify if the user approved the activity.
+      id: f88a72a1-4224-4948-8ed6-4289083ed72a
+      iscommand: false
+      name: User confirmed the activity?
+      type: condition
+      version: -1
+    taskid: f88a72a1-4224-4948-8ed6-4289083ed72a
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 810,
+          "y": 770
+        }
+      }
+  "35":
+    continueonerrortype: ""
+    id: "35"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "21"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      severity:
+        simple: Low
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.set.incident
+      id: f3addca7-59b7-414b-8688-04c3ee501254
+      iscommand: true
+      name: Lower alert severity
+      script: Builtin|||setAlert
+      type: regular
+      version: -1
+    taskid: f3addca7-59b7-414b-8688-04c3ee501254
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1250,
+          "y": 1210
+        }
+      }
+  "36":
+    continueonerrortype: ""
+    id: "36"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "30"
+      Block Account Only:
+      - "42"
+      Block Both IP Address and User Account:
+      - "40"
+      Block IP Address Only:
+      - "41"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Determine whether the following associated indicators should be blocked automatically:
+
+        1- IP address -  ${alert.remoteip}
+        2- User account - ${alert.username}
+      id: 5b4bf4d8-ea20-4b2f-8def-ed7396aebe5b
+      iscommand: false
+      name: Indicators should be blocked?
+      type: condition
+      version: -1
+    taskid: 5b4bf4d8-ea20-4b2f-8def-ed7396aebe5b
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 270,
+          "y": 1210
+        }
+      }
+  "40":
+    continueonerrortype: ""
+    id: "40"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "30"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      AutoCommit:
+        simple: "No"
+      CustomBlockRule:
+        simple: "True"
+      IP:
+        complex:
+          accessor: remoteip
+          root: alert
+          transformers:
+          - operator: uniq
+      InputEnrichment:
+        simple: "False"
+      RuleDirection:
+        simple: inbound
+      RuleName:
+        simple: XSOAR - Block Indicators playbook - ${alert.id}
+      UserVerification:
+        simple: "False"
+      Username:
+        complex:
+          accessor: username
+          root: alert
+          transformers:
+          - operator: uniq
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: d899aefd-1671-4ac2-837c-4175ec5607d4
+      iscommand: false
+      name: Block Indicators - Generic v3
+      playbookId: Block Indicators - Generic v3
+      type: playbook
+      version: -1
+    taskid: d899aefd-1671-4ac2-837c-4175ec5607d4
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": -710,
+          "y": 1425
+        }
+      }
+  "41":
+    continueonerrortype: ""
+    id: "41"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "30"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      AutoCommit:
+        simple: "No"
+      CustomBlockRule:
+        simple: "True"
+      IP:
+        complex:
+          accessor: remoteip
+          root: alert
+          transformers:
+          - operator: uniq
+      InputEnrichment:
+        simple: "False"
+      RuleDirection:
+        simple: inbound
+      RuleName:
+        simple: XSOAR - Block IP playbook - ${alert.id}
+      UserVerification:
+        simple: "False"
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: f560e76e-b4f2-4eca-86c0-b830b5d09d79
+      iscommand: false
+      name: Block IP - Generic v3
+      playbookId: Block IP - Generic v3
+      type: playbook
+      version: -1
+    taskid: f560e76e-b4f2-4eca-86c0-b830b5d09d79
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": -260,
+          "y": 1425
+        }
+      }
+  "42":
+    continueonerrortype: ""
+    id: "42"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "30"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Tag:
+        simple: Bad Account
+      UserVerification:
+        simple: "False"
+      Username:
+        complex:
+          accessor: username
+          root: alert
+          transformers:
+          - operator: uniq
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: b3e600fd-6790-4d2d-8bd2-8387a3755171
+      iscommand: false
+      name: Block Account - Generic v2
+      playbookId: Block Account - Generic v2
+      type: playbook
+      version: -1
+    taskid: b3e600fd-6790-4d2d-8bd2-8387a3755171
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 150,
+          "y": 1425
+        }
+      }
+  "51":
+    continueonerrortype: ""
+    form:
+      description: "It has come to our attention that your employee initiated over
+        a hundred operations on Dropbox files within one hour. \n\nPlease contact
+        your employee and inquire whether they confirm initiating these massive operations
+        or denies them."
+      expired: false
+      questions:
+      - defaultrows: []
+        fieldassociated: ""
+        gridcolumns: []
+        id: "0"
+        label: ""
+        labelarg:
+          simple: Has $[alert.username] confirmed initiating these massive operations
+            on DropBox files?
+        options: []
+        optionsarg:
+        - simple: "No"
+        - simple: "Yes"
+        placeholder: ""
+        readonly: false
+        required: false
+        tooltip: ""
+        type: singleSelect
+      sender: Your SOC team
+      title: Massive scale operations on DropBox files
+      totalanswers: 0
+    id: "51"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    message:
+      bcc: null
+      body:
+        simple: "Hello,\n\nIt has come to our attention that your employee, ${alert.username},
+          initiated over a hundred operations on Dropbox files within one hour. \n\nThe
+          detected DropBox items include: ${alert.initiatedby}\n\nA pattern of such
+          extensive operations may indicate suspicious activity.\n\nPlease contact
+          $[alert.username] and inquire whether they confirm initiating these massive
+          operations or deny them."
+      cc: null
+      format: ""
+      methods:
+      - email
+      subject:
+        simple: ${alert.alertname}
+      timings:
+        completeafterreplies: 1
+        completeaftersla: false
+        completeafterv2: true
+        retriescount: 2
+        retriesinterval: 360
+      to:
+        simple: ${UserManagerEmail}
+    nexttasks:
+      '#none#':
+      - "54"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: "In the absence of an associated user email address, the email
+        will be sent to the employee's manager. \n\nThe manager is asked to confirm
+        or deny the detected large-scale operations on behalf of the user."
+      id: 7e0aefc6-f002-4504-8dc2-c71f1f9994b1
+      iscommand: false
+      name: EmailAsk User's Manager
+      type: collection
+      version: -1
+    taskid: 7e0aefc6-f002-4504-8dc2-c71f1f9994b1
+    timertriggers: []
+    type: collection
+    view: |-
+      {
+        "position": {
+          "x": 1250,
+          "y": 590
+        }
+      }
+  "53":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: employeeemail
+                root: alert
+          operator: isNotEmpty
+          right:
+            value: {}
+      label: Found User Email Addrerss
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: employeemanageremail
+                root: alert
+          operator: isNotEmpty
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: employeeemail
+                root: alert
+          operator: isEmpty
+      label: Found Manager Email Address
+    continueonerrortype: ""
+    id: "53"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "30"
+      Found Manager Email Address:
+      - "51"
+      Found User Email Addrerss:
+      - "29"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Use the email addresses obtained in the previous tasks to determine whether the email will be sent to the user or his manager.
+
+        The task will require further manual investigation if no email addresses are found.
+      id: cc508d36-6455-450b-8346-e0d30114756b
+      iscommand: false
+      name: Get Extracted Email Addresses
+      type: condition
+      version: -1
+    taskid: cc508d36-6455-450b-8346-e0d30114756b
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 550,
+          "y": 410
+        }
+      }
+  "54":
+    conditions:
+    - condition:
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              complex:
+                accessor: "0"
+                root: Massive scale operations on DropBox files.Answers
+          operator: isEqualString
+          right:
+            value:
+              simple: "Yes"
+      label: "yes"
+    continueonerrortype: ""
+    id: "54"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "20"
+      "yes":
+      - "12"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Verify if the user's manager approved the activity.
+      id: cb6b5f4e-7ce4-4ef2-8403-54e894d29d76
+      iscommand: false
+      name: Manager confirmed the activity?
+      type: condition
+      version: -1
+    taskid: cb6b5f4e-7ce4-4ef2-8403-54e894d29d76
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1250,
+          "y": 770
+        }
+      }
+  "55":
+    continueonerrortype: ""
+    id: "55"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "28"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      CloseReason:
+        simple: Resolved - False Positive,Resolved - Duplicate Incident,Resolved -
+          Known Issue
+      Domain:
+        complex:
+          accessor: domainname
+          root: alert
+      FileSHA256:
+        complex:
+          accessor: '[0]'
+          root: alert.initiatorsha256
+      IP:
+        complex:
+          accessor: '[0]'
+          root: alert.remoteip
+          transformers:
+          - operator: uniq
+      InternalRange:
+        complex:
+          root: inputs.InternalRange
+      ProcessName:
+        complex:
+          accessor: initiatedby
+          root: alert
+          transformers:
+          - args:
+              delimiter:
+                value:
+                  simple: ', '
+            operator: split
+      URL:
+        complex:
+          accessor: url
+          root: alert
+      User:
+        complex:
+          accessor: username
+          root: alert
+          transformers:
+          - operator: uniq
+      query:
+        simple: remoteip:${alert.remoteip.[0]} and alertsource:${alert.sourceBrand}
+          and alertname:"${alert.name}"
+      threshold:
+        simple: "5"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: This playbook checks prior alert closing reasons and performs enrichment
+        and prevalence checks on different IOC types. It then  returns the information
+        needed to establish the alert's verdict.
+      id: 64376ca5-5a8a-43d2-881b-e22f719facf1
+      iscommand: false
+      name: Enrichment for Verdict
+      playbookId: Enrichment for Verdict
+      type: playbook
+      version: -1
+    taskid: 64376ca5-5a8a-43d2-881b-e22f719facf1
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 370,
+          "y": 60
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "28_20_Malicious IP or Abnormal File": 0.38,
+      "33_12_Yes": 0.19,
+      "33_20_#default#": 0.16,
+      "36_30_#default#": 0.52,
+      "36_40_Block Both IP Address and User Account": 0.81,
+      "36_41_Block IP Address Only": 0.81,
+      "53_29_Found User Email Addrerss": 0.78,
+      "53_30_#default#": 0.12,
+      "53_51_Found Manager Email Address": 0.76,
+      "54_12_yes": 0.42,
+      "54_20_#default#": 0.1
+    },
+    "paper": {
+      "dimensions": {
+        "height": 2105,
+        "width": 2340,
+        "x": -710,
+        "y": -240
+      }
+    }
+  }
