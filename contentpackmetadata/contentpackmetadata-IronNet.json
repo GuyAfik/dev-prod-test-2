@@ -1,0 +1,426 @@
+{
+	"author": "Iron Defense",
+	"authorImage": "content/packs/IronDefense/Author_image.png",
+	"beta": false,
+	"cacheVersn": 0,
+	"categories": [
+		"Network Security"
+	],
+	"certification": "certified",
+	"contentItemTypes": [
+		"integration",
+		"incidentfield",
+		"incidenttype",
+		"classifier",
+		"layoutscontainer",
+		"layoutrule"
+	],
+	"contentItems": {
+		"automation": null,
+		"casefield": null,
+		"classifier": [
+			{
+				"description": "IronDefense Classifier",
+				"id": "IronDefense",
+				"name": "IronDefense - Classifier"
+			},
+			{
+				"description": "IronDefense Mapper",
+				"id": "IronDefense-mapper",
+				"name": "IronDefense - Incoming Mapper"
+			}
+		],
+		"dashboard": null,
+		"genericfield": null,
+		"generictype": null,
+		"incidentfield": [
+			{
+				"description": "",
+				"name": "IronDefense IronDome ID",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Bytes In",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Src Entity Attribute",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Alert ID",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Updated",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Severity Malicious Details",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Comment Details",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Confidence",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Severity Suspicious Details",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Analyst Expectation",
+				"type": "singleSelect"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Src Entity Attribute Type",
+				"type": "singleSelect"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Severity Details",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Created",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "IronDefense High Cognitive System Details",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Analyst Severity",
+				"type": "singleSelect"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Dome Tags",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Alert IDs",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Mismatch Details",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Start Time",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "IronDefense End Time",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Severity",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Last event Created",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Secondary App Protocol",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Is Blacklisted",
+				"type": "boolean"
+			},
+			{
+				"description": "",
+				"name": "IronDefense App Domains",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense SubCategory",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense VUE URL",
+				"type": "url"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Dst Entity Attribute",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Event ID",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Bytes Out",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Event Count",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Dst Entity Attribute Type",
+				"type": "singleSelect"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Status",
+				"type": "singleSelect"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Aggregation Criteria",
+				"type": "shortText"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Total Bytes",
+				"type": "number"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Dome Shared Time",
+				"type": "date"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Raw Data Format",
+				"type": "multiSelect"
+			},
+			{
+				"description": "",
+				"name": "IronDefense Is Whitelisted",
+				"type": "boolean"
+			}
+		],
+		"incidenttype": [
+			{
+				"closureScript": "",
+				"days": 0,
+				"hours": 0,
+				"name": "IronDefense Event Notification",
+				"playbook": "",
+				"weeks": 0
+			},
+			{
+				"closureScript": "",
+				"days": 0,
+				"hours": 0,
+				"name": "IronDefense Alert Notification",
+				"playbook": "",
+				"weeks": 0
+			},
+			{
+				"closureScript": "",
+				"days": 0,
+				"hours": 0,
+				"name": "IronDefense IronDome Notification",
+				"playbook": "",
+				"weeks": 0
+			}
+		],
+		"indicatorfield": null,
+		"integration": [
+			{
+				"category": "Network Security",
+				"commands": [
+					{
+						"description": "Retrieves IronDefense Events for a given Alert ID.",
+						"name": "irondefense-get-events-from-alert"
+					},
+					{
+						"description": "Adds a comment to an IronDefense alert.",
+						"name": "irondefense-comment-alert"
+					},
+					{
+						"description": "Rates an IronDefense alert.",
+						"name": "irondefense-rate-alert"
+					},
+					{
+						"description": "Sets the status of an IronDefense alert.",
+						"name": "irondefense-set-alert-status"
+					},
+					{
+						"description": "Pulls Alerts from IronDefense.",
+						"name": "irondefense-get-alerts"
+					},
+					{
+						"description": "Submits an observed bad endpoint to IronDefense to create Threat. Intelligence Rules (TIR).",
+						"name": "irondefense-report-observed-bad-activity"
+					},
+					{
+						"description": "Retrieves an IronDefense event.",
+						"name": "irondefense-get-event"
+					},
+					{
+						"description": "Retrieves IronDome information for an IronDefense alert.",
+						"name": "irondefense-get-alert-irondome-information"
+					}
+				],
+				"description": "The IronDefense Integration for Cortex allows users to interact with IronDefense alerts within Cortex. The Integration provides the ability to rate alerts, update alert statuses, add comments to alerts, to report observed bad activity, get alerts, get events, and get IronDome information.",
+				"id": "IronDefense",
+				"name": "IronDefense (Partner Contribution)"
+			}
+		],
+		"layoutrule": [
+			{
+				"deprecated": false,
+				"description": "",
+				"fromversion": "6.10.0",
+				"id": "IronDome_Notification_layout_rule",
+				"layout_id": "IronDefense IronDome Notification",
+				"name": "IronDome Notification Layout Rule",
+				"toversion": ""
+			},
+			{
+				"deprecated": false,
+				"description": "",
+				"fromversion": "6.10.0",
+				"id": "IronDefense_Event_Notification_layout_rule",
+				"layout_id": "IronDefense Event Notification",
+				"name": "IronDefense Event Notification Layout Rule",
+				"toversion": ""
+			},
+			{
+				"deprecated": false,
+				"description": "",
+				"fromversion": "6.10.0",
+				"id": "IronDefense_Alert_Notification_layout_rule",
+				"layout_id": "IronDefense Alert Notification",
+				"name": "IronDefense Alert Notification Layout Rule",
+				"toversion": ""
+			}
+		],
+		"layoutscontainer": [
+			{
+				"description": "IronDefense IronDome Notification Layout",
+				"group": "incident",
+				"name": "IronDefense IronDome Notification"
+			},
+			{
+				"description": "IronDefense Alert Notification Layout",
+				"group": "incident",
+				"name": "IronDefense Alert Notification"
+			},
+			{
+				"description": "IronDefense Event Notification Layout",
+				"group": "incident",
+				"name": "IronDefense Event Notification"
+			}
+		],
+		"list": null,
+		"playbook": null,
+		"report": null,
+		"reputation": null,
+		"widget": null,
+		"wizard": null
+	},
+	"created": "2020-06-30T20:22:39Z",
+	"currentVersion": "1.1.32",
+	"defaultDataSource": {
+		"id": "IronDefense",
+		"name": "IronDefense"
+	},
+	"definitionId": "",
+	"dependencies": {
+		"Base": {
+			"author": "Cortex XSIAM",
+			"certification": "certified",
+			"mandatory": true,
+			"minVersion": "1.39.12",
+			"name": "Base"
+		},
+		"CommonTypes": {
+			"author": "Cortex XSIAM",
+			"certification": "certified",
+			"mandatory": false,
+			"minVersion": "3.8.2",
+			"name": "Common Types"
+		}
+	},
+	"deprecated": false,
+	"description": "The IronDefense Integration allows users to interact with IronDefense alerts within Demisto. The Integration provides the ability to rate alerts, update alert statuses, add comments to alerts, and to report observed bad activity.",
+	"downloads": 1651,
+	"eulaLink": "https://github.com/demisto/content/blob/master/LICENSE",
+	"fromServerVersion": "5.0.0",
+	"general": [
+		"generalFieldCertified",
+		"generalFieldByPartner",
+		"generalFieldFree",
+		"generalFieldSupportIncluded"
+	],
+	"hybrid": false,
+	"id": "IronDefense",
+	"installMessage": "",
+	"integrations": [
+		{
+			"imagePath": "content/packs/IronDefense/IronDefense_image.png",
+			"name": "IronDefense"
+		}
+	],
+	"itemVersion": "1.1.32",
+	"keywords": [],
+	"legacy": true,
+	"modules": [],
+	"name": "IronNet",
+	"packID": "IronDefense",
+	"packName": "",
+	"premium": false,
+	"previewOnly": false,
+	"price": 0,
+	"propagationLabels": [
+		"all"
+	],
+	"rawKeywords": null,
+	"rawTags": null,
+	"rawUseCases": null,
+	"searchRank": 10,
+	"serverMaxVersion": "",
+	"serverMinVersion": "5.0.0",
+	"support": "partner",
+	"supportDetails": {
+		"email": "support@ironnetcybersecurity.com",
+		"url": "https://ironnet.atlassian.net/servicedesk/customer/portal/4"
+	},
+	"tags": [
+		"Data Source"
+	],
+	"toServerVersion": "",
+	"updated": "2025-01-09T20:27:14Z",
+	"useCases": [],
+	"version": -1,
+	"versionInfo": "1958116",
+	"videos": []
+}
